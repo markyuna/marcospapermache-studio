@@ -1,139 +1,147 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
-
-// 🔹 helpers
-function getRequired(value: FormDataEntryValue | null): string {
-  if (typeof value !== "string" || !value.trim()) return "";
-  return value.trim();
-}
-
-function getOptional(value: FormDataEntryValue | null): string | null {
-  if (typeof value !== "string") return null;
-  const trimmed = value.trim();
-  return trimmed || null;
-}
-
-function isValidEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
+import { resend, getResendFromEmail, getResendToEmail } from "@/lib/resend";
+import { AdminNotificationEmail } from "@/emails/AdminNotificationEmail";
+import { ClientConfirmationEmail } from "@/emails/ClientConfirmationEmail";
 
 export async function POST(request: Request) {
   try {
     const formData = await request.formData();
 
-    // 🔹 fields
-    const name = getRequired(formData.get("name"));
-    const email = getRequired(formData.get("email"));
-    const message = getRequired(formData.get("message"));
+    const getFormValue = (value: FormDataEntryValue | null) =>
+      typeof value === "string" ? value.trim() : "";
 
-    const projectType = getOptional(formData.get("projectType"));
-    const dimensions = getOptional(formData.get("dimensions"));
-    const budget = getOptional(formData.get("budget"));
+    const getOptionalFormValue = (value: FormDataEntryValue | null) =>
+      typeof value === "string" ? value.trim() || null : null;
 
-    const file = formData.get("image") as File | null;
+    const name = getFormValue(formData.get("name"));
+    const email = getFormValue(formData.get("email"));
+    const projectType = getOptionalFormValue(formData.get("projectType"));
+    const dimensions = getOptionalFormValue(formData.get("dimensions"));
+    const budget = getOptionalFormValue(formData.get("budget"));
+    const message = getFormValue(formData.get("message"));
+    const imageUrl = getOptionalFormValue(formData.get("imageUrl"));
 
-    // 🔹 validation
     if (!name || !email || !message) {
       return NextResponse.json(
-        { error: "Champs requis manquants." },
+        { error: "Les champs nom, email et message sont obligatoires." },
         { status: 400 }
       );
     }
 
-    if (!isValidEmail(email)) {
-      return NextResponse.json(
-        { error: "Email invalide." },
-        { status: 400 }
-      );
-    }
+    let fileUrl: string | null = null;
 
-    let imageUrl: string | null = null;
+    const file = formData.get("file");
+    if (file && file instanceof File && file.size > 0) {
+      const fileExt = file.name.split(".").pop() || "bin";
+      const safeFileName = `${Date.now()}-${Math.random()
+        .toString(36)
+        .slice(2)}.${fileExt}`;
 
-    // 🔹 image upload
-    if (file && file.size > 0) {
-      const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
-
-      if (!allowedTypes.includes(file.type)) {
-        return NextResponse.json(
-          { error: "Format d’image non supporté." },
-          { status: 400 }
-        );
-      }
-
-      if (file.size > 5 * 1024 * 1024) {
-        return NextResponse.json(
-          { error: "Image trop lourde (max 5MB)." },
-          { status: 400 }
-        );
-      }
-
-      const buffer = Buffer.from(await file.arrayBuffer());
-
-      const extension =
-        file.name.split(".").pop()?.toLowerCase() || "jpg";
-
-      const fileName = `${Date.now()}-${crypto.randomUUID()}.${extension}`;
-      const filePath = `references/${fileName}`;
+      const arrayBuffer = await file.arrayBuffer();
+      const fileBuffer = Buffer.from(arrayBuffer);
 
       const { error: uploadError } = await supabaseAdmin.storage
         .from("commandes")
-        .upload(filePath, buffer, {
-          contentType: file.type,
+        .upload(safeFileName, fileBuffer, {
+          contentType: file.type || "application/octet-stream",
           upsert: false,
         });
 
       if (uploadError) {
-        console.error("Upload error:", uploadError);
-
+        console.error("Supabase upload error:", uploadError);
         return NextResponse.json(
-          { error: "Erreur upload image." },
+          { error: "Erreur lors de l’envoi du fichier." },
           { status: 500 }
         );
       }
 
-      const { data } = supabaseAdmin.storage
+      const { data: publicUrlData } = supabaseAdmin.storage
         .from("commandes")
-        .getPublicUrl(filePath);
+        .getPublicUrl(safeFileName);
 
-      imageUrl = data.publicUrl;
+      fileUrl = publicUrlData.publicUrl;
     }
 
-    // 🔹 insert DB
-    const { data, error } = await supabaseAdmin
+    const { data: insertedCommande, error: insertError } = await supabaseAdmin
       .from("commandes")
-      .insert({
-        name,
-        email,
-        project_type: projectType,
-        dimensions,
-        budget,
-        message,
-        image_url: imageUrl,
-      })
+      .insert([
+        {
+          name,
+          email,
+          project_type: projectType,
+          dimensions,
+          budget,
+          message,
+          image_url: imageUrl,
+          file_url: fileUrl,
+        },
+      ])
       .select()
       .single();
 
-    if (error) {
-      console.error("DB error:", error);
-
+    if (insertError) {
+      console.error("Supabase insert error:", insertError);
       return NextResponse.json(
-        { error: "Erreur base de données." },
+        { error: "Erreur lors de l’enregistrement de la demande." },
         { status: 500 }
       );
     }
 
-    return NextResponse.json(
-      {
-        success: true,
-        commande: data,
+    const from = getResendFromEmail();
+    const adminTo = getResendToEmail();
+
+    const adminEmailResult = await resend.emails.send({
+      from,
+      to: adminTo,
+      subject: `Nouvelle demande sur mesure - ${name}`,
+      react: AdminNotificationEmail({
+        name,
+        email,
+        projectType,
+        dimensions,
+        budget,
+        message,
+        imageUrl,
+        fileUrl,
+      }),
+    });
+
+    if (adminEmailResult.error) {
+      console.error("Resend admin email error:", adminEmailResult.error);
+    }
+
+    const clientEmailResult = await resend.emails.send({
+      from,
+      to: email,
+      subject: "Nous avons bien reçu votre demande",
+      react: ClientConfirmationEmail({
+        name,
+        projectType,
+        dimensions,
+        budget,
+        message,
+      }),
+    });
+
+    if (clientEmailResult.error) {
+      console.error("Resend client email error:", clientEmailResult.error);
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: "Demande envoyée avec succès.",
+      commande: insertedCommande,
+      emails: {
+        adminSent: !adminEmailResult.error,
+        clientSent: !clientEmailResult.error,
       },
-      { status: 201 }
-    );
+    });
   } catch (error) {
-    console.error("API crash:", error);
+    console.error("API route error:", error);
 
     return NextResponse.json(
-      { error: "Erreur serveur." },
+      { error: "Une erreur inattendue est survenue." },
       { status: 500 }
     );
   }
