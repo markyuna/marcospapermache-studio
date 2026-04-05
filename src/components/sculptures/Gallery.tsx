@@ -10,6 +10,7 @@ export default function Gallery() {
           slug={artwork.slug}
           src={artwork.images?.[0] ?? "/placeholder.png"}
           title={artwork.title}
+          availability={artwork.availability}
         />
       ))}
     </section>
