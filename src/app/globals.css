@@ -1,8 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: #000000;
-  --foreground: #ffffff;
+  --background: #fffaf5;
+  --foreground: #181512;
+
+  --primary: #ff6a00;
+  --primary-soft: #ffb36b;
+
+  --accent: #f3e8dc;
+  --accent-strong: #e7d2bf;
+
+  --muted: #6f6257;
+  --stroke: rgba(24, 21, 18, 0.08);
 }
 
 * {
@@ -13,14 +22,25 @@ html {
   scroll-behavior: smooth;
 }
 
+html,
 body {
   margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+body {
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
   background:
-    radial-gradient(circle at top, rgba(255, 255, 255, 0.06), transparent 30%),
-    linear-gradient(to bottom, #000000, #0a0a0a, #000000);
+    radial-gradient(circle at 15% 20%, rgba(255, 106, 0, 0.12), transparent 32%),
+    radial-gradient(circle at 85% 0%, rgba(255, 190, 120, 0.12), transparent 28%),
+    radial-gradient(circle at 50% 100%, rgba(231, 210, 191, 0.18), transparent 30%),
+    linear-gradient(to bottom, #fffaf5, #fff6ef, #fffaf5);
   color: var(--foreground);
   position: relative;
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 body::after {
@@ -28,7 +48,7 @@ body::after {
   position: fixed;
   inset: 0;
   background-image: url("/noise.png");
-  opacity: 0.025;
+  opacity: 0.02;
   pointer-events: none;
   z-index: 999;
 }
@@ -36,4 +56,13 @@ body::after {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+::selection {
+  background: rgba(255, 106, 0, 0.18);
+}
+
+img {
+  max-width: 100%;
+  display: block;
 }

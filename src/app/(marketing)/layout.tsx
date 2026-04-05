@@ -1,5 +1,4 @@
-import { SiteFooter } from "@/components/layout/site-footer";
-import { SiteHeader } from "@/components/layout/site-header";
+import Navbar from "@/components/layout/Navbar";
 
 export default function MarketingLayout({
   children,
@@ -7,10 +6,9 @@ export default function MarketingLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-black text-white">
-      <SiteHeader />
-      {children}
-      <SiteFooter />
-    </div>
+    <>
+      <Navbar />
+      <main className="pt-0">{children}</main>
+    </>
   );
 }
