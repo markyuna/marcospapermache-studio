@@ -1,25 +1,17 @@
-import SculptureCard from "./SculptureCard";
+import SculptureCard from "@/components/sculptures/SculptureCard";
 import { sculptures } from "@/data/sculptures";
 
-type GalleryProps = {
-  limit?: number;
-};
-
-export default function Gallery({ limit }: GalleryProps) {
-  const items = limit ? sculptures.slice(0, limit) : sculptures;
-
+export default function Gallery() {
   return (
-    <section className="py-16">
-      <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-        {items.map((artwork) => (
-          <SculptureCard
-            key={artwork.slug}
-            slug={artwork.slug}
-            src={artwork.image}
-            title={artwork.title}
-          />
-        ))}
-      </div>
+    <section className="mt-16 grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
+      {sculptures.map((artwork) => (
+        <SculptureCard
+          key={artwork.slug}
+          slug={artwork.slug}
+          src={artwork.images?.[0] ?? "/placeholder.png"}
+          title={artwork.title}
+        />
+      ))}
     </section>
   );
 }
