@@ -1,8 +1,5 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 
 type SculptureCardProps = {
   slug: string;
@@ -16,20 +13,23 @@ export default function SculptureCard({
   title,
 }: SculptureCardProps) {
   return (
-    <motion.div whileHover={{ y: -4 }} className="group">
-      <Link href={`/sculptures/${slug}`} className="block">
-        <div className="relative overflow-hidden rounded-[1.5rem] bg-white shadow-[0_20px_60px_rgba(0,0,0,0.08)]">
-          <Image
-            src={src}
-            alt={title}
-            width={800}
-            height={1000}
-            className="h-auto w-full object-cover transition duration-500 group-hover:scale-[1.03]"
-          />
-        </div>
+    <Link
+      href={`/sculptures/${slug}`}
+      className="group block overflow-hidden rounded-3xl border border-black/5 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+    >
+      <div className="relative aspect-[4/5] w-full overflow-hidden">
+        <Image
+          src={src}
+          alt={title}
+          fill
+          className="object-cover transition duration-700 group-hover:scale-105"
+        />
+      </div>
 
-        <p className="mt-4 text-base font-medium text-neutral-900">{title}</p>
-      </Link>
-    </motion.div>
+      <div className="p-5">
+        <h3 className="text-lg font-medium text-neutral-900">{title}</h3>
+        <p className="mt-2 text-sm text-neutral-500">Découvrir l’œuvre</p>
+      </div>
+    </Link>
   );
 }

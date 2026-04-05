@@ -7,6 +7,8 @@ export type Sculpture = {
   details: string[];
   materials: string;
   dimensions: string;
+  year: string;
+  availability: string;
   vision: string;
 };
 
@@ -34,6 +36,8 @@ export const sculptures: Sculpture[] = [
       "Papier mâché, capsules de café Nespresso Vertuo, peinture acrylique",
     vision:
       "Trajectoire incarne la transformation et le mouvement à travers l’art du recyclage...",
+    year: "2025",
+    availability: "Disponible sur demande",
   },
   {
     slug: "emergences",
@@ -57,6 +61,8 @@ export const sculptures: Sculpture[] = [
     materials: "Papier mâché, matériaux recyclés, peinture acrylique",
     vision:
       "Émergences évoque la naissance de formes vivantes à partir de la matière...",
+    year: "2025",
+    availability: "Vendue",
   },
   {
     slug: "support-a-vins",
@@ -80,5 +86,7 @@ export const sculptures: Sculpture[] = [
     materials: "Papier mâché, matériaux recyclés, finitions artisanales",
     vision:
       "Avec Support à vins, j’explore la frontière entre sculpture et objet d’usage...",
+    year: "2025",
+    availability: "Disponible sur demande",
   },
 ];
