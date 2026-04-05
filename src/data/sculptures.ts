@@ -1,15 +1,14 @@
 export type Sculpture = {
   slug: string;
   title: string;
-  subtitle: string;
-  description: string;
+  subtitle?: string;
+  description?: string;
   images: string[];
   details: string[];
-  materials: string;
-  dimensions: string;
-  year: string;
-  availability: string;
-  vision: string;
+  materials?: string;
+  dimensions?: string;
+  year?: string;
+  availability?: string;
 };
 
 export const sculptures: Sculpture[] = [
@@ -18,7 +17,7 @@ export const sculptures: Sculpture[] = [
     title: "Trajectoire",
     subtitle: "Trajectoire — Sculpture murale en relief",
     description:
-      "Trajectoire est une sculpture murale qui célèbre le mouvement, la transformation et la beauté du recyclage...",
+      "“Trajectoire” est une sculpture murale qui célèbre le mouvement, la transformation et la beauté du recyclage. Entièrement réalisée à la main à partir de matériaux récupérés, cette pièce associe la technique artisanale du papier mâché à des capsules de café Nespresso Vertuo, métamorphosées en éléments dorés qui traversent une surface aux reliefs organiques. L’œuvre invite à une réflexion sur notre parcours personnel et collectif, tout en transformant des objets du quotidien en art porteur de sens et de conscience écologique.",
     images: [
       "/trajectoire.jpg",
       "/trajectoire-detail.jpg",
@@ -34,8 +33,6 @@ export const sculptures: Sculpture[] = [
     dimensions: "57 × 73 cm",
     materials:
       "Papier mâché, capsules de café Nespresso Vertuo, peinture acrylique",
-    vision:
-      "Trajectoire incarne la transformation et le mouvement à travers l’art du recyclage...",
     year: "2025",
     availability: "Disponible sur demande",
   },
@@ -44,7 +41,7 @@ export const sculptures: Sculpture[] = [
     title: "Emergences",
     subtitle: "Émergences — Sculpture murale en relief",
     description:
-      "Émergences est une sculpture murale contemporaine réalisée en papier mâché...",
+      "Émergences est une sculpture murale contemporaine réalisée en papier mâché, mettant en valeur un motif organique inspiré de structures naturelles telles que les cellules ou les alvéoles. Le relief travaillé à la main donne une impression de mouvement fluide et de croissance, capturant la lumière selon l’angle de vue. Chaque pièce est unique, fabriquée artisanalement avec soin. Idéal pour une décoration d’intérieur minimaliste, contemporaine ou inspirée par la nature.",
     images: [
       "/emergences.jpg",
       "/emergences-detail.jpg",
@@ -59,8 +56,6 @@ export const sculptures: Sculpture[] = [
     ],
     dimensions: "57 × 73 cm",
     materials: "Papier mâché, matériaux recyclés, peinture acrylique",
-    vision:
-      "Émergences évoque la naissance de formes vivantes à partir de la matière...",
     year: "2025",
     availability: "Vendue",
   },
@@ -69,7 +64,7 @@ export const sculptures: Sculpture[] = [
     title: "Support à vins",
     subtitle: "Objet sculptural fonctionnel",
     description:
-      "Support à vins réunit art et usage dans une création à la fois décorative...",
+      "Réalisée entièrement en papier mâché, cette cave à vin artistique combine fonctionnalité et poésie visuelle. Des formes ondulantes, presque liquides, sculptent la façade et entourent délicatement les bouteilles, comme portées par un souffle ou une vague. Des alvéoles dorées à l’intérieur évoquent des ruches naturelles ou des coraux, apportant une texture organique à l’ensemble. Un éclairage intégré diffuse une lumière chaleureuse depuis les cavités, sublimant les teintes ambrées du verre. Le plateau supérieur, rehaussé d’un doré satiné, complète cette pièce unique, entre mobilier et sculpture contemporaine.",
     images: [
       "/support-a-vins.jpg",
       "/support-a-vins-detail.jpg",
@@ -84,8 +79,6 @@ export const sculptures: Sculpture[] = [
     ],
     dimensions: "60 × 100 cm",
     materials: "Papier mâché, matériaux recyclés, finitions artisanales",
-    vision:
-      "Avec Support à vins, j’explore la frontière entre sculpture et objet d’usage...",
     year: "2025",
     availability: "Disponible sur demande",
   },

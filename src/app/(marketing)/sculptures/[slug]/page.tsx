@@ -23,7 +23,6 @@ export async function generateMetadata({
   params,
 }: SculpturePageProps): Promise<Metadata> {
   const { slug } = await params;
-
   const sculpture = sculptures.find((item) => item.slug === slug);
 
   if (!sculpture) {
@@ -43,7 +42,6 @@ export async function generateMetadata({
 
 export default async function SculpturePage({ params }: SculpturePageProps) {
   const { slug } = await params;
-
   const sculpture = sculptures.find((item) => item.slug === slug);
 
   if (!sculpture) {
@@ -51,14 +49,28 @@ export default async function SculpturePage({ params }: SculpturePageProps) {
   }
 
   const images =
-    sculpture.images && sculpture.images.length > 0
-      ? sculpture.images
-      : ["/placeholder.png"];
+    sculpture.images?.length > 0 ? sculpture.images : ["/placeholder.png"];
+
+  const isSold =
+    sculpture.availability?.toLowerCase().includes("vendue") ?? false;
+
+  const whatsappNumber = "33662482491"; // ← reemplaza por tu número real en formato internacional, sin +
+  const whatsappMessage = encodeURIComponent(
+    isSold
+      ? `Bonjour Marcos, je suis intéressé(e) par une pièce similaire à "${sculpture.title}".`
+      : `Bonjour Marcos, je suis intéressé(e) par la sculpture "${sculpture.title}".`
+  );
+
+  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+
+  const primaryCtaLabel = isSold
+    ? "Commander une pièce similaire"
+    : "Commander cette œuvre";
 
   return (
     <main className="py-16 md:py-24">
       <Container>
-        <div className="mb-8">
+        <div className="mb-10">
           <Link
             href="/sculptures"
             className="inline-flex items-center gap-2 text-sm text-neutral-500 transition hover:text-neutral-900"
@@ -68,14 +80,14 @@ export default async function SculpturePage({ params }: SculpturePageProps) {
           </Link>
         </div>
 
-        <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
-          <section className="space-y-4">
+        <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-start">
+          <section>
             <ImageGallery images={images} title={sculpture.title} />
           </section>
 
           <aside className="lg:sticky lg:top-28">
-            <div className="rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm backdrop-blur md:p-8">
-              <p className="text-xs uppercase tracking-[0.28em] text-neutral-400">
+            <div className="rounded-3xl border border-black/5 bg-white/80 p-6 shadow-sm backdrop-blur md:p-8">
+              <p className="text-xs uppercase tracking-[0.3em] text-neutral-400">
                 Sculpture artisanale
               </p>
 
@@ -94,36 +106,50 @@ export default async function SculpturePage({ params }: SculpturePageProps) {
                   "Une pièce sculpturale unique réalisée à la main, entre matière, texture et composition contemporaine."}
               </p>
 
+              {sculpture.details?.length > 0 && (
+                <div className="mt-8 space-y-2">
+                  {sculpture.details.map((detail, index) => (
+                    <div
+                      key={index}
+                      className="flex items-start gap-3 text-sm text-neutral-600"
+                    >
+                      <span className="mt-[6px] h-1.5 w-1.5 rounded-full bg-neutral-400" />
+                      <span>{detail}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
               <div className="mt-8 grid gap-4 rounded-2xl bg-neutral-50 p-5">
                 {sculpture.dimensions && (
-                  <div className="flex items-start justify-between gap-4 border-b border-neutral-200 pb-3">
+                  <div className="flex justify-between gap-4 border-b border-neutral-200 pb-3">
                     <span className="text-sm text-neutral-500">Dimensions</span>
-                    <span className="text-right text-sm font-medium text-neutral-900">
+                    <span className="max-w-[60%] text-right text-sm font-medium text-neutral-900">
                       {sculpture.dimensions}
                     </span>
                   </div>
                 )}
 
                 {sculpture.materials && (
-                  <div className="flex items-start justify-between gap-4 border-b border-neutral-200 pb-3">
+                  <div className="flex justify-between gap-4 border-b border-neutral-200 pb-3">
                     <span className="text-sm text-neutral-500">Matériaux</span>
-                    <span className="text-right text-sm font-medium text-neutral-900">
+                    <span className="max-w-[60%] text-right text-sm font-medium text-neutral-900">
                       {sculpture.materials}
                     </span>
                   </div>
                 )}
 
                 {sculpture.year && (
-                  <div className="flex items-start justify-between gap-4 border-b border-neutral-200 pb-3">
+                  <div className="flex justify-between gap-4 border-b border-neutral-200 pb-3">
                     <span className="text-sm text-neutral-500">Année</span>
-                    <span className="text-right text-sm font-medium text-neutral-900">
+                    <span className="text-sm font-medium text-neutral-900">
                       {sculpture.year}
                     </span>
                   </div>
                 )}
 
                 {sculpture.availability && (
-                  <div className="flex items-start justify-between gap-4">
+                  <div className="flex justify-between gap-4">
                     <span className="text-sm text-neutral-500">
                       Disponibilité
                     </span>
@@ -134,41 +160,48 @@ export default async function SculpturePage({ params }: SculpturePageProps) {
                 )}
               </div>
 
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-6 py-3 text-sm font-medium text-white shadow-lg transition hover:scale-[1.02] hover:shadow-xl"
+              <div className="mt-4">
+                <p className="text-sm text-neutral-600">
+                  Chaque pièce est unique. Aucune reproduction identique.
+                </p>
+
+                {!isSold ? (
+                  <p className="mt-2 text-sm font-medium text-orange-500">
+                    Pièce disponible actuellement
+                  </p>
+                ) : (
+                  <p className="mt-2 text-sm font-medium text-neutral-500">
+                    Cette œuvre a trouvé son collectionneur, mais une création
+                    similaire peut être réalisée sur demande.
+                  </p>
+                )}
+              </div>
+
+              <div className="mt-10 flex flex-col gap-3">
+                <a
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-6 py-3 text-sm font-medium text-white shadow-lg transition hover:scale-[1.03] hover:shadow-xl"
                 >
-                  Commander cette œuvre
-                </Link>
+                  {primaryCtaLabel}
+                </a>
+
+                <p className="text-center text-xs text-neutral-500">
+                  Réponse rapide • Devis personnalisé • Sans engagement
+                </p>
 
                 <Link
                   href="/experience-ia"
                   className="inline-flex items-center justify-center gap-2 rounded-full border border-neutral-300 bg-white px-6 py-3 text-sm font-medium text-neutral-900 transition hover:bg-neutral-50"
                 >
                   <Sparkles className="h-4 w-4" />
-                  Créer une version avec IA
+                  Créer votre propre sculpture avec IA
                 </Link>
               </div>
             </div>
           </aside>
         </div>
-
-        {sculpture.story && (
-          <section className="mt-16 max-w-4xl">
-            <p className="text-xs uppercase tracking-[0.28em] text-neutral-400">
-              À propos de l’œuvre
-            </p>
-
-            <h2 className="mt-3 text-2xl font-semibold text-neutral-900 md:text-3xl">
-              L’histoire derrière la pièce
-            </h2>
-
-            <p className="mt-6 text-lg leading-8 text-neutral-600">
-              {sculpture.story}
-            </p>
-          </section>
-        )}
       </Container>
     </main>
   );
