@@ -1,53 +1,84 @@
 export type Sculpture = {
-    slug: string;
-    title: string;
-    subtitle: string;
-    description: string;
-    image: string;
-    details: string[];
-  };
-  
-  export const sculptures: Sculpture[] = [
-    {
-      slug: "trajectoire",
-      title: "Trajectoire",
-      subtitle: "Relief mural contemporain",
-      description:
-        "Une sculpture murale artisanale qui explore le mouvement, la matière et l’équilibre à travers une composition organique en papier mâché.",
-      image: "/trajectoire.jpg",
-      details: [
-        "Pièce réalisée à la main",
-        "Papier mâché et matériaux recyclés",
-        "Travail de texture et de relief",
-        "Œuvre décorative contemporaine",
-      ],
-    },
-    {
-      slug: "emergences",
-      title: "Emergences",
-      subtitle: "Composition sculpturale organique",
-      description:
-        "Une œuvre qui met en dialogue la forme, la lumière et la matière, avec une présence sculpturale pensée pour sublimer un intérieur contemporain.",
-      image: "/emergences.jpg",
-      details: [
-        "Cadre et composition artisanale",
-        "Matériaux recyclés",
-        "Finition texturée",
-        "Pièce unique",
-      ],
-    },
-    {
-      slug: "support-a-vins",
-      title: "Support à vins",
-      subtitle: "Objet fonctionnel et sculptural",
-      description:
-        "Une création entre art et fonctionnalité, imaginée pour exposer les bouteilles comme des éléments d’une composition sculpturale.",
-      image: "/support-a-vins.jpg",
-      details: [
-        "Objet décoratif et fonctionnel",
-        "Fabrication artisanale",
-        "Design original",
-        "Pièce de caractère",
-      ],
-    },
-  ];
+  slug: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  images: string[];
+  details: string[];
+  materials: string;
+  dimensions: string;
+  vision: string;
+};
+
+export const sculptures: Sculpture[] = [
+  {
+    slug: "trajectoire",
+    title: "Trajectoire",
+    subtitle: "Trajectoire — Sculpture murale en relief",
+    description:
+      "Trajectoire est une sculpture murale qui célèbre le mouvement, la transformation et la beauté du recyclage...",
+    images: [
+      "/trajectoire.jpg",
+      "/trajectoire-detail.jpg",
+      "/trajectoire-detail-2.jpg",
+    ],
+    details: [
+      "Pièce sculptée entièrement à la main",
+      "Papier mâché et matériaux recyclés",
+      "Composition murale texturée",
+      "Jeu de reliefs, de lumière et d’ombres",
+      "Œuvre contemporaine unique",
+    ],
+    dimensions: "57 × 73 cm",
+    materials:
+      "Papier mâché, capsules de café Nespresso Vertuo, peinture acrylique",
+    vision:
+      "Trajectoire incarne la transformation et le mouvement à travers l’art du recyclage...",
+  },
+  {
+    slug: "emergences",
+    title: "Emergences",
+    subtitle: "Émergences — Sculpture murale en relief",
+    description:
+      "Émergences est une sculpture murale contemporaine réalisée en papier mâché...",
+    images: [
+      "/emergences.jpg",
+      "/emergences-detail.jpg",
+      "/emergences-detail-2.jpg",
+    ],
+    details: [
+      "Œuvre artisanale réalisée à la main",
+      "Papier mâché et matières recyclées",
+      "Reliefs organiques et texture expressive",
+      "Présence visuelle pensée pour l’intérieur contemporain",
+      "Pièce unique",
+    ],
+    dimensions: "57 × 73 cm",
+    materials: "Papier mâché, matériaux recyclés, peinture acrylique",
+    vision:
+      "Émergences évoque la naissance de formes vivantes à partir de la matière...",
+  },
+  {
+    slug: "support-a-vins",
+    title: "Support à vins",
+    subtitle: "Objet sculptural fonctionnel",
+    description:
+      "Support à vins réunit art et usage dans une création à la fois décorative...",
+    images: [
+      "/support-a-vins.jpg",
+      "/support-a-vins-detail.jpg",
+      "/support-a-vins-detail-2.jpg",
+    ],
+    details: [
+      "Création artisanale originale",
+      "Objet fonctionnel à dimension sculpturale",
+      "Papier mâché et matériaux recyclés",
+      "Pensé pour sublimer la présentation des bouteilles",
+      "Pièce décorative de caractère",
+    ],
+    dimensions: "60 × 100 cm",
+    materials: "Papier mâché, matériaux recyclés, finitions artisanales",
+    vision:
+      "Avec Support à vins, j’explore la frontière entre sculpture et objet d’usage...",
+  },
+];
