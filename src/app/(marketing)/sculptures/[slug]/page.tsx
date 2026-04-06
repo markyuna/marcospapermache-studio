@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Sparkles } from "lucide-react";
+import { ArrowLeft, Sparkles, ExternalLink } from "lucide-react";
 
 import { sculptures } from "@/data/sculptures";
 import { Container } from "@/components/layout/container";
@@ -54,7 +54,7 @@ export default async function SculpturePage({ params }: SculpturePageProps) {
   const isSold =
     sculpture.availability?.toLowerCase().includes("vendue") ?? false;
 
-  const whatsappNumber = "33662482491"; // ← reemplaza por tu número real en formato internacional, sin +
+  const whatsappNumber = "33662482491";
   const whatsappMessage = encodeURIComponent(
     isSold
       ? `Bonjour Marcos, je suis intéressé(e) par une pièce similaire à "${sculpture.title}".`
@@ -63,9 +63,17 @@ export default async function SculpturePage({ params }: SculpturePageProps) {
 
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
-  const primaryCtaLabel = isSold
-    ? "Commander une pièce similaire"
-    : "Commander cette œuvre";
+  const etsyUrl = sculpture.etsyUrl ?? null;
+  const shouldUseEtsy = Boolean(etsyUrl && !isSold);
+
+  const primaryCtaLabel = shouldUseEtsy
+    ? "Commander cette œuvre sur Etsy"
+    : isSold
+      ? "Commander une pièce similaire"
+      : "Commander cette œuvre";
+
+  const primaryCtaClass =
+    "inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-6 py-3 text-sm font-medium text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl";
 
   return (
     <main className="py-16 md:py-24">
@@ -178,14 +186,26 @@ export default async function SculpturePage({ params }: SculpturePageProps) {
               </div>
 
               <div className="mt-10 flex flex-col gap-3">
-                <a
-                  href={whatsappLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-6 py-3 text-sm font-medium text-white shadow-lg transition hover:scale-[1.03] hover:shadow-xl"
-                >
-                  {primaryCtaLabel}
-                </a>
+                {shouldUseEtsy ? (
+                  <a
+                    href={etsyUrl!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={primaryCtaClass}
+                  >
+                    {primaryCtaLabel}
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
+                ) : (
+                  <a
+                    href={whatsappLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={primaryCtaClass}
+                  >
+                    {primaryCtaLabel}
+                  </a>
+                )}
 
                 <p className="text-center text-xs text-neutral-500">
                   Réponse rapide • Devis personnalisé • Sans engagement

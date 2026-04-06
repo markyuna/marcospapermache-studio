@@ -9,6 +9,7 @@ export type Sculpture = {
   dimensions?: string;
   year?: string;
   availability?: string;
+  etsyUrl?: string;
 };
 
 export const sculptures: Sculpture[] = [
@@ -35,6 +36,7 @@ export const sculptures: Sculpture[] = [
       "Papier mâché, capsules de café Nespresso Vertuo, peinture acrylique",
     year: "2025",
     availability: "Disponible sur demande",
+    etsyUrl: "https://markpaper.etsy.com/listing/4311930608",
   },
   {
     slug: "emergences",
@@ -81,5 +83,6 @@ export const sculptures: Sculpture[] = [
     materials: "Papier mâché, matériaux recyclés, finitions artisanales",
     year: "2025",
     availability: "Disponible sur demande",
+    etsyUrl: "https://markpaper.etsy.com/listing/4351737928",
   },
 ];
