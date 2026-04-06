@@ -1,14 +1,9 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
-import type { CommandeStatus } from "@/types/commande";
-
-const ALLOWED_STATUSES: CommandeStatus[] = [
-  "nouvelle",
-  "en_cours",
-  "terminee",
-  "livree",
-  "annulee",
-];
+import {
+  isCommandeStatus,
+  type CommandeStatus,
+} from "@/lib/commandes-status";
 
 type RouteContext = {
   params: Promise<{
@@ -29,14 +24,16 @@ export async function PATCH(request: Request, context: RouteContext) {
     }
 
     const body = await request.json();
-    const status = body?.status as CommandeStatus | undefined;
+    const rawStatus = body?.status;
 
-    if (!status || !ALLOWED_STATUSES.includes(status)) {
+    if (typeof rawStatus !== "string" || !isCommandeStatus(rawStatus)) {
       return NextResponse.json(
         { error: "Statut invalide." },
         { status: 400 }
       );
     }
+
+    const status: CommandeStatus = rawStatus;
 
     const { data, error } = await supabaseAdmin
       .from("commandes")
@@ -52,7 +49,10 @@ export async function PATCH(request: Request, context: RouteContext) {
       );
     }
 
-    return NextResponse.json({ success: true, commande: data });
+    return NextResponse.json({
+      success: true,
+      commande: data,
+    });
   } catch (error) {
     console.error("PATCH /api/admin/commandes/[id]/status error:", error);
 

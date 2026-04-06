@@ -1,13 +1,7 @@
-export type CommandeStatus =
-  | "nouvelle"
-  | "en_cours"
-  | "terminee"
-  | "livree"
-  | "annulee";
+import type { CommandeStatus } from "@/lib/commandes-status";
 
 export type Commande = {
   id: number;
-  created_at: string;
   name: string;
   email: string;
   project_type: string | null;
@@ -17,4 +11,5 @@ export type Commande = {
   image_url: string | null;
   file_url: string | null;
   status: CommandeStatus | null;
+  created_at: string;
 };

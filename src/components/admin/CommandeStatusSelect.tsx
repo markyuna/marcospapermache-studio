@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import type { CommandeStatus } from "@/types/commande";
+import type { CommandeStatus } from "@/lib/commandes-status";
 import {
   COMMANDE_STATUS_OPTIONS,
   getCommandeStatusClasses,
@@ -25,20 +25,19 @@ export default function CommandeStatusSelect({
   const [isPending, startTransition] = useTransition();
 
   async function handleChange(nextStatus: CommandeStatus) {
+    const previousStatus = status;
+
     setStatus(nextStatus);
     setFeedback(null);
 
     try {
-      const response = await fetch(
-        `/api/admin/commandes/${commandeId}/status`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ status: nextStatus }),
-        }
-      );
+      const response = await fetch(`/api/admin/commandes/${commandeId}/status`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status: nextStatus }),
+      });
 
       const result = await response.json();
 
@@ -58,7 +57,7 @@ export default function CommandeStatusSelect({
           ? error.message
           : "Une erreur est survenue."
       );
-      setStatus(initialStatus ?? "nouvelle");
+      setStatus(previousStatus);
     }
   }
 
