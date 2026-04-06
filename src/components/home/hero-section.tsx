@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
 import { Container } from "@/components/layout/container";
@@ -18,8 +19,59 @@ export function HeroSection() {
   const signaturePiece =
     sculptures.find((item) => item.slug === "support-a-vin") ?? null;
 
-  const signatureImage =
-    signaturePiece?.images?.[0] ?? "/support-a-vins.jpg";
+  const signatureImage = signaturePiece?.images?.[0] ?? "/support-a-vins.jpg";
+
+  const cardRef = useRef<HTMLDivElement | null>(null);
+
+  const rotateX = useMotionValue(0);
+  const rotateY = useMotionValue(0);
+  const imageScale = useMotionValue(1);
+
+  const smoothRotateX = useSpring(rotateX, {
+    stiffness: 140,
+    damping: 18,
+    mass: 0.6,
+  });
+
+  const smoothRotateY = useSpring(rotateY, {
+    stiffness: 140,
+    damping: 18,
+    mass: 0.6,
+  });
+
+  const smoothScale = useSpring(imageScale, {
+    stiffness: 180,
+    damping: 20,
+    mass: 0.7,
+  });
+
+  const overlayY = useTransform(smoothRotateX, [-8, 8], [10, -10]);
+  const overlayX = useTransform(smoothRotateY, [-8, 8], [-10, 10]);
+
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const element = cardRef.current;
+    if (!element) return;
+
+    const rect = element.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    const percentX = (x / width - 0.5) * 2;
+    const percentY = (y / height - 0.5) * 2;
+
+    rotateY.set(percentX * 7);
+    rotateX.set(percentY * -7);
+    imageScale.set(1.045);
+  };
+
+  const handleMouseLeave = () => {
+    rotateX.set(0);
+    rotateY.set(0);
+    imageScale.set(1);
+  };
 
   return (
     <section className="relative overflow-hidden pb-24 pt-24 md:pb-32 md:pt-32 xl:pb-40 xl:pt-40">
@@ -93,53 +145,81 @@ export function HeroSection() {
             <div className="pointer-events-none absolute -left-8 top-10 hidden h-40 w-40 rounded-full bg-[#ff6a00]/10 blur-3xl lg:block" />
             <div className="pointer-events-none absolute -bottom-10 right-0 hidden h-52 w-52 rounded-full bg-[#ffd7b0]/30 blur-3xl lg:block" />
 
-            <div className="relative overflow-hidden rounded-[2rem] border border-black/5 bg-gradient-to-br from-[#fffaf5] via-[#f9efe4] to-[#f1e1cf] p-5 shadow-[0_30px_80px_rgba(180,120,60,0.12)] md:p-6">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-[1.6rem] border border-white/40 bg-[linear-gradient(180deg,#fbf3ea_0%,#f1e2d2_100%)]">
-                <Image
-                  src={signatureImage}
-                  alt={signaturePiece?.title ?? "Pièce signature"}
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 42vw"
-                  className="object-cover transition duration-700 hover:scale-[1.02]"
-                />
+            <div className="perspective[1400px]">
+              <motion.div
+                ref={cardRef}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+                style={{
+                  rotateX: smoothRotateX,
+                  rotateY: smoothRotateY,
+                  transformStyle: "preserve-3d",
+                }}
+                className="relative overflow-hidden rounded-[2rem] border border-black/5 bg-gradient-to-br from-[#fffaf5] via-[#f9efe4] to-[#f1e1cf] p-5 shadow-[0_30px_80px_rgba(180,120,60,0.12)] transition-shadow duration-500 hover:shadow-[0_36px_95px_rgba(180,120,60,0.18)] md:p-6"
+              >
+                <div className="relative aspect-[4/5] overflow-hidden rounded-[1.6rem] border border-white/40 bg-[linear-gradient(180deg,#fbf3ea_0%,#f1e2d2_100%)]">
+                  <motion.div
+                    style={{ scale: smoothScale }}
+                    className="absolute inset-0 will-change-transform"
+                  >
+                    <Image
+                      src={signatureImage}
+                      alt={signaturePiece?.title ?? "Pièce signature"}
+                      fill
+                      priority
+                      sizes="(max-width: 1024px) 100vw, 42vw"
+                      className="object-cover"
+                    />
+                  </motion.div>
 
-                <div className="absolute inset-0 bg-gradient-to-t from-[#181512]/38 via-[#181512]/10 to-transparent" />
-                <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-white/12 to-transparent" />
+                  <motion.div
+                    style={{ x: overlayX, y: overlayY }}
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#181512]/34 via-[#181512]/8 to-transparent"
+                  />
 
-                <div className="relative z-10 flex h-full items-end p-6 md:p-7">
-                  <div className="max-w-xs rounded-[1.5rem] border border-white/20 bg-gradient-to-b from-white/20 to-white/5 p-6 shadow-[0_12px_30px_rgba(80,50,20,0.10)] backdrop-blur-sm">                    
-                    <p className="text-[12px] uppercase tracking-[0.34em] text-[#683f1c]">
-                      Pièce signature
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-white/12 to-transparent" />
+
+                  <motion.div
+                    style={{
+                      x: useTransform(smoothRotateY, [-8, 8], [-8, 8]),
+                      y: useTransform(smoothRotateX, [-8, 8], [8, -8]),
+                      transformStyle: "preserve-3d",
+                    }}
+                    className="relative z-10 flex h-full items-end p-6 md:p-7"
+                  >
+                    <div className="max-w-xs rounded-[1.5rem] border border-white/30 bg-gradient-to-b from-white/20 via-white/10 to-white/5 p-6 shadow-[0_12px_40px_rgba(80,50,20,0.18)] backdrop-blur-md">
+                      <p className="text-[10px] uppercase tracking-[0.34em] text-black/55">
+                        Pièce signature
+                      </p>
+
+                      <h2 className="mt-3 text-2xl font-medium tracking-[-0.03em] text-black/90">
+                        Support à vins
+                      </h2>
+
+                      <p className="mt-3 text-sm leading-7 text-black/70">
+                        Une œuvre fonctionnelle et sculpturale pensée comme un
+                        objet de présence, entre artisanat, matière et élégance
+                        contemporaine.
+                      </p>
+                    </div>
+                  </motion.div>
+                </div>
+
+                <div className="mt-4 grid gap-3 sm:grid-cols-[1fr_auto]">
+                  <div className="rounded-2xl border border-black/5 bg-white/65 px-4 py-4 backdrop-blur-sm">
+                    <p className="text-[10px] uppercase tracking-[0.28em] text-[#a48a73]">
+                      Univers
                     </p>
-
-                    <h2 className="mt-3 text-2xl font-medium tracking-[-0.03em] text-[#181512]">
-                      Support à vins
-                    </h2>
-
-                    <p className="mt-3 text-sm leading-7 text-[#181512]]">
-                      Une œuvre fonctionnelle et sculpturale pensée comme un
-                      objet de présence, entre artisanat, matière et élégance
-                      contemporaine.
+                    <p className="mt-2 text-sm leading-6 text-[#181512]">
+                      Sculpture fonctionnelle · contemporain · pièce signature
                     </p>
                   </div>
-                </div>
-              </div>
 
-              <div className="mt-4 grid gap-3 sm:grid-cols-[1fr_auto]">
-                <div className="rounded-2xl border border-black/5 bg-white/65 px-4 py-4 backdrop-blur-sm">
-                  <p className="text-[10px] uppercase tracking-[0.28em] text-[#a48a73]">
-                    Univers
-                  </p>
-                  <p className="mt-2 text-sm leading-6 text-[#181512]">
-                    Sculpture fonctionnelle · contemporain · pièce signature
-                  </p>
+                  <div className="flex items-center justify-center rounded-2xl border border-black/5 bg-white/60 px-5 py-4 backdrop-blur-sm">
+                    <div className="h-11 w-11 rounded-full border border-[#ff6a00]/15 bg-gradient-to-br from-[#fff4ea] to-[#f3e8dc]" />
+                  </div>
                 </div>
-
-                <div className="flex items-center justify-center rounded-2xl border border-black/5 bg-white/60 px-5 py-4 backdrop-blur-sm">
-                  <div className="h-11 w-11 rounded-full border border-[#ff6a00]/15 bg-gradient-to-br from-[#fff4ea] to-[#f3e8dc]" />
-                </div>
-              </div>
+              </motion.div>
             </div>
           </motion.div>
         </div>

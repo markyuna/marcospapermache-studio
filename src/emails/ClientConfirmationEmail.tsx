@@ -42,7 +42,7 @@ export function ClientConfirmationEmail({
         <Container style={styles.container}>
           <Section style={styles.logoWrapper}>
             <Img
-              src="https://www.marcospapermache.com/logo.png"
+              src="https://auqffceixjyogdqzlejf.supabase.co/storage/v1/object/public/branding/logo.png"
               alt="Marcos Papermache"
               width="120"
               style={styles.logo}

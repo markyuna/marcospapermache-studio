@@ -37,7 +37,7 @@ function SculptureCard({
           alt={title}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-          className="object-cover transition duration-700 group-hover:scale-[1.045]"
+          className="object-cover transition duration-700 ease-out group-hover:scale-[1.06]"
           priority={index === 0}
         />
 
@@ -80,7 +80,19 @@ function SculptureCard({
 }
 
 export function FeaturedSection() {
-  const featuredSculptures = sculptures.slice(0, 3);
+  /**
+   * Reemplaza estos slugs por los slugs reales
+   * de tus 3 lámparas en papier mâché.
+   */
+  const featuredLampSlugs = [
+    "eveil-lumineux",
+    "ondulation-lumineuse",
+    "lampe-totem",
+  ];
+
+  const featuredSculptures = featuredLampSlugs
+    .map((slug) => sculptures.find((sculpture) => sculpture.slug === slug))
+    .filter(Boolean);
 
   return (
     <section className="relative overflow-hidden py-24 md:py-32">
@@ -101,9 +113,9 @@ export function FeaturedSection() {
             </h2>
 
             <p className="mt-5 max-w-xl text-base leading-8 text-[#6c5d50] md:text-lg">
-              Une sélection de pièces où la matière, la lumière et le geste
-              artisanal dialoguent dans une esthétique contemporaine, sensible
-              et singulière.
+              Trois lampes sculpturales en papier mâché où la matière, la lumière
+              et le geste artisanal dialoguent dans une esthétique contemporaine,
+              sensible et singulière.
             </p>
           </div>
 
@@ -117,17 +129,21 @@ export function FeaturedSection() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {featuredSculptures.map((artwork, index) => (
-            <SculptureCard
-              key={artwork.slug}
-              slug={artwork.slug}
-              title={artwork.title}
-              subtitle={artwork.subtitle}
-              image={artwork.images[0]}
-              availability={artwork.availability}
-              index={index}
-            />
-          ))}
+          {featuredSculptures.map((artwork, index) => {
+            if (!artwork) return null;
+
+            return (
+              <SculptureCard
+                key={artwork.slug}
+                slug={artwork.slug}
+                title={artwork.title}
+                subtitle={artwork.subtitle}
+                image={artwork.images[0]}
+                availability={artwork.availability}
+                index={index}
+              />
+            );
+          })}
         </div>
       </Container>
     </section>
