@@ -4,16 +4,54 @@ import { resend, getResendFromEmail, getResendToEmail } from "@/lib/resend";
 import { AdminNotificationEmail } from "@/emails/AdminNotificationEmail";
 import { ClientConfirmationEmail } from "@/emails/ClientConfirmationEmail";
 
+/**
+ * Helpers
+ */
+const getFormValue = (value: FormDataEntryValue | null) =>
+  typeof value === "string" ? value.trim() : "";
+
+const getOptionalFormValue = (value: FormDataEntryValue | null) =>
+  typeof value === "string" ? value.trim() || null : null;
+
+const createSafeFileName = (originalName: string) => {
+  const ext = originalName.split(".").pop() || "bin";
+  return `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+};
+
+async function uploadFileToSupabase(file: File) {
+  const safeFileName = createSafeFileName(file.name);
+
+  const arrayBuffer = await file.arrayBuffer();
+  const fileBuffer = Buffer.from(arrayBuffer);
+
+  const { error } = await supabaseAdmin.storage
+    .from("commandes")
+    .upload(safeFileName, fileBuffer, {
+      contentType: file.type || "application/octet-stream",
+      upsert: false,
+    });
+
+  if (error) {
+    throw new Error(`Supabase upload failed: ${error.message}`);
+  }
+
+  const { data } = supabaseAdmin.storage
+    .from("commandes")
+    .getPublicUrl(safeFileName);
+
+  return data.publicUrl;
+}
+
+/**
+ * Route
+ */
 export async function POST(request: Request) {
   try {
     const formData = await request.formData();
 
-    const getFormValue = (value: FormDataEntryValue | null) =>
-      typeof value === "string" ? value.trim() : "";
-
-    const getOptionalFormValue = (value: FormDataEntryValue | null) =>
-      typeof value === "string" ? value.trim() || null : null;
-
+    /**
+     * Extract data
+     */
     const name = getFormValue(formData.get("name"));
     const email = getFormValue(formData.get("email"));
     const projectType = getOptionalFormValue(formData.get("projectType"));
@@ -22,6 +60,9 @@ export async function POST(request: Request) {
     const message = getFormValue(formData.get("message"));
     const imageUrl = getOptionalFormValue(formData.get("imageUrl"));
 
+    /**
+     * Validation
+     */
     if (!name || !email || !message) {
       return NextResponse.json(
         { error: "Les champs nom, email et message sont obligatoires." },
@@ -29,119 +70,151 @@ export async function POST(request: Request) {
       );
     }
 
+    /**
+     * File upload (optional)
+     */
     let fileUrl: string | null = null;
-
     const file = formData.get("file");
-    if (file && file instanceof File && file.size > 0) {
-      const fileExt = file.name.split(".").pop() || "bin";
-      const safeFileName = `${Date.now()}-${Math.random()
-        .toString(36)
-        .slice(2)}.${fileExt}`;
 
-      const arrayBuffer = await file.arrayBuffer();
-      const fileBuffer = Buffer.from(arrayBuffer);
+    if (file instanceof File && file.size > 0) {
+      try {
+        fileUrl = await uploadFileToSupabase(file);
+      } catch (uploadError) {
+        console.error("Upload error:", uploadError);
 
-      const { error: uploadError } = await supabaseAdmin.storage
-        .from("commandes")
-        .upload(safeFileName, fileBuffer, {
-          contentType: file.type || "application/octet-stream",
-          upsert: false,
-        });
-
-      if (uploadError) {
-        console.error("Supabase upload error:", uploadError);
         return NextResponse.json(
-          { error: "Erreur lors de l’envoi du fichier." },
+          {
+            error: "Erreur lors de l’envoi du fichier.",
+            details:
+              uploadError instanceof Error
+                ? uploadError.message
+                : "Unknown upload error",
+          },
           { status: 500 }
         );
       }
-
-      const { data: publicUrlData } = supabaseAdmin.storage
-        .from("commandes")
-        .getPublicUrl(safeFileName);
-
-      fileUrl = publicUrlData.publicUrl;
     }
 
-    const { data: insertedCommande, error: insertError } = await supabaseAdmin
-      .from("commandes")
-      .insert([
-        {
-          name,
-          email,
-          project_type: projectType,
-          dimensions,
-          budget,
-          message,
-          image_url: imageUrl,
-          file_url: fileUrl,
-        },
-      ])
-      .select()
-      .single();
+    /**
+     * Preview image for emails
+     * Priority: uploaded file > generated image URL
+     */
+    const previewImage = fileUrl || imageUrl;
+
+    /**
+     * Insert into Supabase
+     */
+    const { data: insertedCommande, error: insertError } =
+      await supabaseAdmin
+        .from("commandes")
+        .insert([
+          {
+            name,
+            email,
+            project_type: projectType,
+            dimensions,
+            budget,
+            message,
+            image_url: imageUrl,
+            file_url: fileUrl,
+            // status: "pending", // activa esto si ya tienes la columna en Supabase
+          },
+        ])
+        .select()
+        .single();
 
     if (insertError) {
       console.error("Supabase insert error:", insertError);
+
       return NextResponse.json(
-        { error: "Erreur lors de l’enregistrement de la demande." },
+        {
+          error: "Erreur lors de l’enregistrement de la demande.",
+          details: insertError.message,
+        },
         { status: 500 }
       );
     }
 
+    /**
+     * Send emails
+     */
     const from = getResendFromEmail();
     const adminTo = getResendToEmail();
 
-    const adminEmailResult = await resend.emails.send({
-      from,
-      to: adminTo,
-      subject: `Nouvelle demande sur mesure - ${name}`,
-      react: AdminNotificationEmail({
-        name,
-        email,
-        projectType,
-        dimensions,
-        budget,
-        message,
-        imageUrl,
-        fileUrl,
-      }),
-    });
+    let adminSent = false;
+    let clientSent = false;
 
-    if (adminEmailResult.error) {
-      console.error("Resend admin email error:", adminEmailResult.error);
+    try {
+      const adminEmail = await resend.emails.send({
+        from,
+        to: adminTo,
+        subject: `Nouvelle demande sur mesure | ${name}`,
+        react: AdminNotificationEmail({
+          name,
+          email,
+          message,
+          projectType,
+          dimensions,
+          budget,
+          imageUrl: previewImage,
+          fileUrl,
+        }),
+      });
+
+      adminSent = !adminEmail.error;
+
+      if (adminEmail.error) {
+        console.error("Admin email error:", adminEmail.error);
+      }
+    } catch (err) {
+      console.error("Admin email exception:", err);
     }
 
-    const clientEmailResult = await resend.emails.send({
-      from,
-      to: email,
-      subject: "Nous avons bien reçu votre demande",
-      react: ClientConfirmationEmail({
-        name,
-        projectType,
-        dimensions,
-        budget,
-        message,
-      }),
-    });
+    try {
+      const clientEmail = await resend.emails.send({
+        from,
+        to: email,
+        subject: "Nous avons bien reçu votre demande | Marcos Papermache",
+        react: ClientConfirmationEmail({
+          name,
+          message,
+          projectType,
+          dimensions,
+          budget,
+          imageUrl: previewImage,
+          fileUrl,
+        }),
+      });
 
-    if (clientEmailResult.error) {
-      console.error("Resend client email error:", clientEmailResult.error);
+      clientSent = !clientEmail.error;
+
+      if (clientEmail.error) {
+        console.error("Client email error:", clientEmail.error);
+      }
+    } catch (err) {
+      console.error("Client email exception:", err);
     }
 
+    /**
+     * Success response
+     */
     return NextResponse.json({
       success: true,
       message: "Demande envoyée avec succès.",
       commande: insertedCommande,
       emails: {
-        adminSent: !adminEmailResult.error,
-        clientSent: !clientEmailResult.error,
+        adminSent,
+        clientSent,
       },
     });
   } catch (error) {
-    console.error("API route error:", error);
+    console.error("API route fatal error:", error);
 
     return NextResponse.json(
-      { error: "Une erreur inattendue est survenue." },
+      {
+        error: "Une erreur inattendue est survenue.",
+        details: error instanceof Error ? error.message : "Unknown error",
+      },
       { status: 500 }
     );
   }

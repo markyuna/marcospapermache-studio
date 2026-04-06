@@ -1,11 +1,12 @@
-import * as React from "react";
 import {
   Body,
+  Button,
   Container,
   Head,
   Heading,
   Hr,
   Html,
+  Img,
   Preview,
   Section,
   Text,
@@ -13,134 +14,225 @@ import {
 
 type ClientConfirmationEmailProps = {
   name: string;
+  imageUrl?: string | null;
   projectType?: string | null;
   dimensions?: string | null;
   budget?: string | null;
-  message: string;
+  message?: string | null;
+  fileUrl?: string | null;
 };
 
 export function ClientConfirmationEmail({
   name,
+  imageUrl,
   projectType,
   dimensions,
   budget,
   message,
+  fileUrl,
 }: ClientConfirmationEmailProps) {
+  const previewImage = fileUrl || imageUrl;
+
   return (
     <Html>
       <Head />
-      <Preview>Nous avons bien reçu votre demande</Preview>
-      <Body style={main}>
-        <Container style={container}>
-          <Heading style={h1}>Merci pour votre demande</Heading>
+      <Preview>Nous avons bien reçu votre demande, {name}</Preview>
 
-          <Text style={paragraph}>
-            Bonjour {name},
-          </Text>
-
-          <Text style={paragraph}>
-            Nous avons bien reçu votre demande de création sur mesure.
-            Merci pour votre intérêt envers l’univers de Marcos Papermache.
-          </Text>
-
-          <Section style={card}>
-            <Text style={label}>Type de projet</Text>
-            <Text style={value}>{projectType || "Non renseigné"}</Text>
-
-            <Text style={label}>Dimensions</Text>
-            <Text style={value}>{dimensions || "Non renseigné"}</Text>
-
-            <Text style={label}>Budget</Text>
-            <Text style={value}>{budget || "Non renseigné"}</Text>
-
-            <Text style={label}>Votre message</Text>
-            <Text style={messageBox}>{message}</Text>
+      <Body style={styles.body}>
+        <Container style={styles.container}>
+          <Section style={styles.logoWrapper}>
+            <Img
+              src="https://www.marcospapermache.com/logo.png"
+              alt="Marcos Papermache"
+              width="120"
+              style={styles.logo}
+            />
           </Section>
 
-          <Hr style={hr} />
+          <Section style={styles.hero}>
+            <Text style={styles.eyebrow}>DEMANDE REÇUE</Text>
+            <Heading style={styles.heading}>
+              Merci pour votre demande ✨
+            </Heading>
+            <Text style={styles.text}>
+              Bonjour {name}, votre projet a bien été reçu. Je vais l’étudier
+              avec attention et revenir vers vous dès que possible.
+            </Text>
+          </Section>
 
-          <Text style={paragraph}>
-            Nous reviendrons vers vous prochainement pour étudier votre projet.
+          {previewImage && (
+            <Section style={styles.imageSection}>
+              <Img
+                src={previewImage}
+                alt="Aperçu du projet"
+                style={styles.image}
+              />
+            </Section>
+          )}
+
+          {(projectType || dimensions || budget) && (
+            <Section style={styles.card}>
+              <Text style={styles.cardTitle}>Récapitulatif de votre demande</Text>
+
+              {projectType && (
+                <Text style={styles.infoLine}>
+                  <strong>Type de projet :</strong> {projectType}
+                </Text>
+              )}
+
+              {dimensions && (
+                <Text style={styles.infoLine}>
+                  <strong>Dimensions :</strong> {dimensions}
+                </Text>
+              )}
+
+              {budget && (
+                <Text style={styles.infoLine}>
+                  <strong>Budget :</strong> {budget}
+                </Text>
+              )}
+            </Section>
+          )}
+
+          {message && (
+            <Section style={styles.messageBox}>
+              <Text style={styles.cardTitle}>Votre message</Text>
+              <Text style={styles.messageText}>{message}</Text>
+            </Section>
+          )}
+
+          <Section style={styles.ctaWrapper}>
+            <Button
+              href="https://www.marcospapermache.com"
+              style={styles.button}
+            >
+              Visiter le site
+            </Button>
+          </Section>
+
+          <Hr style={styles.hr} />
+
+          <Text style={styles.text}>
+            Chaque création est pensée comme une pièce unique, réalisée à la
+            main avec soin et sensibilité artistique.
           </Text>
 
-          <Text style={signature}>
-            Marcos Papermache
-            <br />
-            Sculpture contemporaine & créations artistiques sur mesure
-          </Text>
+          <Text style={styles.signature}>— Marcos Papermache</Text>
         </Container>
       </Body>
     </Html>
   );
 }
 
-const main = {
-  backgroundColor: "#fffaf5",
-  fontFamily: "Arial, sans-serif",
-  padding: "24px 0",
-};
-
-const container = {
-  maxWidth: "640px",
-  margin: "0 auto",
-  backgroundColor: "#ffffff",
-  border: "1px solid #f1e5d8",
-  borderRadius: "16px",
-  padding: "32px",
-};
-
-const card = {
-  backgroundColor: "#fffdf9",
-  border: "1px solid #f3e8dc",
-  borderRadius: "12px",
-  padding: "20px",
-};
-
-const h1 = {
-  fontSize: "28px",
-  lineHeight: "1.2",
-  color: "#1f1f1f",
-  marginBottom: "24px",
-};
-
-const paragraph = {
-  fontSize: "15px",
-  color: "#2b2b2b",
-  lineHeight: "1.7",
-};
-
-const label = {
-  fontSize: "12px",
-  textTransform: "uppercase" as const,
-  letterSpacing: "0.08em",
-  color: "#b06a2b",
-  marginBottom: "4px",
-  marginTop: "16px",
-};
-
-const value = {
-  fontSize: "15px",
-  color: "#2b2b2b",
-  margin: 0,
-};
-
-const messageBox = {
-  fontSize: "15px",
-  color: "#2b2b2b",
-  backgroundColor: "#fff7ef",
-  border: "1px solid #f2dfca",
-  borderRadius: "10px",
-  padding: "14px",
-  marginTop: "8px",
-};
-
-const hr = {
-  borderColor: "#f0e3d6",
-  margin: "24px 0",
-};
-
-const signature = {
-  fontSize: "14px",
-  color: "#5a5a5a",
-  lineHeight: "1.7",
+const styles = {
+  body: {
+    margin: 0,
+    padding: "32px 16px",
+    backgroundColor: "#f6f2ed",
+    fontFamily: "Arial, Helvetica, sans-serif",
+    color: "#1f1f1f",
+  },
+  container: {
+    maxWidth: "620px",
+    margin: "0 auto",
+    backgroundColor: "#ffffff",
+    borderRadius: "18px",
+    padding: "32px 28px",
+    boxShadow: "0 4px 24px rgba(0,0,0,0.06)",
+  },
+  logoWrapper: {
+    textAlign: "center" as const,
+    marginBottom: "24px",
+  },
+  logo: {
+    margin: "0 auto",
+  },
+  hero: {
+    textAlign: "center" as const,
+    marginBottom: "28px",
+  },
+  eyebrow: {
+    margin: "0 0 10px",
+    fontSize: "12px",
+    letterSpacing: "2px",
+    textTransform: "uppercase" as const,
+    color: "#b96a2f",
+  },
+  heading: {
+    margin: "0 0 14px",
+    fontSize: "28px",
+    lineHeight: "36px",
+    fontWeight: "700",
+    color: "#1f1f1f",
+  },
+  text: {
+    margin: "0 0 14px",
+    fontSize: "14px",
+    lineHeight: "24px",
+    color: "#5f5a55",
+  },
+  imageSection: {
+    marginBottom: "24px",
+  },
+  image: {
+    width: "100%",
+    borderRadius: "14px",
+    display: "block",
+  },
+  card: {
+    backgroundColor: "#fbf8f4",
+    borderRadius: "14px",
+    padding: "18px",
+    marginBottom: "18px",
+  },
+  cardTitle: {
+    margin: "0 0 12px",
+    fontSize: "15px",
+    fontWeight: "700",
+    color: "#1f1f1f",
+  },
+  infoLine: {
+    margin: "0 0 10px",
+    fontSize: "14px",
+    lineHeight: "22px",
+    color: "#3c3a37",
+  },
+  messageBox: {
+    backgroundColor: "#fff4ea",
+    borderRadius: "14px",
+    padding: "18px",
+    marginBottom: "20px",
+  },
+  messageText: {
+    margin: 0,
+    fontSize: "14px",
+    lineHeight: "24px",
+    color: "#3c3a37",
+    whiteSpace: "pre-line" as const,
+  },
+  ctaWrapper: {
+    textAlign: "center" as const,
+    marginBottom: "24px",
+    marginTop: "8px",
+  },
+  button: {
+    backgroundColor: "#b96a2f",
+    color: "#ffffff",
+    padding: "12px 20px",
+    borderRadius: "999px",
+    fontSize: "14px",
+    textDecoration: "none",
+    display: "inline-block",
+  },
+  hr: {
+    borderColor: "#ece4db",
+    margin: "24px 0",
+  },
+  signature: {
+    margin: "0",
+    fontSize: "14px",
+    lineHeight: "22px",
+    color: "#5f5a55",
+    fontStyle: "italic" as const,
+  },
 };
