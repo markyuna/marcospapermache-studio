@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
+import { ArrowRight } from "lucide-react";
 
 type SculptureCardProps = {
   slug: string;
@@ -15,56 +16,65 @@ export default function SculptureCard({
   title,
   availability,
 }: SculptureCardProps) {
-  const isSold =
-    availability?.toLowerCase().includes("vendue") ?? false;
+  const normalizedAvailability = availability?.toLowerCase() ?? "";
+  const isSold = normalizedAvailability.includes("vendue");
+  const isAvailable =
+    normalizedAvailability.includes("disponible") && !isSold;
 
   return (
     <Link
       href={`/sculptures/${slug}`}
-      className="group block overflow-hidden rounded-3xl border border-black/5 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+      className="group relative block overflow-hidden rounded-[2rem] border border-black/5 bg-white/80 shadow-[0_16px_50px_rgba(60,35,10,0.06)] backdrop-blur-sm transition-all duration-500 hover:-translate-y-1.5 hover:border-[#ff6a00]/15 hover:shadow-[0_26px_70px_rgba(180,120,60,0.14)]"
     >
-      {/* IMAGE */}
-      <div className="relative aspect-[4/5] w-full overflow-hidden">
+      <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[#ff6a00]/25 to-transparent opacity-0 transition duration-500 group-hover:opacity-100" />
+
+      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-b-[1.4rem]">
         <Image
           src={src}
           alt={title}
           fill
-          className="object-cover transition duration-700 group-hover:scale-105"
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+          className="object-cover transition duration-700 ease-out group-hover:scale-[1.08] group-hover:brightness-110"
         />
 
-        {/* OVERLAY */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#181512]/45 via-[#181512]/10 to-transparent transition duration-500 group-hover:from-[#181512]/28" />
 
-        {/* BADGE */}
-        <div className="absolute top-4 left-4">
+        <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-700 group-hover:opacity-100">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,200,120,0.24),transparent_60%)]" />
+        </div>
+
+        <div className="absolute left-4 top-4">
           <span
             className={clsx(
-              "rounded-full px-3 py-1 text-xs font-medium backdrop-blur",
+              "rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.18em] backdrop-blur-md",
               isSold
-                ? "bg-black/70 text-white"
-                : "bg-white/90 text-neutral-900"
+                ? "border-white/15 bg-black/65 text-white"
+                : "border-white/60 bg-white/85 text-[#5f4632]"
             )}
           >
-            {isSold ? "Vendue" : "Disponible"}
+            {isSold ? "Vendue" : isAvailable ? "Disponible" : "Sur demande"}
           </span>
         </div>
 
-        {/* HOVER CTA */}
-        <div className="absolute bottom-4 left-4 right-4 opacity-0 transition duration-300 group-hover:opacity-100">
-          <div className="rounded-full bg-white/90 px-4 py-2 text-center text-sm font-medium text-neutral-900 backdrop-blur">
+        <div className="absolute inset-x-4 bottom-4 translate-y-3 opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/88 px-4 py-2 text-sm font-medium text-neutral-900 shadow-sm backdrop-blur">
             Découvrir
+            <ArrowRight className="h-4 w-4 transition duration-300 group-hover:translate-x-0.5" />
           </div>
         </div>
       </div>
 
-      {/* CONTENT */}
       <div className="p-5">
-        <h3 className="text-lg font-medium text-neutral-900">{title}</h3>
+        <h3 className="text-xl font-medium tracking-[-0.02em] text-[#181512] transition duration-300 group-hover:text-[#c65400]">
+          {title}
+        </h3>
 
-        <p className="mt-2 text-sm text-neutral-500">
+        <p className="mt-2 text-sm leading-6 text-[#6c5d50]">
           {isSold
-            ? "Voir la pièce et commander similaire"
-            : "Disponible — voir les détails"}
+            ? "Voir la pièce et découvrir une création similaire."
+            : isAvailable
+              ? "Disponible — voir les détails de la pièce."
+              : "Création disponible sur demande."}
         </p>
       </div>
     </Link>

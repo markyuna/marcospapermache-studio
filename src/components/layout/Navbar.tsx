@@ -9,6 +9,7 @@ import clsx from "clsx";
 
 const navLinks = [
   { href: "/", label: "Accueil" },
+  { href: "/about", label: "À propos" },
   { href: "/sculptures", label: "Sculptures" },
   { href: "/creations-sur-mesure", label: "Créations sur mesure" },
   { href: "/experience-ia", label: "Expérience IA" },
@@ -36,7 +37,7 @@ export default function Navbar() {
           className="group relative flex shrink-0 items-center"
           aria-label="Marcos Papermache - Accueil"
         >
-          <div className="relative h-20 w-40 sm:h-24 sm:w-48 lg:h-28 lg:w-56 xl:h-30 xl:w-60">
+          <div className="relative h-20 w-40 sm:h-24 sm:w-48 lg:h-28 lg:w-56">
             <Image
               src="/logo.png"
               alt="Marcos Papermache"
@@ -100,7 +101,7 @@ export default function Navbar() {
         id="mobile-menu"
         className={clsx(
           "overflow-hidden border-t border-black/5 bg-white/95 backdrop-blur-2xl transition-all duration-300 lg:hidden",
-          open ? "max-h-[420px] opacity-100" : "max-h-0 opacity-0"
+          open ? "max-h-[460px] opacity-100" : "max-h-0 opacity-0"
         )}
       >
         <nav className="mx-auto flex w-full max-w-7xl flex-col px-5 py-5 sm:px-6">
