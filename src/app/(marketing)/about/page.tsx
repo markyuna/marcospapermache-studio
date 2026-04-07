@@ -91,8 +91,8 @@ export default function AboutPage() {
                 Son parcours a commencé très jeune à travers des créations
                 faites à la main en carton et en papier, vendues sur les marchés
                 touristiques de Cuba. Cette sensibilité première pour l’objet
-                artisanal s’est transformée au fil du temps en une recherche plus
-                sculpturale, plus contemporaine, plus personnelle.
+                artisanal s’est transformée au fil du temps en une recherche
+                plus sculpturale, plus contemporaine, plus personnelle.
               </p>
 
               <p>
@@ -170,31 +170,96 @@ export default function AboutPage() {
             <div className="absolute right-0 top-0 h-48 w-48 rounded-full bg-[#ffb36b]/15 blur-3xl" />
             <div className="absolute bottom-0 left-0 h-48 w-48 rounded-full bg-[#ffd8ae]/20 blur-3xl" />
 
-            <div className="relative flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-              <div className="max-w-2xl">
-                <p className="text-[10px] uppercase tracking-[0.34em] text-[#b07a52] md:text-[11px]">
-                  Création sur mesure
-                </p>
+            <div className="relative grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+              <div className="max-w-xl">
+                <div className="inline-flex items-center rounded-full border border-[#ecdccf] bg-white/70 px-4 py-2 backdrop-blur-sm">
+                  <p className="text-[10px] uppercase tracking-[0.34em] text-[#b07a52] md:text-[11px]">
+                    Chez nos clients
+                  </p>
+                </div>
 
-                <h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-[#1b1713] md:text-5xl">
-                  Imaginer une pièce unique pour votre intérieur
+                <h2 className="mt-5 text-3xl font-semibold tracking-[-0.04em] text-[#1b1713] md:text-5xl">
+                  Mes sculptures dans des intérieurs réels
                 </h2>
 
                 <p className="mt-5 text-base leading-8 text-[#6c5d50] md:text-lg">
-                  Sculpture murale, lampe sculpturale ou objet fonctionnel :
-                  certaines créations peuvent être pensées sur mesure, en
-                  dialogue avec votre espace, votre sensibilité et votre
-                  univers.
+                  Découvrez comment certaines pièces trouvent leur place dans
+                  des espaces de vie réels. Chaque création dialogue avec son
+                  environnement et devient une présence singulière dans la
+                  maison.
                 </p>
+
+                <p className="mt-4 text-base leading-8 text-[#6c5d50] md:text-lg">
+                  Sculptures murales, lampes sculpturales ou objets
+                  fonctionnels&nbsp;: chaque œuvre s’intègre de manière unique à
+                  l’univers de ceux qui la choisissent.
+                </p>
+
+                <Link
+                  href="/creations-sur-mesure"
+                  className="group mt-8 inline-flex w-fit items-center gap-2 rounded-full border border-[#e6d4c2] bg-white/85 px-5 py-3 text-sm font-medium text-[#4f4338] shadow-[0_10px_30px_rgba(0,0,0,0.05)] backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-[#ff6a00]/30 hover:text-[#c65400]"
+                >
+                  Découvrir les créations sur mesure
+                  <ArrowRight className="h-4 w-4 transition duration-300 group-hover:translate-x-1" />
+                </Link>
               </div>
 
-              <Link
-                href="/creations-sur-mesure"
-                className="group inline-flex w-fit items-center gap-2 rounded-full border border-[#e6d4c2] bg-white/85 px-5 py-3 text-sm font-medium text-[#4f4338] shadow-[0_10px_30px_rgba(0,0,0,0.05)] backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-[#ff6a00]/30 hover:text-[#c65400]"
-              >
-                Découvrir les créations sur mesure
-                <ArrowRight className="h-4 w-4 transition duration-300 group-hover:translate-x-1" />
-              </Link>
+              <div className="grid grid-cols-12 gap-4 md:gap-5">
+                <article className="group relative col-span-6 overflow-hidden rounded-[1.8rem] border border-white/60 bg-white/50 shadow-[0_16px_40px_rgba(0,0,0,0.06)] backdrop-blur-sm">
+                  <div className="relative aspect-[4/5]">
+                    <Image
+                      src="/home3.jpg"
+                      alt="Sculpture de Marcos Suarez intégrée dans un salon"
+                      fill
+                      className="object-cover transition duration-700 ease-out group-hover:scale-[1.05]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#181512]/30 via-transparent to-transparent" />
+                    <div className="absolute left-4 top-4 rounded-full border border-white/40 bg-white/80 px-3 py-1 text-[10px] uppercase tracking-[0.24em] text-[#8f6846] backdrop-blur-md">
+                      Salon
+                    </div>
+                  </div>
+                </article>
+
+                <article className="group relative col-span-6 overflow-hidden rounded-[1.8rem] border border-white/60 bg-white/50 shadow-[0_16px_40px_rgba(0,0,0,0.06)] backdrop-blur-sm md:mt-10">
+                  <div className="relative aspect-[4/5]">
+                    <Image
+                      src="/home2.jpg"
+                      alt="Lampe sculpturale de Marcos Suarez dans un intérieur"
+                      fill
+                      className="object-cover transition duration-700 ease-out group-hover:scale-[1.05]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#181512]/30 via-transparent to-transparent" />
+                    <div className="absolute left-4 top-4 rounded-full border border-white/40 bg-white/80 px-3 py-1 text-[10px] uppercase tracking-[0.24em] text-[#8f6846] backdrop-blur-md">
+                      Mural
+                    </div>
+                  </div>
+                </article>
+
+                <article className="group relative col-span-12 overflow-hidden rounded-[2rem] border border-white/60 bg-white/50 shadow-[0_18px_45px_rgba(0,0,0,0.06)] backdrop-blur-sm">
+                  <div className="relative aspect-[16/7]">
+                    <Image
+                      src="/home1.jpg"
+                      alt="Œuvre de Marcos Suarez intégrée dans un intérieur contemporain"
+                      fill
+                      className="object-cover transition duration-700 ease-out group-hover:scale-[1.04]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#181512]/35 via-transparent to-transparent" />
+
+                    <div className="absolute left-4 top-4 rounded-full border border-white/40 bg-white/80 px-3 py-1 text-[10px] uppercase tracking-[0.24em] text-[#8f6846] backdrop-blur-md">
+                      Intérieur contemporain
+                    </div>
+
+                    <div className="absolute inset-x-5 bottom-5 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+                      <div className="max-w-lg">
+                        <p className="text-sm font-medium text-white/95 md:text-base">
+                          Chaque pièce transforme l’espace et crée une présence
+                          artistique dans le quotidien.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </div>
             </div>
           </div>
         </Container>
