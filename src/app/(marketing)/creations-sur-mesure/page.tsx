@@ -55,7 +55,7 @@ export default function CustomCreationPage() {
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 rounded-full bg-[#181512] px-6 py-3 text-sm font-medium text-white transition duration-300 hover:bg-[#2a241f]"
+                className="inline-flex items-center gap-2 rounded-full bg-[#ef8316] px-6 py-3 text-sm font-medium text-white transition duration-300 hover:bg-[#af6020]"
               >
                 Demander une création
                 <ArrowRight className="h-4 w-4" />

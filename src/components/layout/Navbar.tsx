@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import clsx from "clsx";
@@ -20,9 +20,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
+  const closeMenu = () => setOpen(false);
 
   const isActiveLink = (href: string) => {
     if (href === "/") return pathname === "/";
@@ -34,6 +32,7 @@ export default function Navbar() {
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-5 py-3 sm:px-6 lg:px-10">
         <Link
           href="/"
+          onClick={closeMenu}
           className="group relative flex shrink-0 items-center"
           aria-label="Marcos Papermache - Accueil"
         >
@@ -56,6 +55,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
+                onClick={closeMenu}
                 className={clsx(
                   "group relative inline-flex items-center text-[15px] font-medium tracking-[0.01em] transition-colors duration-300",
                   isActive
@@ -79,6 +79,7 @@ export default function Navbar() {
 
           <Link
             href="/contact"
+            onClick={closeMenu}
             className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-orange-400 via-amber-300 to-orange-200 px-5 py-3 text-sm font-semibold text-neutral-950 shadow-[0_10px_30px_rgba(251,146,60,0.22)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_36px_rgba(251,146,60,0.28)]"
           >
             Commander
@@ -112,6 +113,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
+                onClick={closeMenu}
                 className={clsx(
                   "rounded-2xl px-4 py-3 text-base font-medium transition",
                   isActive
@@ -126,6 +128,7 @@ export default function Navbar() {
 
           <Link
             href="/contact"
+            onClick={closeMenu}
             className="mt-4 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-orange-400 via-amber-300 to-orange-200 px-6 py-3 text-base font-semibold text-neutral-950 shadow-[0_10px_30px_rgba(251,146,60,0.22)] transition-all duration-300 hover:-translate-y-0.5"
           >
             Commander
