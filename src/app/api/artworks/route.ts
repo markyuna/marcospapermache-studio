@@ -2,22 +2,49 @@ import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import slugify from "slugify";
 
+type ArtworkInsert = {
+  title: string;
+  slug: string;
+  description: string | null;
+  category: string | null;
+  dimensions: string | null;
+  year: number | null;
+};
+
+type UploadedImageInsert = {
+  artwork_id: number | string;
+  storage_path: string;
+  image_url: string;
+  position: number;
+  is_cover: boolean;
+};
+
+function getErrorMessage(error: unknown): string {
+  if (error instanceof Error) return error.message;
+  return "Erreur inconnue";
+}
+
 export async function POST(request: Request) {
   try {
     const formData = await request.formData();
 
-    const get = (key: string) => {
+    const get = (key: string): string => {
       const value = formData.get(key);
       return typeof value === "string" ? value.trim() : "";
     };
 
     const title = get("title");
-    const description = get("description");
-    const category = get("category");
-    const dimensions = get("dimensions");
-    const year = Number(get("year")) || null;
+    const description = get("description") || null;
+    const category = get("category") || null;
+    const dimensions = get("dimensions") || null;
 
-    const files = formData.getAll("images") as File[];
+    const yearValue = get("year");
+    const parsedYear = Number(yearValue);
+    const year = yearValue && !Number.isNaN(parsedYear) ? parsedYear : null;
+
+    const files = formData
+      .getAll("images")
+      .filter((file): file is File => file instanceof File && file.size > 0);
 
     if (!title || files.length === 0) {
       return NextResponse.json(
@@ -28,31 +55,30 @@ export async function POST(request: Request) {
 
     const slug = slugify(title, { lower: true, strict: true });
 
-    // 1. Crear artwork
+    const artworkPayload: ArtworkInsert = {
+      title,
+      slug,
+      description,
+      category,
+      dimensions,
+      year,
+    };
+
     const { data: artwork, error: artworkError } = await supabaseAdmin
       .from("artworks")
-      .insert({
-        title,
-        slug,
-        description,
-        category,
-        dimensions,
-        year,
-      })
-      .select()
+      .insert(artworkPayload)
+      .select("id")
       .single();
 
     if (artworkError) {
       throw new Error(artworkError.message);
     }
 
-    const uploadedImages = [];
+    const uploadedImages: UploadedImageInsert[] = [];
 
-    // 2. Subir imágenes
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-
-      const filePath = `${slug}/${Date.now()}-${i}-${file.name}`;
+    for (const [index, file] of files.entries()) {
+      const safeFileName = file.name.replace(/\s+/g, "-");
+      const filePath = `${slug}/${Date.now()}-${index}-${safeFileName}`;
 
       const { error: uploadError } = await supabaseAdmin.storage
         .from("artworks")
@@ -73,12 +99,11 @@ export async function POST(request: Request) {
         artwork_id: artwork.id,
         storage_path: filePath,
         image_url: publicUrlData.publicUrl,
-        position: i,
-        is_cover: i === 0,
+        position: index,
+        is_cover: index === 0,
       });
     }
 
-    // 3. Guardar imágenes en DB
     const { error: imagesError } = await supabaseAdmin
       .from("artwork_images")
       .insert(uploadedImages);
@@ -88,9 +113,9 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
-      { error: error.message || "Erreur inconnue" },
+      { error: getErrorMessage(error) },
       { status: 500 }
     );
   }

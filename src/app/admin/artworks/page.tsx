@@ -1,0 +1,425 @@
+// src/app/admin/artworks/page.tsx
+import Image from "next/image";
+import Link from "next/link";
+import { supabaseAdmin } from "@/lib/supabase";
+
+type ArtworkImage = {
+  image_url: string;
+  is_cover: boolean;
+  position: number;
+};
+
+type Artwork = {
+  id: number;
+  title: string;
+  slug: string;
+  category: string | null;
+  year: number | null;
+  subtitle: string | null;
+  materials: string | null;
+  availability: string | null;
+  etsy_url: string | null;
+  price: string | null;
+  is_featured: boolean | null;
+  artwork_images: ArtworkImage[];
+};
+
+async function getArtworks(): Promise<Artwork[]> {
+  const { data, error } = await supabaseAdmin
+    .from("artworks")
+    .select(`
+      id,
+      title,
+      slug,
+      category,
+      year,
+      subtitle,
+      materials,
+      availability,
+      etsy_url,
+      price,
+      is_featured,
+      artwork_images (
+        image_url,
+        is_cover,
+        position
+      )
+    `)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Error loading artworks:", error);
+    return [];
+  }
+
+  return (data ?? []) as Artwork[];
+}
+
+export default async function AdminArtworksPage() {
+  const artworks = await getArtworks();
+
+  return (
+    <main className="min-h-screen bg-[#f8f5ef] p-6 md:p-10">
+      <div className="mx-auto max-w-7xl space-y-14">
+        <section className="grid gap-10 xl:grid-cols-[0.95fr_1.05fr]">
+          <div className="rounded-[28px] border border-neutral-200 bg-white p-6 shadow-sm md:p-8">
+            <div className="mb-8">
+              <p className="text-xs uppercase tracking-[0.28em] text-neutral-400">
+                Dashboard
+              </p>
+              <h1 className="mt-3 text-3xl font-semibold md:text-4xl">
+                Ajouter une œuvre
+              </h1>
+              <p className="mt-3 max-w-xl text-sm leading-6 text-neutral-600">
+                Ajoute une nouvelle œuvre avec ses informations principales,
+                ses détails commerciaux et une ou plusieurs images.
+              </p>
+            </div>
+
+            <form
+              action="/api/admin/artworks"
+              method="POST"
+              encType="multipart/form-data"
+              className="space-y-5"
+            >
+              <div className="grid gap-5">
+                <div>
+                  <label
+                    htmlFor="title"
+                    className="mb-2 block text-sm font-medium text-neutral-700"
+                  >
+                    Titre
+                  </label>
+                  <input
+                    id="title"
+                    name="title"
+                    required
+                    placeholder="Ex. Fusion des Consciences"
+                    className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="subtitle"
+                    className="mb-2 block text-sm font-medium text-neutral-700"
+                  >
+                    Sous-titre
+                  </label>
+                  <input
+                    id="subtitle"
+                    name="subtitle"
+                    placeholder="Ex. Sculpture murale contemporaine"
+                    className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="description"
+                    className="mb-2 block text-sm font-medium text-neutral-700"
+                  >
+                    Description
+                  </label>
+                  <textarea
+                    id="description"
+                    name="description"
+                    rows={5}
+                    placeholder="Description de l’œuvre"
+                    className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                  />
+                </div>
+
+                <div className="grid gap-5 md:grid-cols-2">
+                  <div>
+                    <label
+                      htmlFor="category"
+                      className="mb-2 block text-sm font-medium text-neutral-700"
+                    >
+                      Catégorie
+                    </label>
+                    <input
+                      id="category"
+                      name="category"
+                      placeholder="Ex. Sculpture murale"
+                      className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="year"
+                      className="mb-2 block text-sm font-medium text-neutral-700"
+                    >
+                      Année
+                    </label>
+                    <input
+                      id="year"
+                      name="year"
+                      type="number"
+                      placeholder="Ex. 2026"
+                      inputMode="numeric"
+                      className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid gap-5 md:grid-cols-2">
+                  <div>
+                    <label
+                      htmlFor="dimensions"
+                      className="mb-2 block text-sm font-medium text-neutral-700"
+                    >
+                      Dimensions
+                    </label>
+                    <input
+                      id="dimensions"
+                      name="dimensions"
+                      placeholder="Ex. 50 x 70 cm"
+                      className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="price"
+                      className="mb-2 block text-sm font-medium text-neutral-700"
+                    >
+                      Prix
+                    </label>
+                    <input
+                      id="price"
+                      name="price"
+                      placeholder="Ex. 2000 €"
+                      className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="materials"
+                    className="mb-2 block text-sm font-medium text-neutral-700"
+                  >
+                    Matériaux
+                  </label>
+                  <input
+                    id="materials"
+                    name="materials"
+                    placeholder="Ex. Papier mâché, carton recyclé, capsules Vertuo"
+                    className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                  />
+                </div>
+
+                <div className="grid gap-5 md:grid-cols-2">
+                  <div>
+                    <label
+                      htmlFor="availability"
+                      className="mb-2 block text-sm font-medium text-neutral-700"
+                    >
+                      Disponibilité
+                    </label>
+                    <input
+                      id="availability"
+                      name="availability"
+                      placeholder="Ex. Disponible sur demande"
+                      className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="etsy_url"
+                      className="mb-2 block text-sm font-medium text-neutral-700"
+                    >
+                      URL Etsy
+                    </label>
+                    <input
+                      id="etsy_url"
+                      name="etsy_url"
+                      type="url"
+                      placeholder="https://markpaper.etsy.com/..."
+                      className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                    />
+                  </div>
+                </div>
+
+                <label className="flex items-center gap-3 rounded-2xl border border-neutral-200 bg-[#faf7f2] px-4 py-3">
+                  <input
+                    type="checkbox"
+                    name="is_featured"
+                    value="true"
+                    className="h-4 w-4 rounded border-neutral-300"
+                  />
+                  <span className="text-sm font-medium text-neutral-700">
+                    Marquer comme œuvre mise en avant
+                  </span>
+                </label>
+
+                <div>
+                  <label
+                    htmlFor="images"
+                    className="mb-2 block text-sm font-medium text-neutral-700"
+                  >
+                    Images
+                  </label>
+                  <input
+                    id="images"
+                    type="file"
+                    name="images"
+                    multiple
+                    required
+                    accept="image/*"
+                    className="w-full rounded-2xl border border-dashed border-neutral-300 bg-[#faf7f2] px-4 py-4 text-sm text-neutral-600 file:mr-4 file:rounded-xl file:border-0 file:bg-black file:px-4 file:py-2 file:text-sm file:font-medium file:text-white hover:file:opacity-90"
+                  />
+                  <p className="mt-2 text-xs text-neutral-500">
+                    Tu peux sélectionner plusieurs images à la fois.
+                  </p>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full rounded-2xl bg-black py-3.5 text-sm font-medium text-white transition hover:opacity-85"
+              >
+                Ajouter l’œuvre
+              </button>
+            </form>
+          </div>
+
+          <div className="rounded-[28px] border border-neutral-200 bg-white p-6 shadow-sm md:p-8">
+            <p className="text-xs uppercase tracking-[0.28em] text-neutral-400">
+              Bibliothèque
+            </p>
+            <h2 className="mt-3 text-2xl font-semibold md:text-3xl">
+              Toutes les œuvres
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-neutral-600">
+              Gère tes œuvres existantes, leurs images et leurs informations
+              de présentation.
+            </p>
+
+            <div className="mt-6 flex items-center justify-between rounded-2xl border border-neutral-200 bg-[#faf7f2] px-4 py-3">
+              <span className="text-sm text-neutral-600">Total</span>
+              <span className="text-sm font-semibold text-neutral-900">
+                {artworks.length} œuvre{artworks.length > 1 ? "s" : ""}
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div className="mb-6">
+            <h2 className="text-2xl font-semibold md:text-3xl">
+              Galerie des œuvres
+            </h2>
+            <p className="mt-2 text-sm text-neutral-600">
+              Accède rapidement à la gestion détaillée de chaque pièce.
+            </p>
+          </div>
+
+          {artworks.length === 0 ? (
+            <div className="rounded-[28px] border border-neutral-200 bg-white p-10 text-center shadow-sm">
+              <p className="text-lg font-medium text-neutral-900">
+                Aucune œuvre pour le moment
+              </p>
+              <p className="mt-2 text-sm text-neutral-500">
+                Commence par ajouter ta première œuvre avec le formulaire
+                ci-dessus.
+              </p>
+            </div>
+          ) : (
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {artworks.map((artwork) => {
+                const sortedImages = [...(artwork.artwork_images ?? [])].sort(
+                  (a, b) => a.position - b.position
+                );
+
+                const cover =
+                  sortedImages.find((image) => image.is_cover) ??
+                  sortedImages[0] ??
+                  null;
+
+                return (
+                  <article
+                    key={artwork.id}
+                    className="group overflow-hidden rounded-[28px] border border-neutral-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                  >
+                    <div className="relative aspect-[4/3] bg-neutral-100">
+                      {cover ? (
+                        <Image
+                          src={cover.image_url}
+                          alt={artwork.title}
+                          fill
+                          className="object-cover transition duration-500 group-hover:scale-[1.02]"
+                        />
+                      ) : (
+                        <div className="flex h-full items-center justify-center text-sm text-neutral-400">
+                          Aucune image
+                        </div>
+                      )}
+
+                      <div className="absolute left-4 top-4 flex flex-wrap gap-2">
+                        <span className="rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-neutral-800 backdrop-blur">
+                          {artwork.category || "Sans catégorie"}
+                        </span>
+
+                        {artwork.year && (
+                          <span className="rounded-full bg-black/85 px-3 py-1 text-xs font-medium text-white backdrop-blur">
+                            {artwork.year}
+                          </span>
+                        )}
+
+                        {artwork.is_featured ? (
+                          <span className="rounded-full bg-amber-500/90 px-3 py-1 text-xs font-medium text-white backdrop-blur">
+                            Featured
+                          </span>
+                        ) : null}
+                      </div>
+                    </div>
+
+                    <div className="space-y-4 p-5">
+                      <div>
+                        <h3 className="text-xl font-semibold text-neutral-900">
+                          {artwork.title}
+                        </h3>
+
+                        {artwork.subtitle ? (
+                          <p className="mt-1 text-sm text-neutral-500">
+                            {artwork.subtitle}
+                          </p>
+                        ) : null}
+
+                        {artwork.availability ? (
+                          <p className="mt-2 text-sm text-neutral-600">
+                            {artwork.availability}
+                          </p>
+                        ) : null}
+                      </div>
+
+                      <div className="flex flex-wrap gap-3">
+                        <Link
+                          href={`/admin/artworks/${artwork.id}`}
+                          className="inline-flex items-center justify-center rounded-xl bg-orange-500 px-4 py-2.5 text-sm font-medium text-white transition hover:opacity-85"
+                        >
+                          Gérer
+                        </Link>
+
+                        <Link
+                          href={`/sculptures/${artwork.slug}`}
+                          className="inline-flex items-center justify-center rounded-xl border border-neutral-300 px-4 py-2.5 text-sm font-medium text-neutral-800 transition hover:border-black hover:text-black"
+                        >
+                          Voir la page
+                        </Link>
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          )}
+        </section>
+      </div>
+    </main>
+  );
+}
