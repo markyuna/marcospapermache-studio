@@ -106,6 +106,31 @@ function normalizeSlug(value: string) {
     .replace(/^-+|-+$/g, "");
 }
 
+function isValidHttpUrl(value: string) {
+  return /^https?:\/\/.+/i.test(value);
+}
+
+function parseYearValue(value: string): number | null {
+  const trimmedValue = value.trim();
+
+  if (!trimmedValue) {
+    return null;
+  }
+
+  const parsedValue = Number(trimmedValue);
+
+  if (
+    Number.isNaN(parsedValue) ||
+    !Number.isFinite(parsedValue) ||
+    !Number.isInteger(parsedValue) ||
+    parsedValue <= 0
+  ) {
+    return null;
+  }
+
+  return parsedValue;
+}
+
 export default function ArtworkDetailManager({ artwork }: Props) {
   const router = useRouter();
   const [isRefreshing, startTransition] = useTransition();
@@ -146,8 +171,12 @@ export default function ArtworkDetailManager({ artwork }: Props) {
   }, [artwork.artwork_images]);
 
   const coverImage = useMemo(() => {
-    return sortedImages.find((image) => image.is_cover) ?? sortedImages[0] ?? null;
+    return (
+      sortedImages.find((image) => image.is_cover) ?? sortedImages[0] ?? null
+    );
   }, [sortedImages]);
+
+  const imageCount = artwork.artwork_images.length;
 
   const isBusy =
     isSavingArtwork ||
@@ -169,6 +198,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
 
   function clearSelectedFiles() {
     setSelectedFiles([]);
+
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -196,8 +226,9 @@ export default function ArtworkDetailManager({ artwork }: Props) {
     const trimmedMaterials = materials.trim();
     const trimmedAvailability = availability.trim();
     const trimmedEtsyUrl = etsyUrl.trim();
+    const trimmedYear = year.trim();
 
-    const parsedYear = year.trim() ? Number(year) : null;
+    const parsedYear = parseYearValue(trimmedYear);
 
     if (!trimmedTitle) {
       setErrorMessage("Le titre est requis.");
@@ -209,15 +240,12 @@ export default function ArtworkDetailManager({ artwork }: Props) {
       return;
     }
 
-    if (year.trim() && (!Number.isInteger(parsedYear) || parsedYear <= 0)) {
+    if (trimmedYear && parsedYear === null) {
       setErrorMessage("L’année doit être un nombre valide.");
       return;
     }
 
-    if (
-      trimmedEtsyUrl &&
-      !/^https?:\/\/.+/i.test(trimmedEtsyUrl)
-    ) {
+    if (trimmedEtsyUrl && !isValidHttpUrl(trimmedEtsyUrl)) {
       setErrorMessage("L’URL Etsy doit être une URL valide.");
       return;
     }
@@ -276,6 +304,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
       setIsUploading(true);
 
       const formData = new FormData();
+
       selectedFiles.forEach((file) => {
         formData.append("images", file);
       });
@@ -337,7 +366,9 @@ export default function ArtworkDetailManager({ artwork }: Props) {
       "Voulez-vous vraiment supprimer cette image ?"
     );
 
-    if (!confirmed) return;
+    if (!confirmed) {
+      return;
+    }
 
     resetMessages();
 
@@ -367,7 +398,9 @@ export default function ArtworkDetailManager({ artwork }: Props) {
       "Voulez-vous vraiment supprimer cette œuvre et toutes ses images ?"
     );
 
-    if (!confirmed) return;
+    if (!confirmed) {
+      return;
+    }
 
     resetMessages();
 
@@ -479,12 +512,16 @@ export default function ArtworkDetailManager({ artwork }: Props) {
                 Modifier l’œuvre
               </h2>
               <p className="text-sm text-neutral-500">
-                Modifie ici les informations principales, artistiques et commerciales.
+                Modifie ici les informations principales, artistiques et
+                commerciales.
               </p>
             </div>
           </div>
 
-          <form onSubmit={handleSaveArtwork} className="grid gap-4 md:grid-cols-2">
+          <form
+            onSubmit={handleSaveArtwork}
+            className="grid gap-4 md:grid-cols-2"
+          >
             <div className="space-y-2">
               <label className="text-sm font-medium text-neutral-700">
                 Titre
@@ -707,7 +744,9 @@ export default function ArtworkDetailManager({ artwork }: Props) {
                 <div className="mt-4 rounded-xl bg-white p-3 ring-1 ring-black/5">
                   <p className="text-sm font-medium text-neutral-800">
                     {selectedFiles.length} fichier
-                    {selectedFiles.length > 1 ? "s sélectionnés" : " sélectionné"}
+                    {selectedFiles.length > 1
+                      ? "s sélectionnés"
+                      : " sélectionné"}
                   </p>
 
                   <div className="mt-2 space-y-1 text-xs text-neutral-500">
@@ -761,7 +800,9 @@ export default function ArtworkDetailManager({ artwork }: Props) {
                       <p className="text-xs uppercase tracking-[0.2em] text-neutral-400">
                         Sous-titre
                       </p>
-                      <p className="mt-2 text-sm text-neutral-700">{subtitle}</p>
+                      <p className="mt-2 text-sm text-neutral-700">
+                        {subtitle}
+                      </p>
                     </div>
                   ) : null}
 
@@ -770,7 +811,9 @@ export default function ArtworkDetailManager({ artwork }: Props) {
                       <p className="text-xs uppercase tracking-[0.2em] text-neutral-400">
                         Dimensions
                       </p>
-                      <p className="mt-2 text-sm text-neutral-700">{dimensions}</p>
+                      <p className="mt-2 text-sm text-neutral-700">
+                        {dimensions}
+                      </p>
                     </div>
                   ) : null}
 
@@ -802,7 +845,9 @@ export default function ArtworkDetailManager({ artwork }: Props) {
                 <p className="text-xs uppercase tracking-[0.2em] text-neutral-400">
                   Matériaux
                 </p>
-                <p className="mt-2 text-sm leading-7 text-neutral-700">{materials}</p>
+                <p className="mt-2 text-sm leading-7 text-neutral-700">
+                  {materials}
+                </p>
               </div>
             ) : null}
 
@@ -836,12 +881,11 @@ export default function ArtworkDetailManager({ artwork }: Props) {
               </h2>
 
               <span className="rounded-full bg-[#f6efe5] px-3 py-1 text-xs font-medium text-neutral-700">
-                {artwork.artwork_images.length} image
-                {artwork.artwork_images.length > 1 ? "s" : ""}
+                {imageCount} image{imageCount > 1 ? "s" : ""}
               </span>
             </div>
 
-            {artwork.artwork_images.length === 0 ? (
+            {imageCount === 0 ? (
               <div className="rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 px-6 py-12 text-center text-sm text-neutral-500">
                 Cette œuvre n’a pas encore d’images.
               </div>
