@@ -111,3 +111,36 @@ svg {
 *::-webkit-scrollbar-track {
   background: transparent;
 }
+
+/* Navbar hidden when lightbox is open */
+.lightbox-open .navbar {
+  opacity: 0;
+  transform: translateY(-120%);
+  pointer-events: none;
+}
+
+/* Optional: smoother overall fullscreen feeling */
+body.lightbox-open {
+  overflow: hidden;
+}
+
+/* Subtle fade for fullscreen artwork environment */
+@keyframes lightbox-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lightbox-zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

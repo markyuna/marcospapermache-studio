@@ -1,4 +1,4 @@
-import Image from "next/image";
+// src/app/(marketing)/sculptures/[slug]/page.tsx
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/layout/container";
@@ -25,7 +25,7 @@ export default async function SculptureDetailPage({
     <main className="bg-[#f8f5ef] py-24 md:py-32">
       <Container>
         <div className="grid gap-12 lg:grid-cols-[1.08fr_0.92fr] xl:gap-16">
-          <div className="object-cover transition duration-500 ease-in-out">
+          <div>
             {artwork.images.length > 0 ? (
               <SculptureImageGallery
                 images={artwork.images}

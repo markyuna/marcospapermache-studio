@@ -1,3 +1,4 @@
+// src/app/(marketing)/sculptures/page.tsx
 import Gallery from "@/components/sculptures/Gallery";
 import { Container } from "@/components/layout/container";
 import { getArtworks } from "@/lib/artworks";

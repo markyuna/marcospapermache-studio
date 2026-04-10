@@ -28,8 +28,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-black/5 bg-white/80 backdrop-blur-2xl supports-[backdrop-filter]:bg-white/70">
-      <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-5 py-3 sm:px-6 lg:px-10">
+    <header className="navbar sticky top-0 z-50 w-full border-b border-black/5 bg-white/80 backdrop-blur-2xl transition-all duration-500 supports-[backdrop-filter]:bg-white/70">      <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-5 py-3 sm:px-6 lg:px-10">
         <Link
           href="/"
           onClick={closeMenu}
