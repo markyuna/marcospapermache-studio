@@ -228,5 +228,43 @@
       "custom": "Projet sur mesure",
       "noCommitment": "Sans engagement"
     }
+  },
+  "SculpturesPage": {
+    "metadata": {
+      "title": "Sculptures | Marcos Papermache",
+      "description": "Une sélection de pièces sculpturales entre formes organiques, matières recyclées et composition contemporaine."
+    },
+    "eyebrow": "Galerie",
+    "title": "Sculptures",
+    "description": "Une sélection de pièces sculpturales entre formes organiques, matières recyclées et composition contemporaine."
+  },
+  "SculptureDetailPage": {
+    "metadata": {
+      "fallbackTitle": "Sculpture | Marcos Papermache",
+      "fallbackDescription": "Découvrez une œuvre sculpturale singulière de Marcos Papermache."
+    },
+    "noImage": "Aucune image disponible",
+    "fallbackCategory": "Sculpture",
+    "dimensions": "Dimensions",
+    "materials": "Matériaux",
+    "description": "Description",
+    "details": "Détails de l’œuvre",
+    "cta": {
+      "request": "Demander cette création",
+      "etsy": "Voir sur Etsy"
+    }
+  },
+  "SculptureCard": {
+    "status": {
+      "sold": "Vendue",
+      "available": "Disponible",
+      "onRequest": "Sur demande"
+    },
+    "discover": "Découvrir",
+    "description": {
+      "sold": "Voir la pièce et découvrir une création similaire.",
+      "available": "Disponible — voir les détails de la pièce.",
+      "onRequest": "Création disponible sur demande."
+    }
   }
 }

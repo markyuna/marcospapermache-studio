@@ -228,5 +228,43 @@
       "custom": "Custom project",
       "noCommitment": "No commitment"
     }
+  },
+  "SculpturesPage": {
+    "metadata": {
+      "title": "Sculptures | Marcos Papermache",
+      "description": "A selection of sculptural pieces combining organic forms, recycled materials and contemporary composition."
+    },
+    "eyebrow": "Gallery",
+    "title": "Sculptures",
+    "description": "A selection of sculptural pieces combining organic forms, recycled materials and contemporary composition."
+  },
+  "SculptureDetailPage": {
+    "metadata": {
+      "fallbackTitle": "Sculpture | Marcos Papermache",
+      "fallbackDescription": "Discover a unique sculptural work by Marcos Papermache."
+    },
+    "noImage": "No image available",
+    "fallbackCategory": "Sculpture",
+    "dimensions": "Dimensions",
+    "materials": "Materials",
+    "description": "Description",
+    "details": "Artwork details",
+    "cta": {
+      "request": "Request this creation",
+      "etsy": "View on Etsy"
+    }
+  },
+  "SculptureCard": {
+    "status": {
+      "sold": "Sold",
+      "available": "Available",
+      "onRequest": "On request"
+    },
+    "discover": "Discover",
+    "description": {
+      "sold": "View the piece and discover a similar creation.",
+      "available": "Available — view the piece details.",
+      "onRequest": "Creation available on request."
+    }
   }
 }

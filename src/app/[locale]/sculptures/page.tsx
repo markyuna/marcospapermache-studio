@@ -1,31 +1,44 @@
-// src/app/(marketing)/sculptures/page.tsx
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+
 import Gallery from "@/components/sculptures/Gallery";
 import { Container } from "@/components/layout/container";
 import { getArtworks } from "@/lib/artworks";
 
-export const metadata = {
-  title: "Sculptures | Marcos Papermache",
-  description:
-    "Une sélection de pièces sculpturales entre formes organiques, matières recyclées et composition contemporaine.",
+type Props = {
+  params: Promise<{
+    locale: string;
+  }>;
 };
 
-export default async function SculpturesPage() {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "SculpturesPage" });
+
+  return {
+    title: t("metadata.title"),
+    description: t("metadata.description"),
+  };
+}
+
+export default async function SculpturesPage({ params }: Props) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "SculpturesPage" });
   const artworks = await getArtworks();
 
   return (
     <main className="bg-[#f8f5ef] py-24 md:py-32">
       <Container>
         <p className="text-xs uppercase tracking-[0.32em] text-neutral-400">
-          Galerie
+          {t("eyebrow")}
         </p>
 
         <h1 className="mt-4 text-4xl font-semibold text-neutral-900 md:text-6xl">
-          Sculptures
+          {t("title")}
         </h1>
 
         <p className="mt-6 max-w-3xl text-lg leading-8 text-neutral-500">
-          Une sélection de pièces sculpturales entre formes organiques,
-          matières recyclées et composition contemporaine.
+          {t("description")}
         </p>
 
         <div className="mt-16">

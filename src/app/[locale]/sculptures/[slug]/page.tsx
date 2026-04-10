@@ -1,21 +1,54 @@
-// src/app/(marketing)/sculptures/[slug]/page.tsx
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
+
 import { Container } from "@/components/layout/container";
 import { getArtworkBySlug } from "@/lib/artworks";
 import SculptureImageGallery from "@/components/sculptures/SculptureImageGallery";
 
 type SculptureDetailPageProps = {
   params: Promise<{
+    locale: string;
     slug: string;
   }>;
 };
 
+export async function generateMetadata({
+  params,
+}: SculptureDetailPageProps): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const artwork = await getArtworkBySlug(slug);
+  const t = await getTranslations({
+    locale,
+    namespace: "SculptureDetailPage",
+  });
+
+  if (!artwork) {
+    return {
+      title: t("metadata.fallbackTitle"),
+      description: t("metadata.fallbackDescription"),
+    };
+  }
+
+  return {
+    title: `${artwork.title} | Marcos Papermache`,
+    description:
+      artwork.description ||
+      artwork.subtitle ||
+      t("metadata.fallbackDescription"),
+  };
+}
+
 export default async function SculptureDetailPage({
   params,
 }: SculptureDetailPageProps) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const artwork = await getArtworkBySlug(slug);
+  const t = await getTranslations({
+    locale,
+    namespace: "SculptureDetailPage",
+  });
 
   if (!artwork) {
     notFound();
@@ -33,14 +66,14 @@ export default async function SculptureDetailPage({
               />
             ) : (
               <div className="flex aspect-[4/5] items-center justify-center rounded-[28px] bg-white text-neutral-400">
-                Aucune image disponible
+                {t("noImage")}
               </div>
             )}
           </div>
 
           <aside className="h-fit lg:sticky lg:top-28">
             <p className="text-xs uppercase tracking-[0.32em] text-neutral-400">
-              {artwork.category || "Sculpture"}
+              {artwork.category || t("fallbackCategory")}
             </p>
 
             <h1 className="mt-4 text-4xl font-semibold text-neutral-900 md:text-5xl">
@@ -72,7 +105,7 @@ export default async function SculptureDetailPage({
                 {artwork.dimensions && (
                   <div>
                     <p className="text-xs uppercase tracking-[0.24em] text-neutral-400">
-                      Dimensions
+                      {t("dimensions")}
                     </p>
                     <p className="mt-2 text-base text-neutral-700">
                       {artwork.dimensions}
@@ -83,7 +116,7 @@ export default async function SculptureDetailPage({
                 {artwork.materials && (
                   <div>
                     <p className="text-xs uppercase tracking-[0.24em] text-neutral-400">
-                      Matériaux
+                      {t("materials")}
                     </p>
                     <p className="mt-2 text-base leading-7 text-neutral-700">
                       {artwork.materials}
@@ -96,7 +129,7 @@ export default async function SculptureDetailPage({
             {artwork.description && (
               <div className="mt-8">
                 <p className="text-xs uppercase tracking-[0.24em] text-neutral-400">
-                  Description
+                  {t("description")}
                 </p>
                 <p className="mt-4 text-lg leading-8 text-neutral-600">
                   {artwork.description}
@@ -107,7 +140,7 @@ export default async function SculptureDetailPage({
             {artwork.details.length > 0 && (
               <div className="mt-10">
                 <p className="text-xs uppercase tracking-[0.24em] text-neutral-400">
-                  Détails de l’œuvre
+                  {t("details")}
                 </p>
 
                 <ul className="mt-4 space-y-3">
@@ -126,10 +159,10 @@ export default async function SculptureDetailPage({
 
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
-                href="/contact"
+                href={`/${locale}/contact`}
                 className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-amber-300 px-6 py-3 text-sm font-medium text-black shadow-[0_12px_30px_rgba(249,115,22,0.22)] transition hover:-translate-y-0.5"
               >
-                Demander cette création
+                {t("cta.request")}
               </Link>
 
               {artwork.etsy_url && (
@@ -139,7 +172,7 @@ export default async function SculptureDetailPage({
                   rel="noreferrer"
                   className="inline-flex items-center justify-center rounded-full border border-black/10 bg-white/80 px-6 py-3 text-sm font-medium text-neutral-800 transition hover:bg-white"
                 >
-                  Voir sur Etsy
+                  {t("cta.etsy")}
                 </Link>
               )}
             </div>

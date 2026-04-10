@@ -1,83 +1,143 @@
-// src/components/sculptures/SculptureCard.tsx
+"use client";
+
 import Image from "next/image";
-import Link from "next/link";
 import clsx from "clsx";
-import { ArrowRight } from "lucide-react";
+import { useTranslations } from "next-intl";
+
+import { Link } from "@/i18n/navigation";
 
 type SculptureCardProps = {
   slug: string;
   src: string;
+  imageAlt?: string;
   title: string;
-  availability?: string;
+  category?: string | null;
+  subtitle?: string | null;
+  description?: string | null;
+  dimensions?: string | null;
+  year?: number | null;
+  availability?: string | null;
+  hasImage?: boolean;
 };
+
+function getAvailabilityStyle(availability?: string | null) {
+  const normalized = availability?.toLowerCase().trim() ?? "";
+
+  if (
+    normalized.includes("vendue") ||
+    normalized.includes("sold") ||
+    normalized.includes("vendida")
+  ) {
+    return "border-neutral-900/80 bg-neutral-900 text-white";
+  }
+
+  if (
+    normalized.includes("disponible") ||
+    normalized.includes("available")
+  ) {
+    return "border-[#ead8bc] bg-[#f6efe2] text-[#6d533b]";
+  }
+
+  return "border-black/10 bg-white/90 text-neutral-600";
+}
 
 export default function SculptureCard({
   slug,
   src,
+  imageAlt,
   title,
+  category,
+  subtitle,
+  description,
+  dimensions,
+  year,
   availability,
+  hasImage = true,
 }: SculptureCardProps) {
-  const normalizedAvailability = availability?.toLowerCase() ?? "";
-  const isSold = normalizedAvailability.includes("vendue");
-  const isAvailable =
-    normalizedAvailability.includes("disponible") && !isSold;
+  const t = useTranslations("Gallery");
 
   return (
     <Link
       href={`/sculptures/${slug}`}
-      className="group relative block overflow-hidden rounded-[2rem] border border-black/5 bg-white/80 shadow-[0_16px_50px_rgba(60,35,10,0.06)] backdrop-blur-sm transition-all duration-500 hover:-translate-y-1.5 hover:border-[#ff6a00]/15 hover:shadow-[0_26px_70px_rgba(180,120,60,0.14)]"
+      className="group block h-full"
     >
-      <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[#ff6a00]/25 to-transparent opacity-0 transition duration-500 group-hover:opacity-100" />
+      <article className="relative flex h-full flex-col overflow-hidden rounded-[30px] border border-black/5 bg-white/80 shadow-[0_18px_50px_rgba(15,23,42,0.06)] backdrop-blur-sm transition duration-500 hover:-translate-y-1.5 hover:border-[#ff6a00]/10 hover:shadow-[0_26px_80px_rgba(15,23,42,0.11)]">
+        <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-[#ff8a1f]/30 to-transparent opacity-0 transition duration-500 group-hover:opacity-100" />
 
-      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-b-[1.4rem]">
-        <Image
-          src={src}
-          alt={title}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-          className="object-cover transition duration-700 ease-out group-hover:scale-[1.08] group-hover:brightness-110"
-        />
+        <div className="relative aspect-[4/5] overflow-hidden bg-[#efe8dc]">
+          {hasImage && src ? (
+            <>
+              <Image
+                src={src}
+                alt={imageAlt || title}
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, (max-width: 1536px) 33vw, 25vw"
+                className="object-cover transition duration-700 ease-out group-hover:scale-[1.045]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1a1612]/18 via-transparent to-transparent transition duration-500 group-hover:from-[#1a1612]/26" />
+            </>
+          ) : (
+            <div className="flex h-full items-center justify-center px-6 text-center text-sm text-neutral-400">
+              {t("imageUnavailable")}
+            </div>
+          )}
 
-        <div className="absolute inset-0 bg-gradient-to-t from-[#181512]/45 via-[#181512]/10 to-transparent transition duration-500 group-hover:from-[#181512]/28" />
-
-        <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-700 group-hover:opacity-100">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,200,120,0.24),transparent_60%)]" />
+          {availability && (
+            <div className="absolute left-4 top-4">
+              <span
+                className={clsx(
+                  "rounded-full border px-3 py-1 text-[11px] font-medium backdrop-blur-md",
+                  getAvailabilityStyle(availability)
+                )}
+              >
+                {availability}
+              </span>
+            </div>
+          )}
         </div>
 
-        <div className="absolute left-4 top-4">
-          <span
-            className={clsx(
-              "rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.18em] backdrop-blur-md",
-              isSold
-                ? "border-white/15 bg-black/65 text-white"
-                : "border-white/60 bg-white/85 text-[#5f4632]"
+        <div className="flex flex-1 flex-col p-5">
+          <div className="min-h-[116px]">
+            <p className="text-[11px] uppercase tracking-[0.28em] text-neutral-400">
+              {category || t("defaultCategory")}
+            </p>
+
+            <h2 className="mt-3 line-clamp-2 text-[1.38rem] font-medium leading-[1.1] tracking-[-0.02em] text-neutral-900 transition duration-300 group-hover:text-[#be5a08]">
+              {title}
+            </h2>
+
+            <div className="mt-2 min-h-[40px]">
+              {subtitle ? (
+                <p className="line-clamp-2 text-sm text-neutral-500">
+                  {subtitle}
+                </p>
+              ) : null}
+            </div>
+          </div>
+
+          <div className="mt-4 min-h-[24px]">
+            {(dimensions || year) && (
+              <p className="text-sm text-neutral-500">
+                {[dimensions, year].filter(Boolean).join(" • ")}
+              </p>
             )}
-          >
-            {isSold ? "Vendue" : isAvailable ? "Disponible" : "Sur demande"}
-          </span>
-        </div>
+          </div>
 
-        <div className="absolute inset-x-4 bottom-4 translate-y-3 opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/88 px-4 py-2 text-sm font-medium text-neutral-900 shadow-sm backdrop-blur">
-            Découvrir
-            <ArrowRight className="h-4 w-4 transition duration-300 group-hover:translate-x-0.5" />
+          <div className="mt-4 flex-1">
+            {description ? (
+              <p className="line-clamp-4 text-sm leading-7 text-neutral-600">
+                {description}
+              </p>
+            ) : null}
+          </div>
+
+          <div className="mt-5 pt-4">
+            <span className="inline-flex items-center text-sm font-medium text-[#c45e09] transition duration-300 group-hover:translate-x-0.5">
+              {t("discover")}
+            </span>
           </div>
         </div>
-      </div>
-
-      <div className="p-5">
-        <h3 className="text-xl font-medium tracking-[-0.02em] text-[#181512] transition duration-300 group-hover:text-[#c65400]">
-          {title}
-        </h3>
-
-        <p className="mt-2 text-sm leading-6 text-[#6c5d50]">
-          {isSold
-            ? "Voir la pièce et découvrir une création similaire."
-            : isAvailable
-              ? "Disponible — voir les détails de la pièce."
-              : "Création disponible sur demande."}
-        </p>
-      </div>
+      </article>
     </Link>
   );
 }
