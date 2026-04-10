@@ -42,47 +42,55 @@ type ArtworkRow = {
 function normalizeArtwork(row: ArtworkRow): Artwork {
   return {
     ...row,
-    images: (row.images ?? []).sort((a, b) => a.position - b.position),
+    images: (row.images ?? []).sort((a, b) => {
+      if (a.is_cover !== b.is_cover) {
+        return Number(b.is_cover) - Number(a.is_cover);
+      }
+
+      return a.position - b.position;
+    }),
     details: (row.details ?? []).sort((a, b) => a.position - b.position),
   };
 }
 
+const artworkSelect = `
+  id,
+  slug,
+  title,
+  subtitle,
+  description,
+  category,
+  materials,
+  dimensions,
+  year,
+  availability,
+  etsy_url,
+  is_featured,
+  created_at,
+  updated_at,
+  images:artwork_images(
+    id,
+    artwork_id,
+    storage_path,
+    image_url,
+    alt_text,
+    position,
+    is_cover,
+    created_at
+  ),
+  details:artwork_details(
+    id,
+    artwork_id,
+    content,
+    position,
+    created_at
+  )
+`;
+
 export async function getArtworks(): Promise<Artwork[]> {
   const { data, error } = await supabaseAdmin
     .from("artworks")
-    .select(`
-      id,
-      slug,
-      title,
-      subtitle,
-      description,
-      category,
-      materials,
-      dimensions,
-      year,
-      availability,
-      etsy_url,
-      is_featured,
-      created_at,
-      updated_at,
-      images:artwork_images(
-        id,
-        artwork_id,
-        storage_path,
-        image_url,
-        alt_text,
-        position,
-        is_cover,
-        created_at
-      ),
-      details:artwork_details(
-        id,
-        artwork_id,
-        content,
-        position,
-        created_at
-      )
-    `)
+    .select(artworkSelect)
     .order("created_at", { ascending: false });
 
   if (error) {
@@ -95,39 +103,7 @@ export async function getArtworks(): Promise<Artwork[]> {
 export async function getArtworkBySlug(slug: string): Promise<Artwork | null> {
   const { data, error } = await supabaseAdmin
     .from("artworks")
-    .select(`
-      id,
-      slug,
-      title,
-      subtitle,
-      description,
-      category,
-      materials,
-      dimensions,
-      year,
-      availability,
-      etsy_url,
-      is_featured,
-      created_at,
-      updated_at,
-      images:artwork_images(
-        id,
-        artwork_id,
-        storage_path,
-        image_url,
-        alt_text,
-        position,
-        is_cover,
-        created_at
-      ),
-      details:artwork_details(
-        id,
-        artwork_id,
-        content,
-        position,
-        created_at
-      )
-    `)
+    .select(artworkSelect)
     .eq("slug", slug)
     .single();
 
@@ -140,4 +116,31 @@ export async function getArtworkBySlug(slug: string): Promise<Artwork | null> {
   }
 
   return normalizeArtwork(data as ArtworkRow);
+}
+
+export async function getArtworksBySlugs(slugs: string[]): Promise<Artwork[]> {
+  if (slugs.length === 0) {
+    return [];
+  }
+
+  const { data, error } = await supabaseAdmin
+    .from("artworks")
+    .select(artworkSelect)
+    .in("slug", slugs);
+
+  if (error) {
+    throw new Error(
+      `Erreur lors du chargement des œuvres sélectionnées : ${error.message}`,
+    );
+  }
+
+  const artworks = ((data ?? []) as ArtworkRow[]).map(normalizeArtwork);
+
+  const orderMap = new Map(slugs.map((slug, index) => [slug, index]));
+
+  return artworks.sort((a, b) => {
+    const aIndex = orderMap.get(a.slug) ?? Number.MAX_SAFE_INTEGER;
+    const bIndex = orderMap.get(b.slug) ?? Number.MAX_SAFE_INTEGER;
+    return aIndex - bIndex;
+  });
 }

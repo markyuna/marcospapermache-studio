@@ -1,16 +1,17 @@
+// src/components/home/featured-section.tsx
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-import { sculptures } from "@/data/sculptures";
 import { Container } from "@/components/layout/container";
+import { getArtworksBySlugs } from "@/lib/artworks";
 
 type SculptureCardProps = {
   slug: string;
   title: string;
-  subtitle?: string;
+  subtitle?: string | null;
   image: string;
-  availability?: string;
+  availability?: string | null;
   index: number;
 };
 
@@ -79,20 +80,14 @@ function SculptureCard({
   );
 }
 
-export function FeaturedSection() {
-  /**
-   * Reemplaza estos slugs por los slugs reales
-   * de tus 3 lámparas en papier mâché.
-   */
+export async function FeaturedSection() {
   const featuredLampSlugs = [
     "eveil-lumineux",
     "ondulation-lumineuse",
     "lampe-totem",
   ];
 
-  const featuredSculptures = featuredLampSlugs
-    .map((slug) => sculptures.find((sculpture) => sculpture.slug === slug))
-    .filter(Boolean);
+  const featuredSculptures = await getArtworksBySlugs(featuredLampSlugs);
 
   return (
     <section className="relative overflow-hidden py-24 md:py-32">
@@ -130,7 +125,11 @@ export function FeaturedSection() {
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {featuredSculptures.map((artwork, index) => {
-            if (!artwork) return null;
+            const coverImage =
+              artwork.images.find((image) => image.is_cover)?.image_url ??
+              artwork.images[0]?.image_url;
+
+            if (!coverImage) return null;
 
             return (
               <SculptureCard
@@ -138,7 +137,7 @@ export function FeaturedSection() {
                 slug={artwork.slug}
                 title={artwork.title}
                 subtitle={artwork.subtitle}
-                image={artwork.images[0]}
+                image={coverImage}
                 availability={artwork.availability}
                 index={index}
               />
