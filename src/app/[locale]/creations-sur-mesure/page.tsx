@@ -1,34 +1,39 @@
 // src/app/[locale]/creations-sur-mesure/page.tsx
+import { notFound } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import CommandeForm from "@/components/forms/CommandeForm";
 import { Container } from "@/components/layout/container";
+import { routing } from "@/i18n/routing";
 
-export default async function CustomCreationPage() {
+type Step = {
+  title: string;
+  description: string;
+};
+
+type Props = {
+  params: Promise<{
+    locale: string;
+  }>;
+};
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
+export default async function CustomCreationPage({ params }: Props) {
+  const { locale } = await params;
+
+  if (!routing.locales.includes(locale as "fr" | "en" | "es")) {
+    notFound();
+  }
+
+  setRequestLocale(locale);
+
   const t = await getTranslations("CustomCreationPage");
-
-  const steps = [
-    {
-      title: t("steps.0.title"),
-      description: t("steps.0.description"),
-    },
-    {
-      title: t("steps.1.title"),
-      description: t("steps.1.description"),
-    },
-    {
-      title: t("steps.2.title"),
-      description: t("steps.2.description"),
-    },
-  ];
-
-  const values = [
-    t("values.0"),
-    t("values.1"),
-    t("values.2"),
-    t("values.3"),
-  ];
+  const steps = t.raw("steps") as Step[];
+  const values = t.raw("values") as string[];
 
   return (
     <main className="relative overflow-hidden">
@@ -75,6 +80,7 @@ export default async function CustomCreationPage() {
             <p className="text-[11px] uppercase tracking-[0.34em] text-[#b07a52]">
               {t("process.eyebrow")}
             </p>
+
             <h2 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-[#1b1713] md:text-5xl">
               {t("process.title")}
             </h2>
@@ -83,7 +89,7 @@ export default async function CustomCreationPage() {
           <div className="grid gap-6 md:grid-cols-3">
             {steps.map((step, index) => (
               <article
-                key={step.title}
+                key={`${step.title}-${index}`}
                 className="rounded-[2rem] border border-black/5 bg-white/70 p-8 shadow-[0_20px_60px_rgba(0,0,0,0.05)] backdrop-blur-sm"
               >
                 <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#ead7c2] bg-[#fff7f0] text-sm font-medium text-[#9c6e47]">
@@ -122,8 +128,8 @@ export default async function CustomCreationPage() {
 
             <div className="rounded-[2rem] border border-black/5 bg-white/70 p-8 shadow-[0_20px_60px_rgba(0,0,0,0.05)] backdrop-blur-sm">
               <ul className="space-y-4">
-                {values.map((value) => (
-                  <li key={value} className="flex items-start gap-3">
+                {values.map((value, index) => (
+                  <li key={`${value}-${index}`} className="flex items-start gap-3">
                     <CheckCircle2 className="mt-0.5 h-5 w-5 text-[#c65400]" />
                     <span className="text-sm leading-7 text-[#5f5348] md:text-base">
                       {value}
