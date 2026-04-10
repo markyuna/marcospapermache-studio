@@ -2,7 +2,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   motion,
   useMotionValue,
@@ -14,17 +14,25 @@ import { useTranslations } from "next-intl";
 
 import { Container } from "@/components/layout/container";
 import { Link } from "@/i18n/navigation";
-import { sculptures } from "@/data/sculptures";
+
+type SignaturePieceResponse = {
+  title: string | null;
+  imageUrl: string;
+  imageAlt: string | null;
+};
+
+const FALLBACK_SIGNATURE: SignaturePieceResponse = {
+  title: null,
+  imageUrl: "/support-a-vins.jpg",
+  imageAlt: null,
+};
 
 export function HeroSection() {
   const t = useTranslations("Hero");
-
-  const signaturePiece =
-    sculptures.find((item) => item.slug === "support-a-vin") ?? null;
-
-  const signatureImage = signaturePiece?.images?.[0] ?? "/support-a-vins.jpg";
-
   const cardRef = useRef<HTMLDivElement | null>(null);
+
+  const [signaturePiece, setSignaturePiece] =
+    useState<SignaturePieceResponse>(FALLBACK_SIGNATURE);
 
   const rotateX = useMotionValue(0);
   const rotateY = useMotionValue(0);
@@ -59,6 +67,44 @@ export function HeroSection() {
     t("highlights.custom"),
     t("highlights.artistic"),
   ];
+
+  useEffect(() => {
+    let active = true;
+
+    async function loadSignaturePiece() {
+      try {
+        const response = await fetch("/api/artworks?slug=support-a-vin", {
+          method: "GET",
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to load signature piece");
+        }
+
+        const data = (await response.json()) as SignaturePieceResponse;
+
+        if (!active) return;
+
+        setSignaturePiece({
+          title: data.title ?? null,
+          imageUrl: data.imageUrl || FALLBACK_SIGNATURE.imageUrl,
+          imageAlt: data.imageAlt ?? null,
+        });
+      } catch (error) {
+        console.error("Error loading signature piece:", error);
+
+        if (!active) return;
+        setSignaturePiece(FALLBACK_SIGNATURE);
+      }
+    }
+
+    loadSignaturePiece();
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
     const element = cardRef.current;
@@ -171,8 +217,12 @@ export function HeroSection() {
                     className="absolute inset-0 will-change-transform"
                   >
                     <Image
-                      src={signatureImage}
-                      alt={signaturePiece?.title ?? t("signature.alt")}
+                      src={signaturePiece.imageUrl}
+                      alt={
+                        signaturePiece.imageAlt ??
+                        signaturePiece.title ??
+                        t("signature.alt")
+                      }
                       fill
                       priority
                       sizes="(max-width: 1024px) 100vw, 42vw"

@@ -1,4 +1,5 @@
-import { NextResponse } from "next/server";
+// src/app/api/artworks/route.ts
+import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import slugify from "slugify";
 
@@ -19,9 +20,124 @@ type UploadedImageInsert = {
   is_cover: boolean;
 };
 
+type ArtworkImageRow = {
+  image_url: string;
+  alt_text?: string | null;
+  is_cover: boolean | null;
+  position: number | null;
+};
+
+type ArtworkRow = {
+  id?: number | string;
+  title: string;
+  slug?: string;
+  description?: string | null;
+  category?: string | null;
+  dimensions?: string | null;
+  year?: number | null;
+  artwork_images: ArtworkImageRow[] | null;
+};
+
 function getErrorMessage(error: unknown): string {
   if (error instanceof Error) return error.message;
   return "Erreur inconnue";
+}
+
+export async function GET(request: NextRequest) {
+  try {
+    const slug = request.nextUrl.searchParams.get("slug");
+
+    if (slug) {
+      const { data, error } = await supabaseAdmin
+        .from("artworks")
+        .select(
+          `
+          id,
+          title,
+          slug,
+          description,
+          category,
+          dimensions,
+          year,
+          artwork_images (
+            image_url,
+            alt_text,
+            is_cover,
+            position
+          )
+        `
+        )
+        .eq("slug", slug)
+        .limit(1)
+        .maybeSingle<ArtworkRow>();
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      if (!data) {
+        return NextResponse.json(
+          {
+            title: null,
+            imageUrl: "/support-a-vins.jpg",
+            imageAlt: null,
+          },
+          { status: 200 }
+        );
+      }
+
+      const images = [...(data.artwork_images ?? [])].sort((a, b) => {
+        const aCover = a.is_cover ? 1 : 0;
+        const bCover = b.is_cover ? 1 : 0;
+
+        if (aCover !== bCover) return bCover - aCover;
+
+        const aPos = a.position ?? 9999;
+        const bPos = b.position ?? 9999;
+        return aPos - bPos;
+      });
+
+      const cover = images[0];
+
+      return NextResponse.json({
+        title: data.title ?? null,
+        imageUrl: cover?.image_url ?? "/support-a-vins.jpg",
+        imageAlt: cover?.alt_text ?? null,
+      });
+    }
+
+    const { data, error } = await supabaseAdmin
+      .from("artworks")
+      .select(
+        `
+        id,
+        title,
+        slug,
+        description,
+        category,
+        dimensions,
+        year,
+        artwork_images (
+          image_url,
+          alt_text,
+          is_cover,
+          position
+        )
+      `
+      )
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return NextResponse.json(data ?? []);
+  } catch (error: unknown) {
+    return NextResponse.json(
+      { error: getErrorMessage(error) },
+      { status: 500 }
+    );
+  }
 }
 
 export async function POST(request: Request) {
