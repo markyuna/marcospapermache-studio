@@ -1,3 +1,4 @@
+// src/components/home/hero-section.tsx
 "use client";
 
 import Image from "next/image";

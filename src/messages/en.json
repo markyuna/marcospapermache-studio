@@ -1,0 +1,13 @@
+{
+  "Navbar": {
+    "home": "Home",
+    "about": "About",
+    "sculptures": "Sculptures",
+    "custom": "Custom creations",
+    "ai": "AI Experience",
+    "contact": "Contact",
+    "order": "Order",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  }
+}
