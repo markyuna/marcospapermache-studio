@@ -2,21 +2,23 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useRef } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { Container } from "@/components/layout/container";
+import { Link } from "@/i18n/navigation";
 import { sculptures } from "@/data/sculptures";
 
-const highlights = [
-  "Pièces uniques",
-  "Sur mesure",
-  "Expérience artistique",
-];
-
 export function HeroSection() {
+  const t = useTranslations("Hero");
+
   const signaturePiece =
     sculptures.find((item) => item.slug === "support-a-vin") ?? null;
 
@@ -48,6 +50,15 @@ export function HeroSection() {
 
   const overlayY = useTransform(smoothRotateX, [-8, 8], [10, -10]);
   const overlayX = useTransform(smoothRotateY, [-8, 8], [-10, 10]);
+
+  const floatingCardX = useTransform(smoothRotateY, [-8, 8], [-8, 8]);
+  const floatingCardY = useTransform(smoothRotateX, [-8, 8], [8, -8]);
+
+  const highlights = [
+    t("highlights.unique"),
+    t("highlights.custom"),
+    t("highlights.artistic"),
+  ];
 
   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
     const element = cardRef.current;
@@ -88,28 +99,26 @@ export function HeroSection() {
           >
             <div className="inline-flex items-center rounded-full border border-[#e9d7c7] bg-white/70 px-4 py-2 backdrop-blur-sm">
               <span className="text-[10px] uppercase tracking-[0.34em] text-[#a77446] md:text-[11px]">
-                Marcos Papermache · Art contemporain
+                {t("badge")}
               </span>
             </div>
 
             <h1 className="mt-7 text-[2.9rem] font-semibold leading-[0.92] tracking-[-0.06em] text-[#181512] sm:text-6xl md:text-7xl xl:text-[6.3rem]">
-              La matière devient forme,
+              {t("title.line1")}
               <br className="hidden sm:block" />
-              <span className="block">l’idée devient sculpture.</span>
+              <span className="block">{t("title.line2")}</span>
             </h1>
 
             <p className="mt-7 max-w-2xl text-base leading-8 text-[#5f5348] md:text-lg">
-              Un univers où l’artisanat, la présence sculpturale et la création
-              assistée par IA se rencontrent pour donner naissance à des œuvres
-              sensibles, contemporaines et pensées sur mesure.
+              {t("description")}
             </p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
               <Link
-                href="/experience-ia"
+                href="/create"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#ff6a00] to-[#ff8c42] px-6 py-3.5 text-sm font-semibold text-white shadow-[0_16px_40px_rgba(255,106,0,0.24)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_48px_rgba(255,106,0,0.3)]"
               >
-                Créer votre sculpture avec IA
+                {t("ctaPrimary")}
                 <ArrowRight className="h-4 w-4" />
               </Link>
 
@@ -117,13 +126,11 @@ export function HeroSection() {
                 href="/sculptures"
                 className="inline-flex items-center justify-center gap-2 rounded-full border border-black/10 bg-white/80 px-6 py-3.5 text-sm font-semibold text-[#181512] backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-white"
               >
-                Voir les sculptures
+                {t("ctaSecondary")}
               </Link>
             </div>
 
-            <p className="mt-5 text-sm text-[#7a6654]">
-              Réponse rapide · Projet sur mesure · Sans engagement
-            </p>
+            <p className="mt-5 text-sm text-[#7a6654]">{t("trustLine")}</p>
 
             <div className="mt-10 flex flex-wrap gap-3">
               {highlights.map((item) => (
@@ -146,7 +153,7 @@ export function HeroSection() {
             <div className="pointer-events-none absolute -left-8 top-10 hidden h-40 w-40 rounded-full bg-[#ff6a00]/10 blur-3xl lg:block" />
             <div className="pointer-events-none absolute -bottom-10 right-0 hidden h-52 w-52 rounded-full bg-[#ffd7b0]/30 blur-3xl lg:block" />
 
-            <div className="perspective[1400px]">
+            <div className="perspective-[1400px]">
               <motion.div
                 ref={cardRef}
                 onMouseMove={handleMouseMove}
@@ -165,7 +172,7 @@ export function HeroSection() {
                   >
                     <Image
                       src={signatureImage}
-                      alt={signaturePiece?.title ?? "Pièce signature"}
+                      alt={signaturePiece?.title ?? t("signature.alt")}
                       fill
                       priority
                       sizes="(max-width: 1024px) 100vw, 42vw"
@@ -182,25 +189,23 @@ export function HeroSection() {
 
                   <motion.div
                     style={{
-                      x: useTransform(smoothRotateY, [-8, 8], [-8, 8]),
-                      y: useTransform(smoothRotateX, [-8, 8], [8, -8]),
+                      x: floatingCardX,
+                      y: floatingCardY,
                       transformStyle: "preserve-3d",
                     }}
                     className="relative z-10 flex h-full items-end p-6 md:p-7"
                   >
                     <div className="max-w-xs rounded-[1.5rem] border border-white/30 bg-gradient-to-b from-white/20 via-white/10 to-white/5 p-6 shadow-[0_12px_40px_rgba(80,50,20,0.18)] backdrop-blur-md">
                       <p className="text-[10px] uppercase tracking-[0.34em] text-black/55">
-                        Pièce signature
+                        {t("signature.label")}
                       </p>
 
                       <h2 className="mt-3 text-2xl font-medium tracking-[-0.03em] text-black/90">
-                        Support à vins
+                        {t("signature.title")}
                       </h2>
 
                       <p className="mt-3 text-sm leading-7 text-black/70">
-                        Une œuvre fonctionnelle et sculpturale pensée comme un
-                        objet de présence, entre artisanat, matière et élégance
-                        contemporaine.
+                        {t("signature.description")}
                       </p>
                     </div>
                   </motion.div>
@@ -209,10 +214,10 @@ export function HeroSection() {
                 <div className="mt-4 grid gap-3 sm:grid-cols-[1fr_auto]">
                   <div className="rounded-2xl border border-black/5 bg-white/65 px-4 py-4 backdrop-blur-sm">
                     <p className="text-[10px] uppercase tracking-[0.28em] text-[#a48a73]">
-                      Univers
+                      {t("universe.label")}
                     </p>
                     <p className="mt-2 text-sm leading-6 text-[#181512]">
-                      Sculpture fonctionnelle · contemporain · pièce signature
+                      {t("universe.value")}
                     </p>
                   </div>
 

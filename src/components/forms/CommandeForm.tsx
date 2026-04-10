@@ -1,9 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function CommandeForm() {
+  const t = useTranslations("CommandeForm");
+
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -36,14 +41,14 @@ export default function CommandeForm() {
 
       if (!contentType.includes("application/json")) {
         const text = await response.text();
-        console.error("Réponse non JSON:", text);
-        throw new Error("Le serveur a retourné une réponse invalide.");
+        console.error("Non-JSON response:", text);
+        throw new Error(t("errors.invalidResponse"));
       }
 
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.error || "Une erreur est survenue.");
+        throw new Error(result.error || t("errors.generic"));
       }
 
       form.reset();
@@ -51,9 +56,7 @@ export default function CommandeForm() {
       setSuccess(true);
     } catch (error) {
       setErrorMessage(
-        error instanceof Error
-          ? error.message
-          : "Une erreur est survenue."
+        error instanceof Error ? error.message : t("errors.generic")
       );
     } finally {
       setLoading(false);
@@ -86,12 +89,8 @@ export default function CommandeForm() {
 
     setImagePreview(null);
 
-    const input = document.querySelector(
-      'input[name="image"]'
-    ) as HTMLInputElement | null;
-
-    if (input) {
-      input.value = "";
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
   }
 
@@ -99,11 +98,9 @@ export default function CommandeForm() {
     return (
       <div className="rounded-[2rem] border border-black/5 bg-white/70 p-10 text-center shadow-[0_20px_60px_rgba(0,0,0,0.05)] backdrop-blur-sm">
         <h3 className="text-2xl font-medium text-[#181512]">
-          Demande envoyée ✨
+          {t("success.title")}
         </h3>
-        <p className="mt-4 text-[#5f5348]">
-          Merci. Je vous répondrai rapidement pour discuter de votre projet.
-        </p>
+        <p className="mt-4 text-[#5f5348]">{t("success.description")}</p>
       </div>
     );
   }
@@ -116,7 +113,8 @@ export default function CommandeForm() {
       <div className="grid gap-6 md:grid-cols-2">
         <input
           name="name"
-          placeholder="Nom"
+          placeholder={t("fields.name")}
+          aria-label={t("fields.name")}
           required
           className="rounded-xl border border-[#e7d5c5] bg-white px-4 py-3 text-sm text-[#181512] outline-none transition focus:border-[#ff6a00]"
         />
@@ -124,7 +122,8 @@ export default function CommandeForm() {
         <input
           name="email"
           type="email"
-          placeholder="Email"
+          placeholder={t("fields.email")}
+          aria-label={t("fields.email")}
           required
           className="rounded-xl border border-[#e7d5c5] bg-white px-4 py-3 text-sm text-[#181512] outline-none transition focus:border-[#ff6a00]"
         />
@@ -133,13 +132,15 @@ export default function CommandeForm() {
       <div className="mt-6 grid gap-6 md:grid-cols-2">
         <input
           name="projectType"
-          placeholder="Type de projet (murale, objet, etc.)"
+          placeholder={t("fields.projectType")}
+          aria-label={t("fields.projectType")}
           className="rounded-xl border border-[#e7d5c5] bg-white px-4 py-3 text-sm text-[#181512] outline-none transition focus:border-[#ff6a00]"
         />
 
         <input
           name="dimensions"
-          placeholder="Dimensions souhaitées"
+          placeholder={t("fields.dimensions")}
+          aria-label={t("fields.dimensions")}
           className="rounded-xl border border-[#e7d5c5] bg-white px-4 py-3 text-sm text-[#181512] outline-none transition focus:border-[#ff6a00]"
         />
       </div>
@@ -147,7 +148,8 @@ export default function CommandeForm() {
       <div className="mt-6">
         <input
           name="budget"
-          placeholder="Budget estimé (€)"
+          placeholder={t("fields.budget")}
+          aria-label={t("fields.budget")}
           className="w-full rounded-xl border border-[#e7d5c5] bg-white px-4 py-3 text-sm text-[#181512] outline-none transition focus:border-[#ff6a00]"
         />
       </div>
@@ -155,7 +157,8 @@ export default function CommandeForm() {
       <div className="mt-6">
         <textarea
           name="message"
-          placeholder="Décrivez votre idée..."
+          placeholder={t("fields.message")}
+          aria-label={t("fields.message")}
           rows={5}
           required
           className="w-full rounded-xl border border-[#e7d5c5] bg-white px-4 py-3 text-sm text-[#181512] outline-none transition focus:border-[#ff6a00]"
@@ -164,10 +167,11 @@ export default function CommandeForm() {
 
       <div className="mt-6">
         <label className="mb-2 block text-sm font-medium text-[#5f5348]">
-          Image de référence
+          {t("fields.referenceImage")}
         </label>
 
         <input
+          ref={fileInputRef}
           name="image"
           type="file"
           accept="image/png,image/jpeg,image/webp"
@@ -180,7 +184,7 @@ export default function CommandeForm() {
             <div className="relative h-64 w-full">
               <Image
                 src={imagePreview}
-                alt="Aperçu de l’image"
+                alt={t("fields.imagePreviewAlt")}
                 fill
                 unoptimized
                 className="object-cover"
@@ -192,14 +196,12 @@ export default function CommandeForm() {
               onClick={handleRemoveImage}
               className="absolute right-3 top-3 rounded-full bg-black/70 px-3 py-1 text-xs text-white backdrop-blur-md transition hover:bg-black/80"
             >
-              Supprimer
+              {t("actions.remove")}
             </button>
           </div>
         )}
 
-        <p className="mt-2 text-xs text-[#8a7667]">
-          JPG, PNG ou WEBP — max 5 MB
-        </p>
+        <p className="mt-2 text-xs text-[#8a7667]">{t("fields.imageHint")}</p>
       </div>
 
       {errorMessage && (
@@ -211,7 +213,7 @@ export default function CommandeForm() {
         disabled={loading}
         className="mt-8 w-full rounded-full bg-[#181512] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#2a241f] disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {loading ? "Envoi..." : "Envoyer la demande"}
+        {loading ? t("actions.sending") : t("actions.submit")}
       </button>
     </form>
   );

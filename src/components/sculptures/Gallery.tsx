@@ -1,7 +1,10 @@
 // src/components/sculptures/Gallery.tsx
+
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
+import { useTranslations } from "next-intl";
 import type { Artwork } from "@/types/artwork";
 
 type GalleryProps = {
@@ -19,11 +22,11 @@ function getCoverImage(artwork: Artwork) {
 function getAvailabilityStyle(availability?: string | null) {
   const normalized = availability?.toLowerCase() ?? "";
 
-  if (normalized.includes("vendue")) {
+  if (normalized.includes("vendue") || normalized.includes("sold")) {
     return "border-neutral-900/80 bg-neutral-900 text-white";
   }
 
-  if (normalized.includes("disponible")) {
+  if (normalized.includes("disponible") || normalized.includes("available")) {
     return "border-[#ead8bc] bg-[#f6efe2] text-[#6d533b]";
   }
 
@@ -31,15 +34,13 @@ function getAvailabilityStyle(availability?: string | null) {
 }
 
 export default function Gallery({ artworks }: GalleryProps) {
+  const t = useTranslations("Gallery");
+
   if (!artworks.length) {
     return (
       <div className="rounded-[30px] border border-black/5 bg-white/70 p-10 text-center shadow-[0_20px_60px_rgba(15,23,42,0.05)]">
-        <p className="text-lg text-neutral-600">
-          Aucune œuvre n’est encore disponible dans la galerie.
-        </p>
-        <p className="mt-2 text-sm text-neutral-400">
-          Ajoute tes premières sculptures depuis Supabase pour les afficher ici.
-        </p>
+        <p className="text-lg text-neutral-600">{t("emptyTitle")}</p>
+        <p className="mt-2 text-sm text-neutral-400">{t("emptyDescription")}</p>
       </div>
     );
   }
@@ -72,7 +73,7 @@ export default function Gallery({ artworks }: GalleryProps) {
                   </>
                 ) : (
                   <div className="flex h-full items-center justify-center px-6 text-center text-sm text-neutral-400">
-                    Image indisponible
+                    {t("imageUnavailable")}
                   </div>
                 )}
 
@@ -93,7 +94,7 @@ export default function Gallery({ artworks }: GalleryProps) {
               <div className="flex flex-1 flex-col p-5">
                 <div className="min-h-[116px]">
                   <p className="text-[11px] uppercase tracking-[0.28em] text-neutral-400">
-                    {artwork.category || "Sculpture"}
+                    {artwork.category || t("defaultCategory")}
                   </p>
 
                   <h2 className="mt-3 line-clamp-2 text-[1.38rem] font-medium leading-[1.1] tracking-[-0.02em] text-neutral-900 transition duration-300 group-hover:text-[#be5a08]">
@@ -127,7 +128,7 @@ export default function Gallery({ artworks }: GalleryProps) {
 
                 <div className="mt-5 pt-4">
                   <span className="inline-flex items-center text-sm font-medium text-[#c45e09] transition duration-300 group-hover:translate-x-0.5">
-                    Découvrir l’œuvre
+                    {t("discover")}
                   </span>
                 </div>
               </div>

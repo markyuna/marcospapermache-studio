@@ -9,5 +9,224 @@
     "order": "Encargar",
     "openMenu": "Abrir menú",
     "closeMenu": "Cerrar menú"
+  },
+  "Hero": {
+    "badge": "Marcos Papermache · Arte contemporáneo",
+    "title": {
+      "line1": "La materia se convierte en forma,",
+      "line2": "la idea se convierte en escultura."
+    },
+    "description": "Un universo donde la artesanía, la presencia escultórica y la creación asistida por IA se encuentran para dar vida a obras sensibles y contemporáneas concebidas a medida.",
+    "ctaPrimary": "Crear tu escultura con IA",
+    "ctaSecondary": "Ver las esculturas",
+    "trustLine": "Respuesta rápida · Proyecto a medida · Sin compromiso",
+    "highlights": {
+      "unique": "Piezas únicas",
+      "custom": "A medida",
+      "artistic": "Experiencia artística"
+    },
+    "signature": {
+      "alt": "Pieza emblemática",
+      "label": "Pieza emblemática",
+      "title": "Soporte para vinos",
+      "description": "Una obra funcional y escultórica concebida como un objeto de presencia, entre artesanía, materia y elegancia contemporánea."
+    },
+    "universe": {
+      "label": "Universo",
+      "value": "Escultura funcional · contemporánea · pieza emblemática"
+    }
+  },
+  "Featured": {
+    "badge": "Selección",
+    "title": "Esculturas en luz",
+    "description": "Tres lámparas escultóricas de papel maché donde materia, luz y gesto artesanal se encuentran en una estética contemporánea, sensible y singular.",
+    "viewAll": "Ver la galería completa",
+    "discover": "Descubrir la pieza",
+    "sold": "Vendido"
+  },
+  "CTA": {
+    "badge": "Experiencia premium",
+    "title": "Da forma a una idea y transfórmala en una obra escultórica.",
+    "description": "Inicia la experiencia IA o envía una solicitud de creación a medida pensada para tu espacio.",
+    "ctaPrimary": "Crear con IA",
+    "ctaSecondary": "Solicitar una pieza a medida"
+  },
+  "ProcessSection": {
+    "badge": "Proceso",
+    "title": "De la idea a la escultura",
+    "steps": {
+      "imagine": {
+        "title": "Imagina",
+        "description": "Describe una intención, una emoción, una materia o una presencia escultórica."
+      },
+      "generate": {
+        "title": "Genera",
+        "description": "La IA propone una dirección visual inspirada en el universo de Marcos Papermache."
+      },
+      "transform": {
+        "title": "Transforma",
+        "description": "El concepto se convierte en la base de una creación real, pensada y elaborada a medida."
+      }
+    }
+  },
+  "Footer": {
+    "description": "Esculturas artesanales en papel maché, que combinan diseño contemporáneo, materiales reciclados y expresión artística única.",
+    "navigation": "Navegación",
+    "links": {
+      "home": "Inicio",
+      "sculptures": "Esculturas",
+      "custom": "Creaciones a medida",
+      "ai": "Experiencia IA",
+      "contact": "Contacto"
+    },
+    "contact": "Contacto",
+    "rights": "Todos los derechos reservados"
+  },
+  "LocaleSwitcher": {
+    "label": "Selector de idioma",
+    "switchTo": "Cambiar el idioma a {locale}"
+  },
+  "AboutPage": {
+    "metadata": {
+      "title": "Sobre mí",
+      "description": "Descubre el universo de Marcos Suarez, artista especializado en la escultura en papel maché, entre materia, luz y creación contemporánea."
+    },
+    "hero": {
+      "badge": "Sobre mí",
+      "title": "Descubre el arte de Marcos Suarez",
+      "description": "Un universo donde la materia reciclada, la escultura y la luz dialogan dentro de una estética artesanal y contemporánea.",
+      "imageAlt": "Marcos Suarez en su universo artístico"
+    },
+    "approach": {
+      "badge": "Enfoque",
+      "title": "Nuestro compromiso artístico",
+      "paragraphs": [
+        "Marcos Suarez, originario de La Habana, desarrolla una práctica artística centrada en la escultura en papel maché, la transformación de la materia y la creación de objetos con una fuerte presencia visual.",
+        "Su trayectoria comenzó muy joven a través de creaciones hechas a mano en cartón y papel, vendidas en los mercados turísticos de Cuba. Esa sensibilidad inicial hacia el objeto artesanal se transformó con el tiempo en una búsqueda más escultórica, más contemporánea y más personal.",
+        "Hoy en día, cada obra explora el diálogo entre formas orgánicas, texturas, reciclaje y luz. Ya se trate de una escultura mural, una lámpara o un objeto funcional, cada pieza está concebida como un encuentro entre poesía, materia y emoción."
+      ],
+      "imageAlt": "Escultura funcional en papel maché de Marcos Suarez"
+    },
+    "values": {
+      "badge": "Valores",
+      "title": "Una práctica entre arte, materia y emoción",
+      "description": "Cada creación nace de una atención especial a las formas, la textura y la atmósfera que una pieza puede generar en un espacio.",
+      "items": [
+        {
+          "title": "Artesanía contemporánea",
+          "text": "Cada pieza está pensada como una presencia escultórica singular, entre gesto manual, búsqueda de forma y sensibilidad contemporánea."
+        },
+        {
+          "title": "Materiales transformados",
+          "text": "El papel maché y los materiales reciclados se convierten en obras con carácter, poéticas, texturadas y duraderas."
+        },
+        {
+          "title": "Creaciones a medida",
+          "text": "Algunas piezas nacen de un diálogo con el cliente, para imaginar una escultura, una lámpara o un objeto escultórico adaptado a un lugar."
+        }
+      ]
+    },
+    "interiors": {
+      "badge": "En casa de nuestros clientes",
+      "title": "Mis esculturas en interiores reales",
+      "description1": "Descubre cómo algunas piezas encuentran su lugar en espacios de vida reales. Cada creación dialoga con su entorno y se convierte en una presencia singular dentro del hogar.",
+      "description2": "Esculturas murales, lámparas escultóricas u objetos funcionales: cada obra se integra de forma única en el universo de quienes la eligen.",
+      "cta": "Descubrir las creaciones a medida",
+      "images": {
+        "livingRoomAlt": "Escultura de Marcos Suarez integrada en un salón",
+        "livingRoomLabel": "Salón",
+        "wallAlt": "Lámpara escultórica de Marcos Suarez en un interior",
+        "wallLabel": "Mural",
+        "contemporaryAlt": "Obra de Marcos Suarez integrada en un interior contemporáneo",
+        "contemporaryLabel": "Interior contemporáneo",
+        "quote": "Cada pieza transforma el espacio y crea una presencia artística en la vida cotidiana."
+      }
+    }
+  },
+  "CustomCreationPage": {
+    "hero": {
+      "eyebrow": "Creación a medida",
+      "title": "Una obra pensada especialmente para ti",
+      "description": "Cada creación a medida nace de un diálogo entre materia, intuición e intención. El objetivo es concebir una pieza singular, en resonancia con tu interior, tu sensibilidad y tu proyecto.",
+      "primaryCta": "Solicitar una creación",
+      "secondaryCta": "Ver las obras"
+    },
+    "process": {
+      "eyebrow": "Proceso",
+      "title": "Cómo se desarrolla un encargo"
+    },
+    "steps": [
+      {
+        "title": "Compartir tu idea",
+        "description": "Describe tu deseo, tu espacio, tus inspiraciones o la emoción que deseas hacer nacer."
+      },
+      {
+        "title": "Definir la dirección artística",
+        "description": "Intercambiamos sobre las formas, los materiales, las dimensiones y la intención estética de la pieza."
+      },
+      {
+        "title": "Dar vida a la obra",
+        "description": "La escultura se realiza a mano dentro de un enfoque artesanal, sensible y contemporáneo."
+      }
+    ],
+    "approach": {
+      "eyebrow": "Enfoque",
+      "title": "Un proceso artesanal, poético y contemporáneo",
+      "description": "Cada proyecto se aborda como una búsqueda de forma, presencia y emoción. La materia reciclada se convierte en lenguaje, la mano marca el ritmo y la pieza final encuentra su lugar entre escultura, objeto y memoria."
+    },
+    "values": [
+      "Pieza única pensada para tu universo",
+      "Fabricación artesanal a mano",
+      "Materiales reciclados y enfoque responsable",
+      "Estética contemporánea y expresiva"
+    ],
+    "contact": {
+      "eyebrow": "Proyecto personalizado",
+      "title": "Hablemos de tu futura creación",
+      "description": "Describe tu idea, tu espacio o simplemente tu intención. Cada proyecto es una colaboración."
+    }
+  },
+    "Gallery": {
+        "emptyTitle": "Aún no hay obras disponibles en la galería.",
+        "emptyDescription": "Agrega tus primeras esculturas desde Supabase para mostrarlas aquí.",
+        "imageUnavailable": "Imagen no disponible",
+        "defaultCategory": "Escultura",
+        "discover": "Descubrir la obra"
+    },
+    "CommandeForm": {
+    "success": {
+      "title": "Solicitud enviada ✨",
+      "description": "Gracias. Te responderé pronto para hablar sobre tu proyecto."
+    },
+    "fields": {
+      "name": "Nombre",
+      "email": "Correo electrónico",
+      "projectType": "Tipo de proyecto (mural, objeto, etc.)",
+      "dimensions": "Dimensiones deseadas",
+      "budget": "Presupuesto estimado (€)",
+      "message": "Describe tu idea...",
+      "referenceImage": "Imagen de referencia",
+      "imagePreviewAlt": "Vista previa de la imagen",
+      "imageHint": "JPG, PNG o WEBP — máx. 5 MB"
+    },
+    "actions": {
+      "remove": "Eliminar",
+      "sending": "Enviando...",
+      "submit": "Enviar solicitud"
+    },
+    "errors": {
+      "invalidResponse": "El servidor devolvió una respuesta no válida.",
+      "generic": "Ha ocurrido un error."
+    }
+  },
+   "CommandePage": {
+    "badge": "Encargo",
+    "title": "Solicitud de creación personalizada.",
+    "description": "Describe tu proyecto, dimensiones, presupuesto y universo visual para iniciar una creación a medida.",
+    "highlights": {
+      "fast": "Respuesta rápida",
+      "custom": "Proyecto a medida",
+      "noCommitment": "Sin compromiso"
+    }
   }
 }

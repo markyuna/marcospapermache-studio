@@ -1,10 +1,14 @@
-import Link from "next/link";
+"use client";
+
 import { Sparkles } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 import { Container } from "./container";
-import { navigation } from "@/data/navigation";
 
 export function SiteHeader() {
+  const t = useTranslations("Navbar");
+
   return (
     <header className="sticky top-0 z-50 border-b border-black/5 bg-white/70 backdrop-blur-2xl">
       <Container className="flex h-20 items-center justify-between">
@@ -24,22 +28,54 @@ export function SiteHeader() {
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
-          {navigation.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="text-sm text-[#5f5348] transition hover:text-[#ff6a00]"
-            >
-              {item.label}
-            </Link>
-          ))}
+          <Link
+            href="/"
+            className="text-sm text-[#5f5348] transition hover:text-[#ff6a00]"
+          >
+            {t("home")}
+          </Link>
+
+          <Link
+            href="/about"
+            className="text-sm text-[#5f5348] transition hover:text-[#ff6a00]"
+          >
+            {t("about")}
+          </Link>
+
+          <Link
+            href="/sculptures"
+            className="text-sm text-[#5f5348] transition hover:text-[#ff6a00]"
+          >
+            {t("sculptures")}
+          </Link>
+
+          <Link
+            href="/creations-sur-mesure"
+            className="text-sm text-[#5f5348] transition hover:text-[#ff6a00]"
+          >
+            {t("custom")}
+          </Link>
+
+          <Link
+            href="/experience-ia"
+            className="text-sm text-[#5f5348] transition hover:text-[#ff6a00]"
+          >
+            {t("ai")}
+          </Link>
+
+          <Link
+            href="/contact"
+            className="text-sm text-[#5f5348] transition hover:text-[#ff6a00]"
+          >
+            {t("contact")}
+          </Link>
         </nav>
 
         <Link
-          href="/create"
+          href="/experience-ia"
           className="rounded-full border border-[#ff6a00]/20 bg-[#ff6a00] px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:scale-[1.02] hover:bg-[#e85f00]"
         >
-          Générer une idée
+          {t("ai")}
         </Link>
       </Container>
     </header>

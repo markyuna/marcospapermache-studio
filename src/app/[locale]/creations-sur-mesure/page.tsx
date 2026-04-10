@@ -1,35 +1,35 @@
-import Link from "next/link";
+// src/app/[locale]/creations-sur-mesure/page.tsx
+import { Link } from "@/i18n/navigation";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import CommandeForm from "@/components/forms/CommandeForm";
-
 import { Container } from "@/components/layout/container";
 
-const steps = [
-  {
-    title: "Partager votre idée",
-    description:
-      "Décrivez votre envie, votre espace, vos inspirations ou l’émotion que vous souhaitez faire naître.",
-  },
-  {
-    title: "Définir la direction artistique",
-    description:
-      "Nous échangeons sur les formes, les matières, les dimensions et l’intention esthétique de la pièce.",
-  },
-  {
-    title: "Donner vie à l’œuvre",
-    description:
-      "La sculpture est réalisée à la main dans une approche artisanale, sensible et contemporaine.",
-  },
-];
+export default async function CustomCreationPage() {
+  const t = await getTranslations("CustomCreationPage");
 
-const values = [
-  "Pièce unique pensée pour votre univers",
-  "Fabrication artisanale à la main",
-  "Matériaux recyclés et approche responsable",
-  "Esthétique contemporaine et expressive",
-];
+  const steps = [
+    {
+      title: t("steps.0.title"),
+      description: t("steps.0.description"),
+    },
+    {
+      title: t("steps.1.title"),
+      description: t("steps.1.description"),
+    },
+    {
+      title: t("steps.2.title"),
+      description: t("steps.2.description"),
+    },
+  ];
 
-export default function CustomCreationPage() {
+  const values = [
+    t("values.0"),
+    t("values.1"),
+    t("values.2"),
+    t("values.3"),
+  ];
+
   return (
     <main className="relative overflow-hidden">
       <section className="relative overflow-hidden pb-24 pt-28 md:pb-32 md:pt-36">
@@ -38,18 +38,15 @@ export default function CustomCreationPage() {
         <Container className="relative">
           <div className="max-w-4xl">
             <p className="text-[11px] uppercase tracking-[0.34em] text-[#b07a52]">
-              Création sur mesure
+              {t("hero.eyebrow")}
             </p>
 
             <h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] text-[#1b1713] md:text-6xl">
-              Une œuvre pensée spécialement pour vous
+              {t("hero.title")}
             </h1>
 
             <p className="mt-6 max-w-2xl text-lg leading-8 text-[#6c5d50]">
-              Chaque création sur mesure naît d’un dialogue entre matière,
-              intuition et intention. L’objectif est de concevoir une pièce
-              singulière, en résonance avec votre intérieur, votre sensibilité
-              et votre projet.
+              {t("hero.description")}
             </p>
 
             <div className="mt-10 flex flex-wrap gap-4">
@@ -57,7 +54,7 @@ export default function CustomCreationPage() {
                 href="/contact"
                 className="inline-flex items-center gap-2 rounded-full bg-[#ef8316] px-6 py-3 text-sm font-medium text-white transition duration-300 hover:bg-[#af6020]"
               >
-                Demander une création
+                {t("hero.primaryCta")}
                 <ArrowRight className="h-4 w-4" />
               </Link>
 
@@ -65,7 +62,7 @@ export default function CustomCreationPage() {
                 href="/sculptures"
                 className="inline-flex items-center gap-2 rounded-full border border-[#dcc7b2] bg-white/80 px-6 py-3 text-sm font-medium text-[#4f4338] backdrop-blur-md transition duration-300 hover:border-[#ff6a00]/30 hover:text-[#c65400]"
               >
-                Voir les œuvres
+                {t("hero.secondaryCta")}
               </Link>
             </div>
           </div>
@@ -76,10 +73,10 @@ export default function CustomCreationPage() {
         <Container>
           <div className="mb-12 max-w-2xl">
             <p className="text-[11px] uppercase tracking-[0.34em] text-[#b07a52]">
-              Processus
+              {t("process.eyebrow")}
             </p>
             <h2 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-[#1b1713] md:text-5xl">
-              Comment se déroule une commande
+              {t("process.title")}
             </h2>
           </div>
 
@@ -111,18 +108,15 @@ export default function CustomCreationPage() {
           <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
             <div>
               <p className="text-[11px] uppercase tracking-[0.34em] text-[#b07a52]">
-                Approche
+                {t("approach.eyebrow")}
               </p>
 
               <h2 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-[#1b1713] md:text-5xl">
-                Une démarche artisanale, poétique et contemporaine
+                {t("approach.title")}
               </h2>
 
               <p className="mt-6 max-w-2xl text-base leading-8 text-[#6c5d50] md:text-lg">
-                Chaque projet est abordé comme une recherche de forme, de
-                présence et d’émotion. La matière recyclée devient langage, la
-                main donne le rythme, et la pièce finale trouve sa place entre
-                sculpture, objet et mémoire.
+                {t("approach.description")}
               </p>
             </div>
 
@@ -142,30 +136,27 @@ export default function CustomCreationPage() {
         </Container>
       </section>
 
-        <section className="pb-24 pt-10 md:pb-32">
-            <Container>
-                <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-start">
-                
-                <div>
-                    <p className="text-[11px] uppercase tracking-[0.34em] text-[#9c6e47]">
-                    Projet personnalisé
-                    </p>
+      <section className="pb-24 pt-10 md:pb-32">
+        <Container>
+          <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-start">
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.34em] text-[#9c6e47]">
+                {t("contact.eyebrow")}
+              </p>
 
-                    <h2 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-[#181512] md:text-5xl">
-                    Parlons de votre future création
-                    </h2>
+              <h2 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-[#181512] md:text-5xl">
+                {t("contact.title")}
+              </h2>
 
-                    <p className="mt-5 text-base leading-8 text-[#5f5348] md:text-lg">
-                    Décrivez votre idée, votre espace ou simplement votre intention.
-                    Chaque projet est une collaboration.
-                    </p>
-                </div>
+              <p className="mt-5 text-base leading-8 text-[#5f5348] md:text-lg">
+                {t("contact.description")}
+              </p>
+            </div>
 
-                <CommandeForm />
-
-                </div>
-            </Container>
-        </section>
+            <CommandeForm />
+          </div>
+        </Container>
+      </section>
     </main>
   );
 }

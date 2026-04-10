@@ -1,4 +1,3 @@
-// src/app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -17,5 +16,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return children;
+  return (
+    <html lang="fr" suppressHydrationWarning>
+      <body className="min-h-screen antialiased">{children}</body>
+    </html>
+  );
 }

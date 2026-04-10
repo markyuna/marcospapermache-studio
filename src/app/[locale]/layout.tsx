@@ -52,16 +52,12 @@ export default async function LocaleLayout({ children, params }: Props) {
   const messages = await getMessages();
 
   return (
-    <html lang={locale} suppressHydrationWarning>
-      <body className="min-h-screen antialiased">
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <div className="flex min-h-screen flex-col">
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      <div className="flex min-h-screen flex-col">
+        <Navbar />
+        <main className="flex-1">{children}</main>
+        <Footer />
+      </div>
+    </NextIntlClientProvider>
   );
 }

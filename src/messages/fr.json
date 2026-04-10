@@ -9,5 +9,224 @@
     "order": "Commander",
     "openMenu": "Ouvrir le menu",
     "closeMenu": "Fermer le menu"
+  },
+  "Hero": {
+    "badge": "Marcos Papermache · Art contemporain",
+    "title": {
+      "line1": "La matière devient forme,",
+      "line2": "l’idée devient sculpture."
+    },
+    "description": "Un univers où l’artisanat, la présence sculpturale et la création assistée par l’IA se rencontrent pour donner vie à des œuvres sensibles et contemporaines pensées sur mesure.",
+    "ctaPrimary": "Créer votre sculpture avec l’IA",
+    "ctaSecondary": "Voir les sculptures",
+    "trustLine": "Réponse rapide · Projet sur mesure · Sans engagement",
+    "highlights": {
+      "unique": "Pièces uniques",
+      "custom": "Sur mesure",
+      "artistic": "Expérience artistique"
+    },
+    "signature": {
+      "alt": "Pièce signature",
+      "label": "Pièce signature",
+      "title": "Support à vins",
+      "description": "Une œuvre fonctionnelle et sculpturale pensée comme un objet de présence, entre artisanat, matière et élégance contemporaine."
+    },
+    "universe": {
+      "label": "Univers",
+      "value": "Sculpture fonctionnelle · contemporaine · pièce signature"
+    }
+  },
+  "Featured": {
+    "badge": "Sélection",
+    "title": "Sculptures en lumière",
+    "description": "Trois lampes sculpturales en papier mâché où matière, lumière et geste artisanal se rencontrent dans une esthétique contemporaine, sensible et singulière.",
+    "viewAll": "Voir la galerie complète",
+    "discover": "Découvrir la pièce",
+    "sold": "Vendu"
+  },
+  "CTA": {
+    "badge": "Expérience premium",
+    "title": "Donnez forme à une idée et transformez-la en œuvre sculpturale.",
+    "description": "Lancez l’expérience IA ou envoyez une demande de création sur mesure pensée pour votre espace.",
+    "ctaPrimary": "Créer avec l’IA",
+    "ctaSecondary": "Demander une pièce sur mesure"
+  },
+  "ProcessSection": {
+    "badge": "Processus",
+    "title": "De l’idée à la sculpture",
+    "steps": {
+      "imagine": {
+        "title": "Imaginez",
+        "description": "Décrivez une intention, une émotion, une matière ou une présence sculpturale."
+      },
+      "generate": {
+        "title": "Générez",
+        "description": "L’IA propose une direction visuelle inspirée de l’univers Marcos Papermache."
+      },
+      "transform": {
+        "title": "Transformez",
+        "description": "Le concept devient la base d’une création réelle, pensée et façonnée sur mesure."
+      }
+    }
+  },
+  "Footer": {
+    "description": "Sculptures artisanales en papier mâché, mêlant design contemporain, matières recyclées et expression artistique unique.",
+    "navigation": "Navigation",
+    "links": {
+      "home": "Accueil",
+      "sculptures": "Sculptures",
+      "custom": "Créations sur mesure",
+      "ai": "Expérience IA",
+      "contact": "Contact"
+    },
+    "contact": "Contact",
+    "rights": "Tous droits réservés"
+  },
+  "LocaleSwitcher": {
+    "label": "Sélecteur de langue",
+    "switchTo": "Changer la langue vers {locale}"
+  },
+  "AboutPage": {
+    "metadata": {
+        "title": "À propos",
+        "description": "Découvrez l’univers de Marcos Suarez, artiste spécialisé dans la sculpture en papier mâché, entre matière, lumière et création contemporaine."
+    },
+    "hero": {
+        "badge": "À propos",
+        "title": "Découvrez l’Art de Marcos Suarez",
+        "description": "Un univers où la matière recyclée, la sculpture et la lumière dialoguent dans une esthétique artisanale et contemporaine.",
+        "imageAlt": "Marcos Suarez dans son univers artistique"
+    },
+    "approach": {
+        "badge": "Démarche",
+        "title": "Notre Engagement Artistique",
+        "paragraphs": [
+        "Marcos Suarez, originaire de La Havane, développe une pratique artistique centrée sur la sculpture en papier mâché, la transformation de la matière et la création d’objets à forte présence visuelle.",
+        "Son parcours a commencé très jeune à travers des créations faites à la main en carton et en papier, vendues sur les marchés touristiques de Cuba. Cette sensibilité première pour l’objet artisanal s’est transformée au fil du temps en une recherche plus sculpturale, plus contemporaine, plus personnelle.",
+        "Aujourd’hui, chaque œuvre explore le dialogue entre formes organiques, textures, recyclage et lumière. Qu’il s’agisse d’une sculpture murale, d’une lampe ou d’un objet fonctionnel, chaque pièce est pensée comme une rencontre entre poésie, matière et émotion."
+        ],
+        "imageAlt": "Sculpture fonctionnelle en papier mâché de Marcos Suarez"
+    },
+    "values": {
+        "badge": "Valeurs",
+        "title": "Une pratique entre art, matière et émotion",
+        "description": "Chaque création naît d’une attention portée aux formes, à la texture et à l’atmosphère qu’une pièce peut faire naître dans un espace.",
+        "items": [
+        {
+            "title": "Artisanat contemporain",
+            "text": "Chaque pièce est pensée comme une présence sculpturale singulière, entre geste manuel, recherche de forme et sensibilité contemporaine."
+        },
+        {
+            "title": "Matières transformées",
+            "text": "Le papier mâché et les matériaux recyclés deviennent des œuvres de caractère, poétiques, texturées et durables."
+        },
+        {
+            "title": "Créations sur mesure",
+            "text": "Certaines pièces naissent d’un dialogue avec le client, pour imaginer une sculpture, une lampe ou un objet sculptural adapté à un lieu."
+        }
+        ]
+    },
+    "interiors": {
+            "badge": "Chez nos clients",
+            "title": "Mes sculptures dans des intérieurs réels",
+            "description1": "Découvrez comment certaines pièces trouvent leur place dans des espaces de vie réels. Chaque création dialogue avec son environnement et devient une présence singulière dans la maison.",
+            "description2": "Sculptures murales, lampes sculpturales ou objets fonctionnels : chaque œuvre s’intègre de manière unique à l’univers de ceux qui la choisissent.",
+            "cta": "Découvrir les créations sur mesure",
+            "images": {
+            "livingRoomAlt": "Sculpture de Marcos Suarez intégrée dans un salon",
+            "livingRoomLabel": "Salon",
+            "wallAlt": "Lampe sculpturale de Marcos Suarez dans un intérieur",
+            "wallLabel": "Mural",
+            "contemporaryAlt": "Œuvre de Marcos Suarez intégrée dans un intérieur contemporain",
+            "contemporaryLabel": "Intérieur contemporain",
+            "quote": "Chaque pièce transforme l’espace et crée une présence artistique dans le quotidien."
+            }
+        }
+  },
+  "CustomCreationPage": {
+    "hero": {
+      "eyebrow": "Création sur mesure",
+      "title": "Une œuvre pensée spécialement pour vous",
+      "description": "Chaque création sur mesure naît d’un dialogue entre matière, intuition et intention. L’objectif est de concevoir une pièce singulière, en résonance avec votre intérieur, votre sensibilité et votre projet.",
+      "primaryCta": "Demander une création",
+      "secondaryCta": "Voir les œuvres"
+    },
+    "process": {
+      "eyebrow": "Processus",
+      "title": "Comment se déroule une commande"
+    },
+    "steps": [
+      {
+        "title": "Partager votre idée",
+        "description": "Décrivez votre envie, votre espace, vos inspirations ou l’émotion que vous souhaitez faire naître."
+      },
+      {
+        "title": "Définir la direction artistique",
+        "description": "Nous échangeons sur les formes, les matières, les dimensions et l’intention esthétique de la pièce."
+      },
+      {
+        "title": "Donner vie à l’œuvre",
+        "description": "La sculpture est réalisée à la main dans une approche artisanale, sensible et contemporaine."
+      }
+    ],
+    "approach": {
+      "eyebrow": "Approche",
+      "title": "Une démarche artisanale, poétique et contemporaine",
+      "description": "Chaque projet est abordé comme une recherche de forme, de présence et d’émotion. La matière recyclée devient langage, la main donne le rythme, et la pièce finale trouve sa place entre sculpture, objet et mémoire."
+    },
+    "values": [
+      "Pièce unique pensée pour votre univers",
+      "Fabrication artisanale à la main",
+      "Matériaux recyclés et approche responsable",
+      "Esthétique contemporaine et expressive"
+    ],
+    "contact": {
+      "eyebrow": "Projet personnalisé",
+      "title": "Parlons de votre future création",
+      "description": "Décrivez votre idée, votre espace ou simplement votre intention. Chaque projet est une collaboration."
+    }
+  },
+  "Gallery": {
+    "emptyTitle": "Aucune œuvre n’est encore disponible dans la galerie.",
+    "emptyDescription": "Ajoute tes premières sculptures depuis Supabase pour les afficher ici.",
+    "imageUnavailable": "Image indisponible",
+    "defaultCategory": "Sculpture",
+    "discover": "Découvrir l’œuvre"
+  },
+  "CommandeForm": {
+    "success": {
+      "title": "Demande envoyée ✨",
+      "description": "Merci. Je vous répondrai rapidement pour discuter de votre projet."
+    },
+    "fields": {
+      "name": "Nom",
+      "email": "Email",
+      "projectType": "Type de projet (murale, objet, etc.)",
+      "dimensions": "Dimensions souhaitées",
+      "budget": "Budget estimé (€)",
+      "message": "Décrivez votre idée...",
+      "referenceImage": "Image de référence",
+      "imagePreviewAlt": "Aperçu de l’image",
+      "imageHint": "JPG, PNG ou WEBP — max 5 MB"
+    },
+    "actions": {
+      "remove": "Supprimer",
+      "sending": "Envoi...",
+      "submit": "Envoyer la demande"
+    },
+    "errors": {
+      "invalidResponse": "Le serveur a retourné une réponse invalide.",
+      "generic": "Une erreur est survenue."
+    }
+  },
+   "CommandePage": {
+    "badge": "Commande",
+    "title": "Demande de création personnalisée.",
+    "description": "Décrivez votre projet, vos dimensions, votre budget et votre univers visuel pour lancer une création sur mesure.",
+    "highlights": {
+      "fast": "Réponse rapide",
+      "custom": "Projet sur mesure",
+      "noCommitment": "Sans engagement"
+    }
   }
 }

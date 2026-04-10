@@ -1,9 +1,9 @@
-// src/components/home/featured-section.tsx
 import Image from "next/image";
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
 import { Container } from "@/components/layout/container";
+import { Link } from "@/i18n/navigation";
 import { getArtworksBySlugs } from "@/lib/artworks";
 
 type SculptureCardProps = {
@@ -13,6 +13,8 @@ type SculptureCardProps = {
   image: string;
   availability?: string | null;
   index: number;
+  discoverLabel: string;
+  soldLabel: string;
 };
 
 function SculptureCard({
@@ -22,8 +24,14 @@ function SculptureCard({
   image,
   availability,
   index,
+  discoverLabel,
+  soldLabel,
 }: SculptureCardProps) {
-  const isSold = availability?.toLowerCase().includes("vendue") ?? false;
+  const normalizedAvailability = availability?.toLowerCase() ?? "";
+  const isSold =
+    normalizedAvailability.includes("vendue") ||
+    normalizedAvailability.includes("vendido") ||
+    normalizedAvailability.includes("sold");
 
   return (
     <Link
@@ -51,7 +59,7 @@ function SculptureCard({
 
         {isSold && (
           <div className="absolute right-5 top-5 rounded-full border border-white/30 bg-[#181512]/72 px-3 py-1 text-[10px] uppercase tracking-[0.24em] text-white shadow-sm backdrop-blur-md">
-            Vendue
+            {soldLabel}
           </div>
         )}
       </div>
@@ -72,7 +80,7 @@ function SculptureCard({
         )}
 
         <div className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-[#7a5a40] transition duration-300 group-hover:text-[#c65400]">
-          Découvrir la pièce
+          {discoverLabel}
           <ArrowRight className="h-4 w-4 transition duration-300 group-hover:translate-x-1" />
         </div>
       </div>
@@ -81,6 +89,8 @@ function SculptureCard({
 }
 
 export async function FeaturedSection() {
+  const t = await getTranslations("Featured");
+
   const featuredLampSlugs = [
     "eveil-lumineux",
     "ondulation-lumineuse",
@@ -99,18 +109,16 @@ export async function FeaturedSection() {
           <div className="max-w-2xl">
             <div className="inline-flex items-center rounded-full border border-[#ead9cb] bg-white/75 px-4 py-2 backdrop-blur-sm">
               <p className="text-[10px] uppercase tracking-[0.34em] text-[#b07a52] md:text-[11px]">
-                Sélection
+                {t("badge")}
               </p>
             </div>
 
             <h2 className="mt-5 text-3xl font-semibold tracking-[-0.04em] text-[#1b1713] md:text-5xl xl:text-6xl">
-              Sculptures en lumière
+              {t("title")}
             </h2>
 
             <p className="mt-5 max-w-xl text-base leading-8 text-[#6c5d50] md:text-lg">
-              Trois lampes sculpturales en papier mâché où la matière, la lumière
-              et le geste artisanal dialoguent dans une esthétique contemporaine,
-              sensible et singulière.
+              {t("description")}
             </p>
           </div>
 
@@ -118,7 +126,7 @@ export async function FeaturedSection() {
             href="/sculptures"
             className="group inline-flex w-fit items-center gap-2 rounded-full border border-[#e7d5c5] bg-white/82 px-5 py-3 text-sm font-medium text-[#4f4338] shadow-[0_10px_30px_rgba(0,0,0,0.05)] backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-[#ff6a00]/30 hover:text-[#c65400]"
           >
-            Voir toute la galerie
+            {t("viewAll")}
             <ArrowRight className="h-4 w-4 transition duration-300 group-hover:translate-x-1" />
           </Link>
         </div>
@@ -140,6 +148,8 @@ export async function FeaturedSection() {
                 image={coverImage}
                 availability={artwork.availability}
                 index={index}
+                discoverLabel={t("discover")}
+                soldLabel={t("sold")}
               />
             );
           })}
