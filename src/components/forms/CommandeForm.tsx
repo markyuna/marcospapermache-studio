@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import { Sparkles, Trash2 } from "lucide-react";
 
 type CommandeFormProps = {
   defaultPrompt?: string;
@@ -132,13 +133,25 @@ export default function CommandeForm({
     sessionStorage.removeItem("generatedImage");
   }
 
+  const inputClassName =
+    "w-full rounded-[1rem] border border-[#e4d6c8] bg-white px-4 py-3.5 text-sm text-[#181512] outline-none transition duration-200 placeholder:text-[#9a8a7d] focus:border-[#cfa57f] focus:ring-4 focus:ring-[#cfa57f]/10";
+
+  const labelClassName = "mb-2 block text-sm font-medium text-[#5f5348]";
+
   if (success) {
     return (
-      <div className="rounded-[2rem] border border-black/5 bg-white/70 p-10 text-center shadow-[0_20px_60px_rgba(0,0,0,0.05)] backdrop-blur-sm">
-        <h3 className="text-2xl font-medium text-[#181512]">
+      <div className="rounded-[2rem] border border-[#e8d9ca] bg-[linear-gradient(180deg,#fffdfa_0%,#f8f1e8_100%)] p-10 text-center shadow-[0_20px_60px_rgba(24,21,18,0.06)]">
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-[#e7d5c5] bg-white text-2xl shadow-[0_10px_30px_rgba(24,21,18,0.05)]">
+          ✨
+        </div>
+
+        <h3 className="mt-6 text-3xl font-semibold tracking-[-0.03em] text-[#181512]">
           {t("success.title")}
         </h3>
-        <p className="mt-4 text-[#5f5348]">{t("success.description")}</p>
+
+        <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-[#6b5f55]">
+          {t("success.description")}
+        </p>
       </div>
     );
   }
@@ -146,16 +159,18 @@ export default function CommandeForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-[2rem] border border-black/5 bg-white/70 p-8 shadow-[0_20px_60px_rgba(0,0,0,0.05)] backdrop-blur-sm"
+      className="rounded-[2rem] border border-[#e7dbcf] bg-white/80 p-6 shadow-[0_18px_50px_rgba(24,21,18,0.04)] backdrop-blur-sm md:p-8"
     >
       {generatedImage ? (
-        <div className="mb-8">
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <p className="text-xs uppercase tracking-[0.24em] text-[#8a7667]">
+        <div className="mb-8 border-b border-[#eee3d8] pb-8">
+          <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#e6d8ca] bg-[#fcf8f3] px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.24em] text-[#8a7667]">
+                <Sparkles className="h-3.5 w-3.5" />
                 Concept IA
-              </p>
-              <p className="mt-2 text-sm text-[#5f5348]">
+              </div>
+
+              <p className="mt-4 text-sm leading-7 text-[#5f5348]">
                 Cette image générée sert de base visuelle pour votre demande sur
                 mesure.
               </p>
@@ -164,13 +179,14 @@ export default function CommandeForm({
             <button
               type="button"
               onClick={handleRemoveGeneratedImage}
-              className="shrink-0 rounded-full border border-[#e7d5c5] bg-white px-4 py-2 text-xs font-medium text-[#181512] transition hover:bg-[#f8f4ef]"
+              className="inline-flex items-center gap-2 self-start rounded-full border border-[#e1d2c4] bg-white px-4 py-2 text-xs font-medium text-[#181512] transition hover:bg-[#f8f4ef]"
             >
+              <Trash2 className="h-3.5 w-3.5" />
               {t("actions.remove")}
             </button>
           </div>
 
-          <div className="relative mt-4 overflow-hidden rounded-[1.5rem] border border-[#e7d5c5] bg-white">
+          <div className="mt-5 overflow-hidden rounded-[1.4rem] border border-[#e5d8cb] bg-white">
             <div className="relative aspect-[4/5] w-full max-w-md">
               <Image
                 src={generatedImage}
@@ -188,78 +204,113 @@ export default function CommandeForm({
       ) : null}
 
       <div className="grid gap-6 md:grid-cols-2">
-        <input
-          name="name"
-          placeholder={t("fields.name")}
-          aria-label={t("fields.name")}
-          required
-          className="rounded-xl border border-[#e7d5c5] bg-white px-4 py-3 text-sm text-[#181512] outline-none transition focus:border-[#ff6a00]"
-        />
+        <div>
+          <label htmlFor="commande-name" className={labelClassName}>
+            {t("fields.name")}
+          </label>
+          <input
+            id="commande-name"
+            name="name"
+            placeholder={t("fields.name")}
+            aria-label={t("fields.name")}
+            required
+            className={inputClassName}
+          />
+        </div>
 
-        <input
-          name="email"
-          type="email"
-          placeholder={t("fields.email")}
-          aria-label={t("fields.email")}
-          required
-          className="rounded-xl border border-[#e7d5c5] bg-white px-4 py-3 text-sm text-[#181512] outline-none transition focus:border-[#ff6a00]"
-        />
+        <div>
+          <label htmlFor="commande-email" className={labelClassName}>
+            {t("fields.email")}
+          </label>
+          <input
+            id="commande-email"
+            name="email"
+            type="email"
+            placeholder={t("fields.email")}
+            aria-label={t("fields.email")}
+            required
+            className={inputClassName}
+          />
+        </div>
       </div>
 
       <div className="mt-6 grid gap-6 md:grid-cols-2">
-        <input
-          name="projectType"
-          placeholder={t("fields.projectType")}
-          aria-label={t("fields.projectType")}
-          className="rounded-xl border border-[#e7d5c5] bg-white px-4 py-3 text-sm text-[#181512] outline-none transition focus:border-[#ff6a00]"
-        />
+        <div>
+          <label htmlFor="commande-project-type" className={labelClassName}>
+            {t("fields.projectType")}
+          </label>
+          <input
+            id="commande-project-type"
+            name="projectType"
+            placeholder={t("fields.projectType")}
+            aria-label={t("fields.projectType")}
+            className={inputClassName}
+          />
+        </div>
 
-        <input
-          name="dimensions"
-          placeholder={t("fields.dimensions")}
-          aria-label={t("fields.dimensions")}
-          className="rounded-xl border border-[#e7d5c5] bg-white px-4 py-3 text-sm text-[#181512] outline-none transition focus:border-[#ff6a00]"
-        />
+        <div>
+          <label htmlFor="commande-dimensions" className={labelClassName}>
+            {t("fields.dimensions")}
+          </label>
+          <input
+            id="commande-dimensions"
+            name="dimensions"
+            placeholder={t("fields.dimensions")}
+            aria-label={t("fields.dimensions")}
+            className={inputClassName}
+          />
+        </div>
       </div>
 
       <div className="mt-6">
+        <label htmlFor="commande-budget" className={labelClassName}>
+          {t("fields.budget")}
+        </label>
         <input
+          id="commande-budget"
           name="budget"
           placeholder={t("fields.budget")}
           aria-label={t("fields.budget")}
-          className="w-full rounded-xl border border-[#e7d5c5] bg-white px-4 py-3 text-sm text-[#181512] outline-none transition focus:border-[#ff6a00]"
+          className={inputClassName}
         />
       </div>
 
       <div className="mt-6">
+        <label htmlFor="commande-message" className={labelClassName}>
+          {t("fields.message")}
+        </label>
         <textarea
+          id="commande-message"
           name="message"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder={t("fields.message")}
           aria-label={t("fields.message")}
-          rows={5}
+          rows={6}
           required
-          className="w-full rounded-xl border border-[#e7d5c5] bg-white px-4 py-3 text-sm text-[#181512] outline-none transition focus:border-[#ff6a00]"
+          className={`${inputClassName} min-h-[170px] resize-y leading-7`}
         />
       </div>
 
       <div className="mt-6">
-        <label className="mb-2 block text-sm font-medium text-[#5f5348]">
+        <label htmlFor="commande-image" className={labelClassName}>
           {t("fields.referenceImage")}
         </label>
 
         <input
+          id="commande-image"
           ref={fileInputRef}
           name="image"
           type="file"
           accept="image/png,image/jpeg,image/webp"
           onChange={handleImageChange}
-          className="block w-full rounded-xl border border-[#e7d5c5] bg-white px-4 py-3 text-sm text-[#5f5348] file:mr-4 file:rounded-full file:border-0 file:bg-[#181512] file:px-4 file:py-2 file:text-sm file:font-medium file:text-white"
+          className="block w-full rounded-[1rem] border border-[#e4d6c8] bg-white px-4 py-3 text-sm text-[#5f5348] file:mr-4 file:rounded-full file:border-0 file:bg-[#181512] file:px-4 file:py-2 file:text-sm file:font-medium file:text-white"
         />
 
+        <p className="mt-2 text-xs text-[#8a7667]">{t("fields.imageHint")}</p>
+
         {imagePreview ? (
-          <div className="relative mt-4 overflow-hidden rounded-xl border border-[#e7d5c5] bg-white">
+          <div className="relative mt-4 overflow-hidden rounded-[1.25rem] border border-[#e5d8cb] bg-white">
             <div className="relative h-64 w-full">
               <Image
                 src={imagePreview}
@@ -274,27 +325,30 @@ export default function CommandeForm({
             <button
               type="button"
               onClick={handleRemoveImage}
-              className="absolute right-3 top-3 rounded-full bg-black/70 px-3 py-1 text-xs text-white backdrop-blur-md transition hover:bg-black/80"
+              className="absolute right-3 top-3 inline-flex items-center gap-2 rounded-full bg-black/70 px-3 py-1.5 text-xs text-white backdrop-blur-md transition hover:bg-black/80"
             >
+              <Trash2 className="h-3.5 w-3.5" />
               {t("actions.remove")}
             </button>
           </div>
         ) : null}
-
-        <p className="mt-2 text-xs text-[#8a7667]">{t("fields.imageHint")}</p>
       </div>
 
       {errorMessage ? (
-        <p className="mt-4 text-sm text-red-600">{errorMessage}</p>
+        <div className="mt-6 rounded-[1rem] border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          {errorMessage}
+        </div>
       ) : null}
 
-      <button
-        type="submit"
-        disabled={loading}
-        className="mt-8 w-full rounded-full bg-[#181512] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#2a241f] disabled:cursor-not-allowed disabled:opacity-60"
-      >
-        {loading ? t("actions.sending") : t("actions.submit")}
-      </button>
+      <div className="mt-8">
+        <button
+          type="submit"
+          disabled={loading}
+          className="inline-flex w-full items-center justify-center rounded-full bg-[#181512] px-6 py-3.5 text-sm font-medium text-white transition duration-300 hover:bg-[#2a241f] disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {loading ? t("actions.sending") : t("actions.submit")}
+        </button>
+      </div>
     </form>
   );
 }
