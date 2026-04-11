@@ -167,12 +167,11 @@ export default function CommandeForm({
             <div className="max-w-2xl">
               <div className="inline-flex items-center gap-2 rounded-full border border-[#e6d8ca] bg-[#fcf8f3] px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.24em] text-[#8a7667]">
                 <Sparkles className="h-3.5 w-3.5" />
-                Concept IA
+                {t("generatedConcept.badge")}
               </div>
 
               <p className="mt-4 text-sm leading-7 text-[#5f5348]">
-                Cette image générée sert de base visuelle pour votre demande sur
-                mesure.
+                {t("generatedConcept.description")}
               </p>
             </div>
 
@@ -190,7 +189,7 @@ export default function CommandeForm({
             <div className="relative aspect-[4/5] w-full max-w-md">
               <Image
                 src={generatedImage}
-                alt="Concept généré avec l’intelligence artificielle"
+                alt={t("generatedConcept.imageAlt")}
                 fill
                 unoptimized
                 sizes="(max-width: 768px) 100vw, 420px"

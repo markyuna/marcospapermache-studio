@@ -194,31 +194,36 @@
         "discover": "Descubrir la obra"
     },
     "CommandeForm": {
-    "success": {
-      "title": "Solicitud enviada ✨",
-      "description": "Gracias. Te responderé pronto para hablar sobre tu proyecto."
-    },
-    "fields": {
-      "name": "Nombre",
-      "email": "Correo electrónico",
-      "projectType": "Tipo de proyecto (mural, objeto, etc.)",
-      "dimensions": "Dimensiones deseadas",
-      "budget": "Presupuesto estimado (€)",
-      "message": "Describe tu idea...",
-      "referenceImage": "Imagen de referencia",
-      "imagePreviewAlt": "Vista previa de la imagen",
-      "imageHint": "JPG, PNG o WEBP — máx. 5 MB"
-    },
-    "actions": {
-      "remove": "Eliminar",
-      "sending": "Enviando...",
-      "submit": "Enviar solicitud"
-    },
-    "errors": {
-      "invalidResponse": "El servidor devolvió una respuesta no válida.",
-      "generic": "Ha ocurrido un error."
-    }
+  "success": {
+    "title": "Solicitud enviada ✨",
+    "description": "Gracias. Te responderé pronto para hablar sobre tu proyecto."
   },
+  "fields": {
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "projectType": "Tipo de proyecto (mural, objeto, etc.)",
+    "dimensions": "Dimensiones deseadas",
+    "budget": "Presupuesto estimado (€)",
+    "message": "Describe tu idea...",
+    "referenceImage": "Imagen de referencia",
+    "imagePreviewAlt": "Vista previa de la imagen",
+    "imageHint": "JPG, PNG o WEBP — máx. 5 MB"
+  },
+  "generatedConcept": {
+    "badge": "Concepto IA",
+    "description": "Esta imagen generada sirve como base visual para tu solicitud personalizada.",
+    "imageAlt": "Concepto generado con inteligencia artificial"
+  },
+  "actions": {
+    "remove": "Eliminar",
+    "sending": "Enviando...",
+    "submit": "Enviar solicitud"
+  },
+  "errors": {
+    "invalidResponse": "El servidor devolvió una respuesta no válida.",
+    "generic": "Ha ocurrido un error."
+  }
+    },
    "CommandePage": {
     "badge": "Encargo",
     "title": "Solicitud de creación personalizada.",
