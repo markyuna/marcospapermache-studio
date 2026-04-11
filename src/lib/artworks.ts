@@ -1,21 +1,44 @@
+// src/lib/artworks.ts
 import { supabaseAdmin } from "@/lib/supabase";
 import type { Artwork } from "@/types/artwork";
 
 type ArtworkRow = {
   id: string;
   slug: string;
+
   title: string;
+  title_en: string | null;
+  title_es: string | null;
+
   subtitle: string | null;
+  subtitle_en: string | null;
+  subtitle_es: string | null;
+
   description: string | null;
+  description_en: string | null;
+  description_es: string | null;
+
   category: string | null;
+  category_en: string | null;
+  category_es: string | null;
+
   materials: string | null;
+  materials_en: string | null;
+  materials_es: string | null;
+
   dimensions: string | null;
   year: number | null;
+  price: string | null;
+
   availability: string | null;
+  availability_en: string | null;
+  availability_es: string | null;
+
   etsy_url: string | null;
   is_featured: boolean;
   created_at: string;
   updated_at: string;
+
   images:
     | {
         id: string;
@@ -25,15 +48,6 @@ type ArtworkRow = {
         alt_text: string | null;
         position: number;
         is_cover: boolean;
-        created_at: string;
-      }[]
-    | null;
-  details:
-    | {
-        id: string;
-        artwork_id: string;
-        content: string;
-        position: number;
         created_at: string;
       }[]
     | null;
@@ -49,7 +63,6 @@ function normalizeArtwork(row: ArtworkRow): Artwork {
 
       return a.position - b.position;
     }),
-    details: (row.details ?? []).sort((a, b) => a.position - b.position),
   };
 }
 
@@ -57,13 +70,26 @@ const artworkSelect = `
   id,
   slug,
   title,
+  title_en,
+  title_es,
   subtitle,
+  subtitle_en,
+  subtitle_es,
   description,
+  description_en,
+  description_es,
   category,
+  category_en,
+  category_es,
   materials,
+  materials_en,
+  materials_es,
   dimensions,
   year,
+  price,
   availability,
+  availability_en,
+  availability_es,
   etsy_url,
   is_featured,
   created_at,
@@ -76,13 +102,6 @@ const artworkSelect = `
     alt_text,
     position,
     is_cover,
-    created_at
-  ),
-  details:artwork_details(
-    id,
-    artwork_id,
-    content,
-    position,
     created_at
   )
 `;
@@ -130,7 +149,7 @@ export async function getArtworksBySlugs(slugs: string[]): Promise<Artwork[]> {
 
   if (error) {
     throw new Error(
-      `Erreur lors du chargement des œuvres sélectionnées : ${error.message}`,
+      `Erreur lors du chargement des œuvres sélectionnées : ${error.message}`
     );
   }
 

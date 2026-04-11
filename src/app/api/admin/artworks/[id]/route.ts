@@ -19,15 +19,34 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
     const body = await request.json();
 
     const title = typeof body?.title === "string" ? body.title.trim() : "";
+    const title_en = normalizeOptionalString(body?.title_en);
+    const title_es = normalizeOptionalString(body?.title_es);
+
     const slug = typeof body?.slug === "string" ? body.slug.trim() : "";
 
-    const category = normalizeOptionalString(body?.category);
-    const description = normalizeOptionalString(body?.description);
     const subtitle = normalizeOptionalString(body?.subtitle);
+    const subtitle_en = normalizeOptionalString(body?.subtitle_en);
+    const subtitle_es = normalizeOptionalString(body?.subtitle_es);
+
+    const description = normalizeOptionalString(body?.description);
+    const description_en = normalizeOptionalString(body?.description_en);
+    const description_es = normalizeOptionalString(body?.description_es);
+
+    const category = normalizeOptionalString(body?.category);
+    const category_en = normalizeOptionalString(body?.category_en);
+    const category_es = normalizeOptionalString(body?.category_es);
+
     const dimensions = normalizeOptionalString(body?.dimensions);
     const price = normalizeOptionalString(body?.price);
+
     const materials = normalizeOptionalString(body?.materials);
+    const materials_en = normalizeOptionalString(body?.materials_en);
+    const materials_es = normalizeOptionalString(body?.materials_es);
+
     const availability = normalizeOptionalString(body?.availability);
+    const availability_en = normalizeOptionalString(body?.availability_en);
+    const availability_es = normalizeOptionalString(body?.availability_es);
+
     const etsy_url = normalizeOptionalString(body?.etsy_url);
 
     const parsedYear =
@@ -81,26 +100,38 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
       );
     }
 
-    const { error } = await supabaseAdmin
+    const { error: updateArtworkError } = await supabaseAdmin
       .from("artworks")
       .update({
         title,
+        title_en,
+        title_es,
         slug,
-        category,
-        year,
-        description,
         subtitle,
+        subtitle_en,
+        subtitle_es,
+        description,
+        description_en,
+        description_es,
+        category,
+        category_en,
+        category_es,
+        year,
         dimensions,
         price,
         materials,
+        materials_en,
+        materials_es,
         availability,
+        availability_en,
+        availability_es,
         etsy_url,
         is_featured,
       })
       .eq("id", id);
 
-    if (error) {
-      console.error("Erreur update artwork:", error);
+    if (updateArtworkError) {
+      console.error("Erreur update artwork:", updateArtworkError);
       return NextResponse.json(
         { error: "Impossible de mettre à jour l’œuvre." },
         { status: 500 }
@@ -110,20 +141,36 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
     revalidatePath("/admin/artworks");
     revalidatePath(`/admin/artworks/${id}`);
     revalidatePath("/sculptures");
+    revalidatePath("/fr/sculptures");
+    revalidatePath("/en/sculptures");
+    revalidatePath("/es/sculptures");
 
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("PATCH /api/admin/artworks/[id] error:", error);
-    return NextResponse.json(
-      { error: "Erreur serveur." },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Erreur serveur." }, { status: 500 });
   }
 }
 
 export async function DELETE(_request: NextRequest, context: RouteContext) {
   try {
     const { id } = await context.params;
+
+    const { data: artwork, error: artworkError } = await supabaseAdmin
+      .from("artworks")
+      .select("slug")
+      .eq("id", id)
+      .maybeSingle();
+
+    if (artworkError) {
+      console.error("Erreur récupération artwork:", artworkError);
+      return NextResponse.json(
+        { error: "Impossible de récupérer l’œuvre." },
+        { status: 500 }
+      );
+    }
+
+    const artworkSlug = artwork?.slug ?? null;
 
     const { data: images, error: imagesError } = await supabaseAdmin
       .from("artwork_images")
@@ -181,13 +228,19 @@ export async function DELETE(_request: NextRequest, context: RouteContext) {
 
     revalidatePath("/admin/artworks");
     revalidatePath("/sculptures");
+    revalidatePath("/fr/sculptures");
+    revalidatePath("/en/sculptures");
+    revalidatePath("/es/sculptures");
+
+    if (artworkSlug) {
+      revalidatePath(`/fr/sculptures/${artworkSlug}`);
+      revalidatePath(`/en/sculptures/${artworkSlug}`);
+      revalidatePath(`/es/sculptures/${artworkSlug}`);
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("DELETE /api/admin/artworks/[id] error:", error);
-    return NextResponse.json(
-      { error: "Erreur serveur." },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Erreur serveur." }, { status: 500 });
   }
 }

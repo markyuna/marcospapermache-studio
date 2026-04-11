@@ -1,4 +1,4 @@
-// src/app/api/admin/artworks/route.tsx
+//src/app/api/admin/artworks/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { supabaseAdmin } from "@/lib/supabase";
@@ -13,27 +13,46 @@ function slugify(value: string) {
     .replace(/^-+|-+$/g, "");
 }
 
+function getString(formData: FormData, key: string) {
+  const value = formData.get(key);
+  return typeof value === "string" ? value.trim() : "";
+}
+
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
 
-    const getString = (key: string) => {
-      const value = formData.get(key);
-      return typeof value === "string" ? value.trim() : "";
-    };
+    const title = getString(formData, "title");
+    const title_en = getString(formData, "title_en") || null;
+    const title_es = getString(formData, "title_es") || null;
 
-    const title = getString("title");
-    const subtitle = getString("subtitle") || null;
-    const description = getString("description") || null;
-    const category = getString("category") || null;
-    const dimensions = getString("dimensions") || null;
-    const price = getString("price") || null;
-    const materials = getString("materials") || null;
-    const availability = getString("availability") || null;
-    const etsy_url = getString("etsy_url") || null;
+    const subtitle = getString(formData, "subtitle") || null;
+    const subtitle_en = getString(formData, "subtitle_en") || null;
+    const subtitle_es = getString(formData, "subtitle_es") || null;
+
+    const description = getString(formData, "description") || null;
+    const description_en = getString(formData, "description_en") || null;
+    const description_es = getString(formData, "description_es") || null;
+
+    const category = getString(formData, "category") || null;
+    const category_en = getString(formData, "category_en") || null;
+    const category_es = getString(formData, "category_es") || null;
+
+    const dimensions = getString(formData, "dimensions") || null;
+    const price = getString(formData, "price") || null;
+
+    const materials = getString(formData, "materials") || null;
+    const materials_en = getString(formData, "materials_en") || null;
+    const materials_es = getString(formData, "materials_es") || null;
+
+    const availability = getString(formData, "availability") || null;
+    const availability_en = getString(formData, "availability_en") || null;
+    const availability_es = getString(formData, "availability_es") || null;
+
+    const etsy_url = getString(formData, "etsy_url") || null;
     const is_featured = formData.get("is_featured") === "true";
 
-    const rawYear = getString("year");
+    const rawYear = getString(formData, "year");
     const parsedYear = rawYear ? Number(rawYear) : null;
     const year =
       typeof parsedYear === "number" && Number.isFinite(parsedYear)
@@ -92,15 +111,27 @@ export async function POST(request: NextRequest) {
       .from("artworks")
       .insert({
         title,
+        title_en,
+        title_es,
         slug,
         subtitle,
+        subtitle_en,
+        subtitle_es,
         description,
+        description_en,
+        description_es,
         category,
+        category_en,
+        category_es,
         year,
         dimensions,
         price,
         materials,
+        materials_en,
+        materials_es,
         availability,
+        availability_en,
+        availability_es,
         etsy_url,
         is_featured,
       })
@@ -116,7 +147,7 @@ export async function POST(request: NextRequest) {
     }
 
     const uploadedImages: {
-      artwork_id: number;
+      artwork_id: string;
       image_url: string;
       storage_path: string;
       is_cover: boolean;
@@ -142,6 +173,9 @@ export async function POST(request: NextRequest) {
 
       if (uploadError) {
         console.error("Erreur upload image:", uploadError);
+
+        await supabaseAdmin.from("artworks").delete().eq("id", artwork.id);
+
         return NextResponse.json(
           { error: "Impossible de téléverser une image." },
           { status: 500 }
@@ -167,6 +201,15 @@ export async function POST(request: NextRequest) {
 
     if (imagesInsertError) {
       console.error("Erreur insertion artwork_images:", imagesInsertError);
+
+      const pathsToDelete = uploadedImages.map((image) => image.storage_path);
+
+      if (pathsToDelete.length > 0) {
+        await supabaseAdmin.storage.from("artworks").remove(pathsToDelete);
+      }
+
+      await supabaseAdmin.from("artworks").delete().eq("id", artwork.id);
+
       return NextResponse.json(
         { error: "L’œuvre a été créée, mais pas les images." },
         { status: 500 }
@@ -175,16 +218,18 @@ export async function POST(request: NextRequest) {
 
     revalidatePath("/admin/artworks");
     revalidatePath("/sculptures");
-    revalidatePath(`/sculptures/${artwork.slug}`);
+    revalidatePath("/fr/sculptures");
+    revalidatePath("/en/sculptures");
+    revalidatePath("/es/sculptures");
+    revalidatePath(`/fr/sculptures/${artwork.slug}`);
+    revalidatePath(`/en/sculptures/${artwork.slug}`);
+    revalidatePath(`/es/sculptures/${artwork.slug}`);
 
     return NextResponse.redirect(new URL("/admin/artworks", request.url), {
       status: 303,
     });
   } catch (error) {
     console.error("POST /api/admin/artworks error:", error);
-    return NextResponse.json(
-      { error: "Erreur serveur." },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Erreur serveur." }, { status: 500 });
   }
 }

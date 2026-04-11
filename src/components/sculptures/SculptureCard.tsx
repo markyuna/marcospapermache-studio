@@ -33,7 +33,11 @@ function getAvailabilityStyle(availability?: string | null) {
 
   if (
     normalized.includes("disponible") ||
-    normalized.includes("available")
+    normalized.includes("available") ||
+    normalized.includes("disponible por encargo") ||
+    normalized.includes("sur demande") ||
+    normalized.includes("on request") ||
+    normalized.includes("por encargo")
   ) {
     return "border-[#ead8bc] bg-[#f6efe2] text-[#6d533b]";
   }
@@ -57,10 +61,7 @@ export default function SculptureCard({
   const t = useTranslations("Gallery");
 
   return (
-    <Link
-      href={`/sculptures/${slug}`}
-      className="group block h-full"
-    >
+    <Link href={`/sculptures/${slug}`} className="group block h-full">
       <article className="relative flex h-full flex-col overflow-hidden rounded-[30px] border border-black/5 bg-white/80 shadow-[0_18px_50px_rgba(15,23,42,0.06)] backdrop-blur-sm transition duration-500 hover:-translate-y-1.5 hover:border-[#ff6a00]/10 hover:shadow-[0_26px_80px_rgba(15,23,42,0.11)]">
         <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-[#ff8a1f]/30 to-transparent opacity-0 transition duration-500 group-hover:opacity-100" />
 
@@ -82,7 +83,7 @@ export default function SculptureCard({
             </div>
           )}
 
-          {availability && (
+          {availability ? (
             <div className="absolute left-4 top-4">
               <span
                 className={clsx(
@@ -93,7 +94,7 @@ export default function SculptureCard({
                 {availability}
               </span>
             </div>
-          )}
+          ) : null}
         </div>
 
         <div className="flex flex-1 flex-col p-5">
@@ -116,11 +117,11 @@ export default function SculptureCard({
           </div>
 
           <div className="mt-4 min-h-[24px]">
-            {(dimensions || year) && (
+            {(dimensions || year) ? (
               <p className="text-sm text-neutral-500">
                 {[dimensions, year].filter(Boolean).join(" • ")}
               </p>
-            )}
+            ) : null}
           </div>
 
           <div className="mt-4 flex-1">

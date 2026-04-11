@@ -6,22 +6,32 @@ import { supabaseAdmin } from "@/lib/supabase";
 type ArtworkImage = {
   image_url: string;
   is_cover: boolean;
-  position: number;
+  position: number | null;
 };
 
 type Artwork = {
   id: number;
   title: string;
+  title_en: string | null;
+  title_es: string | null;
   slug: string;
   category: string | null;
+  category_en: string | null;
+  category_es: string | null;
   year: number | null;
   subtitle: string | null;
+  subtitle_en: string | null;
+  subtitle_es: string | null;
   materials: string | null;
+  materials_en: string | null;
+  materials_es: string | null;
   availability: string | null;
+  availability_en: string | null;
+  availability_es: string | null;
   etsy_url: string | null;
   price: string | null;
   is_featured: boolean | null;
-  artwork_images: ArtworkImage[];
+  artwork_images: ArtworkImage[] | null;
 };
 
 async function getArtworks(): Promise<Artwork[]> {
@@ -30,12 +40,22 @@ async function getArtworks(): Promise<Artwork[]> {
     .select(`
       id,
       title,
+      title_en,
+      title_es,
       slug,
       category,
+      category_en,
+      category_es,
       year,
       subtitle,
+      subtitle_en,
+      subtitle_es,
       materials,
+      materials_en,
+      materials_es,
       availability,
+      availability_en,
+      availability_es,
       etsy_url,
       price,
       is_featured,
@@ -72,7 +92,7 @@ export default async function AdminArtworksPage() {
               </h1>
               <p className="mt-3 max-w-xl text-sm leading-6 text-neutral-600">
                 Ajoute une nouvelle œuvre avec ses informations principales,
-                ses détails commerciaux et une ou plusieurs images.
+                ses contenus multilingues et une ou plusieurs images.
               </p>
             </div>
 
@@ -83,69 +103,320 @@ export default async function AdminArtworksPage() {
               className="space-y-5"
             >
               <div className="grid gap-5">
-                <div>
-                  <label
-                    htmlFor="title"
-                    className="mb-2 block text-sm font-medium text-neutral-700"
-                  >
-                    Titre
-                  </label>
-                  <input
-                    id="title"
-                    name="title"
-                    required
-                    placeholder="Ex. Fusion des Consciences"
-                    className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
-                  />
+                <div className="rounded-3xl border border-neutral-200 bg-[#fcfaf7] p-5">
+                  <div className="mb-4">
+                    <h2 className="text-base font-semibold text-neutral-900">
+                      Français
+                    </h2>
+                    <p className="mt-1 text-sm text-neutral-500">
+                      Contenu principal utilisé comme base.
+                    </p>
+                  </div>
+
+                  <div className="grid gap-5">
+                    <div>
+                      <label
+                        htmlFor="title"
+                        className="mb-2 block text-sm font-medium text-neutral-700"
+                      >
+                        Titre
+                      </label>
+                      <input
+                        id="title"
+                        name="title"
+                        required
+                        placeholder="Ex. Fusion des Consciences"
+                        className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="subtitle"
+                        className="mb-2 block text-sm font-medium text-neutral-700"
+                      >
+                        Sous-titre
+                      </label>
+                      <input
+                        id="subtitle"
+                        name="subtitle"
+                        placeholder="Ex. Sculpture murale contemporaine"
+                        className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="description"
+                        className="mb-2 block text-sm font-medium text-neutral-700"
+                      >
+                        Description
+                      </label>
+                      <textarea
+                        id="description"
+                        name="description"
+                        rows={5}
+                        placeholder="Description de l’œuvre"
+                        className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="category"
+                        className="mb-2 block text-sm font-medium text-neutral-700"
+                      >
+                        Catégorie
+                      </label>
+                      <input
+                        id="category"
+                        name="category"
+                        placeholder="Ex. Sculpture murale"
+                        className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="materials"
+                        className="mb-2 block text-sm font-medium text-neutral-700"
+                      >
+                        Matériaux
+                      </label>
+                      <input
+                        id="materials"
+                        name="materials"
+                        placeholder="Ex. Papier mâché, carton recyclé, capsules Vertuo"
+                        className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="availability"
+                        className="mb-2 block text-sm font-medium text-neutral-700"
+                      >
+                        Disponibilité
+                      </label>
+                      <input
+                        id="availability"
+                        name="availability"
+                        placeholder="Ex. Disponible sur demande"
+                        className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                      />
+                    </div>
+                  </div>
                 </div>
 
-                <div>
-                  <label
-                    htmlFor="subtitle"
-                    className="mb-2 block text-sm font-medium text-neutral-700"
-                  >
-                    Sous-titre
-                  </label>
-                  <input
-                    id="subtitle"
-                    name="subtitle"
-                    placeholder="Ex. Sculpture murale contemporaine"
-                    className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
-                  />
+                <div className="rounded-3xl border border-neutral-200 bg-[#fcfaf7] p-5">
+                  <div className="mb-4">
+                    <h2 className="text-base font-semibold text-neutral-900">
+                      English
+                    </h2>
+                    <p className="mt-1 text-sm text-neutral-500">
+                      Optional. If empty, French content can be used as fallback.
+                    </p>
+                  </div>
+
+                  <div className="grid gap-5">
+                    <div>
+                      <label
+                        htmlFor="title_en"
+                        className="mb-2 block text-sm font-medium text-neutral-700"
+                      >
+                        Title
+                      </label>
+                      <input
+                        id="title_en"
+                        name="title_en"
+                        placeholder="Ex. Fusion of Consciousness"
+                        className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="subtitle_en"
+                        className="mb-2 block text-sm font-medium text-neutral-700"
+                      >
+                        Subtitle
+                      </label>
+                      <input
+                        id="subtitle_en"
+                        name="subtitle_en"
+                        placeholder="Ex. Contemporary wall sculpture"
+                        className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="description_en"
+                        className="mb-2 block text-sm font-medium text-neutral-700"
+                      >
+                        Description
+                      </label>
+                      <textarea
+                        id="description_en"
+                        name="description_en"
+                        rows={5}
+                        placeholder="Artwork description in English"
+                        className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="category_en"
+                        className="mb-2 block text-sm font-medium text-neutral-700"
+                      >
+                        Category
+                      </label>
+                      <input
+                        id="category_en"
+                        name="category_en"
+                        placeholder="Ex. Wall sculpture"
+                        className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="materials_en"
+                        className="mb-2 block text-sm font-medium text-neutral-700"
+                      >
+                        Materials
+                      </label>
+                      <input
+                        id="materials_en"
+                        name="materials_en"
+                        placeholder="Ex. Papier-mâché, recycled cardboard, Vertuo capsules"
+                        className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="availability_en"
+                        className="mb-2 block text-sm font-medium text-neutral-700"
+                      >
+                        Availability
+                      </label>
+                      <input
+                        id="availability_en"
+                        name="availability_en"
+                        placeholder="Ex. Available on request"
+                        className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                      />
+                    </div>
+                  </div>
                 </div>
 
-                <div>
-                  <label
-                    htmlFor="description"
-                    className="mb-2 block text-sm font-medium text-neutral-700"
-                  >
-                    Description
-                  </label>
-                  <textarea
-                    id="description"
-                    name="description"
-                    rows={5}
-                    placeholder="Description de l’œuvre"
-                    className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
-                  />
+                <div className="rounded-3xl border border-neutral-200 bg-[#fcfaf7] p-5">
+                  <div className="mb-4">
+                    <h2 className="text-base font-semibold text-neutral-900">
+                      Español
+                    </h2>
+                    <p className="mt-1 text-sm text-neutral-500">
+                      Opcional. Si queda vacío, luego puedes usar francés como base.
+                    </p>
+                  </div>
+
+                  <div className="grid gap-5">
+                    <div>
+                      <label
+                        htmlFor="title_es"
+                        className="mb-2 block text-sm font-medium text-neutral-700"
+                      >
+                        Título
+                      </label>
+                      <input
+                        id="title_es"
+                        name="title_es"
+                        placeholder="Ej. Fusión de las Conciencias"
+                        className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="subtitle_es"
+                        className="mb-2 block text-sm font-medium text-neutral-700"
+                      >
+                        Subtítulo
+                      </label>
+                      <input
+                        id="subtitle_es"
+                        name="subtitle_es"
+                        placeholder="Ej. Escultura mural contemporánea"
+                        className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="description_es"
+                        className="mb-2 block text-sm font-medium text-neutral-700"
+                      >
+                        Descripción
+                      </label>
+                      <textarea
+                        id="description_es"
+                        name="description_es"
+                        rows={5}
+                        placeholder="Descripción de la obra en español"
+                        className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="category_es"
+                        className="mb-2 block text-sm font-medium text-neutral-700"
+                      >
+                        Categoría
+                      </label>
+                      <input
+                        id="category_es"
+                        name="category_es"
+                        placeholder="Ej. Escultura mural"
+                        className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="materials_es"
+                        className="mb-2 block text-sm font-medium text-neutral-700"
+                      >
+                        Materiales
+                      </label>
+                      <input
+                        id="materials_es"
+                        name="materials_es"
+                        placeholder="Ej. Papel maché, cartón reciclado, cápsulas Vertuo"
+                        className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="availability_es"
+                        className="mb-2 block text-sm font-medium text-neutral-700"
+                      >
+                        Disponibilidad
+                      </label>
+                      <input
+                        id="availability_es"
+                        name="availability_es"
+                        placeholder="Ej. Disponible por encargo"
+                        className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <div className="grid gap-5 md:grid-cols-2">
-                  <div>
-                    <label
-                      htmlFor="category"
-                      className="mb-2 block text-sm font-medium text-neutral-700"
-                    >
-                      Catégorie
-                    </label>
-                    <input
-                      id="category"
-                      name="category"
-                      placeholder="Ex. Sculpture murale"
-                      className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
-                    />
-                  </div>
-
                   <div>
                     <label
                       htmlFor="year"
@@ -162,9 +433,7 @@ export default async function AdminArtworksPage() {
                       className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
                     />
                   </div>
-                </div>
 
-                <div className="grid gap-5 md:grid-cols-2">
                   <div>
                     <label
                       htmlFor="dimensions"
@@ -179,7 +448,9 @@ export default async function AdminArtworksPage() {
                       className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
                     />
                   </div>
+                </div>
 
+                <div className="grid gap-5 md:grid-cols-2">
                   <div>
                     <label
                       htmlFor="price"
@@ -191,38 +462,6 @@ export default async function AdminArtworksPage() {
                       id="price"
                       name="price"
                       placeholder="Ex. 2000 €"
-                      className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="materials"
-                    className="mb-2 block text-sm font-medium text-neutral-700"
-                  >
-                    Matériaux
-                  </label>
-                  <input
-                    id="materials"
-                    name="materials"
-                    placeholder="Ex. Papier mâché, carton recyclé, capsules Vertuo"
-                    className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
-                  />
-                </div>
-
-                <div className="grid gap-5 md:grid-cols-2">
-                  <div>
-                    <label
-                      htmlFor="availability"
-                      className="mb-2 block text-sm font-medium text-neutral-700"
-                    >
-                      Disponibilité
-                    </label>
-                    <input
-                      id="availability"
-                      name="availability"
-                      placeholder="Ex. Disponible sur demande"
                       className="w-full rounded-2xl border border-neutral-300 bg-white px-4 py-3 outline-none transition focus:border-black"
                     />
                   </div>
@@ -305,6 +544,97 @@ export default async function AdminArtworksPage() {
                 {artworks.length} œuvre{artworks.length > 1 ? "s" : ""}
               </span>
             </div>
+
+            <div className="mt-6 space-y-4">
+              {artworks.length === 0 ? (
+                <div className="rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 px-6 py-12 text-center text-sm text-neutral-500">
+                  Aucune œuvre enregistrée pour le moment.
+                </div>
+              ) : (
+                artworks.map((artwork) => {
+                  const sortedImages = [...(artwork.artwork_images ?? [])].sort(
+                    (a, b) => (a.position ?? 9999) - (b.position ?? 9999)
+                  );
+
+                  const cover =
+                    sortedImages.find((image) => image.is_cover) ??
+                    sortedImages[0] ??
+                    null;
+
+                  return (
+                    <article
+                      key={artwork.id}
+                      className="overflow-hidden rounded-2xl border border-neutral-200 bg-[#fffdf9] shadow-sm"
+                    >
+                      <div className="flex gap-4 p-4">
+                        <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-2xl bg-neutral-100">
+                          {cover ? (
+                            <Image
+                              src={cover.image_url}
+                              alt={artwork.title}
+                              fill
+                              className="object-cover"
+                            />
+                          ) : (
+                            <div className="flex h-full items-center justify-center text-center text-xs text-neutral-400">
+                              Aucune image
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="min-w-0 flex-1">
+                          <div className="flex flex-wrap gap-2">
+                            <h3 className="text-base font-semibold text-neutral-900">
+                              {artwork.title}
+                            </h3>
+
+                            {artwork.is_featured ? (
+                              <span className="rounded-full bg-amber-500/90 px-2.5 py-1 text-[11px] font-medium text-white">
+                                Featured
+                              </span>
+                            ) : null}
+                          </div>
+
+                          {artwork.subtitle ? (
+                            <p className="mt-1 line-clamp-2 text-sm text-neutral-500">
+                              {artwork.subtitle}
+                            </p>
+                          ) : null}
+
+                          <div className="mt-3 flex flex-wrap gap-2 text-xs">
+                            <span className="rounded-full bg-[#f3eadb] px-2.5 py-1 text-neutral-700">
+                              {artwork.category || "Sans catégorie"}
+                            </span>
+
+                            {artwork.year ? (
+                              <span className="rounded-full border border-neutral-200 bg-white px-2.5 py-1 text-neutral-600">
+                                {artwork.year}
+                              </span>
+                            ) : null}
+                          </div>
+
+                          <div className="mt-4 flex flex-wrap gap-2">
+                            <Link
+                              href={`/admin/artworks/${artwork.id}`}
+                              className="inline-flex items-center justify-center rounded-xl bg-orange-500 px-3.5 py-2 text-sm font-medium text-white transition hover:opacity-85"
+                            >
+                              Gérer
+                            </Link>
+
+                            <Link
+                              href={`/fr/sculptures/${artwork.slug}`}
+                              className="inline-flex items-center justify-center rounded-xl border border-neutral-300 px-3.5 py-2 text-sm font-medium text-neutral-800 transition hover:border-black hover:text-black"
+                            >
+                              Voir la page
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+                  );
+                })
+              )}
+            </div>
           </div>
         </section>
 
@@ -332,7 +662,7 @@ export default async function AdminArtworksPage() {
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
               {artworks.map((artwork) => {
                 const sortedImages = [...(artwork.artwork_images ?? [])].sort(
-                  (a, b) => a.position - b.position
+                  (a, b) => (a.position ?? 9999) - (b.position ?? 9999)
                 );
 
                 const cover =
@@ -364,11 +694,11 @@ export default async function AdminArtworksPage() {
                           {artwork.category || "Sans catégorie"}
                         </span>
 
-                        {artwork.year && (
+                        {artwork.year ? (
                           <span className="rounded-full bg-black/85 px-3 py-1 text-xs font-medium text-white backdrop-blur">
                             {artwork.year}
                           </span>
-                        )}
+                        ) : null}
 
                         {artwork.is_featured ? (
                           <span className="rounded-full bg-amber-500/90 px-3 py-1 text-xs font-medium text-white backdrop-blur">
@@ -406,7 +736,7 @@ export default async function AdminArtworksPage() {
                         </Link>
 
                         <Link
-                          href={`/sculptures/${artwork.slug}`}
+                          href={`/fr/sculptures/${artwork.slug}`}
                           className="inline-flex items-center justify-center rounded-xl border border-neutral-300 px-4 py-2.5 text-sm font-medium text-neutral-800 transition hover:border-black hover:text-black"
                         >
                           Voir la page

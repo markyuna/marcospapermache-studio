@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import {
   ArrowLeft,
   Loader2,
-  Plus,
   Save,
   Star,
   Trash2,
@@ -27,19 +26,42 @@ type ArtworkImage = {
 
 type Artwork = {
   id: string;
+
   title: string;
+  title_en: string | null;
+  title_es: string | null;
+
   slug: string;
+
   category: string | null;
+  category_en: string | null;
+  category_es: string | null;
+
   year: number | null;
+
   description: string | null;
+  description_en: string | null;
+  description_es: string | null;
+
   subtitle: string | null;
+  subtitle_en: string | null;
+  subtitle_es: string | null;
+
   dimensions: string | null;
   price: string | null;
+
   materials: string | null;
+  materials_en: string | null;
+  materials_es: string | null;
+
   availability: string | null;
+  availability_en: string | null;
+  availability_es: string | null;
+
   etsy_url: string | null;
   is_featured: boolean | null;
   created_at?: string;
+
   artwork_images: ArtworkImage[];
 };
 
@@ -138,15 +160,44 @@ export default function ArtworkDetailManager({ artwork }: Props) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const [title, setTitle] = useState(artwork.title);
+  const [titleEn, setTitleEn] = useState(artwork.title_en ?? "");
+  const [titleEs, setTitleEs] = useState(artwork.title_es ?? "");
+
   const [slug, setSlug] = useState(artwork.slug);
+
   const [category, setCategory] = useState(artwork.category ?? "");
+  const [categoryEn, setCategoryEn] = useState(artwork.category_en ?? "");
+  const [categoryEs, setCategoryEs] = useState(artwork.category_es ?? "");
+
   const [year, setYear] = useState(artwork.year?.toString() ?? "");
+
   const [subtitle, setSubtitle] = useState(artwork.subtitle ?? "");
+  const [subtitleEn, setSubtitleEn] = useState(artwork.subtitle_en ?? "");
+  const [subtitleEs, setSubtitleEs] = useState(artwork.subtitle_es ?? "");
+
   const [description, setDescription] = useState(artwork.description ?? "");
+  const [descriptionEn, setDescriptionEn] = useState(
+    artwork.description_en ?? ""
+  );
+  const [descriptionEs, setDescriptionEs] = useState(
+    artwork.description_es ?? ""
+  );
+
   const [dimensions, setDimensions] = useState(artwork.dimensions ?? "");
   const [price, setPrice] = useState(artwork.price ?? "");
+
   const [materials, setMaterials] = useState(artwork.materials ?? "");
+  const [materialsEn, setMaterialsEn] = useState(artwork.materials_en ?? "");
+  const [materialsEs, setMaterialsEs] = useState(artwork.materials_es ?? "");
+
   const [availability, setAvailability] = useState(artwork.availability ?? "");
+  const [availabilityEn, setAvailabilityEn] = useState(
+    artwork.availability_en ?? ""
+  );
+  const [availabilityEs, setAvailabilityEs] = useState(
+    artwork.availability_es ?? ""
+  );
+
   const [etsyUrl, setEtsyUrl] = useState(artwork.etsy_url ?? "");
   const [isFeatured, setIsFeatured] = useState(Boolean(artwork.is_featured));
 
@@ -164,9 +215,20 @@ export default function ArtworkDetailManager({ artwork }: Props) {
 
   const sortedImages = useMemo(() => {
     return [...artwork.artwork_images].sort((a, b) => {
+      if (a.is_cover !== b.is_cover) {
+        return Number(b.is_cover) - Number(a.is_cover);
+      }
+
       const posA = a.position ?? 9999;
       const posB = b.position ?? 9999;
-      return posA - posB;
+
+      if (posA !== posB) {
+        return posA - posB;
+      }
+
+      return (
+        new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+      );
     });
   }, [artwork.artwork_images]);
 
@@ -217,21 +279,41 @@ export default function ArtworkDetailManager({ artwork }: Props) {
     resetMessages();
 
     const trimmedTitle = title.trim();
+    const trimmedTitleEn = titleEn.trim();
+    const trimmedTitleEs = titleEs.trim();
+
     const trimmedSlug = normalizeSlug(slug);
+
     const trimmedCategory = category.trim();
+    const trimmedCategoryEn = categoryEn.trim();
+    const trimmedCategoryEs = categoryEs.trim();
+
     const trimmedSubtitle = subtitle.trim();
+    const trimmedSubtitleEn = subtitleEn.trim();
+    const trimmedSubtitleEs = subtitleEs.trim();
+
     const trimmedDescription = description.trim();
+    const trimmedDescriptionEn = descriptionEn.trim();
+    const trimmedDescriptionEs = descriptionEs.trim();
+
     const trimmedDimensions = dimensions.trim();
     const trimmedPrice = price.trim();
+
     const trimmedMaterials = materials.trim();
+    const trimmedMaterialsEn = materialsEn.trim();
+    const trimmedMaterialsEs = materialsEs.trim();
+
     const trimmedAvailability = availability.trim();
+    const trimmedAvailabilityEn = availabilityEn.trim();
+    const trimmedAvailabilityEs = availabilityEs.trim();
+
     const trimmedEtsyUrl = etsyUrl.trim();
     const trimmedYear = year.trim();
 
     const parsedYear = parseYearValue(trimmedYear);
 
     if (!trimmedTitle) {
-      setErrorMessage("Le titre est requis.");
+      setErrorMessage("Le titre français est requis.");
       return;
     }
 
@@ -260,15 +342,36 @@ export default function ArtworkDetailManager({ artwork }: Props) {
         },
         body: JSON.stringify({
           title: trimmedTitle,
+          title_en: trimmedTitleEn || null,
+          title_es: trimmedTitleEs || null,
+
           slug: trimmedSlug,
+
           category: trimmedCategory || null,
+          category_en: trimmedCategoryEn || null,
+          category_es: trimmedCategoryEs || null,
+
           year: parsedYear,
+
           subtitle: trimmedSubtitle || null,
+          subtitle_en: trimmedSubtitleEn || null,
+          subtitle_es: trimmedSubtitleEs || null,
+
           description: trimmedDescription || null,
+          description_en: trimmedDescriptionEn || null,
+          description_es: trimmedDescriptionEs || null,
+
           dimensions: trimmedDimensions || null,
           price: trimmedPrice || null,
+
           materials: trimmedMaterials || null,
+          materials_en: trimmedMaterialsEn || null,
+          materials_es: trimmedMaterialsEs || null,
+
           availability: trimmedAvailability || null,
+          availability_en: trimmedAvailabilityEn || null,
+          availability_es: trimmedAvailabilityEs || null,
+
           etsy_url: trimmedEtsyUrl || null,
           is_featured: isFeatured,
         }),
@@ -512,19 +615,19 @@ export default function ArtworkDetailManager({ artwork }: Props) {
                 Modifier l’œuvre
               </h2>
               <p className="text-sm text-neutral-500">
-                Modifie ici les informations principales, artistiques et
-                commerciales.
+                Modifie ici les informations principales, multilingues,
+                artistiques et commerciales.
               </p>
             </div>
           </div>
 
           <form
             onSubmit={handleSaveArtwork}
-            className="grid gap-4 md:grid-cols-2"
+            className="grid gap-6 md:grid-cols-2"
           >
             <div className="space-y-2">
               <label className="text-sm font-medium text-neutral-700">
-                Titre
+                Titre (FR)
               </label>
               <input
                 value={title}
@@ -548,30 +651,267 @@ export default function ArtworkDetailManager({ artwork }: Props) {
               />
             </div>
 
-            <div className="space-y-2 md:col-span-2">
-              <label className="text-sm font-medium text-neutral-700">
-                Sous-titre
-              </label>
-              <input
-                value={subtitle}
-                onChange={(e) => setSubtitle(e.target.value)}
-                disabled={isBusy}
-                className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                placeholder="Sculpture murale contemporaine"
-              />
+            <div className="rounded-2xl border border-neutral-200 bg-[#fcfaf7] p-4 md:col-span-2">
+              <div className="mb-4">
+                <h3 className="text-base font-semibold text-neutral-900">
+                  Français
+                </h3>
+                <p className="mt-1 text-sm text-neutral-500">
+                  Contenu principal utilisé comme base.
+                </p>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2 md:col-span-2">
+                  <label className="text-sm font-medium text-neutral-700">
+                    Sous-titre (FR)
+                  </label>
+                  <input
+                    value={subtitle}
+                    onChange={(e) => setSubtitle(e.target.value)}
+                    disabled={isBusy}
+                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
+                    placeholder="Sculpture murale contemporaine"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-neutral-700">
+                    Catégorie (FR)
+                  </label>
+                  <input
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    disabled={isBusy}
+                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
+                    placeholder="Sculpture murale"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-neutral-700">
+                    Disponibilité (FR)
+                  </label>
+                  <input
+                    value={availability}
+                    onChange={(e) => setAvailability(e.target.value)}
+                    disabled={isBusy}
+                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
+                    placeholder="Disponible sur demande"
+                  />
+                </div>
+
+                <div className="space-y-2 md:col-span-2">
+                  <label className="text-sm font-medium text-neutral-700">
+                    Matériaux (FR)
+                  </label>
+                  <input
+                    value={materials}
+                    onChange={(e) => setMaterials(e.target.value)}
+                    disabled={isBusy}
+                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
+                    placeholder="Papier mâché, carton recyclé, capsules..."
+                  />
+                </div>
+
+                <div className="space-y-2 md:col-span-2">
+                  <label className="text-sm font-medium text-neutral-700">
+                    Description (FR)
+                  </label>
+                  <textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    rows={6}
+                    disabled={isBusy}
+                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
+                    placeholder="Description de l’œuvre"
+                  />
+                </div>
+              </div>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-neutral-700">
-                Catégorie
-              </label>
-              <input
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                disabled={isBusy}
-                className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                placeholder="Sculpture murale"
-              />
+            <div className="rounded-2xl border border-neutral-200 bg-[#fcfaf7] p-4 md:col-span-2">
+              <div className="mb-4">
+                <h3 className="text-base font-semibold text-neutral-900">
+                  English
+                </h3>
+                <p className="mt-1 text-sm text-neutral-500">
+                  Optional. If empty, French can be used as fallback.
+                </p>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-neutral-700">
+                    Title (EN)
+                  </label>
+                  <input
+                    value={titleEn}
+                    onChange={(e) => setTitleEn(e.target.value)}
+                    disabled={isBusy}
+                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
+                    placeholder="Artwork title"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-neutral-700">
+                    Subtitle (EN)
+                  </label>
+                  <input
+                    value={subtitleEn}
+                    onChange={(e) => setSubtitleEn(e.target.value)}
+                    disabled={isBusy}
+                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
+                    placeholder="Contemporary wall sculpture"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-neutral-700">
+                    Category (EN)
+                  </label>
+                  <input
+                    value={categoryEn}
+                    onChange={(e) => setCategoryEn(e.target.value)}
+                    disabled={isBusy}
+                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
+                    placeholder="Wall sculpture"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-neutral-700">
+                    Availability (EN)
+                  </label>
+                  <input
+                    value={availabilityEn}
+                    onChange={(e) => setAvailabilityEn(e.target.value)}
+                    disabled={isBusy}
+                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
+                    placeholder="Available on request"
+                  />
+                </div>
+
+                <div className="space-y-2 md:col-span-2">
+                  <label className="text-sm font-medium text-neutral-700">
+                    Materials (EN)
+                  </label>
+                  <input
+                    value={materialsEn}
+                    onChange={(e) => setMaterialsEn(e.target.value)}
+                    disabled={isBusy}
+                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
+                    placeholder="Papier-mâché, recycled cardboard..."
+                  />
+                </div>
+
+                <div className="space-y-2 md:col-span-2">
+                  <label className="text-sm font-medium text-neutral-700">
+                    Description (EN)
+                  </label>
+                  <textarea
+                    value={descriptionEn}
+                    onChange={(e) => setDescriptionEn(e.target.value)}
+                    rows={6}
+                    disabled={isBusy}
+                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
+                    placeholder="Artwork description in English"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-neutral-200 bg-[#fcfaf7] p-4 md:col-span-2">
+              <div className="mb-4">
+                <h3 className="text-base font-semibold text-neutral-900">
+                  Español
+                </h3>
+                <p className="mt-1 text-sm text-neutral-500">
+                  Opcional. Si está vacío, el francés puede servir como base.
+                </p>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-neutral-700">
+                    Título (ES)
+                  </label>
+                  <input
+                    value={titleEs}
+                    onChange={(e) => setTitleEs(e.target.value)}
+                    disabled={isBusy}
+                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
+                    placeholder="Título de la obra"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-neutral-700">
+                    Subtítulo (ES)
+                  </label>
+                  <input
+                    value={subtitleEs}
+                    onChange={(e) => setSubtitleEs(e.target.value)}
+                    disabled={isBusy}
+                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
+                    placeholder="Escultura mural contemporánea"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-neutral-700">
+                    Categoría (ES)
+                  </label>
+                  <input
+                    value={categoryEs}
+                    onChange={(e) => setCategoryEs(e.target.value)}
+                    disabled={isBusy}
+                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
+                    placeholder="Escultura mural"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-neutral-700">
+                    Disponibilidad (ES)
+                  </label>
+                  <input
+                    value={availabilityEs}
+                    onChange={(e) => setAvailabilityEs(e.target.value)}
+                    disabled={isBusy}
+                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
+                    placeholder="Disponible por encargo"
+                  />
+                </div>
+
+                <div className="space-y-2 md:col-span-2">
+                  <label className="text-sm font-medium text-neutral-700">
+                    Materiales (ES)
+                  </label>
+                  <input
+                    value={materialsEs}
+                    onChange={(e) => setMaterialsEs(e.target.value)}
+                    disabled={isBusy}
+                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
+                    placeholder="Papel maché, cartón reciclado..."
+                  />
+                </div>
+
+                <div className="space-y-2 md:col-span-2">
+                  <label className="text-sm font-medium text-neutral-700">
+                    Descripción (ES)
+                  </label>
+                  <textarea
+                    value={descriptionEs}
+                    onChange={(e) => setDescriptionEs(e.target.value)}
+                    rows={6}
+                    disabled={isBusy}
+                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
+                    placeholder="Descripción de la obra en español"
+                  />
+                </div>
+              </div>
             </div>
 
             <div className="space-y-2">
@@ -615,32 +955,6 @@ export default function ArtworkDetailManager({ artwork }: Props) {
               />
             </div>
 
-            <div className="space-y-2 md:col-span-2">
-              <label className="text-sm font-medium text-neutral-700">
-                Matériaux
-              </label>
-              <input
-                value={materials}
-                onChange={(e) => setMaterials(e.target.value)}
-                disabled={isBusy}
-                className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                placeholder="Papier mâché, carton recyclé, capsules..."
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-neutral-700">
-                Disponibilité
-              </label>
-              <input
-                value={availability}
-                onChange={(e) => setAvailability(e.target.value)}
-                disabled={isBusy}
-                className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                placeholder="Disponible sur demande"
-              />
-            </div>
-
             <div className="space-y-2">
               <label className="text-sm font-medium text-neutral-700">
                 URL Etsy
@@ -670,20 +984,6 @@ export default function ArtworkDetailManager({ artwork }: Props) {
               </label>
             </div>
 
-            <div className="space-y-2 md:col-span-2">
-              <label className="text-sm font-medium text-neutral-700">
-                Description
-              </label>
-              <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                rows={6}
-                disabled={isBusy}
-                className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                placeholder="Description de l’œuvre"
-              />
-            </div>
-
             <div className="md:col-span-2">
               <button
                 type="submit"
@@ -704,7 +1004,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
         <div className="mb-8 rounded-3xl border border-black/5 bg-white p-5 shadow-sm">
           <div className="mb-4 flex items-center gap-2">
             <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#f6efe5]">
-              <Plus className="h-5 w-5 text-neutral-800" />
+              <Upload className="h-5 w-5 text-neutral-800" />
             </div>
             <div>
               <h2 className="text-lg font-semibold text-neutral-950">

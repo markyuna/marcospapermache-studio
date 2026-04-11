@@ -1,8 +1,9 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 import type { Artwork } from "@/types/artwork";
+import { localizeArtwork } from "@/lib/artwork-i18n";
 import SculptureCard from "@/components/sculptures/SculptureCard";
 
 type GalleryProps = {
@@ -19,6 +20,7 @@ function getCoverImage(artwork: Artwork) {
 
 export default function Gallery({ artworks }: GalleryProps) {
   const t = useTranslations("Gallery");
+  const locale = useLocale();
 
   if (!artworks.length) {
     return (
@@ -31,9 +33,13 @@ export default function Gallery({ artworks }: GalleryProps) {
     );
   }
 
+  const localizedArtworks = artworks.map((artwork) =>
+    localizeArtwork(artwork, locale)
+  );
+
   return (
     <div className="grid auto-rows-fr gap-6 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-      {artworks.map((artwork) => {
+      {localizedArtworks.map((artwork) => {
         const cover = getCoverImage(artwork);
 
         return (
