@@ -48,39 +48,47 @@ export default async function AboutPage({
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,106,0,0.08),transparent_24%),radial-gradient(circle_at_85%_10%,rgba(255,190,120,0.10),transparent_22%)]" />
 
       <section className="relative overflow-hidden">
-        <div className="relative h-[72vh] min-h-[620px] w-full">
-          <Image
-            src="/banniere.png"
-            alt={t("hero.imageAlt")}
-            fill
-            priority
-            className="object-cover object-center"
-          />
+  <div className="relative h-[72vh] min-h-[620px] w-full">
 
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(247,242,236,0.12),rgba(247,242,236,0.06),rgba(247,242,236,0.52))]" />
-          <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(247,242,236,0.86),rgba(247,242,236,0.08)_42%,rgba(247,242,236,0.10))]" />
+    {/* IMAGEN BACKGROUND */}
+    <Image
+      src="/marcos.png"
+      alt={t("hero.imageAlt")}
+      fill
+      priority
+      className="object-cover object-right"
+    />
 
-          <Container className="relative z-10 flex h-full items-center justify-end">
-            <div className="max-w-[560px] text-right">
-              <div className="inline-flex rounded-full border border-white/40 bg-white/50 px-4 py-2 backdrop-blur-md">
-                <span className="text-[10px] uppercase tracking-[0.34em] text-[#9e744d] md:text-[11px]">
-                  {t("hero.badge")}
-                </span>
-              </div>
+    {/* OVERLAY PARA OSCURECER LADO IZQUIERDO */}
+    <div className="absolute inset-0 bg-gradient-to-r from-[#f7f2ec]/95 via-[#f7f2ec]/70 to-transparent" />
 
-              <h1 className="mt-6 text-4xl font-semibold leading-[0.95] tracking-[-0.05em] text-[#8b6947] md:text-6xl xl:text-7xl">
-                {t("hero.title")}
-              </h1>
+    {/* CONTENIDO */}
+    <Container className="relative z-10 flex h-full items-center">
+      <div className="max-w-[560px] text-left">
 
-              <p className="ml-auto mt-6 max-w-[480px] text-base leading-8 text-[#6d5b4d] md:text-lg">
-                {t("hero.description")}
-              </p>
-            </div>
-          </Container>
-
-          <div className="absolute inset-x-0 bottom-0 h-24 bg-[radial-gradient(120%_100%_at_50%_0%,transparent_48%,#f4efe9_49%)] md:h-32" />
+        <div className="inline-flex rounded-full border border-[#e7d8ca] bg-white/70 px-4 py-2 backdrop-blur-sm">
+          <span className="text-[10px] uppercase tracking-[0.34em] text-[#9e744d] md:text-[11px]">
+            {t("hero.badge")}
+          </span>
         </div>
-      </section>
+
+        <h1 className="mt-6 text-4xl font-semibold leading-[0.95] tracking-[-0.05em] text-[#8b6947] md:text-6xl xl:text-7xl">
+          {t("hero.title")}
+        </h1>
+
+        <p className="mt-6 max-w-[480px] text-base leading-8 text-[#6d5b4d] md:text-lg">
+          {t("hero.description")}
+        </p>
+
+      </div>
+    </Container>
+
+    {/* TRANSICIÓN ABAJO */}
+    <div className="absolute inset-x-0 bottom-0 h-24 bg-[radial-gradient(120%_100%_at_50%_0%,transparent_48%,#f4efe9_49%)] md:h-32" />
+
+  </div>
+</section>
+
 
       <section className="relative py-24 md:py-32">
         <Container className="grid items-center gap-14 lg:grid-cols-[1fr_0.95fr] lg:gap-20">
@@ -108,7 +116,7 @@ export default async function AboutPage({
             <div className="relative overflow-hidden rounded-[38%_62%_58%_42%/34%_36%_64%_66%] border border-white/60 bg-white/60 shadow-[0_30px_100px_rgba(86,57,29,0.14)] backdrop-blur-sm">
               <div className="relative aspect-[4/5]">
                 <Image
-                  src="/support-a-vins.jpg"
+                  src="/marcos.jpg"
                   alt={t("approach.imageAlt")}
                   fill
                   className="object-cover"
@@ -146,9 +154,11 @@ export default async function AboutPage({
                   className="rounded-[2rem] border border-[#efe2d6] bg-[linear-gradient(180deg,rgba(255,255,255,0.92),rgba(255,248,242,0.82))] p-6 shadow-[0_16px_40px_rgba(0,0,0,0.04)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_55px_rgba(140,95,42,0.10)]"
                 >
                   <div className="h-10 w-10 rounded-full bg-[radial-gradient(circle_at_30%_30%,#ffd5a8,#f4b06f)] opacity-80" />
+
                   <h3 className="mt-5 text-xl font-medium tracking-[-0.03em] text-[#1d1915]">
                     {value.title}
                   </h3>
+
                   <p className="mt-3 text-sm leading-7 text-[#6c5d50]">
                     {value.text}
                   </p>
@@ -186,7 +196,7 @@ export default async function AboutPage({
                 </p>
 
                 <Link
-                  href="/creations-sur-mesure"
+                  href="/commande"
                   className="group mt-8 inline-flex w-fit items-center gap-2 rounded-full border border-[#e6d4c2] bg-white/85 px-5 py-3 text-sm font-medium text-[#4f4338] shadow-[0_10px_30px_rgba(0,0,0,0.05)] backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-[#ff6a00]/30 hover:text-[#c65400]"
                 >
                   {t("interiors.cta")}

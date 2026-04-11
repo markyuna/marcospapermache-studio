@@ -99,7 +99,7 @@
     },
     "approach": {
         "badge": "Démarche",
-        "title": "Notre Engagement Artistique",
+        "title": "De la matière à l’expression",
         "paragraphs": [
         "Marcos Suarez, originaire de La Havane, développe une pratique artistique centrée sur la sculpture en papier mâché, la transformation de la matière et la création d’objets à forte présence visuelle.",
         "Son parcours a commencé très jeune à travers des créations faites à la main en carton et en papier, vendues sur les marchés touristiques de Cuba. Cette sensibilité première pour l’objet artisanal s’est transformée au fil du temps en une recherche plus sculpturale, plus contemporaine, plus personnelle.",
@@ -266,5 +266,14 @@
       "available": "Disponible — voir les détails de la pièce.",
       "onRequest": "Création disponible sur demande."
     }
-  }
+  },
+  "AboutArtist": {
+  "badge": "À propos de l’artiste",
+  "title": "Marcos Suárez, entre matière, lumière et transformation",
+  "paragraph1": "À travers le papier mâché, la lumière et les matières recyclées, Marcos Suárez développe un langage sculptural sensible, où le geste artisanal dialogue avec une esthétique contemporaine.",
+  "paragraph2": "Chaque pièce naît d’un processus de recherche, de texture et de transformation. Le travail manuel, les finitions organiques et la présence de la lumière donnent vie à des œuvres uniques, pensées comme des présences sculpturales.",
+  "cta": "Découvrir les sculptures",
+  "imageAlt": "Marcos Suárez en train de travailler une sculpture en papier mâché dans son atelier",
+  "quote": "Transformer la matière en présence."
+}
 }
