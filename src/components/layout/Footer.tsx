@@ -52,7 +52,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/experience-ia"
+                  href="/create"
                   className="transition hover:text-orange-500"
                 >
                   {t("links.ai")}

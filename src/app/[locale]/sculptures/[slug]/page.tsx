@@ -1,12 +1,14 @@
+//src/app/[locale]/sculptures/[slug]/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 
+import { Button } from "@/components/ui/button";
 import { Container } from "@/components/layout/container";
-import { getArtworkBySlug } from "@/lib/artworks";
-import { localizeArtwork } from "@/lib/artwork-i18n";
 import SculptureImageGallery from "@/components/sculptures/SculptureImageGallery";
+import { localizeArtwork } from "@/lib/artwork-i18n";
+import { getArtworkBySlug } from "@/lib/artworks";
 
 type SculptureDetailPageProps = {
   params: Promise<{
@@ -60,9 +62,11 @@ export default async function SculptureDetailPage({
   const localizedArtwork = localizeArtwork(artwork, locale);
 
   return (
-    <main className="bg-[#f8f5ef] py-24 md:py-32">
-      <Container>
-        <div className="grid gap-12 lg:grid-cols-[1.08fr_0.92fr] xl:gap-16">
+    <main className="relative overflow-hidden bg-[linear-gradient(to_bottom,#fcfaf6,#f7f2ea,#fbf8f3)] py-24 md:py-32">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(214,191,163,0.14),transparent_28%),radial-gradient(circle_at_85%_10%,rgba(255,106,0,0.08),transparent_20%)]" />
+
+      <Container className="relative z-10">
+        <div className="grid gap-14 lg:grid-cols-[1.06fr_0.94fr] xl:gap-20">
           <div>
             {localizedArtwork.images.length > 0 ? (
               <SculptureImageGallery
@@ -70,46 +74,46 @@ export default async function SculptureDetailPage({
                 title={localizedArtwork.title}
               />
             ) : (
-              <div className="flex aspect-[4/5] items-center justify-center rounded-[28px] bg-white text-neutral-400">
+              <div className="flex aspect-[4/5] items-center justify-center rounded-[32px] border border-black/[0.04] bg-white/75 text-neutral-400 shadow-[0_18px_50px_rgba(0,0,0,0.04)]">
                 {t("noImage")}
               </div>
             )}
           </div>
 
           <aside className="h-fit lg:sticky lg:top-28">
-            <p className="text-xs uppercase tracking-[0.32em] text-neutral-400">
+            <p className="text-[11px] uppercase tracking-[0.32em] text-neutral-400">
               {localizedArtwork.category || t("fallbackCategory")}
             </p>
 
-            <h1 className="mt-4 text-4xl font-semibold text-neutral-900 md:text-5xl">
+            <h1 className="mt-4 text-4xl font-medium tracking-[-0.045em] text-[#181512] md:text-5xl xl:text-[3.4rem]">
               {localizedArtwork.title}
             </h1>
 
             {localizedArtwork.subtitle ? (
-              <p className="mt-4 text-lg text-neutral-500 md:text-xl">
+              <p className="mt-4 max-w-2xl text-lg leading-8 text-neutral-500 md:text-xl">
                 {localizedArtwork.subtitle}
               </p>
             ) : null}
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
               {localizedArtwork.availability ? (
-                <span className="rounded-full bg-[#f3eadb] px-4 py-2 text-sm font-medium text-neutral-700">
+                <span className="rounded-full border border-[#eadcc8] bg-[#f3ece2] px-4 py-2 text-sm font-medium text-[#5c4632]">
                   {localizedArtwork.availability}
                 </span>
               ) : null}
 
               {localizedArtwork.year ? (
-                <span className="rounded-full border border-black/5 bg-white/80 px-4 py-2 text-sm text-neutral-600">
+                <span className="rounded-full border border-black/5 bg-white/75 px-4 py-2 text-sm text-neutral-600 backdrop-blur-sm">
                   {localizedArtwork.year}
                 </span>
               ) : null}
             </div>
 
             {(localizedArtwork.dimensions || localizedArtwork.materials) ? (
-              <div className="mt-8 space-y-4 rounded-[24px] border border-black/5 bg-white/70 p-6 shadow-[0_20px_50px_rgba(15,23,42,0.04)]">
+              <div className="mt-8 space-y-5 rounded-[28px] border border-black/[0.04] bg-white/72 p-6 shadow-[0_16px_45px_rgba(0,0,0,0.05)] backdrop-blur-sm">
                 {localizedArtwork.dimensions ? (
                   <div>
-                    <p className="text-xs uppercase tracking-[0.24em] text-neutral-400">
+                    <p className="text-[11px] uppercase tracking-[0.24em] text-neutral-400">
                       {t("dimensions")}
                     </p>
                     <p className="mt-2 text-base text-neutral-700">
@@ -120,7 +124,7 @@ export default async function SculptureDetailPage({
 
                 {localizedArtwork.materials ? (
                   <div>
-                    <p className="text-xs uppercase tracking-[0.24em] text-neutral-400">
+                    <p className="text-[11px] uppercase tracking-[0.24em] text-neutral-400">
                       {t("materials")}
                     </p>
                     <p className="mt-2 text-base leading-7 text-neutral-700">
@@ -133,7 +137,7 @@ export default async function SculptureDetailPage({
 
             {localizedArtwork.description ? (
               <div className="mt-8">
-                <p className="text-xs uppercase tracking-[0.24em] text-neutral-400">
+                <p className="text-[11px] uppercase tracking-[0.24em] text-neutral-400">
                   {t("description")}
                 </p>
                 <p className="mt-4 text-lg leading-8 text-neutral-600">
@@ -143,22 +147,20 @@ export default async function SculptureDetailPage({
             ) : null}
 
             <div className="mt-10 flex flex-wrap gap-4">
-              <Link
-                href={`/${locale}/contact`}
-                className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-amber-300 px-6 py-3 text-sm font-medium text-black shadow-[0_12px_30px_rgba(249,115,22,0.22)] transition hover:-translate-y-0.5"
-              >
-                {t("cta.request")}
-              </Link>
+              <Button asChild variant="default" size="lg">
+                <Link href={`/${locale}/contact`}>{t("cta.request")}</Link>
+              </Button>
 
               {localizedArtwork.etsy_url ? (
-                <Link
-                  href={localizedArtwork.etsy_url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center rounded-full border border-black/10 bg-white/80 px-6 py-3 text-sm font-medium text-neutral-800 transition hover:bg-white"
-                >
-                  {t("cta.etsy")}
-                </Link>
+                <Button asChild variant="outline" size="lg">
+                  <Link
+                    href={localizedArtwork.etsy_url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {t("cta.etsy")}
+                  </Link>
+                </Button>
               ) : null}
             </div>
           </aside>

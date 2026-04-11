@@ -1,3 +1,4 @@
+//src/components/Lightbox.tsx
 "use client";
 
 import Image from "next/image";
@@ -42,6 +43,8 @@ export default function Lightbox({
   }
 
   function goToPrevious() {
+    if (images.length <= 1) return;
+
     setSessionIndex((current) => {
       const baseIndex = current ?? safeInitialIndex;
       return baseIndex === 0 ? images.length - 1 : baseIndex - 1;
@@ -49,6 +52,8 @@ export default function Lightbox({
   }
 
   function goToNext() {
+    if (images.length <= 1) return;
+
     setSessionIndex((current) => {
       const baseIndex = current ?? safeInitialIndex;
       return baseIndex === images.length - 1 ? 0 : baseIndex + 1;
@@ -60,10 +65,19 @@ export default function Lightbox({
   }
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) {
+      delete document.body.dataset.lightboxOpen;
+      delete document.documentElement.dataset.lightboxOpen;
+      return;
+    }
 
     const previousOverflow = document.body.style.overflow;
     const previousTouchAction = document.body.style.touchAction;
+
+    document.body.dataset.lightboxOpen = "true";
+    document.documentElement.dataset.lightboxOpen = "true";
+    document.body.style.overflow = "hidden";
+    document.body.style.touchAction = "none";
 
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
@@ -82,13 +96,13 @@ export default function Lightbox({
     }
 
     window.addEventListener("keydown", handleKeyDown);
-    document.body.style.overflow = "hidden";
-    document.body.style.touchAction = "none";
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = previousOverflow;
       document.body.style.touchAction = previousTouchAction;
+      delete document.body.dataset.lightboxOpen;
+      delete document.documentElement.dataset.lightboxOpen;
     };
   }, [isOpen, images.length, safeInitialIndex]);
 
@@ -98,21 +112,21 @@ export default function Lightbox({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[999999] bg-black/95 backdrop-blur-xl"
+      className="fixed inset-0 z-[999999] bg-black/92 backdrop-blur-md"
       role="dialog"
       aria-modal="true"
       aria-label="Galerie plein écran"
       onClick={handleClose}
     >
-      <div className="pointer-events-none absolute inset-0 opacity-80">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,210,150,0.08),transparent_42%)]" />
+      <div className="pointer-events-none absolute inset-0 opacity-90">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(215,188,150,0.08),transparent_42%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.04),transparent_30%)]" />
       </div>
 
       <button
         type="button"
         onClick={handleClose}
-        className="absolute right-4 top-4 z-[1000001] inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/10 text-white backdrop-blur-md transition duration-300 hover:scale-[1.03] hover:bg-white/15 md:right-6 md:top-6"
+        className="absolute right-4 top-4 z-[1000001] inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/10 text-white backdrop-blur-md transition duration-300 hover:bg-white/15 md:right-6 md:top-6"
         aria-label="Fermer la galerie"
       >
         <X className="h-5 w-5" />
@@ -126,7 +140,7 @@ export default function Lightbox({
               event.stopPropagation();
               goToPrevious();
             }}
-            className="absolute left-3 top-1/2 z-[1000001] inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-white/10 text-white backdrop-blur-md transition duration-300 hover:scale-[1.03] hover:bg-white/15 md:left-6"
+            className="absolute left-3 top-1/2 z-[1000001] inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-white/10 text-white backdrop-blur-md transition duration-300 hover:bg-white/15 md:left-6"
             aria-label="Image précédente"
           >
             <ChevronLeft className="h-6 w-6" />
@@ -138,7 +152,7 @@ export default function Lightbox({
               event.stopPropagation();
               goToNext();
             }}
-            className="absolute right-3 top-1/2 z-[1000001] inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-white/10 text-white backdrop-blur-md transition duration-300 hover:scale-[1.03] hover:bg-white/15 md:right-6"
+            className="absolute right-3 top-1/2 z-[1000001] inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-white/10 text-white backdrop-blur-md transition duration-300 hover:bg-white/15 md:right-6"
             aria-label="Image suivante"
           >
             <ChevronRight className="h-6 w-6" />
@@ -152,11 +166,8 @@ export default function Lightbox({
       >
         <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center">
           <div className="flex flex-1 items-center justify-center">
-            <div
-              className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[32px] border border-white/8 bg-white/[0.04] px-2 py-2 shadow-[0_30px_120px_rgba(0,0,0,0.45)] sm:px-4 sm:py-4 lg:px-6 lg:py-6"
-              style={{ animation: "lightbox-zoom-in 0.4s ease" }}
-            >
-              <div className="relative h-full min-h-0 w-full">
+            <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[32px] border border-white/8 bg-white/[0.03] px-2 py-2 shadow-[0_30px_120px_rgba(0,0,0,0.45)] sm:px-4 sm:py-4 lg:px-6 lg:py-6">
+              <div className="relative h-full min-h-0 w-full animate-[lightbox-fade-in_0.35s_ease]">
                 <Image
                   key={image.src}
                   src={image.src}
@@ -180,9 +191,11 @@ export default function Lightbox({
               </h3>
             </div>
 
-            <div className="shrink-0 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm backdrop-blur-md">
-              {currentIndex + 1} / {images.length}
-            </div>
+            {images.length > 1 ? (
+              <div className="shrink-0 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm backdrop-blur-md">
+                {currentIndex + 1} / {images.length}
+              </div>
+            ) : null}
           </div>
 
           {images.length > 1 && (
@@ -198,7 +211,7 @@ export default function Lightbox({
                   className={clsx(
                     "relative h-20 w-16 shrink-0 overflow-hidden rounded-xl border transition duration-300",
                     thumbnailIndex === currentIndex
-                      ? "border-white opacity-100 shadow-[0_12px_30px_rgba(0,0,0,0.4)]"
+                      ? "border-white/50 opacity-100 shadow-[0_12px_30px_rgba(0,0,0,0.4)]"
                       : "border-white/15 opacity-55 hover:opacity-100"
                   )}
                   aria-label={`Afficher l’image ${thumbnailIndex + 1} dans la galerie`}

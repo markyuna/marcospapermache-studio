@@ -57,7 +57,7 @@ export function SiteHeader() {
           </Link>
 
           <Link
-            href="/experience-ia"
+            href="/create"
             className="text-sm text-[#5f5348] transition hover:text-[#ff6a00]"
           >
             {t("ai")}
@@ -71,12 +71,6 @@ export function SiteHeader() {
           </Link>
         </nav>
 
-        <Link
-          href="/experience-ia"
-          className="rounded-full border border-[#ff6a00]/20 bg-[#ff6a00] px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:scale-[1.02] hover:bg-[#e85f00]"
-        >
-          {t("ai")}
-        </Link>
       </Container>
     </header>
   );

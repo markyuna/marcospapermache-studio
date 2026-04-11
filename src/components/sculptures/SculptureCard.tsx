@@ -1,3 +1,4 @@
+//src/components/sculptures/SculptureCard.tsx
 "use client";
 
 import Image from "next/image";
@@ -39,7 +40,7 @@ function getAvailabilityStyle(availability?: string | null) {
     normalized.includes("on request") ||
     normalized.includes("por encargo")
   ) {
-    return "border-[#ead8bc] bg-[#f6efe2] text-[#6d533b]";
+    return "border-[#eadcc8] bg-[#f3ece2] text-[#5c4632]";
   }
 
   return "border-black/10 bg-white/90 text-neutral-600";
@@ -62,8 +63,8 @@ export default function SculptureCard({
 
   return (
     <Link href={`/sculptures/${slug}`} className="group block h-full">
-      <article className="relative flex h-full flex-col overflow-hidden rounded-[30px] border border-black/5 bg-white/80 shadow-[0_18px_50px_rgba(15,23,42,0.06)] backdrop-blur-sm transition duration-500 hover:-translate-y-1.5 hover:border-[#ff6a00]/10 hover:shadow-[0_26px_80px_rgba(15,23,42,0.11)]">
-        <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-[#ff8a1f]/30 to-transparent opacity-0 transition duration-500 group-hover:opacity-100" />
+      <article className="relative flex h-full flex-col overflow-hidden rounded-[30px] border border-black/[0.04] bg-white/80 shadow-[0_10px_40px_rgba(0,0,0,0.06)] backdrop-blur-sm transition duration-500 hover:-translate-y-1 hover:border-black/[0.06] hover:shadow-[0_18px_60px_rgba(0,0,0,0.08)]">
+        <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-[#d9c4a5]/70 to-transparent opacity-0 transition duration-500 group-hover:opacity-100" />
 
         <div className="relative aspect-[4/5] overflow-hidden bg-[#efe8dc]">
           {hasImage && src ? (
@@ -73,9 +74,9 @@ export default function SculptureCard({
                 alt={imageAlt || title}
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, (max-width: 1536px) 33vw, 25vw"
-                className="object-cover transition duration-700 ease-out group-hover:scale-[1.045]"
+                className="object-cover transition duration-700 ease-out group-hover:scale-[1.025]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1a1612]/18 via-transparent to-transparent transition duration-500 group-hover:from-[#1a1612]/26" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1a1612]/16 via-transparent to-transparent transition duration-500 group-hover:from-[#1a1612]/22" />
             </>
           ) : (
             <div className="flex h-full items-center justify-center px-6 text-center text-sm text-neutral-400">
@@ -103,7 +104,7 @@ export default function SculptureCard({
               {category || t("defaultCategory")}
             </p>
 
-            <h2 className="mt-3 line-clamp-2 text-[1.38rem] font-medium leading-[1.1] tracking-[-0.02em] text-neutral-900 transition duration-300 group-hover:text-[#be5a08]">
+            <h2 className="mt-3 line-clamp-2 text-[1.38rem] font-medium leading-[1.1] tracking-[-0.02em] text-neutral-900 transition duration-300 group-hover:text-black">
               {title}
             </h2>
 
@@ -117,7 +118,7 @@ export default function SculptureCard({
           </div>
 
           <div className="mt-4 min-h-[24px]">
-            {(dimensions || year) ? (
+            {dimensions || year ? (
               <p className="text-sm text-neutral-500">
                 {[dimensions, year].filter(Boolean).join(" • ")}
               </p>
@@ -133,7 +134,7 @@ export default function SculptureCard({
           </div>
 
           <div className="mt-5 pt-4">
-            <span className="inline-flex items-center text-sm font-medium text-[#c45e09] transition duration-300 group-hover:translate-x-0.5">
+            <span className="inline-flex items-center text-sm font-medium text-[#6d533b] transition duration-300 group-hover:translate-x-0.5">
               {t("discover")}
             </span>
           </div>
