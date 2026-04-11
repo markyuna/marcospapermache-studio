@@ -2,8 +2,17 @@ import { getTranslations } from "next-intl/server";
 import { Container } from "@/components/layout/container";
 import CommandeForm from "@/components/forms/CommandeForm";
 
-export default async function CommandePage() {
+type CommandePageProps = {
+  searchParams: Promise<{
+    prompt?: string;
+  }>;
+};
+
+export default async function CommandePage({
+  searchParams,
+}: CommandePageProps) {
   const t = await getTranslations("CommandePage");
+  const { prompt = "" } = await searchParams;
 
   return (
     <section className="py-24 md:py-32">
@@ -33,7 +42,7 @@ export default async function CommandePage() {
         </div>
 
         <div className="mt-12">
-          <CommandeForm />
+          <CommandeForm defaultPrompt={prompt} />
         </div>
       </Container>
     </section>

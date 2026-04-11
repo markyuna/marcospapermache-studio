@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { Link } from "@/i18n/navigation";
+import { useRouter } from "@/i18n/navigation";
 
 type GenerateImageResponse = {
   image?: string;
@@ -20,6 +20,7 @@ type GenerateImageResponse = {
 
 export default function AIExperienceSection() {
   const t = useTranslations("AIExperience");
+  const router = useRouter();
 
   const stylePresets = [
     {
@@ -119,17 +120,25 @@ export default function AIExperienceSection() {
     setGeneratedImage(null);
     setLastPrompt("");
     setError("");
+    if (typeof window !== "undefined") {
+      sessionStorage.removeItem("generatedImage");
+    }
   }
 
-  const commandeHref = generatedImage
-    ? {
-        pathname: "/commande",
-        query: {
-          prompt: lastPrompt,
-          image: generatedImage,
-        },
-      }
-    : "/commande";
+  function handleOrderClick() {
+    if (!generatedImage) return;
+
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("generatedImage", generatedImage);
+    }
+
+    router.push({
+      pathname: "/commande",
+      query: {
+        prompt: lastPrompt,
+      },
+    });
+  }
 
   return (
     <section className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-[#0b0b0d] p-6 text-white shadow-[0_30px_120px_rgba(0,0,0,0.38)] md:p-10">
@@ -310,18 +319,20 @@ export default function AIExperienceSection() {
               {t("buttons.regenerate")}
             </button>
 
-            <Link
-              href={commandeHref}
+            <button
+              type="button"
+              onClick={handleOrderClick}
+              disabled={!generatedImage}
               className={[
                 "inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-medium transition duration-300",
                 generatedImage
                   ? "bg-[#d9b08c] text-black hover:scale-[1.015] hover:bg-[#e5c4a6]"
-                  : "pointer-events-none bg-neutral-700 text-neutral-400",
+                  : "cursor-not-allowed bg-neutral-700 text-neutral-400",
               ].join(" ")}
             >
               {t("buttons.order")}
               <ArrowRight className="h-4 w-4" />
-            </Link>
+            </button>
           </div>
 
           <div className="mt-5 space-y-3">
