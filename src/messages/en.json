@@ -266,5 +266,58 @@
       "available": "Available — view the piece details.",
       "onRequest": "Creation available on request."
     }
+  },
+  "AIExperience": {
+    "badge": "AI-assisted creation",
+    "title": "Imagine your sculpture before bringing it to life.",
+    "description": "Describe your idea, choose an artistic direction, generate a visual concept, then transform it into a bespoke sculptural work.",
+    "promptEnrichedTitle": "Enhanced prompt",
+    "promptEnrichedSuffix": "Desired style:",
+    "form": {
+      "label": "Describe your idea",
+      "placeholder": "E.g. An organic white wall sculpture with golden accents, inspired by the movement of waves, elegant and contemporary.",
+      "styleLabel": "Choose a style"
+    },
+    "styles": {
+      "organic": {
+        "label": "Organic",
+        "prompt": "Organic papier-mâché sculpture, fluid shapes, handcrafted texture, contemporary elegance, soft light, high-end rendering"
+      },
+      "minimal": {
+        "label": "Minimalist",
+        "prompt": "Minimalist papier-mâché sculpture, clean lines, off-white and gold palette, contemporary design, art gallery rendering"
+      },
+      "oceanic": {
+        "label": "Ocean-inspired",
+        "prompt": "Papier-mâché sculpture inspired by the ocean, natural curves, fluid movement, pearly white, golden accents, visual poetry"
+      },
+      "luminous": {
+        "label": "Luminous",
+        "prompt": "Papier-mâché lamp sculpture, integrated luminous circle, contemporary sculptural design, white and gold finish, elegant atmosphere"
+      }
+    },
+    "buttons": {
+      "generate": "Generate an image",
+      "generating": "Generating...",
+      "reset": "Reset",
+      "regenerate": "Regenerate",
+      "order": "Bring this sculpture to life"
+    },
+    "result": {
+      "emptyTitle": "Your concept will appear here",
+      "emptyDescription": "Generate a first vision of your future sculpture, then refine it before bringing it to life in the studio.",
+      "generatedTitle": "Generated concept",
+      "imageAlt": "AI-generated sculpture concept"
+    },
+    "footer": {
+      "line1": "Each generated concept serves as a visual foundation. The final sculpture is then handmade in the studio, with a bespoke, sensitive and artisanal approach.",
+      "line2": "Each piece is unique and conceived as a contemporary work, created to interact with your space."
+    },
+    "errors": {
+      "emptyPrompt": "Describe your idea first to generate an image.",
+      "generationFailed": "An error occurred during generation.",
+      "noImageReturned": "No image was returned.",
+      "unknown": "An unknown error occurred."
+    }
   }
 }

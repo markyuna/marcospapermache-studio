@@ -14,7 +14,7 @@ const navLinks = [
   { href: "/about", key: "about", width: "min-w-[96px]" },
   { href: "/sculptures", key: "sculptures", width: "min-w-[110px]" },
   { href: "/creations-sur-mesure", key: "custom", width: "min-w-[138px]" },
-  { href: "/experience-ia", key: "ai", width: "min-w-[118px]" },
+  { href: "/create", key: "ai", width: "min-w-[118px]" },
   { href: "/contact", key: "contact", width: "min-w-[98px]" },
 ] as const;
 

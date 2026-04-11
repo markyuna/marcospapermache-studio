@@ -266,5 +266,58 @@
       "available": "Disponible — ver los detalles de la pieza.",
       "onRequest": "Creación disponible por encargo."
     }
+  },
+  "AIExperience": {
+    "badge": "Creación asistida por IA",
+    "title": "Imagina tu escultura antes de hacerla nacer.",
+    "description": "Describe tu idea, elige una dirección artística, genera un concepto visual y luego transfórmalo en una obra escultórica a medida.",
+    "promptEnrichedTitle": "Prompt enriquecido",
+    "promptEnrichedSuffix": "Estilo deseado:",
+    "form": {
+      "label": "Describe tu idea",
+      "placeholder": "Ej. Una escultura mural orgánica blanca con toques dorados, inspirada en el movimiento de las olas, elegante y contemporánea.",
+      "styleLabel": "Elige un estilo"
+    },
+    "styles": {
+      "organic": {
+        "label": "Orgánico",
+        "prompt": "Escultura orgánica en papel maché, formas fluidas, textura artesanal, elegancia contemporánea, luz suave, acabado de alta gama"
+      },
+      "minimal": {
+        "label": "Minimalista",
+        "prompt": "Escultura minimalista en papel maché, líneas depuradas, paleta blanco roto y dorado, diseño contemporáneo, acabado de galería de arte"
+      },
+      "oceanic": {
+        "label": "Inspirada en el océano",
+        "prompt": "Escultura en papel maché inspirada en el océano, curvas naturales, movimiento fluido, blanco nacarado, toques dorados, poesía visual"
+      },
+      "luminous": {
+        "label": "Luminosa",
+        "prompt": "Escultura-lámpara en papel maché, círculo luminoso integrado, diseño escultórico contemporáneo, acabado blanco y dorado, ambiente elegante"
+      }
+    },
+    "buttons": {
+      "generate": "Generar una imagen",
+      "generating": "Generando...",
+      "reset": "Restablecer",
+      "regenerate": "Regenerar",
+      "order": "Dar vida a esta escultura"
+    },
+    "result": {
+      "emptyTitle": "Tu concepto aparecerá aquí",
+      "emptyDescription": "Genera una primera visión de tu futura escultura y luego afínala antes de darle vida en el taller.",
+      "generatedTitle": "Concepto generado",
+      "imageAlt": "Concepto de escultura generado por IA"
+    },
+    "footer": {
+      "line1": "Cada concepto generado sirve como base visual. La escultura final se realiza a mano en el taller, con un enfoque artesanal, sensible y totalmente a medida.",
+      "line2": "Cada pieza es única y está pensada como una obra contemporánea, creada para dialogar con tu espacio."
+    },
+    "errors": {
+      "emptyPrompt": "Describe primero tu idea para generar una imagen.",
+      "generationFailed": "Error durante la generación.",
+      "noImageReturned": "No se devolvió ninguna imagen.",
+      "unknown": "Ha ocurrido un error desconocido."
+    }
   }
 }
