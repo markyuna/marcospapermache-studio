@@ -29,6 +29,8 @@ export default function LocaleSwitcher({
   const t = useTranslations("LocaleSwitcher");
   const [isPending, startTransition] = useTransition();
 
+  const activeIndex = locales.findIndex((l) => l.code === locale);
+
   const handleChangeLocale = (nextLocale: Locale) => {
     if (nextLocale === locale || isPending) return;
 
@@ -41,12 +43,20 @@ export default function LocaleSwitcher({
   return (
     <div
       className={clsx(
-        "flex items-center gap-1 rounded-full border border-black/10 bg-white/80 backdrop-blur-xl",
-        mobile ? "mt-4 w-fit px-2 py-2" : "px-2 py-1.5"
+        "relative flex items-center rounded-full border border-black/10 bg-white/70 backdrop-blur-md",
+        mobile ? "mt-4 w-fit p-[2px]" : "p-[1.5px]"
       )}
       role="group"
       aria-label={t("label")}
     >
+      <div
+        className="absolute top-[1.5px] bottom-[1.5px] rounded-full transition-all duration-300 ease-out bg-gradient-to-r from-[#ff7a18] via-[#ff9a3c] to-[#ffd28a]"
+        style={{
+          width: "33.333%",
+          transform: `translateX(${activeIndex * 100}%)`,
+        }}
+      />
+
       {locales.map((item) => {
         const isActive = locale === item.code;
 
@@ -55,12 +65,12 @@ export default function LocaleSwitcher({
             key={item.code}
             type="button"
             onClick={() => handleChangeLocale(item.code)}
-            disabled={isActive || isPending}
+            disabled={isPending}
             className={clsx(
-              "rounded-full px-3 py-1.5 text-xs font-semibold tracking-[0.08em] transition-all duration-300 disabled:cursor-default disabled:opacity-100",
+              "relative z-10 px-2 py-[5px] text-[10px] font-medium tracking-[0.12em] transition-colors duration-300",
               isActive
-                ? "bg-neutral-950 text-white shadow-sm"
-                : "text-neutral-600 hover:bg-orange-50 hover:text-neutral-950"
+                ? "text-white"
+                : "text-neutral-500 hover:text-neutral-900"
             )}
             aria-pressed={isActive}
             aria-label={t("switchTo", { locale: item.label })}

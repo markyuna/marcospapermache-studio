@@ -1,4 +1,3 @@
-//src/components/layout/Navbar.tsx
 "use client";
 
 import Image from "next/image";
@@ -11,12 +10,12 @@ import { Link, usePathname } from "@/i18n/navigation";
 import LocaleSwitcher from "@/components/layout/LocaleSwitcher";
 
 const navLinks = [
-  { href: "/", key: "home", width: "min-w-[88px]" },
-  { href: "/about", key: "about", width: "min-w-[94px]" },
-  { href: "/sculptures", key: "sculptures", width: "min-w-[108px]" },
-  { href: "/creations-sur-mesure", key: "custom", width: "min-w-[138px]" },
-  { href: "/create", key: "ai", width: "min-w-[116px]" },
-  { href: "/contact", key: "contact", width: "min-w-[96px]" },
+  { href: "/", key: "home", width: "min-w-[94px]" },
+  { href: "/about", key: "about", width: "min-w-[100px]" },
+  { href: "/sculptures", key: "sculptures", width: "min-w-[120px]" },
+  { href: "/creations-sur-mesure", key: "custom", width: "min-w-[158px]" },
+  { href: "/create", key: "ai", width: "min-w-[118px]" },
+  { href: "/contact", key: "contact", width: "min-w-[102px]" },
 ] as const;
 
 function getLightboxOpenState() {
@@ -85,32 +84,33 @@ export default function Navbar() {
   return (
     <header
       className={clsx(
-        "navbar sticky top-0 z-50 w-full border-b border-black/5 bg-white/60 backdrop-blur-xl transition-all duration-500 supports-[backdrop-filter]:bg-white/40",
+        "navbar sticky top-0 z-50 w-full border-b border-black/5 bg-white/65 backdrop-blur-xl transition-all duration-500 supports-[backdrop-filter]:bg-white/45",
         isLightboxOpen
           ? "pointer-events-none -translate-y-full opacity-0"
           : "translate-y-0 opacity-100"
       )}
     >
-      <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-5 py-3 sm:px-6 lg:px-8 xl:px-10">
+      <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-5 py-4 sm:px-6 lg:px-8 xl:px-10">
         <Link
           href="/"
           onClick={closeMenu}
           className="group relative flex shrink-0 items-center"
           aria-label="Marcos Papermache"
         >
-          <div className="relative h-20 w-36 sm:h-24 sm:w-44 lg:h-24 lg:w-48 xl:h-28 xl:w-56">
+          <div className="relative h-24 w-44 sm:h-28 sm:w-52 lg:h-32 lg:w-60 xl:h-36 xl:w-72">
             <Image
               src="/logo.png"
               alt="Marcos Papermache"
               fill
               priority
-              className="object-contain object-left transition duration-500 group-hover:scale-[1.015]"
+              sizes="(max-width: 640px) 176px, (max-width: 768px) 208px, (max-width: 1024px) 240px, 288px"
+              className="object-contain object-left transition duration-500 group-hover:scale-[1.02]"
             />
           </div>
         </Link>
 
         <div className="hidden flex-1 items-center justify-end lg:flex">
-          <nav className="flex flex-1 items-center justify-center gap-1 xl:gap-2">
+          <nav className="flex flex-1 items-center justify-center gap-2 xl:gap-2.5">
             {navLinks.map((link) => {
               const isActive = isActiveLink(link.href);
 
@@ -119,18 +119,20 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   className={clsx(
-                    "group relative flex h-16 max-w-[150px] items-center justify-center px-3 text-center text-[14px] font-normal leading-tight tracking-[0.02em] transition-colors duration-300",
+                    "group relative flex h-[68px] max-w-[180px] items-center justify-center px-4 text-center text-[15px] font-medium leading-none tracking-[0.05em] transition-all duration-300",
                     link.width,
                     isActive
                       ? "text-neutral-950"
-                      : "text-neutral-700 hover:text-neutral-950"
+                      : "text-neutral-600 hover:text-neutral-900"
                   )}
                 >
-                  <span className="line-clamp-2">{t(link.key)}</span>
+                  <span className="line-clamp-1 whitespace-nowrap">
+                    {t(link.key)}
+                  </span>
 
                   <span
                     className={clsx(
-                      "absolute bottom-1 left-1/2 h-px w-[calc(100%-1.75rem)] -translate-x-1/2 origin-center rounded-full bg-gradient-to-r from-[#d6bfa3] via-[#caa47c] to-[#e8d8c3] transition-transform duration-300",
+                      "absolute bottom-[10px] left-1/2 h-[2px] w-[calc(100%-2.1rem)] -translate-x-1/2 origin-center rounded-full bg-gradient-to-r from-[#ff7a18] via-[#ffb347] to-[#ffd28a] transition-transform duration-300",
                       isActive
                         ? "scale-x-100"
                         : "scale-x-0 group-hover:scale-x-100"
@@ -141,7 +143,7 @@ export default function Navbar() {
             })}
           </nav>
 
-          <div className="ml-4 shrink-0">
+          <div className="ml-5 shrink-0">
             <LocaleSwitcher />
           </div>
         </div>
@@ -149,7 +151,7 @@ export default function Navbar() {
         <button
           type="button"
           onClick={toggleMenu}
-          className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-black/10 bg-white/80 text-neutral-900 shadow-sm transition hover:bg-[#f5efe6] lg:hidden"
+          className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-black/10 bg-white/85 text-neutral-900 shadow-sm transition hover:bg-[#f8f1e8] lg:hidden"
           aria-label={open ? t("closeMenu") : t("openMenu")}
           aria-expanded={open}
           aria-controls="mobile-menu"
@@ -175,10 +177,10 @@ export default function Navbar() {
                 href={link.href}
                 onClick={closeMenu}
                 className={clsx(
-                  "rounded-2xl px-4 py-3 text-base font-normal tracking-[0.01em] transition",
+                  "rounded-2xl px-4 py-3 text-[16px] font-medium tracking-[0.035em] transition",
                   isActive
-                    ? "bg-[#f5efe6] text-neutral-950"
-                    : "text-neutral-700 hover:bg-[#f5efe6] hover:text-neutral-950"
+                    ? "bg-[#f8f1e8] text-neutral-950"
+                    : "text-neutral-700 hover:bg-[#f8f1e8] hover:text-neutral-950"
                 )}
               >
                 {t(link.key)}

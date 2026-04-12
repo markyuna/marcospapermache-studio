@@ -17,33 +17,45 @@ export default function ContactVisual({
     <div
       className={
         mobile
-          ? "relative min-h-[520px] overflow-hidden rounded-[2rem] border border-white/10 bg-[radial-gradient(circle_at_top,rgba(255,106,0,0.10),transparent_28%),linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01))] lg:hidden"
-          : "relative hidden min-h-[760px] overflow-hidden rounded-[2.2rem] border border-white/10 bg-[radial-gradient(circle_at_top,rgba(255,106,0,0.10),transparent_28%),linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01))] lg:flex lg:items-center lg:justify-center"
+          ? "relative min-h-[520px] overflow-hidden rounded-[2rem] border border-white/10 lg:hidden"
+          : "relative hidden min-h-[760px] overflow-hidden rounded-[2.2rem] border border-white/10 lg:flex lg:items-center lg:justify-center"
       }
     >
       <div className="pointer-events-none absolute inset-0">
         <div
           className={
             mobile
-              ? "absolute left-1/2 top-14 h-[220px] w-[220px] -translate-x-1/2 rounded-full bg-[#ff6a00]/10 blur-[90px]"
-              : "absolute left-1/2 top-20 h-[340px] w-[340px] -translate-x-1/2 rounded-full bg-[#ff6a00]/10 blur-[110px]"
+              ? "absolute left-1/2 top-12 h-[240px] w-[240px] -translate-x-1/2 rounded-full "
+              : "absolute left-1/2 top-16 h-[360px] w-[360px] -translate-x-1/2 rounded-full "
           }
         />
+
         <div
           className={
             mobile
-              ? "absolute bottom-10 left-8 h-[120px] w-[120px] rounded-full bg-[#f4d2b8]/10 blur-[70px]"
-              : "absolute bottom-16 left-16 h-[180px] w-[180px] rounded-full bg-[#f4d2b8]/10 blur-[90px]"
+              ? "absolute left-1/2 top-[42%] h-[260px] w-[220px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#f5dcc8]/10 blur-[70px]"
+              : "absolute left-1/2 top-[46%] h-[360px] w-[280px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#f5dcc8]/12 blur-[90px]"
           }
         />
+
         <div
           className={
             mobile
-              ? "absolute right-8 top-16 h-[90px] w-[90px] rounded-full bg-white/5 blur-[55px]"
-              : "absolute right-12 top-24 h-[140px] w-[140px] rounded-full bg-white/5 blur-[70px]"
+              ? "absolute bottom-10 left-8 h-[120px] w-[120px] rounded-full bg-[#f4d2b8]/8 blur-[70px]"
+              : "absolute bottom-16 left-16 h-[180px] w-[180px] rounded-full bg-[#f4d2b8]/8 blur-[90px]"
           }
         />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.02),transparent_24%,transparent_76%,rgba(255,255,255,0.02))]" />
+
+        <div
+          className={
+            mobile
+              ? "absolute right-8 top-16 h-[90px] w-[90px] rounded-full bg-white/[0.04] blur-[55px]"
+              : "absolute right-12 top-24 h-[140px] w-[140px] rounded-full bg-white/[0.04] blur-[70px]"
+          }
+        />
+
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.02),transparent_22%,transparent_78%,rgba(255,255,255,0.02))]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_34%,rgba(0,0,0,0.14)_100%)]" />
       </div>
 
       <div
@@ -57,6 +69,7 @@ export default function ContactVisual({
           <p className="text-[11px] uppercase tracking-[0.34em] text-neutral-400">
             {t("eyebrow")}
           </p>
+
           <h2
             className={
               mobile
@@ -69,8 +82,9 @@ export default function ContactVisual({
               {t("title.line2")}
             </span>
           </h2>
+
           <p className="mt-5 text-sm leading-7 text-neutral-400">
-            {t("description")}
+            
           </p>
         </div>
 
@@ -102,8 +116,16 @@ export default function ContactVisual({
               <div
                 className={
                   mobile
-                    ? "absolute inset-x-6 bottom-2 h-10 rounded-full bg-[#ff6a00]/15 blur-3xl"
-                    : "absolute inset-x-10 bottom-3 h-12 rounded-full bg-[#ff6a00]/15 blur-3xl"
+                    ? "absolute inset-x-6 bottom-2 h-10 rounded-full bg-[#ff6a00]/20 blur-3xl"
+                    : "absolute inset-x-10 bottom-3 h-12 rounded-full bg-[#ff6a00]/20 blur-3xl"
+                }
+              />
+
+              <div
+                className={
+                  mobile
+                    ? "absolute left-1/2 top-1/2 z-[1] h-[240px] w-[180px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/8 bg-white/[0.02] blur-[2px]"
+                    : "absolute left-1/2 top-1/2 z-[1] h-[420px] w-[290px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/8 bg-white/[0.02] blur-[2px]"
                 }
               />
 
@@ -115,8 +137,8 @@ export default function ContactVisual({
                 priority
                 className={
                   mobile
-                    ? "relative z-10 h-auto w-[210px] object-contain drop-shadow-[0_30px_70px_rgba(0,0,0,0.55)]"
-                    : "relative z-10 h-auto w-[380px] object-contain drop-shadow-[0_30px_70px_rgba(0,0,0,0.55)] xl:w-[460px]"
+                    ? "relative z-10 h-auto w-[220px] object-contain drop-shadow-[0_30px_70px_rgba(0,0,0,0.72)]"
+                    : "relative z-10 h-auto w-[400px] object-contain drop-shadow-[0_36px_90px_rgba(0,0,0,0.72)] xl:w-[570px]"
                 }
               />
             </motion.div>

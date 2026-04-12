@@ -231,12 +231,14 @@
   },
   "SculpturesPage": {
     "metadata": {
-      "title": "Esculturas | Marcos Papermache",
-      "description": "Una selección de piezas escultóricas entre formas orgánicas, materiales reciclados y composición contemporánea."
+      "title": "Esculturas",
+      "description": "Descubre una colección de esculturas contemporáneas en papel maché, entre materia, luz y presencia."
     },
-    "eyebrow": "Galería",
+    "eyebrow": "Colección",
     "title": "Esculturas",
-    "description": "Una selección de piezas escultóricas entre formas orgánicas, materiales reciclados y composición contemporánea."
+    "bannerAlt": "Banner de la página esculturas",
+    "collectionLabel": "Galería",
+    "collectionTitle": "Obras originales y piezas con carácter"
   },
   "SculptureDetailPage": {
     "metadata": {
