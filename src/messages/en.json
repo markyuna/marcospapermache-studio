@@ -16,7 +16,7 @@
       "line1": "Matter becomes form,",
       "line2": "the idea becomes sculpture."
     },
-    "description": "A universe where craftsmanship, sculptural presence, and AI-assisted creation come together to bring sensitive and contemporary made-to-measure works to life.",
+    "description": "A universe where craftsmanship, sculptural presence and AI-assisted creation come together to bring sensitive, contemporary made-to-measure works to life.",
     "ctaPrimary": "Create your sculpture with AI",
     "ctaSecondary": "View the sculptures",
     "trustLine": "Fast response · Custom project · No commitment",
@@ -29,7 +29,7 @@
       "alt": "Signature piece",
       "label": "Signature piece",
       "title": "Wine holder",
-      "description": "A functional and sculptural work conceived as an object of presence, between craftsmanship, material, and contemporary elegance."
+      "description": "A functional and sculptural work conceived as an object of presence, between craftsmanship, material and contemporary elegance."
     },
     "universe": {
       "label": "Universe",
@@ -39,7 +39,7 @@
   "Featured": {
     "badge": "Selection",
     "title": "Sculptures in light",
-    "description": "Three sculptural papier-mâché lamps where material, light, and artisanal gesture meet in a contemporary, sensitive, and singular aesthetic.",
+    "description": "Three sculptural papier-mâché lamps where material, light and craftsmanship meet in a contemporary, sensitive and singular aesthetic.",
     "viewAll": "View the full gallery",
     "discover": "Discover the piece",
     "sold": "Sold"
@@ -47,7 +47,7 @@
   "CTA": {
     "badge": "Premium experience",
     "title": "Give shape to an idea and transform it into a sculptural work.",
-    "description": "Start the AI experience or send a made-to-measure creation request designed for your space.",
+    "description": "Start the AI experience or send a custom creation request designed for your space.",
     "ctaPrimary": "Create with AI",
     "ctaSecondary": "Request a custom piece"
   },
@@ -57,7 +57,7 @@
     "steps": {
       "imagine": {
         "title": "Imagine",
-        "description": "Describe an intention, an emotion, a material, or a sculptural presence."
+        "description": "Describe an intention, an emotion, a material or a sculptural presence."
       },
       "generate": {
         "title": "Generate",
@@ -70,7 +70,7 @@
     }
   },
   "Footer": {
-    "description": "Handcrafted papier-mâché sculptures combining contemporary design, recycled materials, and unique artistic expression.",
+    "description": "Handcrafted papier-mâché sculptures blending contemporary design, recycled materials and unique artistic expression.",
     "navigation": "Navigation",
     "links": {
       "home": "Home",
@@ -89,65 +89,65 @@
   "AboutPage": {
     "metadata": {
       "title": "About",
-      "description": "Discover the universe of Marcos Suarez, an artist specializing in papier-mâché sculpture, where material, light, and contemporary creation meet."
+      "description": "Discover the world of Marcos Suarez, an artist specializing in papier-mâché sculpture, where material, light and contemporary creation meet."
     },
     "hero": {
       "badge": "About",
       "title": "Discover the Art of Marcos Suarez",
-      "description": "A universe where recycled material, sculpture, and light engage in dialogue within a handcrafted and contemporary aesthetic.",
+      "description": "A universe where recycled material, sculpture and light engage in dialogue through a handcrafted and contemporary aesthetic.",
       "imageAlt": "Marcos Suarez in his artistic universe"
     },
     "approach": {
       "badge": "Approach",
-      "title": "From matter to expression",
+      "title": "From material to expression",
       "paragraphs": [
-        "Marcos Suarez, originally from Havana, develops an artistic practice centered on papier-mâché sculpture, the transformation of material, and the creation of objects with a strong visual presence.",
-        "His journey began at a very young age through handmade creations in cardboard and paper, sold in Cuba’s tourist markets. This early sensitivity to handcrafted objects gradually evolved into a more sculptural, more contemporary, and more personal artistic pursuit.",
-        "Today, each work explores the dialogue between organic forms, textures, recycling, and light. Whether it is a wall sculpture, a lamp, or a functional object, each piece is conceived as a meeting point between poetry, material, and emotion."
+        "Marcos Suarez, originally from Havana, develops an artistic practice centered on papier-mâché sculpture, the transformation of material and the creation of objects with a strong visual presence.",
+        "His journey began at a very young age through handmade creations in cardboard and paper, sold in Cuba’s tourist markets. This early sensitivity to the crafted object gradually evolved into a more sculptural, more contemporary and more personal exploration.",
+        "Today, each work explores the dialogue between organic forms, textures, recycling and light. Whether it is a wall sculpture, a lamp or a functional object, each piece is conceived as a meeting point between poetry, material and emotion."
       ],
       "imageAlt": "Functional papier-mâché sculpture by Marcos Suarez"
     },
     "values": {
       "badge": "Values",
-      "title": "A practice between art, material, and emotion",
-      "description": "Each creation is born from careful attention to form, texture, and the atmosphere a piece can bring into a space.",
+      "title": "A practice between art, material and emotion",
+      "description": "Each creation is born from close attention to form, texture and the atmosphere a piece can bring into a space.",
       "items": [
         {
           "title": "Contemporary craftsmanship",
-          "text": "Each piece is conceived as a singular sculptural presence, between manual gesture, form research, and contemporary sensitivity."
+          "text": "Each piece is conceived as a singular sculptural presence, between handcraft, formal research and contemporary sensibility."
         },
         {
           "title": "Transformed materials",
-          "text": "Papier-mâché and recycled materials become works full of character, poetic, textured, and enduring."
+          "text": "Papier-mâché and recycled materials become works of character—poetic, textured and lasting."
         },
         {
           "title": "Custom creations",
-          "text": "Some pieces are born from a dialogue with the client to imagine a sculpture, a lamp, or a sculptural object adapted to a place."
+          "text": "Some pieces are born from a dialogue with the client, imagining a sculpture, a lamp or a sculptural object designed for a specific place."
         }
       ]
     },
     "interiors": {
       "badge": "In our clients’ homes",
       "title": "My sculptures in real interiors",
-      "description1": "Discover how some pieces find their place in real living spaces. Each creation interacts with its environment and becomes a singular presence in the home.",
-      "description2": "Wall sculptures, sculptural lamps, or functional objects: each work integrates uniquely into the world of those who choose it.",
+      "description1": "Discover how certain pieces find their place in real living spaces. Each creation interacts with its environment and becomes a singular presence within the home.",
+      "description2": "Wall sculptures, sculptural lamps or functional objects: each work integrates in a unique way into the world of those who choose it.",
       "cta": "Discover custom creations",
       "images": {
         "livingRoomAlt": "A Marcos Suarez sculpture integrated into a living room",
         "livingRoomLabel": "Living room",
         "wallAlt": "A sculptural lamp by Marcos Suarez in an interior",
         "wallLabel": "Wall piece",
-        "contemporaryAlt": "A Marcos Suarez work integrated into a contemporary interior",
+        "contemporaryAlt": "A Marcos Suarez artwork integrated into a contemporary interior",
         "contemporaryLabel": "Contemporary interior",
-        "quote": "Each piece transforms space and creates an artistic presence in everyday life."
+        "quote": "Each piece transforms the space and creates an artistic presence in everyday life."
       }
     }
   },
   "CustomCreationPage": {
     "hero": {
       "eyebrow": "Custom creation",
-      "title": "A work created especially for you",
-      "description": "Each custom creation is born from a dialogue between material, intuition, and intention. The goal is to design a singular piece in harmony with your interior, your sensibility, and your project.",
+      "title": "A work designed especially for you",
+      "description": "Each custom creation is born from a dialogue between material, intuition and intention. The goal is to design a singular piece in harmony with your interior, your sensitivity and your project.",
       "primaryCta": "Request a creation",
       "secondaryCta": "View the works"
     },
@@ -158,45 +158,45 @@
     "steps": [
       {
         "title": "Share your idea",
-        "description": "Describe your wish, your space, your inspirations, or the emotion you would like to bring to life."
+        "description": "Describe your desire, your space, your inspirations or the emotion you would like to bring to life."
       },
       {
         "title": "Define the artistic direction",
-        "description": "We discuss the forms, materials, dimensions, and the aesthetic intention of the piece."
+        "description": "We discuss the forms, materials, dimensions and aesthetic intention of the piece."
       },
       {
         "title": "Bring the work to life",
-        "description": "The sculpture is handcrafted through a sensitive, artisanal, and contemporary approach."
+        "description": "The sculpture is handcrafted through a sensitive and contemporary artisanal approach."
       }
     ],
     "approach": {
       "eyebrow": "Approach",
-      "title": "An artisanal, poetic, and contemporary process",
-      "description": "Each project is approached as a search for form, presence, and emotion. Recycled material becomes language, the hand sets the rhythm, and the final piece finds its place between sculpture, object, and memory."
+      "title": "A handcrafted, poetic and contemporary practice",
+      "description": "Each project is approached as a search for form, presence and emotion. Recycled material becomes language, the hand sets the rhythm, and the final piece finds its place between sculpture, object and memory."
     },
     "values": [
       "A unique piece designed for your world",
-      "Handcrafted artisanal production",
+      "Handcrafted production",
       "Recycled materials and a responsible approach",
       "Contemporary and expressive aesthetics"
     ],
     "contact": {
       "eyebrow": "Personalized project",
       "title": "Let’s talk about your future creation",
-      "description": "Describe your idea, your space, or simply your intention. Every project is a collaboration."
+      "description": "Describe your idea, your space or simply your intention. Every project is a collaboration."
     }
   },
-    "Gallery": {
-        "emptyTitle": "No artwork is available in the gallery yet.",
-        "emptyDescription": "Add your first sculptures from Supabase to display them here.",
-        "imageUnavailable": "Image unavailable",
-        "defaultCategory": "Sculpture",
-        "discover": "Discover the artwork"
-    },
-    "CommandeForm": {
+  "Gallery": {
+    "emptyTitle": "No work is available in the gallery yet.",
+    "emptyDescription": "Add your first sculptures from Supabase to display them here.",
+    "imageUnavailable": "Image unavailable",
+    "defaultCategory": "Sculpture",
+    "discover": "Discover the work"
+  },
+  "CommandeForm": {
     "success": {
       "title": "Request sent ✨",
-      "description": "Thank you. I will get back to you quickly to discuss your project."
+      "description": "Thank you. I will reply quickly to discuss your project."
     },
     "fields": {
       "name": "Name",
@@ -222,7 +222,7 @@
   "CommandePage": {
     "badge": "Order",
     "title": "Custom creation request.",
-    "description": "Describe your project, dimensions, budget and visual universe to start a custom-made sculpture.",
+    "description": "Describe your project, dimensions, budget and visual universe to begin a custom-made creation.",
     "highlights": {
       "fast": "Fast response",
       "custom": "Custom project",
@@ -232,23 +232,23 @@
   "SculpturesPage": {
     "metadata": {
       "title": "Sculptures | Marcos Papermache",
-      "description": "A selection of sculptural pieces combining organic forms, recycled materials and contemporary composition."
+      "description": "A selection of sculptural pieces between organic forms, recycled materials and contemporary composition."
     },
     "eyebrow": "Gallery",
     "title": "Sculptures",
-    "description": "A selection of sculptural pieces combining organic forms, recycled materials and contemporary composition."
+    "description": "A selection of sculptural pieces between organic forms, recycled materials and contemporary composition."
   },
   "SculptureDetailPage": {
     "metadata": {
       "fallbackTitle": "Sculpture | Marcos Papermache",
-      "fallbackDescription": "Discover a unique sculptural work by Marcos Papermache."
+      "fallbackDescription": "Discover a singular sculptural work by Marcos Papermache."
     },
     "noImage": "No image available",
     "fallbackCategory": "Sculpture",
     "dimensions": "Dimensions",
     "materials": "Materials",
     "description": "Description",
-    "details": "Artwork details",
+    "details": "Work details",
     "cta": {
       "request": "Request this creation",
       "etsy": "View on Etsy"
@@ -263,25 +263,34 @@
     "discover": "Discover",
     "description": {
       "sold": "View the piece and discover a similar creation.",
-      "available": "Available — view the piece details.",
+      "available": "Available — view the details of the piece.",
       "onRequest": "Creation available on request."
     }
+  },
+  "AboutArtist": {
+    "badge": "About the artist",
+    "title": "Marcos Suárez, between material, light and transformation",
+    "paragraph1": "Through papier-mâché, light and recycled materials, Marcos Suárez develops a sensitive sculptural language where handcrafted gesture meets a contemporary aesthetic.",
+    "paragraph2": "Each piece is born from a process of research, texture and transformation. Handwork, organic finishes and the presence of light bring unique works to life, conceived as sculptural presences.",
+    "cta": "Discover the sculptures",
+    "imageAlt": "Marcos Suárez working on a papier-mâché sculpture in his studio",
+    "quote": "Transforming material into presence."
   },
   "AIExperience": {
     "badge": "AI-assisted creation",
     "title": "Imagine your sculpture before bringing it to life.",
-    "description": "Describe your idea, choose an artistic direction, generate a visual concept, then transform it into a bespoke sculptural work.",
-    "promptEnrichedTitle": "Enhanced prompt",
+    "description": "Describe your idea, choose an artistic direction, generate a visual concept, then transform it into a custom sculptural work.",
+    "promptEnrichedTitle": "Enriched prompt",
     "promptEnrichedSuffix": "Desired style:",
     "form": {
       "label": "Describe your idea",
-      "placeholder": "E.g. An organic white wall sculpture with golden accents, inspired by the movement of waves, elegant and contemporary.",
+      "placeholder": "Ex. An organic white wall sculpture with golden touches, inspired by the movement of waves, elegant and contemporary.",
       "styleLabel": "Choose a style"
     },
     "styles": {
       "organic": {
         "label": "Organic",
-        "prompt": "Organic papier-mâché sculpture, fluid shapes, handcrafted texture, contemporary elegance, soft light, high-end rendering"
+        "prompt": "Organic papier-mâché sculpture, fluid forms, handcrafted texture, contemporary elegance, soft light, premium rendering"
       },
       "minimal": {
         "label": "Minimalist",
@@ -293,7 +302,7 @@
       },
       "luminous": {
         "label": "Luminous",
-        "prompt": "Papier-mâché lamp sculpture, integrated luminous circle, contemporary sculptural design, white and gold finish, elegant atmosphere"
+        "prompt": "Papier-mâché sculpture-lamp, integrated luminous circle, contemporary sculptural design, white and gold finish, elegant atmosphere"
       }
     },
     "buttons": {
@@ -310,14 +319,111 @@
       "imageAlt": "AI-generated sculpture concept"
     },
     "footer": {
-      "line1": "Each generated concept serves as a visual foundation. The final sculpture is then handmade in the studio, with a bespoke, sensitive and artisanal approach.",
-      "line2": "Each piece is unique and conceived as a contemporary work, created to interact with your space."
+      "line1": "Each generated concept serves as a visual foundation. The final sculpture is then handcrafted in the studio through a sensitive, artisanal and fully custom approach.",
+      "line2": "Each piece is unique and conceived as a contemporary work created to engage with your space."
     },
     "errors": {
       "emptyPrompt": "Describe your idea first to generate an image.",
       "generationFailed": "An error occurred during generation.",
       "noImageReturned": "No image was returned.",
       "unknown": "An unknown error occurred."
+    }
+  },
+  "ContactPage": {
+    "metadata": {
+      "title": "Contact | Marcos Papermache",
+      "description": "Contact Marcos Papermache for a custom order, an artistic collaboration or a question about a work."
+    },
+    "badge": "Premium contact",
+    "title": {
+      "line1": "Let’s talk about your",
+      "line2": "sculptural project."
+    },
+    "description": "For a custom order, an artistic collaboration or a question about a work, this page is conceived as a direct, clear and elegant point of contact.",
+    "contactCard": {
+      "eyebrow": "Contact information",
+      "email": {
+        "title": "Email"
+      },
+      "instagram": {
+        "title": "Instagram"
+      },
+      "form": {
+        "title": "Form"
+      },
+      "requestTypesTitle": "Types of requests"
+    },
+    "requestTypes": {
+      "customOrder": "Custom order",
+      "collaboration": "Collaboration",
+      "artworkQuestion": "Question about a work",
+      "decorativeProject": "Decorative project",
+      "professionalRequest": "Professional request"
+    },
+    "process": {
+      "eyebrow": "A made-to-measure approach",
+      "title": "From the initial idea to sculptural presence."
+    },
+    "steps": {
+      "step1": {
+        "title": "1. First exchange",
+        "text": "You share your intention, your space or your inspiration."
+      },
+      "step2": {
+        "title": "2. Artistic direction",
+        "text": "A visual and sculptural approach is defined according to your project."
+      },
+      "step3": {
+        "title": "3. Feasibility study",
+        "text": "Dimensions, materials, finishes and timing are considered."
+      },
+      "step4": {
+        "title": "4. Custom creation",
+        "text": "Each piece is conceived with a handcrafted and contemporary dimension."
+      }
+    }
+  },
+  "ContactForm": {
+    "intro": {
+      "nameLabel": "Hello, my name is",
+      "namePlaceholder": "your name",
+      "emailLabel": "You can reply to me at",
+      "emailPlaceholder": "your@email.com",
+      "projectLabel": "I would like to discuss",
+      "projectPlaceholder": "select a project type"
+    },
+    "projectTypes": {
+      "customSculpture": "Custom sculpture",
+      "wallPiece": "Wall piece",
+      "sculpturalLamp": "Sculptural lamp",
+      "artInstallation": "Art installation",
+      "collaboration": "Collaboration"
+    },
+    "message": {
+      "eyebrow": "Artistic intention",
+      "defaultProject": "your project",
+      "placeholder": "Describe {project} freely: an idea, an emotion, an atmosphere, a space, a visual reference or a sculptural intention..."
+    },
+    "budgetPlaceholder": "indicative budget (optional)",
+    "timelinePlaceholder": "desired timeline (optional)",
+    "submit": {
+      "default": "Send my request",
+      "loading": "Sending..."
+    }
+  },
+  "ContactVisual": {
+    "eyebrow": "Sculptural presence",
+    "title": {
+      "line1": "A sensitive material",
+      "line2": "serving your project."
+    },
+    "description": "A visual presence conceived as an extension of the sculptural universe, between contemporary craftsmanship, texture and emotion.",
+    "imageAlt": "Contemporary abstract sculpture",
+    "footer": {
+      "directionLabel": "Direction",
+      "directionValue": "Made to measure · artistic · contemporary",
+      "universeLabel": "Universe",
+      "universeValue": "Papier-mâché · texture · presence"
     }
   }
 }

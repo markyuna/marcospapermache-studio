@@ -88,60 +88,60 @@
   },
   "AboutPage": {
     "metadata": {
-        "title": "À propos",
-        "description": "Découvrez l’univers de Marcos Suarez, artiste spécialisé dans la sculpture en papier mâché, entre matière, lumière et création contemporaine."
+      "title": "À propos",
+      "description": "Découvrez l’univers de Marcos Suarez, artiste spécialisé dans la sculpture en papier mâché, entre matière, lumière et création contemporaine."
     },
     "hero": {
-        "badge": "À propos",
-        "title": "Découvrez l’Art de Marcos Suarez",
-        "description": "Un univers où la matière recyclée, la sculpture et la lumière dialoguent dans une esthétique artisanale et contemporaine.",
-        "imageAlt": "Marcos Suarez dans son univers artistique"
+      "badge": "À propos",
+      "title": "Découvrez l’Art de Marcos Suarez",
+      "description": "Un univers où la matière recyclée, la sculpture et la lumière dialoguent dans une esthétique artisanale et contemporaine.",
+      "imageAlt": "Marcos Suarez dans son univers artistique"
     },
     "approach": {
-        "badge": "Démarche",
-        "title": "De la matière à l’expression",
-        "paragraphs": [
+      "badge": "Démarche",
+      "title": "De la matière à l’expression",
+      "paragraphs": [
         "Marcos Suarez, originaire de La Havane, développe une pratique artistique centrée sur la sculpture en papier mâché, la transformation de la matière et la création d’objets à forte présence visuelle.",
         "Son parcours a commencé très jeune à travers des créations faites à la main en carton et en papier, vendues sur les marchés touristiques de Cuba. Cette sensibilité première pour l’objet artisanal s’est transformée au fil du temps en une recherche plus sculpturale, plus contemporaine, plus personnelle.",
         "Aujourd’hui, chaque œuvre explore le dialogue entre formes organiques, textures, recyclage et lumière. Qu’il s’agisse d’une sculpture murale, d’une lampe ou d’un objet fonctionnel, chaque pièce est pensée comme une rencontre entre poésie, matière et émotion."
-        ],
-        "imageAlt": "Sculpture fonctionnelle en papier mâché de Marcos Suarez"
+      ],
+      "imageAlt": "Sculpture fonctionnelle en papier mâché de Marcos Suarez"
     },
     "values": {
-        "badge": "Valeurs",
-        "title": "Une pratique entre art, matière et émotion",
-        "description": "Chaque création naît d’une attention portée aux formes, à la texture et à l’atmosphère qu’une pièce peut faire naître dans un espace.",
-        "items": [
+      "badge": "Valeurs",
+      "title": "Une pratique entre art, matière et émotion",
+      "description": "Chaque création naît d’une attention portée aux formes, à la texture et à l’atmosphère qu’une pièce peut faire naître dans un espace.",
+      "items": [
         {
-            "title": "Artisanat contemporain",
-            "text": "Chaque pièce est pensée comme une présence sculpturale singulière, entre geste manuel, recherche de forme et sensibilité contemporaine."
+          "title": "Artisanat contemporain",
+          "text": "Chaque pièce est pensée comme une présence sculpturale singulière, entre geste manuel, recherche de forme et sensibilité contemporaine."
         },
         {
-            "title": "Matières transformées",
-            "text": "Le papier mâché et les matériaux recyclés deviennent des œuvres de caractère, poétiques, texturées et durables."
+          "title": "Matières transformées",
+          "text": "Le papier mâché et les matériaux recyclés deviennent des œuvres de caractère, poétiques, texturées et durables."
         },
         {
-            "title": "Créations sur mesure",
-            "text": "Certaines pièces naissent d’un dialogue avec le client, pour imaginer une sculpture, une lampe ou un objet sculptural adapté à un lieu."
+          "title": "Créations sur mesure",
+          "text": "Certaines pièces naissent d’un dialogue avec le client, pour imaginer une sculpture, une lampe ou un objet sculptural adapté à un lieu."
         }
-        ]
+      ]
     },
     "interiors": {
-            "badge": "Chez nos clients",
-            "title": "Mes sculptures dans des intérieurs réels",
-            "description1": "Découvrez comment certaines pièces trouvent leur place dans des espaces de vie réels. Chaque création dialogue avec son environnement et devient une présence singulière dans la maison.",
-            "description2": "Sculptures murales, lampes sculpturales ou objets fonctionnels : chaque œuvre s’intègre de manière unique à l’univers de ceux qui la choisissent.",
-            "cta": "Découvrir les créations sur mesure",
-            "images": {
-            "livingRoomAlt": "Sculpture de Marcos Suarez intégrée dans un salon",
-            "livingRoomLabel": "Salon",
-            "wallAlt": "Lampe sculpturale de Marcos Suarez dans un intérieur",
-            "wallLabel": "Mural",
-            "contemporaryAlt": "Œuvre de Marcos Suarez intégrée dans un intérieur contemporain",
-            "contemporaryLabel": "Intérieur contemporain",
-            "quote": "Chaque pièce transforme l’espace et crée une présence artistique dans le quotidien."
-            }
-        }
+      "badge": "Chez nos clients",
+      "title": "Mes sculptures dans des intérieurs réels",
+      "description1": "Découvrez comment certaines pièces trouvent leur place dans des espaces de vie réels. Chaque création dialogue avec son environnement et devient une présence singulière dans la maison.",
+      "description2": "Sculptures murales, lampes sculpturales ou objets fonctionnels : chaque œuvre s’intègre de manière unique à l’univers de ceux qui la choisissent.",
+      "cta": "Découvrir les créations sur mesure",
+      "images": {
+        "livingRoomAlt": "Sculpture de Marcos Suarez intégrée dans un salon",
+        "livingRoomLabel": "Salon",
+        "wallAlt": "Lampe sculpturale de Marcos Suarez dans un intérieur",
+        "wallLabel": "Mural",
+        "contemporaryAlt": "Œuvre de Marcos Suarez intégrée dans un intérieur contemporain",
+        "contemporaryLabel": "Intérieur contemporain",
+        "quote": "Chaque pièce transforme l’espace et crée une présence artistique dans le quotidien."
+      }
+    }
   },
   "CustomCreationPage": {
     "hero": {
@@ -219,7 +219,7 @@
       "generic": "Une erreur est survenue."
     }
   },
-   "CommandePage": {
+  "CommandePage": {
     "badge": "Commande",
     "title": "Demande de création personnalisée.",
     "description": "Décrivez votre projet, vos dimensions, votre budget et votre univers visuel pour lancer une création sur mesure.",
@@ -268,14 +268,14 @@
     }
   },
   "AboutArtist": {
-  "badge": "À propos de l’artiste",
-  "title": "Marcos Suárez, entre matière, lumière et transformation",
-  "paragraph1": "À travers le papier mâché, la lumière et les matières recyclées, Marcos Suárez développe un langage sculptural sensible, où le geste artisanal dialogue avec une esthétique contemporaine.",
-  "paragraph2": "Chaque pièce naît d’un processus de recherche, de texture et de transformation. Le travail manuel, les finitions organiques et la présence de la lumière donnent vie à des œuvres uniques, pensées comme des présences sculpturales.",
-  "cta": "Découvrir les sculptures",
-  "imageAlt": "Marcos Suárez en train de travailler une sculpture en papier mâché dans son atelier",
-  "quote": "Transformer la matière en présence."
-},
+    "badge": "À propos de l’artiste",
+    "title": "Marcos Suárez, entre matière, lumière et transformation",
+    "paragraph1": "À travers le papier mâché, la lumière et les matières recyclées, Marcos Suárez développe un langage sculptural sensible, où le geste artisanal dialogue avec une esthétique contemporaine.",
+    "paragraph2": "Chaque pièce naît d’un processus de recherche, de texture et de transformation. Le travail manuel, les finitions organiques et la présence de la lumière donnent vie à des œuvres uniques, pensées comme des présences sculpturales.",
+    "cta": "Découvrir les sculptures",
+    "imageAlt": "Marcos Suárez en train de travailler une sculpture en papier mâché dans son atelier",
+    "quote": "Transformer la matière en présence."
+  },
   "AIExperience": {
     "badge": "Création assistée par IA",
     "title": "Imaginez votre sculpture avant de la faire naître.",
@@ -327,6 +327,103 @@
       "generationFailed": "Erreur pendant la génération.",
       "noImageReturned": "Aucune image n’a été retournée.",
       "unknown": "Une erreur inconnue est survenue."
+    }
+  },
+  "ContactPage": {
+    "metadata": {
+      "title": "Contact | Marcos Papermache",
+      "description": "Contactez Marcos Papermache pour une commande sur mesure, une collaboration artistique ou une question à propos d’une œuvre."
+    },
+    "badge": "Contact premium",
+    "title": {
+      "line1": "Parlons de votre",
+      "line2": "projet sculptural."
+    },
+    "description": "Pour une commande sur mesure, une collaboration artistique ou une question à propos d’une œuvre, cette page est pensée comme un point de contact direct, clair et élégant.",
+    "contactCard": {
+      "eyebrow": "Informations de contact",
+      "email": {
+        "title": "Email"
+      },
+      "instagram": {
+        "title": "Instagram"
+      },
+      "form": {
+        "title": "Formulaire"
+      },
+      "requestTypesTitle": "Types de demandes"
+    },
+    "requestTypes": {
+      "customOrder": "Commande sur mesure",
+      "collaboration": "Collaboration",
+      "artworkQuestion": "Question sur une œuvre",
+      "decorativeProject": "Projet décoratif",
+      "professionalRequest": "Demande professionnelle"
+    },
+    "process": {
+      "eyebrow": "Une approche sur mesure",
+      "title": "De l’idée initiale à la présence sculpturale."
+    },
+    "steps": {
+      "step1": {
+        "title": "1. Premier échange",
+        "text": "Vous partagez votre intention, votre espace ou votre inspiration."
+      },
+      "step2": {
+        "title": "2. Direction artistique",
+        "text": "Une approche visuelle et sculpturale est définie selon votre projet."
+      },
+      "step3": {
+        "title": "3. Étude de faisabilité",
+        "text": "Dimensions, matériaux, finitions et temporalité sont envisagés."
+      },
+      "step4": {
+        "title": "4. Création sur mesure",
+        "text": "Chaque pièce est pensée avec une dimension artisanale et contemporaine."
+      }
+    }
+  },
+  "ContactForm": {
+    "intro": {
+      "nameLabel": "Bonjour, je m’appelle",
+      "namePlaceholder": "votre nom",
+      "emailLabel": "Vous pouvez me répondre à",
+      "emailPlaceholder": "votre@email.com",
+      "projectLabel": "Je souhaite discuter de",
+      "projectPlaceholder": "sélectionner un type de projet"
+    },
+    "projectTypes": {
+      "customSculpture": "Sculpture sur mesure",
+      "wallPiece": "Pièce murale",
+      "sculpturalLamp": "Lampe sculpturale",
+      "artInstallation": "Installation artistique",
+      "collaboration": "Collaboration"
+    },
+    "message": {
+      "eyebrow": "Intention artistique",
+      "defaultProject": "votre projet",
+      "placeholder": "Décrivez librement {project} : une idée, une émotion, une ambiance, un espace, une référence visuelle ou une intention sculpturale..."
+    },
+    "budgetPlaceholder": "budget indicatif (optionnel)",
+    "timelinePlaceholder": "délai souhaité (optionnel)",
+    "submit": {
+      "default": "Envoyer ma demande",
+      "loading": "Envoi en cours..."
+    }
+  },
+  "ContactVisual": {
+    "eyebrow": "Présence sculpturale",
+    "title": {
+      "line1": "Une matière sensible",
+      "line2": "au service de votre projet."
+    },
+    "description": "Une présence visuelle pensée comme une extension de l’univers sculptural, entre artisanat contemporain, texture et émotion.",
+    "imageAlt": "Sculpture abstraite contemporaine",
+    "footer": {
+      "directionLabel": "Direction",
+      "directionValue": "Sur mesure · artistique · contemporaine",
+      "universeLabel": "Univers",
+      "universeValue": "Papier mâché · texture · présence"
     }
   }
 }
