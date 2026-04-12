@@ -17,19 +17,11 @@ export default function ContactVisual({
     <div
       className={
         mobile
-          ? "relative min-h-[520px] overflow-hidden rounded-[2rem] border border-white/10 lg:hidden"
-          : "relative hidden min-h-[760px] overflow-hidden rounded-[2.2rem] border border-white/10 lg:flex lg:items-center lg:justify-center"
+          ? "relative min-h-[520px] overflow-hidden rounded-[2rem] border border-white/10 bg-[#0b0b0b] lg:hidden"
+          : "relative hidden min-h-[760px] overflow-hidden rounded-[2.2rem] border border-white/10 bg-[#0b0b0b] lg:flex lg:items-center lg:justify-center"
       }
     >
       <div className="pointer-events-none absolute inset-0">
-        <div
-          className={
-            mobile
-              ? "absolute left-1/2 top-12 h-[240px] w-[240px] -translate-x-1/2 rounded-full "
-              : "absolute left-1/2 top-16 h-[360px] w-[360px] -translate-x-1/2 rounded-full "
-          }
-        />
-
         <div
           className={
             mobile
@@ -41,8 +33,8 @@ export default function ContactVisual({
         <div
           className={
             mobile
-              ? "absolute bottom-10 left-8 h-[120px] w-[120px] rounded-full bg-[#f4d2b8]/8 blur-[70px]"
-              : "absolute bottom-16 left-16 h-[180px] w-[180px] rounded-full bg-[#f4d2b8]/8 blur-[90px]"
+              ? "absolute bottom-10 left-8 h-[220px] w-[120px] rounded-full bg-[#f4d2b8]/8 blur-[70px]"
+              : "absolute bottom-16 left-16 h-[280px] w-[180px] rounded-full bg-[#f4d2b8]/8 blur-[90px]"
           }
         />
 
@@ -54,8 +46,8 @@ export default function ContactVisual({
           }
         />
 
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.02),transparent_22%,transparent_78%,rgba(255,255,255,0.02))]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_34%,rgba(0,0,0,0.14)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.015),transparent_22%,transparent_78%,rgba(255,255,255,0.015))]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_34%,rgba(0,0,0,0.18)_100%)]" />
       </div>
 
       <div
@@ -82,10 +74,6 @@ export default function ContactVisual({
               {t("title.line2")}
             </span>
           </h2>
-
-          <p className="mt-5 text-sm leading-7 text-neutral-400">
-            
-          </p>
         </div>
 
         <div
@@ -138,7 +126,7 @@ export default function ContactVisual({
                 className={
                   mobile
                     ? "relative z-10 h-auto w-[220px] object-contain drop-shadow-[0_30px_70px_rgba(0,0,0,0.72)]"
-                    : "relative z-10 h-auto w-[400px] object-contain drop-shadow-[0_36px_90px_rgba(0,0,0,0.72)] xl:w-[570px]"
+                    : "relative z-10 h-auto w-[400px] object-contain drop-shadow-[0_36px_90px_rgba(0,0,0,0.72)] xl:w-[520px]"
                 }
               />
             </motion.div>

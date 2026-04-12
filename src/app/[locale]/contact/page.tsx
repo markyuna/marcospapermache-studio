@@ -76,7 +76,7 @@ export default async function ContactPage({
           <div className="flex flex-col gap-8 lg:grid lg:grid-cols-[0.95fr_1.05fr] lg:items-start lg:gap-14">
             <div className="space-y-6 md:space-y-8">
               <div className="max-w-2xl">
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 ">
+                <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2">
                   <Sparkles className="h-4 w-4 text-[#ff6a00]" />
                   <span className="text-[11px] uppercase tracking-[0.28em] text-neutral-300">
                     {t("badge")}
@@ -89,8 +89,6 @@ export default async function ContactPage({
                     {t("title.line2")}
                   </span>
                 </h1>
-
-                
               </div>
 
               <div className="pt-1 md:pt-3">
