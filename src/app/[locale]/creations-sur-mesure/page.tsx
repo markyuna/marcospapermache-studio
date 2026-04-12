@@ -1,8 +1,8 @@
-// src/app/[locale]/creations-sur-mesure/page.tsx
 import { notFound } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+
 import CommandeForm from "@/components/forms/CommandeForm";
 import { Container } from "@/components/layout/container";
 import { routing } from "@/i18n/routing";
@@ -17,6 +17,37 @@ type Props = {
     locale: string;
   }>;
 };
+
+type LightboxLinkProps = {
+  href: string;
+  children: React.ReactNode;
+  icon?: boolean;
+  variant?: "primary" | "secondary";
+};
+
+function LightboxLink({
+  href,
+  children,
+  icon = false,
+  variant = "primary",
+}: LightboxLinkProps) {
+  const baseClassName =
+    "group inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition duration-300";
+
+  const variantClassName =
+    variant === "primary"
+      ? "border border-[#ef8316]/30 bg-[linear-gradient(180deg,rgba(255,138,61,0.95),rgba(214,95,8,0.95))] text-white shadow-[0_14px_40px_rgba(239,131,22,0.24)] hover:translate-y-[-1px] hover:shadow-[0_20px_55px_rgba(239,131,22,0.3)]"
+      : "border border-[#dcc7b2] bg-white/75 text-[#4f4338] shadow-[0_12px_30px_rgba(0,0,0,0.05)] backdrop-blur-md hover:border-[#ff6a00]/30 hover:text-[#c65400] hover:bg-white";
+
+  return (
+    <Link href={href} className={`${baseClassName} ${variantClassName}`}>
+      <span>{children}</span>
+      {icon ? (
+        <ArrowRight className="h-4 w-4 transition duration-300 group-hover:translate-x-0.5" />
+      ) : null}
+    </Link>
+  );
+}
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -36,9 +67,9 @@ export default async function CustomCreationPage({ params }: Props) {
   const values = t.raw("values") as string[];
 
   return (
-    <main className="relative overflow-hidden">
+    <main className="relative overflow-hidden bg-[linear-gradient(to_bottom,#fffaf5,#fff5ed,#fffaf5)]">
       <section className="relative overflow-hidden pb-24 pt-28 md:pb-32 md:pt-36">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,106,0,0.14),transparent_28%),radial-gradient(circle_at_85%_10%,rgba(255,190,120,0.16),transparent_26%),linear-gradient(to_bottom,#fffaf5,#fff5ed,#fffaf5)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,106,0,0.14),transparent_28%),radial-gradient(circle_at_85%_10%,rgba(255,190,120,0.16),transparent_26%)]" />
 
         <Container className="relative">
           <div className="max-w-4xl">
@@ -55,20 +86,13 @@ export default async function CustomCreationPage({ params }: Props) {
             </p>
 
             <div className="mt-10 flex flex-wrap gap-4">
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-full bg-[#ef8316] px-6 py-3 text-sm font-medium text-white transition duration-300 hover:bg-[#af6020]"
-              >
+              <LightboxLink href="/contact" icon>
                 {t("hero.primaryCta")}
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+              </LightboxLink>
 
-              <Link
-                href="/sculptures"
-                className="inline-flex items-center gap-2 rounded-full border border-[#dcc7b2] bg-white/80 px-6 py-3 text-sm font-medium text-[#4f4338] backdrop-blur-md transition duration-300 hover:border-[#ff6a00]/30 hover:text-[#c65400]"
-              >
+              <LightboxLink href="/sculptures" variant="secondary">
                 {t("hero.secondaryCta")}
-              </Link>
+              </LightboxLink>
             </div>
           </div>
         </Container>
