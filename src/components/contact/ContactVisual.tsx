@@ -25,8 +25,16 @@ export default function ContactVisual({
         <div
           className={
             mobile
-              ? "absolute left-1/2 top-[42%] h-[260px] w-[220px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#f5dcc8]/10 blur-[70px]"
-              : "absolute left-1/2 top-[46%] h-[360px] w-[280px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#f5dcc8]/12 blur-[90px]"
+              ? "absolute left-1/2 top-[42%] h-[300px] w-[250px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#f5dcc8]/14 blur-[85px]"
+              : "absolute left-1/2 top-[46%] h-[420px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#f5dcc8]/14 blur-[110px]"
+          }
+        />
+
+        <div
+          className={
+            mobile
+              ? "absolute left-1/2 top-[48%] h-[220px] w-[170px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ff8a3d]/14 blur-[80px]"
+              : "absolute left-1/2 top-[50%] h-[320px] w-[230px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ff8a3d]/14 blur-[100px]"
           }
         />
 
@@ -46,8 +54,16 @@ export default function ContactVisual({
           }
         />
 
+        <div
+          className={
+            mobile
+              ? "absolute inset-x-[18%] top-[28%] h-[180px] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.08)_0%,rgba(255,255,255,0.02)_45%,transparent_75%)] blur-[45px]"
+              : "absolute inset-x-[22%] top-[26%] h-[240px] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.08)_0%,rgba(255,255,255,0.02)_45%,transparent_75%)] blur-[55px]"
+          }
+        />
+
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.015),transparent_22%,transparent_78%,rgba(255,255,255,0.015))]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_34%,rgba(0,0,0,0.18)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,rgba(0,0,0,0.24)_100%)]" />
       </div>
 
       <div
@@ -112,8 +128,24 @@ export default function ContactVisual({
               <div
                 className={
                   mobile
-                    ? "absolute left-1/2 top-1/2 z-[1] h-[240px] w-[180px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/8 bg-white/[0.02] blur-[2px]"
-                    : "absolute left-1/2 top-1/2 z-[1] h-[420px] w-[290px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/8 bg-white/[0.02] blur-[2px]"
+                    ? "absolute left-1/2 top-1/2 z-[1] h-[270px] w-[200px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(245,214,191,0.16)_0%,rgba(255,138,61,0.09)_42%,rgba(255,255,255,0.03)_65%,transparent_100%)] blur-[14px]"
+                    : "absolute left-1/2 top-1/2 z-[1] h-[460px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(245,214,191,0.16)_0%,rgba(255,138,61,0.09)_42%,rgba(255,255,255,0.03)_65%,transparent_100%)] blur-[18px]"
+                }
+              />
+
+              <div
+                className={
+                  mobile
+                    ? "absolute left-1/2 top-1/2 z-[2] h-[245px] w-[185px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/6 bg-white/[0.015] blur-[2px]"
+                    : "absolute left-1/2 top-1/2 z-[2] h-[425px] w-[295px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/6 bg-white/[0.015] blur-[2px]"
+                }
+              />
+
+              <div
+                className={
+                  mobile
+                    ? "absolute left-1/2 top-[46%] z-[3] h-[180px] w-[120px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.05] blur-[55px]"
+                    : "absolute left-1/2 top-[45%] z-[3] h-[250px] w-[170px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.05] blur-[70px]"
                 }
               />
 

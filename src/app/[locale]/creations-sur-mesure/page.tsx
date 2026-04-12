@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
+import type { ReactNode } from "react";
 import { Link } from "@/i18n/navigation";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-
 import CommandeForm from "@/components/forms/CommandeForm";
 import { Container } from "@/components/layout/container";
 import { routing } from "@/i18n/routing";
@@ -18,26 +18,26 @@ type Props = {
   }>;
 };
 
-type LightboxLinkProps = {
+type CtaLinkProps = {
   href: string;
-  children: React.ReactNode;
+  children: ReactNode;
   icon?: boolean;
   variant?: "primary" | "secondary";
 };
 
-function LightboxLink({
+function CtaLink({
   href,
   children,
   icon = false,
   variant = "primary",
-}: LightboxLinkProps) {
+}: CtaLinkProps) {
   const baseClassName =
     "group inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition duration-300";
 
   const variantClassName =
     variant === "primary"
       ? "border border-[#ef8316]/30 bg-[linear-gradient(180deg,rgba(255,138,61,0.95),rgba(214,95,8,0.95))] text-white shadow-[0_14px_40px_rgba(239,131,22,0.24)] hover:translate-y-[-1px] hover:shadow-[0_20px_55px_rgba(239,131,22,0.3)]"
-      : "border border-[#dcc7b2] bg-white/75 text-[#4f4338] shadow-[0_12px_30px_rgba(0,0,0,0.05)] backdrop-blur-md hover:border-[#ff6a00]/30 hover:text-[#c65400] hover:bg-white";
+      : "border border-[#dcc7b2] bg-white/75 text-[#4f4338] shadow-[0_12px_30px_rgba(0,0,0,0.05)] backdrop-blur-md hover:border-[#ff6a00]/30 hover:bg-white hover:text-[#c65400]";
 
   return (
     <Link href={href} className={`${baseClassName} ${variantClassName}`}>
@@ -86,13 +86,13 @@ export default async function CustomCreationPage({ params }: Props) {
             </p>
 
             <div className="mt-10 flex flex-wrap gap-4">
-              <LightboxLink href="/contact" icon>
+              <CtaLink href="/contact" icon>
                 {t("hero.primaryCta")}
-              </LightboxLink>
+              </CtaLink>
 
-              <LightboxLink href="/sculptures" variant="secondary">
+              <CtaLink href="/sculptures" variant="secondary">
                 {t("hero.secondaryCta")}
-              </LightboxLink>
+              </CtaLink>
             </div>
           </div>
         </Container>

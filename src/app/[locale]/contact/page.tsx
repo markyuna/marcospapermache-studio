@@ -65,10 +65,8 @@ export default async function ContactPage({
     <main className="relative overflow-hidden bg-[#0a0a0a] py-20 text-white md:py-28">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/2 top-0 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[#ff6a00]/7 blur-[150px]" />
-        <div className="absolute right-[-120px] top-24 h-[320px] w-[320px] rounded-full bg-[#f3d2b2]/5 blur-[130px]" />
-        <div className="absolute bottom-[-120px] left-[-120px] h-[320px] w-[320px] rounded-full bg-white/[0.025] blur-[120px]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.035),transparent_36%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.01),transparent_18%,transparent_82%,rgba(255,255,255,0.01))]" />
+        <div className="absolute right-[-120px] top-24 h-[320px] w-[320px] rounded-full bg-[#f3d288]/5 blur-[130px]" />
+        <div className="absolute bottom-[-120px] left-[-120px] h-[320px] w-[320px] rounded-full bg-transparent blur-[120px]" />
       </div>
 
       <Container className="relative z-10">
@@ -76,7 +74,7 @@ export default async function ContactPage({
           <div className="flex flex-col gap-8 lg:grid lg:grid-cols-[0.95fr_1.05fr] lg:items-start lg:gap-14">
             <div className="space-y-6 md:space-y-8">
               <div className="max-w-2xl">
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2">
+                <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-transparent px-4 py-2">
                   <Sparkles className="h-4 w-4 text-[#ff6a00]" />
                   <span className="text-[11px] uppercase tracking-[0.28em] text-neutral-300">
                     {t("badge")}
@@ -97,7 +95,7 @@ export default async function ContactPage({
               </div>
             </div>
 
-            <div className="rounded-[2rem] border border-white/10 bg-white/[0.045] p-6 shadow-[0_20px_80px_rgba(0,0,0,0.38)] backdrop-blur-xl md:p-8">
+            <div className="rounded-[2rem] border border-white/10 bg-transparent p-6 shadow-[0_20px_80px_rgba(0,0,0,0.38)] md:p-8">
               <p className="text-xs uppercase tracking-[0.28em] text-neutral-400">
                 {t("contactCard.eyebrow")}
               </p>
@@ -183,7 +181,7 @@ export default async function ContactPage({
         </section>
 
         <section className="mx-auto mt-16 max-w-6xl md:mt-20">
-          <div className="rounded-[2.2rem] border border-white/10 bg-gradient-to-br from-[#171717] via-[#121212] to-[#0d0d0d] p-8 shadow-[0_30px_100px_rgba(0,0,0,0.38)] md:p-12">
+          <div className="rounded-[2.2rem] border border-white/10  p-8 shadow-[0_30px_100px_rgba(0,0,0,0.38)] md:p-12">
             <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
               <div>
                 <p className="text-xs uppercase tracking-[0.28em] text-[#c7a98b]">
