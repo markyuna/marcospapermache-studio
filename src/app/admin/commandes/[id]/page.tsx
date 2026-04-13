@@ -211,8 +211,6 @@ export default async function AdminCommandeDetailPage({ params }: PageProps) {
                   label="Date de création"
                   value={formatDate(commande.created_at)}
                 />
-                <InfoRow label="Image URL" value={commande.image_url} isLink />
-                <InfoRow label="Fichier URL" value={commande.file_url} isLink />
               </dl>
             </div>
 
