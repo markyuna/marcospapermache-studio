@@ -194,31 +194,37 @@
     "discover": "Découvrir l’œuvre"
   },
   "CommandeForm": {
-    "success": {
-      "title": "Demande envoyée ✨",
-      "description": "Merci. Je vous répondrai rapidement pour discuter de votre projet."
-    },
-    "fields": {
-      "name": "Nom",
-      "email": "Email",
-      "projectType": "Type de projet (murale, objet, etc.)",
-      "dimensions": "Dimensions souhaitées",
-      "budget": "Budget estimé (€)",
-      "message": "Décrivez votre idée...",
-      "referenceImage": "Image de référence",
-      "imagePreviewAlt": "Aperçu de l’image",
-      "imageHint": "JPG, PNG ou WEBP — max 5 MB"
-    },
-    "actions": {
-      "remove": "Supprimer",
-      "sending": "Envoi...",
-      "submit": "Envoyer la demande"
-    },
-    "errors": {
-      "invalidResponse": "Le serveur a retourné une réponse invalide.",
-      "generic": "Une erreur est survenue."
-    }
+  "success": {
+    "title": "Demande envoyée ✨",
+    "description": "Merci. Je vous répondrai rapidement pour discuter de votre projet."
   },
+  "generatedConcept": {
+    "badge": "Concept généré par IA",
+    "description": "Cette image générée sert de base visuelle pour votre demande. Vous pouvez la conserver comme référence pour votre création sur mesure.",
+    "remove": "Supprimer",
+    "imageAlt": "Concept généré par IA"
+  },
+  "fields": {
+    "name": "Nom",
+    "email": "Email",
+    "projectType": "Type de projet (murale, objet, etc.)",
+    "dimensions": "Dimensions souhaitées",
+    "budget": "Budget estimé (€)",
+    "message": "Décrivez votre idée...",
+    "referenceImage": "Image de référence",
+    "imagePreviewAlt": "Aperçu de l’image",
+    "imageHint": "JPG, PNG ou WEBP — max 5 MB"
+  },
+  "actions": {
+    "remove": "Supprimer",
+    "sending": "Envoi...",
+    "submit": "Envoyer la demande"
+  },
+  "errors": {
+    "invalidResponse": "Le serveur a retourné une réponse invalide.",
+    "generic": "Une erreur est survenue."
+  }
+},
   "CommandePage": {
     "badge": "Commande",
     "title": "Demande de création personnalisée.",
@@ -279,58 +285,62 @@
     "quote": "Transformer la matière en présence."
   },
   "AIExperience": {
-    "badge": "Création assistée par IA",
-    "title": "Imaginez votre sculpture avant de la faire naître.",
-    "description": "Décrivez votre idée, choisissez une direction artistique, générez un concept visuel, puis transformez-le en œuvre sculpturale sur mesure.",
-    "promptEnrichedTitle": "Prompt enrichi",
-    "promptEnrichedSuffix": "Style souhaité :",
-    "form": {
-      "label": "Décrivez votre idée",
-      "placeholder": "Ex. Une sculpture murale organique blanche avec des touches dorées, inspirée du mouvement des vagues, élégante et contemporaine.",
-      "styleLabel": "Choisissez un style"
+  "badge": "Création assistée par IA",
+  "title": "Imaginez votre sculpture avant de lui donner vie.",
+  "description": "Décrivez votre idée, choisissez une direction artistique, générez un concept visuel puis transformez-le en une œuvre sculpturale sur mesure.",
+  "promptEnrichedTitle": "Prompt enrichi",
+  "promptEnrichedSuffix": "Style souhaité :",
+  "form": {
+    "label": "Décrivez votre idée",
+    "placeholder": "Ex. Une sculpture murale organique blanche avec des touches dorées, inspirée par le mouvement des vagues, élégante et contemporaine.",
+    "styleLabel": "Choisissez un style",
+
+    "optionsLabel": "Options de présentation",
+    "withFrame": "Version galerie (cadre en verre flottant)",
+    "withFrameDescription": "Générez la sculpture intégrée dans un cadre en verre transparent, avec un effet flottant inspiré des installations de galerie."
+  },
+  "styles": {
+    "organic": {
+      "label": "Organique",
+      "prompt": "Sculpture organique en papier mâché, formes fluides, texture artisanale, élégance contemporaine, lumière douce, finition haut de gamme"
     },
-    "styles": {
-      "organic": {
-        "label": "Organique",
-        "prompt": "Sculpture organique en papier mâché, formes fluides, texture artisanale, élégance contemporaine, lumière douce, rendu haut de gamme"
-      },
-      "minimal": {
-        "label": "Minimaliste",
-        "prompt": "Sculpture minimaliste en papier mâché, lignes épurées, palette blanc cassé et doré, design contemporain, rendu galerie d’art"
-      },
-      "oceanic": {
-        "label": "Inspirée de l’océan",
-        "prompt": "Sculpture en papier mâché inspirée par l’océan, courbes naturelles, mouvement fluide, blanc nacré, touches dorées, poésie visuelle"
-      },
-      "luminous": {
-        "label": "Lumineuse",
-        "prompt": "Sculpture-lampe en papier mâché, cercle lumineux intégré, design sculptural contemporain, finition blanche et dorée, ambiance élégante"
-      }
+    "minimal": {
+      "label": "Minimaliste",
+      "prompt": "Sculpture minimaliste en papier mâché, lignes épurées, palette blanc cassé et doré, design contemporain, finition galerie d’art"
     },
-    "buttons": {
-      "generate": "Générer une image",
-      "generating": "Génération en cours...",
-      "reset": "Réinitialiser",
-      "regenerate": "Régénérer",
-      "order": "Donner vie à cette sculpture"
+    "oceanic": {
+      "label": "Inspirée de l’océan",
+      "prompt": "Sculpture en papier mâché inspirée de l’océan, courbes naturelles, mouvement fluide, blanc nacré, touches dorées, poésie visuelle"
     },
-    "result": {
-      "emptyTitle": "Votre concept apparaîtra ici",
-      "emptyDescription": "Générez une première vision de votre future sculpture, puis affinez-la avant de lui donner vie dans l’atelier.",
-      "generatedTitle": "Concept généré",
-      "imageAlt": "Concept de sculpture généré par IA"
-    },
-    "footer": {
-      "line1": "Chaque concept généré sert de base visuelle. La sculpture finale est ensuite réalisée à la main dans l’atelier, avec une approche artisanale, sensible et entièrement sur mesure.",
-      "line2": "Chaque pièce est unique et pensée comme une œuvre contemporaine, créée pour dialoguer avec votre espace."
-    },
-    "errors": {
-      "emptyPrompt": "Décris d’abord ton idée pour générer une image.",
-      "generationFailed": "Erreur pendant la génération.",
-      "noImageReturned": "Aucune image n’a été retournée.",
-      "unknown": "Une erreur inconnue est survenue."
+    "luminous": {
+      "label": "Lumineuse",
+      "prompt": "Sculpture-lampe en papier mâché, cercle lumineux intégré, design sculptural contemporain, finition blanche et dorée, atmosphère élégante"
     }
   },
+  "buttons": {
+    "generate": "Générer une image",
+    "generating": "Génération...",
+    "reset": "Réinitialiser",
+    "regenerate": "Régénérer",
+    "order": "Donner vie à cette sculpture"
+  },
+  "result": {
+    "emptyTitle": "Votre concept apparaîtra ici",
+    "emptyDescription": "Générez une première vision de votre future sculpture puis affinez-la avant de lui donner vie dans l’atelier.",
+    "generatedTitle": "Concept généré",
+    "imageAlt": "Concept de sculpture généré par IA"
+  },
+  "footer": {
+    "line1": "Chaque concept généré sert de base visuelle. La sculpture finale est ensuite réalisée à la main en atelier, avec une approche artisanale, sensible et entièrement sur mesure.",
+    "line2": "Chaque pièce est unique et pensée comme une œuvre contemporaine destinée à dialoguer avec votre espace."
+  },
+  "errors": {
+    "emptyPrompt": "Décrivez d’abord votre idée pour générer une image.",
+    "generationFailed": "Erreur lors de la génération.",
+    "noImageReturned": "Aucune image n’a été retournée.",
+    "unknown": "Une erreur inconnue s’est produite."
+  }
+},
   "ContactPage": {
     "metadata": {
       "title": "Contact | Marcos Papermache",

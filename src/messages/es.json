@@ -194,31 +194,37 @@
     "discover": "Descubrir la obra"
   },
   "CommandeForm": {
-    "success": {
-      "title": "Solicitud enviada ✨",
-      "description": "Gracias. Te responderé rápidamente para hablar sobre tu proyecto."
-    },
-    "fields": {
-      "name": "Nombre",
-      "email": "Email",
-      "projectType": "Tipo de proyecto (mural, objeto, etc.)",
-      "dimensions": "Dimensiones deseadas",
-      "budget": "Presupuesto estimado (€)",
-      "message": "Describe tu idea...",
-      "referenceImage": "Imagen de referencia",
-      "imagePreviewAlt": "Vista previa de la imagen",
-      "imageHint": "JPG, PNG o WEBP — máximo 5 MB"
-    },
-    "actions": {
-      "remove": "Eliminar",
-      "sending": "Enviando...",
-      "submit": "Enviar solicitud"
-    },
-    "errors": {
-      "invalidResponse": "El servidor devolvió una respuesta no válida.",
-      "generic": "Ha ocurrido un error."
-    }
+  "success": {
+    "title": "Solicitud enviada ✨",
+    "description": "Gracias. Te responderé rápidamente para hablar sobre tu proyecto."
   },
+  "generatedConcept": {
+    "badge": "Concepto generado por IA",
+    "description": "Esta imagen generada sirve como base visual para tu solicitud. Puedes conservarla como referencia para tu creación a medida.",
+    "remove": "Eliminar",
+    "imageAlt": "Concepto de escultura generado por IA"
+  },
+  "fields": {
+    "name": "Nombre",
+    "email": "Email",
+    "projectType": "Tipo de proyecto (mural, objeto, etc.)",
+    "dimensions": "Dimensiones deseadas",
+    "budget": "Presupuesto estimado (€)",
+    "message": "Describe tu idea...",
+    "referenceImage": "Imagen de referencia",
+    "imagePreviewAlt": "Vista previa de la imagen",
+    "imageHint": "JPG, PNG o WEBP — máx. 5 MB"
+  },
+  "actions": {
+    "remove": "Eliminar",
+    "sending": "Enviando...",
+    "submit": "Enviar solicitud"
+  },
+  "errors": {
+    "invalidResponse": "El servidor devolvió una respuesta inválida.",
+    "generic": "Se ha producido un error."
+  }
+},
   "CommandePage": {
     "badge": "Encargo",
     "title": "Solicitud de creación personalizada.",
@@ -279,58 +285,62 @@
     "quote": "Transformar la materia en presencia."
   },
   "AIExperience": {
-    "badge": "Creación asistida por IA",
-    "title": "Imagina tu escultura antes de hacerla nacer.",
-    "description": "Describe tu idea, elige una dirección artística, genera un concepto visual y luego transfórmalo en una obra escultórica a medida.",
-    "promptEnrichedTitle": "Prompt enriquecido",
-    "promptEnrichedSuffix": "Estilo deseado:",
-    "form": {
-      "label": "Describe tu idea",
-      "placeholder": "Ej. Una escultura mural orgánica blanca con toques dorados, inspirada en el movimiento de las olas, elegante y contemporánea.",
-      "styleLabel": "Elige un estilo"
+  "badge": "Creación asistida por IA",
+  "title": "Imagina tu escultura antes de hacerla nacer.",
+  "description": "Describe tu idea, elige una dirección artística, genera un concepto visual y luego transfórmalo en una obra escultórica a medida.",
+  "promptEnrichedTitle": "Prompt enriquecido",
+  "promptEnrichedSuffix": "Estilo deseado:",
+  "form": {
+    "label": "Describe tu idea",
+    "placeholder": "Ej. Una escultura mural orgánica blanca con toques dorados, inspirada en el movimiento de las olas, elegante y contemporánea.",
+    "styleLabel": "Elige un estilo",
+
+    "optionsLabel": "Opciones de presentación",
+    "withFrame": "Versión galería (marco de cristal flotante)",
+    "withFrameDescription": "Genera la escultura integrada en un cuadro de cristal transparente, con un efecto flotante inspirado en instalaciones de galería."
+  },
+  "styles": {
+    "organic": {
+      "label": "Orgánico",
+      "prompt": "Escultura orgánica en papel maché, formas fluidas, textura artesanal, elegancia contemporánea, luz suave, acabado de alta gama"
     },
-    "styles": {
-      "organic": {
-        "label": "Orgánico",
-        "prompt": "Escultura orgánica en papel maché, formas fluidas, textura artesanal, elegancia contemporánea, luz suave, acabado de alta gama"
-      },
-      "minimal": {
-        "label": "Minimalista",
-        "prompt": "Escultura minimalista en papel maché, líneas depuradas, paleta blanco roto y dorado, diseño contemporáneo, acabado de galería de arte"
-      },
-      "oceanic": {
-        "label": "Inspirada en el océano",
-        "prompt": "Escultura en papel maché inspirada en el océano, curvas naturales, movimiento fluido, blanco nacarado, toques dorados, poesía visual"
-      },
-      "luminous": {
-        "label": "Luminosa",
-        "prompt": "Escultura-lámpara en papel maché, círculo luminoso integrado, diseño escultórico contemporáneo, acabado blanco y dorado, atmósfera elegante"
-      }
+    "minimal": {
+      "label": "Minimalista",
+      "prompt": "Escultura minimalista en papel maché, líneas depuradas, paleta blanco roto y dorado, diseño contemporáneo, acabado de galería de arte"
     },
-    "buttons": {
-      "generate": "Generar una imagen",
-      "generating": "Generando...",
-      "reset": "Restablecer",
-      "regenerate": "Regenerar",
-      "order": "Dar vida a esta escultura"
+    "oceanic": {
+      "label": "Inspirada en el océano",
+      "prompt": "Escultura en papel maché inspirada en el océano, curvas naturales, movimiento fluido, blanco nacarado, toques dorados, poesía visual"
     },
-    "result": {
-      "emptyTitle": "Tu concepto aparecerá aquí",
-      "emptyDescription": "Genera una primera visión de tu futura escultura y luego afínala antes de darle vida en el taller.",
-      "generatedTitle": "Concepto generado",
-      "imageAlt": "Concepto de escultura generado por IA"
-    },
-    "footer": {
-      "line1": "Cada concepto generado sirve como base visual. La escultura final se realiza después a mano en el taller, con un enfoque artesanal, sensible y completamente a medida.",
-      "line2": "Cada pieza es única y está concebida como una obra contemporánea creada para dialogar con tu espacio."
-    },
-    "errors": {
-      "emptyPrompt": "Describe primero tu idea para generar una imagen.",
-      "generationFailed": "Error durante la generación.",
-      "noImageReturned": "No se devolvió ninguna imagen.",
-      "unknown": "Se ha producido un error desconocido."
+    "luminous": {
+      "label": "Luminosa",
+      "prompt": "Escultura-lámpara en papel maché, círculo luminoso integrado, diseño escultórico contemporáneo, acabado blanco y dorado, atmósfera elegante"
     }
   },
+  "buttons": {
+    "generate": "Generar una imagen",
+    "generating": "Generando...",
+    "reset": "Restablecer",
+    "regenerate": "Regenerar",
+    "order": "Dar vida a esta escultura"
+  },
+  "result": {
+    "emptyTitle": "Tu concepto aparecerá aquí",
+    "emptyDescription": "Genera una primera visión de tu futura escultura y luego afínala antes de darle vida en el taller.",
+    "generatedTitle": "Concepto generado",
+    "imageAlt": "Concepto de escultura generado por IA"
+  },
+  "footer": {
+    "line1": "Cada concepto generado sirve como base visual. La escultura final se realiza después a mano en el taller, con un enfoque artesanal, sensible y completamente a medida.",
+    "line2": "Cada pieza es única y está concebida como una obra contemporánea creada para dialogar con tu espacio."
+  },
+  "errors": {
+    "emptyPrompt": "Describe primero tu idea para generar una imagen.",
+    "generationFailed": "Error durante la generación.",
+    "noImageReturned": "No se devolvió ninguna imagen.",
+    "unknown": "Se ha producido un error desconocido."
+  }
+},
   "ContactPage": {
     "metadata": {
       "title": "Contacto | Marcos Papermache",

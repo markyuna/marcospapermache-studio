@@ -1,18 +1,32 @@
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+
 import { Container } from "@/components/layout/container";
 import CommandeForm from "@/components/forms/CommandeForm";
+import { routing } from "@/i18n/routing";
 
 type CommandePageProps = {
+  params: Promise<{
+    locale: string;
+  }>;
   searchParams: Promise<{
     prompt?: string;
   }>;
 };
 
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
 export default async function CommandePage({
+  params,
   searchParams,
 }: CommandePageProps) {
-  const t = await getTranslations("CommandePage");
+  const { locale } = await params;
   const { prompt = "" } = await searchParams;
+
+  setRequestLocale(locale);
+
+  const t = await getTranslations("CommandePage");
 
   return (
     <section className="relative overflow-hidden bg-[linear-gradient(180deg,#f4eadf_0%,#f7efe7_24%,#fbf7f2_58%,#f8f1e8_100%)] py-24 md:py-32">

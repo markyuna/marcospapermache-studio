@@ -22,18 +22,23 @@ export default function CommandeForm({
   const [errorMessage, setErrorMessage] = useState("");
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [message, setMessage] = useState(defaultPrompt);
-
-  const [generatedImage, setGeneratedImage] = useState<string | null>(() => {
-    if (typeof window === "undefined") {
-      return defaultImage || null;
-    }
-
-    return sessionStorage.getItem("generatedImage") || defaultImage || null;
-  });
+  const [generatedImage, setGeneratedImage] = useState<string | null>(
+    defaultImage || null,
+  );
 
   useEffect(() => {
     setMessage(defaultPrompt);
   }, [defaultPrompt]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const storedImage = sessionStorage.getItem("generatedImage");
+
+    if (storedImage) {
+      setGeneratedImage(storedImage);
+    }
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -82,7 +87,9 @@ export default function CommandeForm({
         URL.revokeObjectURL(imagePreview);
       }
 
-      sessionStorage.removeItem("generatedImage");
+      if (typeof window !== "undefined") {
+        sessionStorage.removeItem("generatedImage");
+      }
 
       setImagePreview(null);
       setGeneratedImage(null);
@@ -130,7 +137,10 @@ export default function CommandeForm({
 
   function handleRemoveGeneratedImage() {
     setGeneratedImage(null);
-    sessionStorage.removeItem("generatedImage");
+
+    if (typeof window !== "undefined") {
+      sessionStorage.removeItem("generatedImage");
+    }
   }
 
   const inputClassName =
@@ -181,7 +191,7 @@ export default function CommandeForm({
               className="inline-flex items-center gap-2 self-start rounded-full border border-[#e1d2c4] bg-white px-4 py-2 text-xs font-medium text-[#181512] transition hover:bg-[#f8f4ef]"
             >
               <Trash2 className="h-3.5 w-3.5" />
-              {t("actions.remove")}
+              {t("generatedConcept.remove")}
             </button>
           </div>
 

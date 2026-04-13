@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useMemo, useRef, useState } from "react";
 import {
   ArrowRight,
+  Check,
   Loader2,
   RefreshCcw,
   Sparkles,
@@ -47,6 +48,7 @@ export default function AIExperienceSection() {
 
   const [prompt, setPrompt] = useState("");
   const [selectedStyle, setSelectedStyle] = useState<string | null>(null);
+  const [withFrame, setWithFrame] = useState(false);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [lastPrompt, setLastPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -57,13 +59,25 @@ export default function AIExperienceSection() {
   const fullPrompt = useMemo(() => {
     const preset = stylePresets.find((item) => item.id === selectedStyle);
 
-    if (!prompt.trim() && preset) return preset.prompt;
-    if (prompt.trim() && preset) {
-      return `${prompt.trim()}. ${t("promptEnrichedSuffix")} ${preset.prompt}`;
+    let basePrompt = "";
+
+    if (!prompt.trim() && preset) {
+      basePrompt = preset.prompt;
+    } else if (prompt.trim() && preset) {
+      basePrompt = `${prompt.trim()}. ${t("promptEnrichedSuffix")} ${preset.prompt}`;
+    } else {
+      basePrompt = prompt.trim();
     }
 
-    return prompt.trim();
-  }, [prompt, selectedStyle, t, stylePresets]);
+    if (!basePrompt) return "";
+
+    if (withFrame) {
+      basePrompt +=
+        ", mounted inside a transparent glass frame, sculpture attached to a clear glass panel, floating effect, contemporary gallery presentation, elegant frame structure, subtle reflections on glass, realistic shadows, depth, premium art installation, soft cinematic lighting, collectible artwork photography";
+    }
+
+    return basePrompt;
+  }, [prompt, selectedStyle, withFrame, t, stylePresets]);
 
   async function handleGenerate() {
     if (!fullPrompt) {
@@ -117,9 +131,11 @@ export default function AIExperienceSection() {
   function handleReset() {
     setPrompt("");
     setSelectedStyle(null);
+    setWithFrame(false);
     setGeneratedImage(null);
     setLastPrompt("");
     setError("");
+
     if (typeof window !== "undefined") {
       sessionStorage.removeItem("generatedImage");
     }
@@ -207,6 +223,44 @@ export default function AIExperienceSection() {
               </div>
             </div>
 
+            <div className="mt-7">
+              <p className="text-sm font-medium text-neutral-200">
+                {t("form.optionsLabel")}
+              </p>
+
+              <button
+                type="button"
+                onClick={() => setWithFrame((prev) => !prev)}
+                className={[
+                  "mt-4 flex w-full items-start gap-3 rounded-[1.35rem] border px-4 py-4 text-left transition duration-300",
+                  withFrame
+                    ? "border-[#d9b08c] bg-[#d9b08c]/14 text-white shadow-[0_0_0_1px_rgba(217,176,140,0.22)]"
+                    : "border-white/10 bg-white/[0.05] text-neutral-300 hover:border-white/20 hover:bg-white/[0.09] hover:text-white",
+                ].join(" ")}
+              >
+                <span
+                  className={[
+                    "mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition duration-300",
+                    withFrame
+                      ? "border-[#e3bf9d] bg-[#e3bf9d] text-black"
+                      : "border-white/20 bg-transparent text-transparent",
+                  ].join(" ")}
+                >
+                  <Check className="h-3.5 w-3.5" />
+                </span>
+
+                <span className="flex-1">
+                  <span className="flex items-center gap-2 text-sm font-medium">
+                    <Sparkles className="h-4 w-4 text-[#e3bf9d]" />
+                    {t("form.withFrame")}
+                  </span>
+                  <span className="mt-1 block text-sm leading-6 text-neutral-400">
+                    {t("form.withFrameDescription")}
+                  </span>
+                </span>
+              </button>
+            </div>
+
             {fullPrompt ? (
               <div className="mt-6 rounded-[1.5rem] border border-[#d9b08c]/18 bg-gradient-to-br from-[#d9b08c]/10 to-transparent p-4 md:p-5">
                 <p className="text-xs uppercase tracking-[0.24em] text-[#e3bf9d]">
@@ -285,13 +339,13 @@ export default function AIExperienceSection() {
 
             {generatedImage ? (
               <div className="w-full">
-                <div className="relative w-full aspect-[4/5] overflow-hidden rounded-[1.5rem] border border-white/10 bg-black/20">
+                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[1.5rem] border border-white/10 bg-black/20">
                   <Image
                     src={generatedImage}
                     alt={t("result.imageAlt")}
                     fill
                     sizes="(max-width: 1024px) 100vw, 40vw"
-                    className="object-cover transition-all duration-700 ease-out animate-[fadeIn_0.7s_ease-out]"
+                    className="animate-[fadeIn_0.7s_ease-out] object-cover transition-all duration-700 ease-out"
                     unoptimized
                   />
                 </div>

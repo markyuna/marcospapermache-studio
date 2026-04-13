@@ -1,8 +1,8 @@
 "use client";
 
+import clsx from "clsx";
 import { useTransition } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import clsx from "clsx";
 
 import { usePathname, useRouter } from "@/i18n/navigation";
 
@@ -29,28 +29,28 @@ export default function LocaleSwitcher({
   const t = useTranslations("LocaleSwitcher");
   const [isPending, startTransition] = useTransition();
 
-  const activeIndex = locales.findIndex((l) => l.code === locale);
+  const activeIndex = locales.findIndex((item) => item.code === locale);
 
-  const handleChangeLocale = (nextLocale: Locale) => {
+  function handleChangeLocale(nextLocale: Locale) {
     if (nextLocale === locale || isPending) return;
 
     startTransition(() => {
       router.replace(pathname, { locale: nextLocale });
       onChange?.();
     });
-  };
+  }
 
   return (
     <div
       className={clsx(
         "relative flex items-center rounded-full border border-black/10 bg-white/70 backdrop-blur-md",
-        mobile ? "mt-4 w-fit p-0" : "p-0"
+        mobile ? "mt-4 w-fit p-0" : "p-0",
       )}
-      role="optgroup"
+      role="group"
       aria-label={t("label")}
     >
       <div
-        className="absolute top-0.5 bottom-0.5 rounded-full transition-all duration-300 ease-out bg-gradient-to-r from-[#ff7a18] via-[#ff9a3c] to-[#ffd28a]"
+        className="absolute bottom-0.5 top-0.5 rounded-full bg-gradient-to-r from-[#ff7a18] via-[#ff9a3c] to-[#ffd28a] transition-all duration-300 ease-out"
         style={{
           width: "33.333%",
           transform: `translateX(${activeIndex * 100}%)`,
@@ -70,7 +70,7 @@ export default function LocaleSwitcher({
               "relative z-10 px-2 py-[5px] text-[10px] font-medium tracking-[0.12em] transition-colors duration-300",
               isActive
                 ? "text-white"
-                : "text-neutral-500 hover:text-neutral-900"
+                : "text-neutral-500 hover:text-neutral-900",
             )}
             aria-pressed={isActive}
             aria-label={t("switchTo", { locale: item.label })}
