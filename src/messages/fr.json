@@ -284,39 +284,71 @@
     "imageAlt": "Marcos Suárez en train de travailler une sculpture en papier mâché dans son atelier",
     "quote": "Transformer la matière en présence."
   },
-  "AIExperience": {
+ "AIExperience": {
   "badge": "Création assistée par IA",
   "title": "Imaginez votre sculpture avant de lui donner vie.",
-  "description": "Décrivez votre idée, choisissez une direction artistique, générez un concept visuel puis transformez-le en une œuvre sculpturale sur mesure.",
+  "description": "Décrivez votre idée, choisissez une direction artistique, configurez votre œuvre (taille, cadre, matériaux), générez un concept visuel puis transformez-le en une sculpture sur mesure.",
+
   "promptEnrichedTitle": "Prompt enrichi",
   "promptEnrichedSuffix": "Style souhaité :",
+
+  "sizes": {
+    "small": "30 × 40 cm",
+    "medium": "50 × 70 cm",
+    "large": "70 × 100 cm"
+  },
+
+  "frameColors": {
+    "black": "Noir",
+    "white": "Blanc",
+    "gold": "Doré"
+  },
+
+  "frameMaterials": {
+    "metal": "Métal",
+    "wood": "Bois"
+  },
+
   "form": {
     "label": "Décrivez votre idée",
     "placeholder": "Ex. Une sculpture murale organique blanche avec des touches dorées, inspirée par le mouvement des vagues, élégante et contemporaine.",
-    "styleLabel": "Choisissez un style",
 
-    "optionsLabel": "Options de présentation",
-    "withFrame": "Version galerie (cadre en verre flottant)",
-    "withFrameDescription": "Générez la sculpture intégrée dans un cadre en verre transparent, avec un effet flottant inspiré des installations de galerie."
+    "styleLabel": "Direction artistique",
+    "sizeLabel": "Taille de l’œuvre",
+
+    "optionsLabel": "Présentation de l’œuvre",
+
+    "withFrame": "Cadre artistique ouvert",
+    "withFrameDescription": "Intégration dans un cadre fin et ouvert, où la sculpture interagit avec la structure sans être enfermée.",
+
+    "frameColor": "Couleur du cadre",
+    "frameMaterial": "Matériau du cadre"
   },
+
   "styles": {
     "organic": {
       "label": "Organique",
-      "prompt": "Sculpture organique en papier mâché, formes fluides, texture artisanale, élégance contemporaine, lumière douce, finition haut de gamme"
+      "prompt": "sculpture murale contemporaine en papier mâché, formes organiques fluides, relief sculptural élégant, composition artisanale haut de gamme"
     },
     "minimal": {
-      "label": "Minimaliste",
-      "prompt": "Sculpture minimaliste en papier mâché, lignes épurées, palette blanc cassé et doré, design contemporain, finition galerie d’art"
+      "label": "Minimal",
+      "prompt": "sculpture murale contemporaine en papier mâché, lignes épurées, composition minimaliste raffinée, relief sobre et élégant"
     },
     "oceanic": {
-      "label": "Inspirée de l’océan",
-      "prompt": "Sculpture en papier mâché inspirée de l’océan, courbes naturelles, mouvement fluide, blanc nacré, touches dorées, poésie visuelle"
+      "label": "Océanique",
+      "prompt": "sculpture murale contemporaine en papier mâché, formes inspirées de l’océan, mouvement fluide, relief organique évoquant les vagues et les courants"
     },
     "luminous": {
-      "label": "Lumineuse",
-      "prompt": "Sculpture-lampe en papier mâché, cercle lumineux intégré, design sculptural contemporain, finition blanche et dorée, atmosphère élégante"
+      "label": "Lumineux",
+      "prompt": "sculpture murale contemporaine en papier mâché, présence lumineuse subtile, relief élégant, accents raffinés inspirés par la lumière"
+    },
+    "origami": {
+      "label": "Origami",
+      "prompt": "sculpture murale contemporaine en papier mâché inspirée de l’origami, plis géométriques, facettes sculpturales nettes, composition structurée et élégante"
     }
+
   },
+
   "buttons": {
     "generate": "Générer une image",
     "generating": "Génération...",
@@ -324,22 +356,26 @@
     "regenerate": "Régénérer",
     "order": "Donner vie à cette sculpture"
   },
+
   "result": {
     "emptyTitle": "Votre concept apparaîtra ici",
     "emptyDescription": "Générez une première vision de votre future sculpture puis affinez-la avant de lui donner vie dans l’atelier.",
     "generatedTitle": "Concept généré",
     "imageAlt": "Concept de sculpture généré par IA"
   },
+
   "footer": {
     "line1": "Chaque concept généré sert de base visuelle. La sculpture finale est ensuite réalisée à la main en atelier, avec une approche artisanale, sensible et entièrement sur mesure.",
     "line2": "Chaque pièce est unique et pensée comme une œuvre contemporaine destinée à dialoguer avec votre espace."
   },
+
   "errors": {
     "emptyPrompt": "Décrivez d’abord votre idée pour générer une image.",
     "generationFailed": "Erreur lors de la génération.",
     "noImageReturned": "Aucune image n’a été retournée.",
     "unknown": "Une erreur inconnue s’est produite."
   },
+
   "loading": {
     "title": "Création de votre image en cours",
     "description": "Cela peut prendre quelques instants. Merci de patienter jusqu’à la fin de la génération afin d’éviter toute interruption.",

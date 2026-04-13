@@ -8,6 +8,7 @@ import {
   Check,
   Loader2,
   RefreshCcw,
+  Ruler,
   Sparkles,
   Wand2,
 } from "lucide-react";
@@ -20,36 +21,112 @@ type GenerateImageResponse = {
   error?: string;
 };
 
+type SizeOption = {
+  id: "30x40" | "50x70" | "70x100";
+  label: string;
+  prompt: string;
+};
+
+type FrameColor = "black" | "white" | "gold";
+type FrameMaterial = "metal" | "wood";
+type StylePresetId =
+  | "organic"
+  | "minimal"
+  | "oceanic"
+  | "luminous"
+  | "origami";
+
+type StylePreset = {
+  id: StylePresetId;
+  label: string;
+  prompt: string;
+  framedPrompt: string;
+};
+
 export default function AIExperienceSection() {
   const t = useTranslations("AIExperience");
   const router = useRouter();
 
-  const stylePresets = [
+  const stylePresets: readonly StylePreset[] = [
     {
       id: "organic",
       label: t("styles.organic.label"),
       prompt: t("styles.organic.prompt"),
+      framedPrompt:
+        "organic sculptural composition adapted to framed wall art, balanced relief structure, elegant flowing forms, controlled expansion, composition designed to preserve the full frame visibility",
     },
     {
       id: "minimal",
       label: t("styles.minimal.label"),
       prompt: t("styles.minimal.prompt"),
+      framedPrompt:
+        "minimal sculptural composition adapted to framed wall art, restrained relief, refined clean volumes, disciplined composition that fully respects the frame and preserves the frame as a visible design element",
     },
     {
       id: "oceanic",
       label: t("styles.oceanic.label"),
       prompt: t("styles.oceanic.prompt"),
+      framedPrompt:
+        "ocean-inspired sculptural composition adapted to framed wall art, fluid layered relief, elegant wave-like movement with controlled depth, composition arranged to keep the frame fully visible",
     },
     {
       id: "luminous",
       label: t("styles.luminous.label"),
       prompt: t("styles.luminous.prompt"),
+      framedPrompt:
+        "luminous sculptural composition adapted to framed wall art, refined light-inspired relief, subtle radiant accents, composition built to preserve full frame visibility on all sides",
+    },
+    {
+      id: "origami",
+      label: t("styles.origami.label"),
+      prompt: t("styles.origami.prompt"),
+      framedPrompt:
+        "origami-inspired sculptural composition adapted to framed wall art, folded geometric planes, crisp faceted relief, elegant angular paper-like construction, structured composition designed to remain centered and fully contained inside a clearly visible open frame",
     },
   ] as const;
 
+  const sizeOptions: SizeOption[] = [
+    {
+      id: "30x40",
+      label: t("sizes.small"),
+      prompt:
+        "vertical format artwork, portrait orientation, aspect ratio 3:4, proportions of a 30 x 40 cm wall piece, realistic scale as a small wall artwork",
+    },
+    {
+      id: "50x70",
+      label: t("sizes.medium"),
+      prompt:
+        "vertical format artwork, portrait orientation, aspect ratio 5:7, proportions of a 50 x 70 cm wall piece, realistic scale as a medium-sized wall artwork",
+    },
+    {
+      id: "70x100",
+      label: t("sizes.large"),
+      prompt:
+        "vertical format artwork, portrait orientation, aspect ratio 7:10, proportions of a 70 x 100 cm wall piece, realistic scale as a large wall artwork",
+    },
+  ];
+
+  const frameColors: { id: FrameColor; label: string; prompt: string }[] = [
+    { id: "black", label: t("frameColors.black"), prompt: "black" },
+    { id: "white", label: t("frameColors.white"), prompt: "white" },
+    { id: "gold", label: t("frameColors.gold"), prompt: "gold" },
+  ];
+
+  const frameMaterials: {
+    id: FrameMaterial;
+    label: string;
+    prompt: string;
+  }[] = [
+    { id: "metal", label: t("frameMaterials.metal"), prompt: "metal" },
+    { id: "wood", label: t("frameMaterials.wood"), prompt: "wood" },
+  ];
+
   const [prompt, setPrompt] = useState("");
-  const [selectedStyle, setSelectedStyle] = useState<string | null>(null);
+  const [selectedStyle, setSelectedStyle] = useState<StylePresetId | null>(null);
+  const [selectedSize, setSelectedSize] = useState<SizeOption["id"]>("50x70");
   const [withFrame, setWithFrame] = useState(false);
+  const [frameColor, setFrameColor] = useState<FrameColor>("black");
+  const [frameMaterial, setFrameMaterial] = useState<FrameMaterial>("metal");
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [lastPrompt, setLastPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -72,8 +149,26 @@ export default function AIExperienceSection() {
     };
   }, [isLoading]);
 
+  const previewAspectClass = useMemo(() => {
+    switch (selectedSize) {
+      case "30x40":
+        return "aspect-[3/4]";
+      case "50x70":
+        return "aspect-[5/7]";
+      case "70x100":
+        return "aspect-[7/10]";
+      default:
+        return "aspect-[5/7]";
+    }
+  }, [selectedSize]);
+
   const fullPrompt = useMemo(() => {
     const preset = stylePresets.find((item) => item.id === selectedStyle);
+    const sizePreset = sizeOptions.find((item) => item.id === selectedSize);
+    const colorPreset = frameColors.find((item) => item.id === frameColor);
+    const materialPreset = frameMaterials.find(
+      (item) => item.id === frameMaterial,
+    );
 
     let basePrompt = "";
 
@@ -87,13 +182,44 @@ export default function AIExperienceSection() {
 
     if (!basePrompt) return "";
 
+    if (sizePreset) {
+      basePrompt += `, ${sizePreset.prompt}`;
+    }
+
     if (withFrame) {
+      const frameDescription = `clearly visible thin flat open ${colorPreset?.prompt ?? "black"} ${materialPreset?.prompt ?? "metal"} frame`;
+
       basePrompt +=
-        ", contemporary papier-mâché wall sculpture integrated with a thin flat black open frame, wall-mounted artistic relief, the sculpture interacts directly with the frame and can partially extend beyond its edges, minimalist gallery presentation, elegant handcrafted composition, realistic handmade texture, premium contemporary art photography, subtle natural shadows, realistic proportions, no box frame, no shadow box, no display case, no transparent front panel, no glass enclosure, no deep frame, no recessed showcase, no museum vitrine";
+        `, contemporary papier-mâché wall sculpture designed as framed wall art, ` +
+        `${frameDescription}, ` +
+        `front-facing centered composition, ` +
+        `the entire outer frame must be fully visible on all four sides, ` +
+        `comfortable and even margin around the full frame, ` +
+        `no cropped frame, no cut frame, no partial frame, no cut-off corners, ` +
+        `the frame is an essential and visible part of the artwork, ` +
+        `the sculpture is physically attached to and integrated into the frame, ` +
+        `the sculpture may interact with the inner edges of the frame, ` +
+        `but the outer perimeter of the frame must remain entirely visible and readable, ` +
+        `zoomed out slightly so the whole frame fits naturally inside the image, ` +
+        `neutral studio-style presentation, no room staging, no furniture, no large decorative background, ` +
+        `premium contemporary art photography, realistic handmade texture, subtle natural shadows, open frame only, flat frame only, visible frame structure, no invisible frame, no box frame, no shadow box, no display case, no glass enclosure`;
+
+      if (preset?.framedPrompt) {
+        basePrompt += `, ${preset.framedPrompt}`;
+      }
     }
 
     return basePrompt;
-  }, [prompt, selectedStyle, withFrame, t, stylePresets]);
+  }, [
+    prompt,
+    selectedStyle,
+    selectedSize,
+    withFrame,
+    frameColor,
+    frameMaterial,
+    t,
+    stylePresets,
+  ]);
 
   async function handleGenerate() {
     if (!fullPrompt) {
@@ -113,6 +239,8 @@ export default function AIExperienceSection() {
         },
         body: JSON.stringify({
           prompt: fullPrompt,
+          size: selectedSize,
+          withFrame,
         }),
       });
 
@@ -147,13 +275,20 @@ export default function AIExperienceSection() {
   function handleReset() {
     setPrompt("");
     setSelectedStyle(null);
+    setSelectedSize("50x70");
     setWithFrame(false);
+    setFrameColor("black");
+    setFrameMaterial("metal");
     setGeneratedImage(null);
     setLastPrompt("");
     setError("");
 
     if (typeof window !== "undefined") {
       sessionStorage.removeItem("generatedImage");
+      sessionStorage.removeItem("generatedImageSize");
+      sessionStorage.removeItem("generatedFrameColor");
+      sessionStorage.removeItem("generatedFrameMaterial");
+      sessionStorage.removeItem("generatedWithFrame");
     }
   }
 
@@ -162,12 +297,20 @@ export default function AIExperienceSection() {
 
     if (typeof window !== "undefined") {
       sessionStorage.setItem("generatedImage", generatedImage);
+      sessionStorage.setItem("generatedImageSize", selectedSize);
+      sessionStorage.setItem("generatedFrameColor", frameColor);
+      sessionStorage.setItem("generatedFrameMaterial", frameMaterial);
+      sessionStorage.setItem("generatedWithFrame", String(withFrame));
     }
 
     router.push({
       pathname: "/commande",
       query: {
         prompt: lastPrompt,
+        size: selectedSize,
+        frame: withFrame ? "open" : "none",
+        frameColor: withFrame ? frameColor : "none",
+        frameMaterial: withFrame ? frameMaterial : "none",
       },
     });
   }
@@ -176,7 +319,7 @@ export default function AIExperienceSection() {
     <section className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-[#0b0b0d] p-6 text-white shadow-[0_30px_120px_rgba(0,0,0,0.38)] md:p-10">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(205,164,124,0.18),transparent_24%),radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.04),transparent_24%)]" />
 
-      <div className="relative grid gap-10 lg:grid-cols-[1.04fr_0.96fr] lg:gap-8">
+      <div className="relative grid gap-10 xl:grid-cols-[0.96fr_1.04fr] xl:gap-10">
         <div>
           <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-xs uppercase tracking-[0.28em] text-neutral-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
             <Sparkles className="h-4 w-4" />
@@ -243,6 +386,36 @@ export default function AIExperienceSection() {
 
             <div className="mt-7">
               <p className="text-sm font-medium text-neutral-200">
+                {t("form.sizeLabel")}
+              </p>
+
+              <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                {sizeOptions.map((size) => {
+                  const isActive = selectedSize === size.id;
+
+                  return (
+                    <button
+                      key={size.id}
+                      type="button"
+                      disabled={isLoading}
+                      onClick={() => setSelectedSize(size.id)}
+                      className={[
+                        "flex items-center justify-center gap-2 rounded-[1.2rem] border px-4 py-3 text-sm transition duration-300 disabled:cursor-not-allowed disabled:opacity-60",
+                        isActive
+                          ? "border-[#d9b08c] bg-[#d9b08c]/14 text-white shadow-[0_0_0_1px_rgba(217,176,140,0.22)]"
+                          : "border-white/10 bg-white/[0.05] text-neutral-300 hover:border-white/20 hover:bg-white/[0.09] hover:text-white",
+                      ].join(" ")}
+                    >
+                      <Ruler className="h-4 w-4" />
+                      {size.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="mt-7">
+              <p className="text-sm font-medium text-neutral-200">
                 {t("form.optionsLabel")}
               </p>
 
@@ -279,6 +452,68 @@ export default function AIExperienceSection() {
                 </span>
               </button>
             </div>
+
+            {withFrame ? (
+              <>
+                <div className="mt-7">
+                  <p className="text-sm font-medium text-neutral-200">
+                    {t("form.frameColor")}
+                  </p>
+
+                  <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                    {frameColors.map((color) => {
+                      const isActive = frameColor === color.id;
+
+                      return (
+                        <button
+                          key={color.id}
+                          type="button"
+                          disabled={isLoading}
+                          onClick={() => setFrameColor(color.id)}
+                          className={[
+                            "rounded-[1.2rem] border px-4 py-3 text-sm transition duration-300 disabled:cursor-not-allowed disabled:opacity-60",
+                            isActive
+                              ? "border-[#d9b08c] bg-[#d9b08c]/14 text-white shadow-[0_0_0_1px_rgba(217,176,140,0.22)]"
+                              : "border-white/10 bg-white/[0.05] text-neutral-300 hover:border-white/20 hover:bg-white/[0.09] hover:text-white",
+                          ].join(" ")}
+                        >
+                          {color.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="mt-7">
+                  <p className="text-sm font-medium text-neutral-200">
+                    {t("form.frameMaterial")}
+                  </p>
+
+                  <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    {frameMaterials.map((material) => {
+                      const isActive = frameMaterial === material.id;
+
+                      return (
+                        <button
+                          key={material.id}
+                          type="button"
+                          disabled={isLoading}
+                          onClick={() => setFrameMaterial(material.id)}
+                          className={[
+                            "rounded-[1.2rem] border px-4 py-3 text-sm transition duration-300 disabled:cursor-not-allowed disabled:opacity-60",
+                            isActive
+                              ? "border-[#d9b08c] bg-[#d9b08c]/14 text-white shadow-[0_0_0_1px_rgba(217,176,140,0.22)]"
+                              : "border-white/10 bg-white/[0.05] text-neutral-300 hover:border-white/20 hover:bg-white/[0.09] hover:text-white",
+                          ].join(" ")}
+                        >
+                          {material.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </>
+            ) : null}
 
             {fullPrompt ? (
               <div className="mt-6 rounded-[1.5rem] border border-[#d9b08c]/18 bg-gradient-to-br from-[#d9b08c]/10 to-transparent p-4 md:p-5">
@@ -332,7 +567,7 @@ export default function AIExperienceSection() {
         </div>
 
         <div ref={resultRef} className="flex flex-col">
-          <div className="relative flex min-h-[520px] flex-1 items-center justify-center overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+          <div className="relative flex min-h-[640px] flex-1 items-center justify-center overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-5 md:min-h-[760px] md:p-6 xl:min-h-[860px] xl:p-7 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
             {!generatedImage && !isLoading ? (
               <div className="mx-auto max-w-md text-center">
                 <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-white/[0.05]">
@@ -351,10 +586,8 @@ export default function AIExperienceSection() {
 
             {isLoading ? (
               <>
-                <div className="w-full">
-                  <div className="aspect-[4/5] w-full rounded-[1.5rem] bg-white/10" />
-                  <div className="mt-4 h-4 w-2/3 rounded bg-white/10" />
-                  <div className="mt-2 h-4 w-1/2 rounded bg-white/10" />
+                <div className="flex h-full w-full items-center justify-center">
+                  <div className={`w-full max-w-[760px] ${previewAspectClass} rounded-[1.75rem] bg-white/10`} />
                 </div>
 
                 <div
@@ -364,7 +597,7 @@ export default function AIExperienceSection() {
                 >
                   <div className="mx-auto flex max-w-md flex-col items-center px-6 text-center">
                     <div className="relative mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-[#d9b08c]/25 bg-[#d9b08c]/10">
-                      <span className="absolute inline-flex h-20 w-20 rounded-full border border-[#d9b08c]/20 animate-ping" />
+                      <span className="absolute inline-flex h-20 w-20 animate-ping rounded-full border border-[#d9b08c]/20" />
                       <Loader2 className="relative z-10 h-9 w-9 animate-spin text-[#e3bf9d]" />
                     </div>
 
@@ -385,29 +618,32 @@ export default function AIExperienceSection() {
             ) : null}
 
             {generatedImage ? (
-              <div className="w-full">
-                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[1.5rem] border border-white/10 bg-black/20">
+              <div className="flex h-full w-full items-center justify-center">
+                <div className="relative flex w-full max-w-[780px] items-center justify-center overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#111214] p-3 md:p-4 xl:p-5">
                   <Image
                     src={generatedImage}
                     alt={t("result.imageAlt")}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 40vw"
-                    className="animate-[fadeIn_0.7s_ease-out] object-cover transition-all duration-700 ease-out"
-                    unoptimized
+                    width={1024}
+                    height={1024}
+                    sizes="(max-width: 1280px) 100vw, 50vw"
+                    className="h-auto max-h-[760px] w-auto max-w-full object-contain"
+                    priority
                   />
-                </div>
-
-                <div className="mt-5 rounded-[1.5rem] border border-white/10 bg-black/20 p-4 md:p-5">
-                  <p className="text-xs uppercase tracking-[0.22em] text-neutral-400">
-                    {t("result.generatedTitle")}
-                  </p>
-                  <p className="mt-3 text-sm leading-8 text-neutral-200">
-                    {lastPrompt}
-                  </p>
                 </div>
               </div>
             ) : null}
           </div>
+
+          {generatedImage ? (
+            <div className="mt-5 rounded-[1.5rem] border border-white/10 bg-black/20 p-4 md:p-5">
+              <p className="text-xs uppercase tracking-[0.22em] text-neutral-400">
+                {t("result.generatedTitle")}
+              </p>
+              <p className="mt-3 text-sm leading-8 text-neutral-200">
+                {lastPrompt}
+              </p>
+            </div>
+          ) : null}
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <button
@@ -447,19 +683,6 @@ export default function AIExperienceSection() {
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: scale(1.03);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-      `}</style>
     </section>
   );
 }

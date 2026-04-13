@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import {
   ArrowLeft,
@@ -16,6 +15,8 @@ import {
 import { supabaseAdmin } from "@/lib/supabase";
 import type { Commande } from "@/types/commande";
 import CommandeStatusSelect from "@/components/admin/CommandeStatusSelect";
+import AdminCommandeImagePreview from "@/components/admin/AdminCommandeImagePreview";
+import ExpandableMessage from "@/components/admin/ExpandableMessage";
 import {
   getCommandeStatusClasses,
   getCommandeStatusLabel,
@@ -153,7 +154,7 @@ export default async function AdminCommandeDetailPage({ params }: PageProps) {
 
           <span
             className={`inline-flex rounded-full px-4 py-2 text-sm font-medium ring-1 ring-inset ${getCommandeStatusClasses(
-              commande.status
+              commande.status,
             )}`}
           >
             {getCommandeStatusLabel(commande.status)}
@@ -221,47 +222,19 @@ export default async function AdminCommandeDetailPage({ params }: PageProps) {
               </h2>
 
               <div className="mt-4 rounded-2xl bg-[linear-gradient(to_bottom_right,#fffaf6,#fff3e8)] p-5">
-                <p className="whitespace-pre-line text-sm leading-7 text-neutral-700">
-                  {commande.message || "Aucun message fourni."}
-                </p>
+                <ExpandableMessage
+                  text={commande.message || ""}
+                  emptyText="Aucun message fourni."
+                  previewLines={5}
+                />
               </div>
             </div>
 
             {commande.image_url ? (
-              <div className="rounded-3xl border border-white/70 bg-white/90 p-5 shadow-[0_10px_30px_rgba(15,23,42,0.06)] md:p-6">
-                <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-                  <div>
-                    <h2 className="text-lg font-semibold text-neutral-900">
-                      Aperçu image
-                    </h2>
-                    <p className="text-sm text-neutral-500">
-                      Visualisation rapide du visuel envoyé
-                    </p>
-                  </div>
-
-                  <a
-                    href={commande.image_url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-2xl border border-neutral-200 bg-white px-4 py-2 text-sm font-medium text-neutral-700 transition hover:border-orange-200 hover:bg-orange-50"
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                    Ouvrir l’image
-                  </a>
-                </div>
-
-                <div className="relative overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-50">
-                  <div className="relative h-[260px] w-full md:h-[360px] xl:h-[460px]">
-                    <Image
-                      src={commande.image_url}
-                      alt={`Commande ${commande.id}`}
-                      fill
-                      className="object-contain"
-                      sizes="(max-width: 1280px) 100vw, 900px"
-                    />
-                  </div>
-                </div>
-              </div>
+              <AdminCommandeImagePreview
+                imageUrl={commande.image_url}
+                alt={`Commande ${commande.id}`}
+              />
             ) : null}
           </section>
 

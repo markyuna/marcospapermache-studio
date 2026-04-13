@@ -19,7 +19,7 @@ export async function PATCH(request: Request, context: RouteContext) {
     if (!Number.isInteger(numericId)) {
       return NextResponse.json(
         { error: "ID de commande invalide." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -29,7 +29,7 @@ export async function PATCH(request: Request, context: RouteContext) {
     if (typeof rawStatus !== "string" || !isCommandeStatus(rawStatus)) {
       return NextResponse.json(
         { error: "Statut invalide." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -45,7 +45,7 @@ export async function PATCH(request: Request, context: RouteContext) {
     if (error) {
       return NextResponse.json(
         { error: error.message || "Impossible de mettre à jour le statut." },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -58,7 +58,7 @@ export async function PATCH(request: Request, context: RouteContext) {
 
     return NextResponse.json(
       { error: "Erreur serveur inattendue." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

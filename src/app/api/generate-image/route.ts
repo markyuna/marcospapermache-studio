@@ -1,16 +1,37 @@
 import { NextResponse } from "next/server";
 
+type RequestBody = {
+  prompt?: string;
+  size?: "30x40" | "50x70" | "70x100";
+  withFrame?: boolean;
+};
+
+function getImageSize(size?: RequestBody["size"]) {
+  switch (size) {
+    case "30x40":
+      return "1024x1536";
+    case "70x100":
+      return "1024x1536";
+    case "50x70":
+    default:
+      return "1024x1536";
+  }
+}
+
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
+    const body = (await request.json()) as RequestBody;
     const prompt = body?.prompt?.trim();
+    const imageSize = getImageSize(body?.size);
+    const withFrame = Boolean(body?.withFrame);
 
     if (!prompt) {
-      return NextResponse.json(
-        { error: "Prompt manquant." },
-        { status: 400 },
-      );
+      return NextResponse.json({ error: "Prompt manquant." }, { status: 400 });
     }
+
+    const reinforcedPrompt = withFrame
+      ? `${prompt}, zoomed out composition, the full outer frame must be completely visible with comfortable margin on every side, no cropped frame, no cut edges, no partial artwork, the artwork must fit naturally inside the image`
+      : `${prompt}, centered composition, complete artwork fully visible, no cropped edges`;
 
     const response = await fetch("https://api.openai.com/v1/images/generations", {
       method: "POST",
@@ -20,8 +41,8 @@ export async function POST(request: Request) {
       },
       body: JSON.stringify({
         model: "gpt-image-1",
-        prompt,
-        size: "1024x1024",
+        prompt: reinforcedPrompt,
+        size: imageSize,
       }),
     });
 
