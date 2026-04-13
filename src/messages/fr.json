@@ -339,6 +339,11 @@
     "generationFailed": "Erreur lors de la génération.",
     "noImageReturned": "Aucune image n’a été retournée.",
     "unknown": "Une erreur inconnue s’est produite."
+  },
+  "loading": {
+    "title": "Création de votre image en cours",
+    "description": "Cela peut prendre quelques instants. Merci de patienter jusqu’à la fin de la génération afin d’éviter toute interruption.",
+    "notice": "N’actualisez pas et ne fermez pas cette page"
   }
 },
   "ContactPage": {

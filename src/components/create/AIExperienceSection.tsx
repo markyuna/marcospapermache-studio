@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
+  AlertCircle,
   ArrowRight,
   Check,
   Loader2,
@@ -56,6 +57,21 @@ export default function AIExperienceSection() {
 
   const resultRef = useRef<HTMLDivElement | null>(null);
 
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (!isLoading) return;
+
+      event.preventDefault();
+      event.returnValue = "";
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [isLoading]);
+
   const fullPrompt = useMemo(() => {
     const preset = stylePresets.find((item) => item.id === selectedStyle);
 
@@ -73,7 +89,7 @@ export default function AIExperienceSection() {
 
     if (withFrame) {
       basePrompt +=
-        ", mounted inside a transparent glass frame, sculpture attached to a clear glass panel, floating effect, contemporary gallery presentation, elegant frame structure, subtle reflections on glass, realistic shadows, depth, premium art installation, soft cinematic lighting, collectible artwork photography";
+        ", contemporary papier-mâché wall sculpture integrated with a thin flat black open frame, wall-mounted artistic relief, the sculpture interacts directly with the frame and can partially extend beyond its edges, minimalist gallery presentation, elegant handcrafted composition, realistic handmade texture, premium contemporary art photography, subtle natural shadows, realistic proportions, no box frame, no shadow box, no display case, no transparent front panel, no glass enclosure, no deep frame, no recessed showcase, no museum vitrine";
     }
 
     return basePrompt;
@@ -188,7 +204,8 @@ export default function AIExperienceSection() {
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               placeholder={t("form.placeholder")}
-              className="mt-4 min-h-[170px] w-full resize-y rounded-[1.5rem] border border-white/10 bg-black/20 px-5 py-4 text-sm leading-7 text-white outline-none transition duration-300 placeholder:text-neutral-500 focus:border-[#caa27c] focus:bg-black/25 focus:ring-2 focus:ring-[#caa27c]/20"
+              disabled={isLoading}
+              className="mt-4 min-h-[170px] w-full resize-y rounded-[1.5rem] border border-white/10 bg-black/20 px-5 py-4 text-sm leading-7 text-white outline-none transition duration-300 placeholder:text-neutral-500 focus:border-[#caa27c] focus:bg-black/25 focus:ring-2 focus:ring-[#caa27c]/20 disabled:cursor-not-allowed disabled:opacity-70"
             />
 
             <div className="mt-7">
@@ -204,13 +221,14 @@ export default function AIExperienceSection() {
                     <button
                       key={preset.id}
                       type="button"
+                      disabled={isLoading}
                       onClick={() =>
                         setSelectedStyle((current) =>
                           current === preset.id ? null : preset.id,
                         )
                       }
                       className={[
-                        "rounded-full border px-4 py-2 text-sm transition duration-300",
+                        "rounded-full border px-4 py-2 text-sm transition duration-300 disabled:cursor-not-allowed disabled:opacity-60",
                         isActive
                           ? "border-[#d9b08c] bg-[#d9b08c]/14 text-white shadow-[0_0_0_1px_rgba(217,176,140,0.22)]"
                           : "border-white/10 bg-white/[0.05] text-neutral-300 hover:border-white/20 hover:bg-white/[0.09] hover:text-white",
@@ -230,9 +248,10 @@ export default function AIExperienceSection() {
 
               <button
                 type="button"
+                disabled={isLoading}
                 onClick={() => setWithFrame((prev) => !prev)}
                 className={[
-                  "mt-4 flex w-full items-start gap-3 rounded-[1.35rem] border px-4 py-4 text-left transition duration-300",
+                  "mt-4 flex w-full items-start gap-3 rounded-[1.35rem] border px-4 py-4 text-left transition duration-300 disabled:cursor-not-allowed disabled:opacity-60",
                   withFrame
                     ? "border-[#d9b08c] bg-[#d9b08c]/14 text-white shadow-[0_0_0_1px_rgba(217,176,140,0.22)]"
                     : "border-white/10 bg-white/[0.05] text-neutral-300 hover:border-white/20 hover:bg-white/[0.09] hover:text-white",
@@ -273,8 +292,9 @@ export default function AIExperienceSection() {
             ) : null}
 
             {error ? (
-              <div className="mt-6 rounded-[1.25rem] border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-200">
-                {error}
+              <div className="mt-6 flex items-start gap-3 rounded-[1.25rem] border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+                <span>{error}</span>
               </div>
             ) : null}
 
@@ -330,11 +350,38 @@ export default function AIExperienceSection() {
             ) : null}
 
             {isLoading ? (
-              <div className="w-full animate-pulse">
-                <div className="aspect-[4/5] w-full rounded-[1.5rem] bg-white/10" />
-                <div className="mt-4 h-4 w-2/3 rounded bg-white/10" />
-                <div className="mt-2 h-4 w-1/2 rounded bg-white/10" />
-              </div>
+              <>
+                <div className="w-full">
+                  <div className="aspect-[4/5] w-full rounded-[1.5rem] bg-white/10" />
+                  <div className="mt-4 h-4 w-2/3 rounded bg-white/10" />
+                  <div className="mt-2 h-4 w-1/2 rounded bg-white/10" />
+                </div>
+
+                <div
+                  className="absolute inset-0 z-20 flex items-center justify-center bg-black/60 backdrop-blur-md"
+                  aria-live="assertive"
+                  aria-busy="true"
+                >
+                  <div className="mx-auto flex max-w-md flex-col items-center px-6 text-center">
+                    <div className="relative mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-[#d9b08c]/25 bg-[#d9b08c]/10">
+                      <span className="absolute inline-flex h-20 w-20 rounded-full border border-[#d9b08c]/20 animate-ping" />
+                      <Loader2 className="relative z-10 h-9 w-9 animate-spin text-[#e3bf9d]" />
+                    </div>
+
+                    <h3 className="text-xl font-semibold text-white">
+                      {t("loading.title")}
+                    </h3>
+
+                    <p className="mt-3 max-w-sm text-sm leading-7 text-neutral-300">
+                      {t("loading.description")}
+                    </p>
+
+                    <div className="mt-5 rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-xs uppercase tracking-[0.22em] text-neutral-300">
+                      {t("loading.notice")}
+                    </div>
+                  </div>
+                </div>
+              </>
             ) : null}
 
             {generatedImage ? (
@@ -376,10 +423,10 @@ export default function AIExperienceSection() {
             <button
               type="button"
               onClick={handleOrderClick}
-              disabled={!generatedImage}
+              disabled={!generatedImage || isLoading}
               className={[
                 "inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-medium transition duration-300",
-                generatedImage
+                generatedImage && !isLoading
                   ? "bg-[#d9b08c] text-black hover:scale-[1.015] hover:bg-[#e5c4a6]"
                   : "cursor-not-allowed bg-neutral-700 text-neutral-400",
               ].join(" ")}
