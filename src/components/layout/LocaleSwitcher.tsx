@@ -44,13 +44,13 @@ export default function LocaleSwitcher({
     <div
       className={clsx(
         "relative flex items-center rounded-full border border-black/10 bg-white/70 backdrop-blur-md",
-        mobile ? "mt-4 w-fit p-[2px]" : "p-[1.5px]"
+        mobile ? "mt-4 w-fit p-0" : "p-0"
       )}
-      role="group"
+      role="optgroup"
       aria-label={t("label")}
     >
       <div
-        className="absolute top-[1.5px] bottom-[1.5px] rounded-full transition-all duration-300 ease-out bg-gradient-to-r from-[#ff7a18] via-[#ff9a3c] to-[#ffd28a]"
+        className="absolute top-0.5 bottom-0.5 rounded-full transition-all duration-300 ease-out bg-gradient-to-r from-[#ff7a18] via-[#ff9a3c] to-[#ffd28a]"
         style={{
           width: "33.333%",
           transform: `translateX(${activeIndex * 100}%)`,

@@ -1,3 +1,4 @@
+// src/components/layout/Navbar.tsx
 "use client";
 
 import Image from "next/image";
@@ -5,9 +6,15 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
+import { Space_Grotesk } from "next/font/google";
 
 import { Link, usePathname } from "@/i18n/navigation";
 import LocaleSwitcher from "@/components/layout/LocaleSwitcher";
+
+const space = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
 
 const navLinks = [
   { href: "/", key: "home", width: "min-w-[94px]" },
@@ -103,14 +110,18 @@ export default function Navbar() {
               alt="Marcos Papermache"
               fill
               priority
-              sizes="(max-width: 640px) 176px, (max-width: 768px) 208px, (max-width: 1024px) 240px, 288px"
               className="object-contain object-left transition duration-500 group-hover:scale-[1.02]"
             />
           </div>
         </Link>
 
         <div className="hidden flex-1 items-center justify-end lg:flex">
-          <nav className="flex flex-1 items-center justify-center gap-2 xl:gap-2.5">
+          <nav
+            className={clsx(
+              space.className,
+              "flex flex-1 items-center justify-center gap-2 xl:gap-2.5"
+            )}
+          >
             {navLinks.map((link) => {
               const isActive = isActiveLink(link.href);
 
@@ -119,7 +130,7 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   className={clsx(
-                    "group relative flex h-[68px] max-w-[180px] items-center justify-center px-4 text-center text-[15px] font-medium leading-none tracking-[0.05em] transition-all duration-300",
+                    "group relative flex h-[68px] max-w-[180px] items-center justify-center px-4 text-center text-[18px] font-stretch-expanded leading-none tracking-tight transition-all duration-300",
                     link.width,
                     isActive
                       ? "text-neutral-950"
@@ -152,22 +163,23 @@ export default function Navbar() {
           type="button"
           onClick={toggleMenu}
           className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-black/10 bg-white/85 text-neutral-900 shadow-sm transition hover:bg-[#f8f1e8] lg:hidden"
-          aria-label={open ? t("closeMenu") : t("openMenu")}
-          aria-expanded={open}
-          aria-controls="mobile-menu"
         >
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
       <div
-        id="mobile-menu"
         className={clsx(
           "overflow-hidden border-t border-black/5 bg-white/90 backdrop-blur-xl transition-all duration-300 lg:hidden",
           open ? "max-h-[560px] opacity-100" : "max-h-0 opacity-0"
         )}
       >
-        <nav className="mx-auto flex w-full max-w-7xl flex-col px-5 py-5 sm:px-6">
+        <nav
+          className={clsx(
+            space.className,
+            "mx-auto flex w-full max-w-7xl flex-col px-5 py-5 sm:px-6"
+          )}
+        >
           {navLinks.map((link) => {
             const isActive = isActiveLink(link.href);
 
@@ -177,7 +189,7 @@ export default function Navbar() {
                 href={link.href}
                 onClick={closeMenu}
                 className={clsx(
-                  "rounded-2xl px-4 py-3 text-[16px] font-medium tracking-[0.035em] transition",
+                  "rounded-2xl px-4 py-3 text-[18px] font-medium tracking-[0.06em] transition",
                   isActive
                     ? "bg-[#f8f1e8] text-neutral-950"
                     : "text-neutral-700 hover:bg-[#f8f1e8] hover:text-neutral-950"
