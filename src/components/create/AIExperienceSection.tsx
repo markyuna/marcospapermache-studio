@@ -326,7 +326,7 @@ export default function AIExperienceSection() {
             {t("badge")}
           </p>
 
-          <h1 className="mt-6 max-w-3xl text-4xl font-semibold tracking-[-0.05em] text-white md:text-6xl">
+          <h1 className="mt-6 max-w-3xl bg-gradient-to-br from-white via-[#ffe7d1] to-[#d07a2d] bg-clip-text text-4xl font-semibold tracking-[-0.05em] text-transparent drop-shadow-[0_0_18px_rgba(208,122,45,0.16)] md:text-6xl">
             {t("title")}
           </h1>
 
@@ -567,7 +567,7 @@ export default function AIExperienceSection() {
         </div>
 
         <div ref={resultRef} className="flex flex-col">
-          <div className="relative flex min-h-[640px] flex-1 items-center justify-center overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-5 md:min-h-[760px] md:p-6 xl:min-h-[860px] xl:p-7 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+          <div className="relative flex min-h-[640px] flex-1 items-center justify-center overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] md:min-h-[760px] md:p-6 xl:min-h-[860px] xl:p-7">
             {!generatedImage && !isLoading ? (
               <div className="mx-auto max-w-md text-center">
                 <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-white/[0.05]">
@@ -587,7 +587,9 @@ export default function AIExperienceSection() {
             {isLoading ? (
               <>
                 <div className="flex h-full w-full items-center justify-center">
-                  <div className={`w-full max-w-[760px] ${previewAspectClass} rounded-[1.75rem] bg-white/10`} />
+                  <div
+                    className={`w-full max-w-[760px] ${previewAspectClass} rounded-[1.75rem] bg-white/10`}
+                  />
                 </div>
 
                 <div

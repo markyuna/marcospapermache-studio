@@ -53,7 +53,7 @@ export default async function SculpturesPage({ params }: Props) {
 
                 <div className="mt-4 h-px w-14 bg-white/40 md:mt-5" />
 
-                <h1 className="mt-4 max-w-4xl text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-white md:mt-5 md:text-6xl xl:text-7xl">
+                <h1 className="mt-6 mb-20 max-w-3xl bg-gradient-to-br from-white via-[#ffe7d1] to-[#d07a2d] bg-clip-text text-4xl font-semibold tracking-[-0.05em] text-transparent drop-shadow-[0_0_18px_rgba(208,122,45,0.16)] md:text-6xl">
                   {t("title")}
                 </h1>
               </div>
