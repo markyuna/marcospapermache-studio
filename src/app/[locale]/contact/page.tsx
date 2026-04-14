@@ -71,31 +71,8 @@ export default async function ContactPage({
 
       <Container className="relative z-10">
         <section className="mx-auto max-w-6xl">
-          <div className="flex flex-col gap-8 lg:grid lg:grid-cols-[0.95fr_1.05fr] lg:items-start lg:gap-14">
-            <div className="space-y-6 md:space-y-8">
-              <div className="max-w-2xl">
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-transparent px-4 py-2">
-                  <Sparkles className="h-4 w-4 text-[#ff6a00]" />
-                  <span className="text-[11px] uppercase tracking-[0.28em] text-neutral-300">
-                    {t("badge")}
-                  </span>
-                </div>
-
-                <h1 className="mt-5 max-w-4xl text-3xl font-semibold leading-tight tracking-[-0.04em] text-white sm:text-4xl md:mt-6 md:text-6xl md:leading-[1.02]">
-                  {t("title.line1")}
-                  <span className="block bg-gradient-to-r from-white via-[#f6d7bd] to-[#ff6a00] bg-clip-text text-transparent">
-                    {t("title.line2")}
-                  </span>
-                </h1>
-              </div>
-
-              <div className="pt-1 md:pt-3">
-                <ContactVisual mobile />
-                <ContactVisual />
-              </div>
-            </div>
-
-            <div className="rounded-[2rem] border border-white/10 bg-transparent p-6 shadow-[0_20px_80px_rgba(0,0,0,0.38)] md:p-8">
+          <div className="flex flex-col gap-8 lg:grid lg:grid-cols-[1.05fr_0.95fr] lg:items-start lg:gap-14">
+            <div className="order-1 rounded-[2rem] border border-white/10 bg-transparent p-6 shadow-[0_20px_80px_rgba(0,0,0,0.38)] md:p-8">
               <p className="text-xs uppercase tracking-[0.28em] text-neutral-400">
                 {t("contactCard.eyebrow")}
               </p>
@@ -177,11 +154,34 @@ export default async function ContactPage({
                 </div>
               </div>
             </div>
+
+            <div className="order-2 space-y-6 md:space-y-8">
+              <div className="max-w-2xl">
+                <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-transparent px-4 py-2">
+                  <Sparkles className="h-4 w-4 text-[#ff6a00]" />
+                  <span className="text-[11px] uppercase tracking-[0.28em] text-neutral-300">
+                    {t("badge")}
+                  </span>
+                </div>
+
+                <h1 className="mt-5 max-w-4xl text-3xl font-semibold leading-tight tracking-[-0.04em] text-white sm:text-4xl md:mt-6 md:text-6xl md:leading-[1.02]">
+                  {t("title.line1")}
+                  <span className="block bg-gradient-to-r from-white via-[#f6d7bd] to-[#ff6a00] bg-clip-text text-transparent">
+                    {t("title.line2")}
+                  </span>
+                </h1>
+              </div>
+
+              <div className="pt-1 md:pt-3">
+                <ContactVisual mobile />
+                <ContactVisual />
+              </div>
+            </div>
           </div>
         </section>
 
         <section className="mx-auto mt-16 max-w-6xl md:mt-20">
-          <div className="rounded-[2.2rem] border border-white/10  p-8 shadow-[0_30px_100px_rgba(0,0,0,0.38)] md:p-12">
+          <div className="rounded-[2.2rem] border border-white/10 p-8 shadow-[0_30px_100px_rgba(0,0,0,0.38)] md:p-12">
             <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
               <div>
                 <p className="text-xs uppercase tracking-[0.28em] text-[#c7a98b]">
