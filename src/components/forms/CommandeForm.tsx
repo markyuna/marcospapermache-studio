@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { Sparkles, Trash2 } from "lucide-react";
+import { CheckCircle2, Loader2, Sparkles, Trash2, AlertCircle } from "lucide-react";
 
 type CommandeFormProps = {
   defaultPrompt?: string;
@@ -20,6 +20,7 @@ export default function CommandeForm({
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [message, setMessage] = useState(defaultPrompt);
   const [generatedImage, setGeneratedImage] = useState<string | null>(
@@ -48,11 +49,22 @@ export default function CommandeForm({
     };
   }, [imagePreview]);
 
+  useEffect(() => {
+    if (!showSuccessToast) return;
+
+    const timeout = window.setTimeout(() => {
+      setShowSuccessToast(false);
+    }, 5000);
+
+    return () => window.clearTimeout(timeout);
+  }, [showSuccessToast]);
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
     setSuccess(false);
     setErrorMessage("");
+    setShowSuccessToast(false);
 
     const form = e.currentTarget;
     const formData = new FormData(form);
@@ -95,6 +107,12 @@ export default function CommandeForm({
       setGeneratedImage(null);
       setMessage("");
       setSuccess(true);
+      setShowSuccessToast(true);
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     } catch (error) {
       setErrorMessage(
         error instanceof Error ? error.message : t("errors.generic"),
@@ -151,8 +169,8 @@ export default function CommandeForm({
   if (success) {
     return (
       <div className="rounded-[2rem] border border-[#e8d9ca] bg-[linear-gradient(180deg,#fffdfa_0%,#f8f1e8_100%)] p-10 text-center shadow-[0_20px_60px_rgba(24,21,18,0.06)]">
-        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-[#e7d5c5] bg-white text-2xl shadow-[0_10px_30px_rgba(24,21,18,0.05)]">
-          ✨
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-[#e7d5c5] bg-white text-[#181512] shadow-[0_10px_30px_rgba(24,21,18,0.05)]">
+          <CheckCircle2 className="h-8 w-8" />
         </div>
 
         <h3 className="mt-6 text-3xl font-semibold tracking-[-0.03em] text-[#181512]">
@@ -171,6 +189,20 @@ export default function CommandeForm({
       onSubmit={handleSubmit}
       className="rounded-[2rem] border border-[#e7dbcf] bg-white/80 p-6 shadow-[0_18px_50px_rgba(24,21,18,0.04)] backdrop-blur-sm md:p-8"
     >
+      {showSuccessToast ? (
+        <div className="mb-6 flex items-start gap-3 rounded-[1.2rem] border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800 shadow-[0_10px_30px_rgba(16,185,129,0.08)]">
+          <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0" />
+          <div>
+            <p className="font-medium">
+              {t("success.title")}
+            </p>
+            <p className="mt-1 text-emerald-700/90">
+              {t("success.description")}
+            </p>
+          </div>
+        </div>
+      ) : null}
+
       {generatedImage ? (
         <div className="mb-8 border-b border-[#eee3d8] pb-8">
           <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
@@ -344,8 +376,9 @@ export default function CommandeForm({
       </div>
 
       {errorMessage ? (
-        <div className="mt-6 rounded-[1rem] border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-          {errorMessage}
+        <div className="mt-6 flex items-start gap-3 rounded-[1rem] border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
+          <span>{errorMessage}</span>
         </div>
       ) : null}
 
@@ -353,9 +386,16 @@ export default function CommandeForm({
         <button
           type="submit"
           disabled={loading}
-          className="inline-flex w-full items-center justify-center rounded-full bg-[#181512] px-6 py-3.5 text-sm font-medium text-white transition duration-300 hover:bg-[#2a241f] disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#181512] px-6 py-3.5 text-sm font-medium text-white transition duration-300 hover:bg-[#2a241f] disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {loading ? t("actions.sending") : t("actions.submit")}
+          {loading ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin" />
+              {t("actions.sending")}
+            </>
+          ) : (
+            t("actions.submit")
+          )}
         </button>
       </div>
     </form>
