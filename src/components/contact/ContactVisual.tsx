@@ -25,45 +25,21 @@ export default function ContactVisual({
         <div
           className={
             mobile
-              ? "absolute left-1/2 top-[42%] h-[300px] w-[250px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#f5dcc8]/14 blur-[85px]"
-              : "absolute left-1/2 top-[46%] h-[420px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#f5dcc8]/14 blur-[110px]"
+              ? "absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(245,220,200,0.12),transparent_20%),radial-gradient(circle_at_50%_52%,rgba(255,138,61,0.10),transparent_18%),radial-gradient(circle_at_18%_82%,rgba(244,210,184,0.06),transparent_20%),radial-gradient(circle_at_84%_16%,rgba(255,255,255,0.04),transparent_12%)]"
+              : "absolute inset-0 bg-[radial-gradient(circle_at_50%_44%,rgba(245,220,200,0.12),transparent_22%),radial-gradient(circle_at_50%_54%,rgba(255,138,61,0.10),transparent_18%),radial-gradient(circle_at_16%_82%,rgba(244,210,184,0.06),transparent_22%),radial-gradient(circle_at_86%_18%,rgba(255,255,255,0.04),transparent_12%)]"
           }
         />
 
         <div
           className={
             mobile
-              ? "absolute left-1/2 top-[48%] h-[220px] w-[170px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ff8a3d]/14 blur-[80px]"
-              : "absolute left-1/2 top-[50%] h-[320px] w-[230px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ff8a3d]/14 blur-[100px]"
-          }
-        />
-
-        <div
-          className={
-            mobile
-              ? "absolute bottom-10 left-8 h-[220px] w-[120px] rounded-full bg-[#f4d2b8]/8 blur-[70px]"
-              : "absolute bottom-16 left-16 h-[280px] w-[180px] rounded-full bg-[#f4d2b8]/8 blur-[90px]"
-          }
-        />
-
-        <div
-          className={
-            mobile
-              ? "absolute right-8 top-16 h-[90px] w-[90px] rounded-full bg-white/[0.04] blur-[55px]"
-              : "absolute right-12 top-24 h-[140px] w-[140px] rounded-full bg-white/[0.04] blur-[70px]"
-          }
-        />
-
-        <div
-          className={
-            mobile
-              ? "absolute inset-x-[18%] top-[28%] h-[180px] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.08)_0%,rgba(255,255,255,0.02)_45%,transparent_75%)] blur-[45px]"
-              : "absolute inset-x-[22%] top-[26%] h-[240px] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.08)_0%,rgba(255,255,255,0.02)_45%,transparent_75%)] blur-[55px]"
+              ? "absolute inset-x-[14%] top-[24%] h-[200px] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.07)_0%,rgba(255,255,255,0.018)_45%,transparent_74%)] blur-[48px]"
+              : "absolute inset-x-[18%] top-[22%] h-[260px] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.07)_0%,rgba(255,255,255,0.018)_45%,transparent_74%)] blur-[56px]"
           }
         />
 
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.015),transparent_22%,transparent_78%,rgba(255,255,255,0.015))]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,rgba(0,0,0,0.24)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_34%,rgba(0,0,0,0.28)_100%)]" />
       </div>
 
       <div
@@ -100,68 +76,90 @@ export default function ContactVisual({
           }
         >
           <motion.div
-            initial={{ opacity: 0, y: 24, scale: 0.96 }}
+            initial={{ opacity: 0, y: 24, scale: 0.975 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="relative"
+            className="relative flex items-center justify-center"
           >
-            <motion.div
-              animate={{
-                y: [0, -12, 0],
-                rotate: [0, -1.2, 0.8, 0],
-              }}
-              transition={{
-                duration: 7.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="relative"
+            <div
+              className={
+                mobile
+                  ? "relative flex items-center justify-center [mask-image:radial-gradient(circle_at_center,white_44%,white_58%,rgba(255,255,255,0.82)_70%,transparent_100%)]"
+                  : "relative flex items-center justify-center [mask-image:radial-gradient(circle_at_center,white_46%,white_60%,rgba(255,255,255,0.82)_72%,transparent_100%)]"
+              }
             >
-              <div
+              <motion.div
+                animate={{
+                  x: [0, 4, -3, 0],
+                  y: [0, -10, 0],
+                  opacity: [0.72, 0.9, 0.76, 0.72],
+                  scale: [1, 1.03, 0.99, 1],
+                }}
+                transition={{
+                  duration: 9,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
                 className={
                   mobile
-                    ? "absolute inset-x-6 bottom-2 h-10 rounded-full bg-[#ff6a00]/20 blur-3xl"
-                    : "absolute inset-x-10 bottom-3 h-12 rounded-full bg-[#ff6a00]/20 blur-3xl"
+                    ? "absolute left-1/2 top-1/2 z-[1] h-[250px] w-[190px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(245,214,191,0.14)_0%,rgba(255,138,61,0.08)_40%,rgba(255,255,255,0.025)_64%,transparent_100%)] blur-[22px]"
+                    : "absolute left-1/2 top-1/2 z-[1] h-[420px] w-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(245,214,191,0.14)_0%,rgba(255,138,61,0.08)_40%,rgba(255,255,255,0.025)_64%,transparent_100%)] blur-[28px]"
+                }
+              />
+
+              <motion.div
+                animate={{
+                  x: [0, -2, 2, 0],
+                  y: [0, -6, 0],
+                  opacity: [0.24, 0.34, 0.26, 0.24],
+                }}
+                transition={{
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className={
+                  mobile
+                    ? "absolute left-1/2 top-[45%] z-[2] h-[170px] w-[110px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.05] blur-[62px]"
+                    : "absolute left-1/2 top-[44%] z-[2] h-[240px] w-[150px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.05] blur-[78px]"
                 }
               />
 
               <div
                 className={
                   mobile
-                    ? "absolute left-1/2 top-1/2 z-[1] h-[270px] w-[200px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(245,214,191,0.16)_0%,rgba(255,138,61,0.09)_42%,rgba(255,255,255,0.03)_65%,transparent_100%)] blur-[14px]"
-                    : "absolute left-1/2 top-1/2 z-[1] h-[460px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(245,214,191,0.16)_0%,rgba(255,138,61,0.09)_42%,rgba(255,255,255,0.03)_65%,transparent_100%)] blur-[18px]"
+                    ? "absolute inset-x-8 bottom-4 z-[1] h-10 rounded-full bg-[#ff6a00]/16 blur-3xl"
+                    : "absolute inset-x-12 bottom-5 z-[1] h-14 rounded-full bg-[#ff6a00]/16 blur-3xl"
                 }
               />
 
-              <div
-                className={
-                  mobile
-                    ? "absolute left-1/2 top-1/2 z-[2] h-[245px] w-[185px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/6 bg-white/[0.015] blur-[2px]"
-                    : "absolute left-1/2 top-1/2 z-[2] h-[425px] w-[295px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/6 bg-white/[0.015] blur-[2px]"
-                }
-              />
-
-              <div
-                className={
-                  mobile
-                    ? "absolute left-1/2 top-[46%] z-[3] h-[180px] w-[120px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.05] blur-[55px]"
-                    : "absolute left-1/2 top-[45%] z-[3] h-[250px] w-[170px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.05] blur-[70px]"
-                }
-              />
-
-              <Image
-                src="/contact-sculpture.png"
-                alt={t("imageAlt")}
-                width={680}
-                height={880}
-                priority
-                className={
-                  mobile
-                    ? "relative z-10 h-auto w-[220px] object-contain drop-shadow-[0_30px_70px_rgba(0,0,0,0.72)]"
-                    : "relative z-10 h-auto w-[400px] object-contain drop-shadow-[0_36px_90px_rgba(0,0,0,0.72)] xl:w-[520px]"
-                }
-              />
-            </motion.div>
+              <motion.div
+                animate={{
+                  y: [0, -12, 0],
+                  rotate: [0, -1, 0.8, 0],
+                }}
+                transition={{
+                  duration: 7.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="relative z-10 will-change-transform"
+                style={{ transformOrigin: "50% 55%" }}
+              >
+                <Image
+                  src="/contact-sculpture.png"
+                  alt={t("imageAlt")}
+                  width={680}
+                  height={880}
+                  priority
+                  className={
+                    mobile
+                      ? "relative z-10 h-auto w-[220px] object-contain drop-shadow-[0_30px_70px_rgba(0,0,0,0.72)]"
+                      : "relative z-10 h-auto w-[400px] object-contain drop-shadow-[0_36px_90px_rgba(0,0,0,0.72)] xl:w-[520px]"
+                  }
+                />
+              </motion.div>
+            </div>
           </motion.div>
         </div>
 
