@@ -45,11 +45,31 @@
     "sold": "Vendido"
   },
   "CTA": {
-    "badge": "Experiencia premium",
+    "badge": "EXPERIENCIA PREMIUM",
     "title": "Da forma a una idea y transfórmala en una obra escultórica.",
-    "description": "Inicia la experiencia IA o envía una solicitud de creación a medida pensada para tu espacio.",
+    "description": "Inicia la experiencia con IA o envía una solicitud de creación a medida pensada para tu espacio.",
     "ctaPrimary": "Crear con IA",
-    "ctaSecondary": "Solicitar una pieza a medida"
+    "ctaSecondary": "Solicitar una pieza a medida",
+    "promptCta": "Ver el prompt",
+    "promptHelper": "Ejemplo de visualización generada con IA",
+    "imageBadge": "VISUALIZACIÓN IA",
+    "imageAlt": "Visualización con IA de una escultura en un interior contemporáneo",
+    "floatingCard": {
+      "badge": "INSPIRACIÓN",
+      "description": "Descubre un ejemplo de prompt para imaginar una escultura mural dentro de tu propio universo."
+    },
+    "promptModal": {
+      "badge": "PROMPT DE INSPIRACIÓN",
+      "title": "Un ejemplo de prompt para generar una escultura en este estilo",
+      "description": "Utiliza este prompt como punto de partida y luego adapta las formas, los colores, los materiales o la atmósfera para crear una obra más personal.",
+      "examplePrompt": "Crear una escultura mural contemporánea en papel maché inspirada en formas orgánicas y florales en relieve, integrada en un marco fino de metal negro. La composición debe evocar un movimiento natural, con flores escultóricas, hojas ondulantes, raíces fluidas y volúmenes elegantes que parezcan salir del marco. Paleta refinada de blanco roto, verde vegetal, oro patinado y marrón cálido. Textura artesanal de alta gama, acabado realista, pieza única, estética de galería de arte contemporáneo, luz suave, gran presencia mural, estilo sofisticado y poético.",
+      "copy": "Copiar el prompt",
+      "copySuccess": "Prompt copiado",
+      "createCta": "Crear con IA",
+      "close": "Cerrar",
+      "closeAriaLabel": "Cerrar ventana",
+      "tip": "Consejo: conserva la estructura del prompt y cambia la paleta, el tema o el estilo para obtener resultados más variados."
+    }
   },
   "ProcessSection": {
     "badge": "Proceso",

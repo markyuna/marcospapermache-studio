@@ -45,11 +45,31 @@
     "sold": "Sold"
   },
   "CTA": {
-    "badge": "Premium experience",
-    "title": "Give shape to an idea and transform it into a sculptural work.",
-    "description": "Start the AI experience or send a custom creation request designed for your space.",
+    "badge": "PREMIUM EXPERIENCE",
+    "title": "Shape an idea and transform it into a sculptural artwork.",
+    "description": "Start the AI experience or send a bespoke creation request designed for your space.",
     "ctaPrimary": "Create with AI",
-    "ctaSecondary": "Request a custom piece"
+    "ctaSecondary": "Request a custom piece",
+    "promptCta": "View the prompt",
+    "promptHelper": "Example of an AI-generated visualization",
+    "imageBadge": "AI VISUALIZATION",
+    "imageAlt": "AI visualization of a sculpture in a contemporary interior",
+    "floatingCard": {
+      "badge": "INSPIRATION",
+      "description": "Discover an example prompt to imagine a wall sculpture within your own universe."
+    },
+    "promptModal": {
+      "badge": "INSPIRATION PROMPT",
+      "title": "An example prompt to generate a sculpture in this spirit",
+      "description": "Use this prompt as a starting point, then adapt the shapes, colors, materials, or atmosphere to create a more personal artwork.",
+      "examplePrompt": "Create a contemporary papier-mâché wall sculpture inspired by organic and floral relief forms, integrated into a slim black metal frame. The composition should evoke natural movement, with sculptural flowers, undulating leaves, fluid roots, and elegant volumes that seem to emerge from the frame. Refined palette of off-white, vegetal green, patinated gold, and warm brown. High-end handcrafted texture, realistic finish, one-of-a-kind piece, contemporary art gallery aesthetic, soft lighting, strong wall presence, sophisticated and poetic style.",
+      "copy": "Copy prompt",
+      "copySuccess": "Prompt copied",
+      "createCta": "Create with AI",
+      "close": "Close",
+      "closeAriaLabel": "Close window",
+      "tip": "Tip: keep the prompt structure, then change the palette, subject, or style to get more varied results."
+    }
   },
   "ProcessSection": {
     "badge": "Process",

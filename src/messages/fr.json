@@ -45,12 +45,32 @@
     "sold": "Vendu"
   },
   "CTA": {
-    "badge": "Expérience premium",
-    "title": "Donnez forme à une idée et transformez-la en œuvre sculpturale.",
-    "description": "Lancez l’expérience IA ou envoyez une demande de création sur mesure pensée pour votre espace.",
-    "ctaPrimary": "Créer avec l’IA",
-    "ctaSecondary": "Demander une pièce sur mesure"
+  "badge": "EXPÉRIENCE PREMIUM",
+  "title": "Donnez forme à une idée et transformez-la en œuvre sculpturale.",
+  "description": "Lancez l’expérience IA ou envoyez une demande de création sur mesure pensée pour votre espace.",
+  "ctaPrimary": "Créer avec l’IA",
+  "ctaSecondary": "Demander une pièce sur mesure",
+  "promptCta": "Voir le prompt",
+  "promptHelper": "Exemple de visualisation générée avec l’IA",
+  "imageBadge": "VISUALISATION IA",
+  "imageAlt": "Visualisation IA d’une sculpture dans un intérieur contemporain",
+  "floatingCard": {
+    "badge": "INSPIRATION",
+    "description": "Découvrez un exemple de prompt pour imaginer une sculpture murale dans votre propre univers."
   },
+  "promptModal": {
+    "badge": "PROMPT D’INSPIRATION",
+    "title": "Un exemple de prompt pour générer une sculpture dans cet esprit",
+    "description": "Utilisez ce prompt comme point de départ, puis adaptez les formes, les couleurs, les matériaux ou l’ambiance pour créer une œuvre plus personnelle.",
+    "examplePrompt": "Créer une sculpture murale contemporaine en papier mâché inspirée de formes organiques et florales en relief, intégrée dans un cadre fin en métal noir. La composition doit évoquer un mouvement naturel, avec des fleurs sculpturales, des feuilles ondulantes, des racines fluides et des volumes élégants qui semblent sortir du cadre. Palette raffinée de blanc cassé, vert végétal, or patiné et brun chaud. Texture artisanale haut de gamme, rendu réaliste, pièce unique, esthétique galerie d’art contemporaine, lumière douce, grande présence murale, style sophistiqué et poétique.",
+    "copy": "Copier le prompt",
+    "copySuccess": "Prompt copié",
+    "createCta": "Créer avec l’IA",
+    "close": "Fermer",
+    "closeAriaLabel": "Fermer la fenêtre",
+    "tip": "Conseil : gardez la structure du prompt, puis changez la palette, le sujet ou le style pour obtenir des résultats plus variés."
+  }
+},
   "ProcessSection": {
     "badge": "Processus",
     "title": "De l’idée à la sculpture",
