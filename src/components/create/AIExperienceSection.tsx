@@ -221,6 +221,18 @@ export default function AIExperienceSection() {
     stylePresets,
   ]);
 
+  function scrollToResult(offset = 100) {
+    if (!resultRef.current || typeof window === "undefined") return;
+
+    const top =
+      resultRef.current.getBoundingClientRect().top + window.scrollY - offset;
+
+    window.scrollTo({
+      top,
+      behavior: "smooth",
+    });
+  }
+
   async function handleGenerate() {
     if (!fullPrompt) {
       setError(t("errors.emptyPrompt"));
@@ -231,6 +243,10 @@ export default function AIExperienceSection() {
       setIsLoading(true);
       setError("");
       setGeneratedImage(null);
+
+      requestAnimationFrame(() => {
+        scrollToResult(90);
+      });
 
       const response = await fetch("/api/generate-image", {
         method: "POST",
@@ -258,15 +274,20 @@ export default function AIExperienceSection() {
       setLastPrompt(fullPrompt);
 
       requestAnimationFrame(() => {
-        resultRef.current?.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
+        scrollToResult(90);
       });
+
+      setTimeout(() => {
+        scrollToResult(90);
+      }, 250);
     } catch (err) {
       const message =
         err instanceof Error ? err.message : t("errors.unknown");
       setError(message);
+
+      requestAnimationFrame(() => {
+        scrollToResult(90);
+      });
     } finally {
       setIsLoading(false);
     }
@@ -679,9 +700,7 @@ export default function AIExperienceSection() {
               {t("footer.line1")}
             </p>
 
-            <p className="text-sm leading-7 text-neutral-500">
-              {t("footer.line2")}
-            </p>
+            
           </div>
         </div>
       </div>

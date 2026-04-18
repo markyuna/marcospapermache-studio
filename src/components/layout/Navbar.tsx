@@ -2,7 +2,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
@@ -37,9 +37,12 @@ function getLightboxOpenState() {
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [isLightboxOpen, setIsLightboxOpen] = useState(getLightboxOpenState);
+  const [isHidden, setIsHidden] = useState(false);
 
   const pathname = usePathname();
   const t = useTranslations("Navbar");
+
+  const lastScrollY = useRef(0);
 
   const closeMenu = () => setOpen(false);
   const toggleMenu = () => setOpen((prev) => !prev);
@@ -88,11 +91,55 @@ export default function Navbar() {
     };
   }, [open, isLightboxOpen]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (open || isLightboxOpen) {
+        lastScrollY.current = currentScrollY;
+        return;
+      }
+
+      if (currentScrollY <= 16) {
+        setIsHidden(false);
+        lastScrollY.current = currentScrollY;
+        return;
+      }
+
+      const delta = currentScrollY - lastScrollY.current;
+      const threshold = 8;
+
+      if (Math.abs(delta) < threshold) return;
+
+      if (delta > 0) {
+        setIsHidden(true);
+      } else {
+        setIsHidden(false);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    lastScrollY.current = window.scrollY;
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [open, isLightboxOpen]);
+
+  useEffect(() => {
+    setOpen(false);
+    setIsHidden(false);
+    lastScrollY.current = 0;
+  }, [pathname]);
+
   return (
     <header
       className={clsx(
         "navbar sticky top-0 z-50 w-full border-b border-black/5 bg-white/65 backdrop-blur-xl transition-all duration-500 supports-[backdrop-filter]:bg-white/45",
-        isLightboxOpen
+        isLightboxOpen || isHidden
           ? "pointer-events-none -translate-y-full opacity-0"
           : "translate-y-0 opacity-100"
       )}
@@ -163,6 +210,7 @@ export default function Navbar() {
           type="button"
           onClick={toggleMenu}
           className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-black/10 bg-white/85 text-neutral-900 shadow-sm transition hover:bg-[#f8f1e8] lg:hidden"
+          aria-label={open ? t("closeMenu") : t("openMenu")}
         >
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
