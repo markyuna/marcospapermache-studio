@@ -1,5 +1,7 @@
+// src/app/api/admin/commandes/[id]/status/route.ts
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
+import { requireAdmin } from "@/lib/admin-auth";
 import {
   isCommandeStatus,
   type CommandeStatus,
@@ -13,13 +15,22 @@ type RouteContext = {
 
 export async function PATCH(request: Request, context: RouteContext) {
   try {
+    const auth = await requireAdmin();
+
+    if (!auth.ok) {
+      return NextResponse.json(
+        { error: auth.error },
+        { status: auth.status }
+      );
+    }
+
     const { id } = await context.params;
     const numericId = Number(id);
 
     if (!Number.isInteger(numericId)) {
       return NextResponse.json(
         { error: "ID de commande invalide." },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -29,7 +40,7 @@ export async function PATCH(request: Request, context: RouteContext) {
     if (typeof rawStatus !== "string" || !isCommandeStatus(rawStatus)) {
       return NextResponse.json(
         { error: "Statut invalide." },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -45,7 +56,7 @@ export async function PATCH(request: Request, context: RouteContext) {
     if (error) {
       return NextResponse.json(
         { error: error.message || "Impossible de mettre à jour le statut." },
-        { status: 500 },
+        { status: 500 }
       );
     }
 
@@ -58,7 +69,7 @@ export async function PATCH(request: Request, context: RouteContext) {
 
     return NextResponse.json(
       { error: "Erreur serveur inattendue." },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

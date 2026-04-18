@@ -1,7 +1,8 @@
-//src/app/api/admin/artworks/route.ts
+// src/app/api/admin/artworks/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { supabaseAdmin } from "@/lib/supabase";
+import { requireAdmin } from "@/lib/admin-auth";
 
 function slugify(value: string) {
   return value
@@ -20,6 +21,15 @@ function getString(formData: FormData, key: string) {
 
 export async function POST(request: NextRequest) {
   try {
+    const auth = await requireAdmin();
+
+    if (!auth.ok) {
+      return NextResponse.json(
+        { error: auth.error },
+        { status: auth.status }
+      );
+    }
+
     const formData = await request.formData();
 
     const title = getString(formData, "title");

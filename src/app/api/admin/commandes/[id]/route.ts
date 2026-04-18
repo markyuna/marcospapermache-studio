@@ -1,5 +1,7 @@
+// src/app/api/admin/commandes/[id]/route.ts
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
+import { requireAdmin } from "@/lib/admin-auth";
 
 type RouteContext = {
   params: Promise<{
@@ -9,13 +11,22 @@ type RouteContext = {
 
 export async function DELETE(_request: Request, context: RouteContext) {
   try {
+    const auth = await requireAdmin();
+
+    if (!auth.ok) {
+      return NextResponse.json(
+        { error: auth.error },
+        { status: auth.status }
+      );
+    }
+
     const { id } = await context.params;
     const numericId = Number(id);
 
     if (!Number.isInteger(numericId)) {
       return NextResponse.json(
         { error: "Identifiant invalide." },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -27,7 +38,7 @@ export async function DELETE(_request: Request, context: RouteContext) {
     if (error) {
       return NextResponse.json(
         { error: error.message || "Suppression impossible." },
-        { status: 500 },
+        { status: 500 }
       );
     }
 
@@ -37,7 +48,7 @@ export async function DELETE(_request: Request, context: RouteContext) {
 
     return NextResponse.json(
       { error: "Erreur serveur pendant la suppression." },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

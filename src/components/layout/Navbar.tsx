@@ -1,4 +1,3 @@
-// src/components/layout/Navbar.tsx
 "use client";
 
 import Image from "next/image";
@@ -46,6 +45,12 @@ export default function Navbar() {
 
   const closeMenu = () => setOpen(false);
   const toggleMenu = () => setOpen((prev) => !prev);
+
+  const handleNavigation = () => {
+    setOpen(false);
+    setIsHidden(false);
+    lastScrollY.current = 0;
+  };
 
   const isActiveLink = (href: string) => {
     if (href === "/") return pathname === "/";
@@ -129,12 +134,6 @@ export default function Navbar() {
     };
   }, [open, isLightboxOpen]);
 
-  useEffect(() => {
-    setOpen(false);
-    setIsHidden(false);
-    lastScrollY.current = 0;
-  }, [pathname]);
-
   return (
     <header
       className={clsx(
@@ -147,7 +146,7 @@ export default function Navbar() {
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-5 py-4 sm:px-6 lg:px-8 xl:px-10">
         <Link
           href="/"
-          onClick={closeMenu}
+          onClick={handleNavigation}
           className="group relative flex shrink-0 items-center"
           aria-label="Marcos Papermache"
         >
@@ -176,6 +175,7 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
+                  onClick={handleNavigation}
                   className={clsx(
                     "group relative flex h-[68px] max-w-[180px] items-center justify-center px-4 text-center text-[18px] font-stretch-expanded leading-none tracking-tight transition-all duration-300",
                     link.width,
@@ -235,7 +235,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                onClick={closeMenu}
+                onClick={handleNavigation}
                 className={clsx(
                   "rounded-2xl px-4 py-3 text-[18px] font-medium tracking-[0.06em] transition",
                   isActive

@@ -1,8 +1,8 @@
+// src/components/admin/CommandeStatusSelect.tsx
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
-import { CheckCircle2, Loader2, AlertCircle } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { CheckCircle2, AlertCircle, ChevronDown, Loader2 } from "lucide-react";
 
 import type { CommandeStatus } from "@/lib/commandes-status";
 import {
@@ -21,26 +21,47 @@ export default function CommandeStatusSelect({
   initialStatus,
   onStatusChange,
 }: CommandeStatusSelectProps) {
-  const router = useRouter();
-
   const [status, setStatus] = useState<CommandeStatus>(
     initialStatus ?? "nouvelle",
   );
+  const [isPending, setIsPending] = useState(false);
   const [feedback, setFeedback] = useState<{
     type: "success" | "error";
     message: string;
   } | null>(null);
-  const [isPending, startTransition] = useTransition();
+
+  const feedbackTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     setStatus(initialStatus ?? "nouvelle");
   }, [initialStatus]);
 
+  useEffect(() => {
+    return () => {
+      if (feedbackTimeoutRef.current) {
+        window.clearTimeout(feedbackTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  function showFeedback(type: "success" | "error", message: string) {
+    setFeedback({ type, message });
+
+    if (feedbackTimeoutRef.current) {
+      window.clearTimeout(feedbackTimeoutRef.current);
+    }
+
+    feedbackTimeoutRef.current = window.setTimeout(() => {
+      setFeedback(null);
+    }, 2500);
+  }
+
   async function handleChange(nextStatus: CommandeStatus) {
-    if (nextStatus === status) return;
+    if (nextStatus === status || isPending) return;
 
     const previousStatus = status;
 
+    setIsPending(true);
     setStatus(nextStatus);
     setFeedback(null);
     onStatusChange?.(nextStatus);
@@ -54,31 +75,25 @@ export default function CommandeStatusSelect({
         body: JSON.stringify({ status: nextStatus }),
       });
 
-      const result = await response.json();
+      const result = await response.json().catch(() => null);
 
       if (!response.ok) {
         throw new Error(result?.error || "Impossible de mettre à jour le statut.");
       }
 
-      setFeedback({
-        type: "success",
-        message: "Statut mis à jour avec succès.",
-      });
-
-      startTransition(() => {
-        router.refresh();
-      });
+      showFeedback("success", "Statut mis à jour avec succès.");
     } catch (error) {
       console.error(error);
 
       setStatus(previousStatus);
       onStatusChange?.(previousStatus);
 
-      setFeedback({
-        type: "error",
-        message:
-          error instanceof Error ? error.message : "Une erreur est survenue.",
-      });
+      showFeedback(
+        "error",
+        error instanceof Error ? error.message : "Une erreur est survenue.",
+      );
+    } finally {
+      setIsPending(false);
     }
   }
 
@@ -91,9 +106,14 @@ export default function CommandeStatusSelect({
             handleChange(event.target.value as CommandeStatus)
           }
           disabled={isPending}
-          className={`w-full appearance-none rounded-xl border px-4 py-3 pr-10 text-sm font-medium outline-none transition ${getCommandeStatusClasses(
-            status,
-          )} disabled:cursor-not-allowed disabled:opacity-70`}
+          aria-label="Changer le statut de la commande"
+          className={[
+            "w-full appearance-none rounded-xl border bg-white px-4 py-3 pr-12 text-sm font-medium outline-none transition",
+            "shadow-sm",
+            "focus:ring-4 focus:ring-orange-100",
+            "disabled:cursor-not-allowed disabled:opacity-70",
+            getCommandeStatusClasses(status),
+          ].join(" ")}
         >
           {COMMANDE_STATUS_OPTIONS.map((option) => (
             <option key={option.value} value={option.value}>
@@ -102,10 +122,11 @@ export default function CommandeStatusSelect({
           ))}
         </select>
 
-        <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+        <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center gap-2">
           {isPending ? (
             <Loader2 className="h-4 w-4 animate-spin text-neutral-500" />
           ) : null}
+          <ChevronDown className="h-4 w-4 text-neutral-500" />
         </div>
       </div>
 

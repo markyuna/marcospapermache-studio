@@ -1,7 +1,13 @@
-// src/app/admin/artworks/page.tsx
 import Image from "next/image";
 import Link from "next/link";
 import { supabaseAdmin } from "@/lib/supabase";
+
+type ArtworkImageRow = {
+  artwork_id: number;
+  image_url: string;
+  is_cover: boolean;
+  position: number | null;
+};
 
 type ArtworkImage = {
   image_url: string;
@@ -35,45 +41,101 @@ type Artwork = {
 };
 
 async function getArtworks(): Promise<Artwork[]> {
-  const { data, error } = await supabaseAdmin
-    .from("artworks")
-    .select(`
-      id,
-      title,
-      title_en,
-      title_es,
-      slug,
-      category,
-      category_en,
-      category_es,
-      year,
-      subtitle,
-      subtitle_en,
-      subtitle_es,
-      materials,
-      materials_en,
-      materials_es,
-      availability,
-      availability_en,
-      availability_es,
-      etsy_url,
-      price,
-      is_featured,
-      artwork_images (
+  try {
+    const { data: artworksData, error: artworksError } = await supabaseAdmin
+      .from("artworks")
+      .select(`
+        id,
+        title,
+        title_en,
+        title_es,
+        slug,
+        category,
+        category_en,
+        category_es,
+        year,
+        subtitle,
+        subtitle_en,
+        subtitle_es,
+        materials,
+        materials_en,
+        materials_es,
+        availability,
+        availability_en,
+        availability_es,
+        etsy_url,
+        price,
+        is_featured,
+        created_at
+      `)
+      .order("created_at", { ascending: false });
+
+    if (artworksError) {
+      console.error("Error loading artworks table:", {
+        message: artworksError.message,
+        details: artworksError.details,
+        hint: artworksError.hint,
+        code: artworksError.code,
+      });
+      return [];
+    }
+
+    const artworks = (artworksData ?? []) as Omit<Artwork, "artwork_images">[];
+
+    if (artworks.length === 0) {
+      return [];
+    }
+
+    const artworkIds = artworks.map((artwork) => artwork.id);
+
+    const { data: imagesData, error: imagesError } = await supabaseAdmin
+      .from("artwork_images")
+      .select(`
+        artwork_id,
         image_url,
         is_cover,
         position
-      )
-    `)
-    .order("created_at", { ascending: false });
+      `)
+      .in("artwork_id", artworkIds)
+      .order("position", { ascending: true });
 
-  if (error) {
-    console.error("Error loading artworks:", error);
+    if (imagesError) {
+      console.error("Error loading artwork_images table:", {
+        message: imagesError.message,
+        details: imagesError.details,
+        hint: imagesError.hint,
+        code: imagesError.code,
+      });
+
+      return artworks.map((artwork) => ({
+        ...artwork,
+        artwork_images: [],
+      }));
+    }
+
+    const imagesByArtworkId = new Map<number, ArtworkImage[]>();
+
+    for (const image of (imagesData ?? []) as ArtworkImageRow[]) {
+      const current = imagesByArtworkId.get(image.artwork_id) ?? [];
+      current.push({
+        image_url: image.image_url,
+        is_cover: image.is_cover,
+        position: image.position,
+      });
+      imagesByArtworkId.set(image.artwork_id, current);
+    }
+
+    return artworks.map((artwork) => ({
+      ...artwork,
+      artwork_images: imagesByArtworkId.get(artwork.id) ?? [],
+    }));
+  } catch (error) {
+    console.error("Unexpected error loading artworks:", error);
     return [];
   }
-
-  return (data ?? []) as Artwork[];
 }
+
+export const dynamic = "force-dynamic";
 
 export default async function AdminArtworksPage() {
   const artworks = await getArtworks();
@@ -87,9 +149,9 @@ export default async function AdminArtworksPage() {
               <p className="text-xs uppercase tracking-[0.28em] text-neutral-400">
                 Dashboard
               </p>
-              <h1 className="mt-3 text-3xl font-semibold md:text-4xl">
+              <h2 className="mt-3 text-3xl font-semibold md:text-4xl">
                 Ajouter une œuvre
-              </h1>
+              </h2>
               <p className="mt-3 max-w-xl text-sm leading-6 text-neutral-600">
                 Ajoute une nouvelle œuvre avec ses informations principales,
                 ses contenus multilingues et une ou plusieurs images.
@@ -105,9 +167,9 @@ export default async function AdminArtworksPage() {
               <div className="grid gap-5">
                 <div className="rounded-3xl border border-neutral-200 bg-[#fcfaf7] p-5">
                   <div className="mb-4">
-                    <h2 className="text-base font-semibold text-neutral-900">
+                    <h3 className="text-base font-semibold text-neutral-900">
                       Français
-                    </h2>
+                    </h3>
                     <p className="mt-1 text-sm text-neutral-500">
                       Contenu principal utilisé comme base.
                     </p>
@@ -210,9 +272,9 @@ export default async function AdminArtworksPage() {
 
                 <div className="rounded-3xl border border-neutral-200 bg-[#fcfaf7] p-5">
                   <div className="mb-4">
-                    <h2 className="text-base font-semibold text-neutral-900">
+                    <h3 className="text-base font-semibold text-neutral-900">
                       English
-                    </h2>
+                    </h3>
                     <p className="mt-1 text-sm text-neutral-500">
                       Optional. If empty, French content can be used as fallback.
                     </p>
@@ -314,9 +376,9 @@ export default async function AdminArtworksPage() {
 
                 <div className="rounded-3xl border border-neutral-200 bg-[#fcfaf7] p-5">
                   <div className="mb-4">
-                    <h2 className="text-base font-semibold text-neutral-900">
+                    <h3 className="text-base font-semibold text-neutral-900">
                       Español
-                    </h2>
+                    </h3>
                     <p className="mt-1 text-sm text-neutral-500">
                       Opcional. Si queda vacío, luego puedes usar francés como base.
                     </p>
@@ -574,6 +636,7 @@ export default async function AdminArtworksPage() {
                               alt={artwork.title}
                               fill
                               className="object-cover"
+                              sizes="96px"
                             />
                           ) : (
                             <div className="flex h-full items-center justify-center text-center text-xs text-neutral-400">
@@ -682,6 +745,7 @@ export default async function AdminArtworksPage() {
                           alt={artwork.title}
                           fill
                           className="object-cover transition duration-500 group-hover:scale-[1.02]"
+                          sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
                         />
                       ) : (
                         <div className="flex h-full items-center justify-center text-sm text-neutral-400">

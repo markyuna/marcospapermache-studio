@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { supabaseAdmin } from "@/lib/supabase";
+import { requireAdmin } from "@/lib/admin-auth";
 
 type RouteContext = {
   params: Promise<{
@@ -12,6 +13,15 @@ type RouteContext = {
 
 export async function PATCH(request: NextRequest, context: RouteContext) {
   try {
+    const auth = await requireAdmin();
+
+    if (!auth.ok) {
+      return NextResponse.json(
+        { error: auth.error },
+        { status: auth.status }
+      );
+    }
+
     const { id: artworkId, imageId } = await context.params;
     const body = await request.json();
 
@@ -19,6 +29,20 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
       return NextResponse.json(
         { error: "Action invalide." },
         { status: 400 }
+      );
+    }
+
+    const { data: image, error: imageError } = await supabaseAdmin
+      .from("artwork_images")
+      .select("id, artwork_id")
+      .eq("id", imageId)
+      .eq("artwork_id", artworkId)
+      .single();
+
+    if (imageError || !image) {
+      return NextResponse.json(
+        { error: "Image introuvable pour cette œuvre." },
+        { status: 404 }
       );
     }
 
@@ -64,6 +88,15 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
 
 export async function DELETE(_request: NextRequest, context: RouteContext) {
   try {
+    const auth = await requireAdmin();
+
+    if (!auth.ok) {
+      return NextResponse.json(
+        { error: auth.error },
+        { status: auth.status }
+      );
+    }
+
     const { id: artworkId, imageId } = await context.params;
 
     const { data: image, error: fetchError } = await supabaseAdmin
