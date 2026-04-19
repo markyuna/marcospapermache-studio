@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import { motion } from "framer-motion";
 import {
   CheckCircle2,
   Loader2,
@@ -203,23 +204,50 @@ export default function CommandeForm({
 
   if (success) {
     return (
-      <div
+      <motion.div
         ref={successCardRef}
         tabIndex={-1}
-        className="rounded-[2rem] border border-[#e8d9ca] bg-[linear-gradient(180deg,#fffdfa_0%,#f8f1e8_100%)] p-10 text-center shadow-[0_20px_60px_rgba(24,21,18,0.06)] outline-none"
+        initial={{ opacity: 0, y: 30, scale: 0.96 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{
+          duration: 0.6,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+        className="relative rounded-[2rem] border border-[#e8d9ca] bg-[linear-gradient(180deg,#fffdfa_0%,#f8f1e8_100%)] p-10 text-center shadow-[0_20px_60px_rgba(24,21,18,0.06)] outline-none"
       >
-        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-[#e7d5c5] bg-white text-[#181512] shadow-[0_10px_30px_rgba(24,21,18,0.05)]">
+        {/* ✨ Glow background */}
+        <div className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_center,rgba(207,165,127,0.15),transparent_60%)]" />
+  
+        {/* ✨ Icon */}
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.4 }}
+          className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-[#e7d5c5] bg-white text-[#181512] shadow-[0_10px_30px_rgba(24,21,18,0.05)]"
+        >
           <CheckCircle2 className="h-8 w-8" />
-        </div>
-
-        <h3 className="mt-6 text-3xl font-semibold tracking-[-0.03em] text-[#181512]">
-          {t("success.title")}
-        </h3>
-
-        <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-[#6b5f55]">
+        </motion.div>
+  
+        {/* ✨ Title */}
+        <motion.h3
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="mt-6 text-3xl font-semibold tracking-[-0.03em] text-[#181512]"
+        >
+          {t("success.title")} ✨
+        </motion.h3>
+  
+        {/* ✨ Description */}
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="mx-auto mt-4 max-w-2xl text-base leading-8 text-[#6b5f55]"
+        >
           {t("success.description")}
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
     );
   }
 
