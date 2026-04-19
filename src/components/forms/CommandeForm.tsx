@@ -3,7 +3,13 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { CheckCircle2, Loader2, Sparkles, Trash2, AlertCircle } from "lucide-react";
+import {
+  CheckCircle2,
+  Loader2,
+  Sparkles,
+  Trash2,
+  AlertCircle,
+} from "lucide-react";
 
 type CommandeFormProps = {
   defaultPrompt?: string;
@@ -16,6 +22,7 @@ export default function CommandeForm({
 }: CommandeFormProps) {
   const t = useTranslations("CommandeForm");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const successCardRef = useRef<HTMLDivElement | null>(null);
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -58,6 +65,39 @@ export default function CommandeForm({
 
     return () => window.clearTimeout(timeout);
   }, [showSuccessToast]);
+
+  useEffect(() => {
+    if (!success || !successCardRef.current || typeof window === "undefined") {
+      return;
+    }
+
+    const scrollToSuccessCard = () => {
+      const element = successCardRef.current;
+      if (!element) return;
+
+      const mobileOffset = 24;
+      const desktopOffset = 40;
+      const offset = window.innerWidth < 768 ? mobileOffset : desktopOffset;
+
+      const top =
+        element.getBoundingClientRect().top + window.scrollY - offset;
+
+      window.scrollTo({
+        top,
+        behavior: "smooth",
+      });
+
+      element.focus({ preventScroll: true });
+    };
+
+    const frame = window.requestAnimationFrame(scrollToSuccessCard);
+    const timeout = window.setTimeout(scrollToSuccessCard, 220);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(timeout);
+    };
+  }, [success]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -108,11 +148,6 @@ export default function CommandeForm({
       setMessage("");
       setSuccess(true);
       setShowSuccessToast(true);
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
     } catch (error) {
       setErrorMessage(
         error instanceof Error ? error.message : t("errors.generic"),
@@ -168,7 +203,11 @@ export default function CommandeForm({
 
   if (success) {
     return (
-      <div className="rounded-[2rem] border border-[#e8d9ca] bg-[linear-gradient(180deg,#fffdfa_0%,#f8f1e8_100%)] p-10 text-center shadow-[0_20px_60px_rgba(24,21,18,0.06)]">
+      <div
+        ref={successCardRef}
+        tabIndex={-1}
+        className="rounded-[2rem] border border-[#e8d9ca] bg-[linear-gradient(180deg,#fffdfa_0%,#f8f1e8_100%)] p-10 text-center shadow-[0_20px_60px_rgba(24,21,18,0.06)] outline-none"
+      >
         <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-[#e7d5c5] bg-white text-[#181512] shadow-[0_10px_30px_rgba(24,21,18,0.05)]">
           <CheckCircle2 className="h-8 w-8" />
         </div>
@@ -193,9 +232,7 @@ export default function CommandeForm({
         <div className="mb-6 flex items-start gap-3 rounded-[1.2rem] border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800 shadow-[0_10px_30px_rgba(16,185,129,0.08)]">
           <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0" />
           <div>
-            <p className="font-medium">
-              {t("success.title")}
-            </p>
+            <p className="font-medium">{t("success.title")}</p>
             <p className="mt-1 text-emerald-700/90">
               {t("success.description")}
             </p>
