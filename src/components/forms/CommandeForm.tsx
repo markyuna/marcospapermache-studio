@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import {
@@ -15,6 +15,17 @@ import {
 type CommandeFormProps = {
   defaultPrompt?: string;
   defaultImage?: string;
+};
+
+type ConfettiPiece = {
+  id: number;
+  left: string;
+  width: number;
+  height: number;
+  rotate: number;
+  duration: number;
+  delay: number;
+  opacity: number;
 };
 
 export default function CommandeForm({
@@ -99,6 +110,84 @@ export default function CommandeForm({
       window.clearTimeout(timeout);
     };
   }, [success]);
+
+  useEffect(() => {
+    if (!success || typeof window === "undefined") return;
+
+    playSuccessSound();
+
+    if ("vibrate" in navigator) {
+      navigator.vibrate?.([80, 40, 120]);
+    }
+  }, [success]);
+
+  const confettiPieces = useMemo<ConfettiPiece[]>(
+    () =>
+      Array.from({ length: 18 }, (_, index) => ({
+        id: index,
+        left: `${6 + index * 5.2}%`,
+        width: index % 3 === 0 ? 8 : 6,
+        height: index % 2 === 0 ? 18 : 14,
+        rotate: (index % 2 === 0 ? 1 : -1) * (12 + index * 7),
+        duration: 1.8 + (index % 5) * 0.18,
+        delay: index * 0.035,
+        opacity: 0.55 + (index % 4) * 0.08,
+      })),
+    [],
+  );
+
+  function playSuccessSound() {
+    try {
+      const AudioContextClass =
+        window.AudioContext ||
+        // @ts-expect-error Safari legacy support
+        window.webkitAudioContext;
+
+      if (!AudioContextClass) return;
+
+      const audioContext = new AudioContextClass();
+      const now = audioContext.currentTime;
+
+      const masterGain = audioContext.createGain();
+      masterGain.gain.setValueAtTime(0.0001, now);
+      masterGain.connect(audioContext.destination);
+
+      const osc1 = audioContext.createOscillator();
+      const osc2 = audioContext.createOscillator();
+      const osc3 = audioContext.createOscillator();
+
+      osc1.type = "sine";
+      osc2.type = "triangle";
+      osc3.type = "sine";
+
+      osc1.frequency.setValueAtTime(740, now);
+      osc2.frequency.setValueAtTime(1110, now + 0.06);
+      osc3.frequency.setValueAtTime(1480, now + 0.12);
+
+      masterGain.gain.exponentialRampToValueAtTime(0.035, now + 0.03);
+      masterGain.gain.exponentialRampToValueAtTime(0.02, now + 0.16);
+      masterGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.55);
+
+      osc1.connect(masterGain);
+      osc2.connect(masterGain);
+      osc3.connect(masterGain);
+
+      osc1.start(now);
+      osc1.stop(now + 0.18);
+
+      osc2.start(now + 0.07);
+      osc2.stop(now + 0.28);
+
+      osc3.start(now + 0.14);
+      osc3.stop(now + 0.42);
+
+      window.setTimeout(() => {
+        void audioContext.close();
+      }, 900);
+    } catch {
+      // ignore audio failures silently
+    }
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -207,43 +296,82 @@ export default function CommandeForm({
       <motion.div
         ref={successCardRef}
         tabIndex={-1}
-        initial={{ opacity: 0, y: 30, scale: 0.96 }}
+        initial={{ opacity: 0, y: 30, scale: 0.965 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{
-          duration: 0.6,
-          ease: [0.22, 1, 0.36, 1],
-        }}
-        className="relative rounded-[2rem] border border-[#e8d9ca] bg-[linear-gradient(180deg,#fffdfa_0%,#f8f1e8_100%)] p-10 text-center shadow-[0_20px_60px_rgba(24,21,18,0.06)] outline-none"
+        transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+        className="relative overflow-hidden rounded-[2rem] border border-[#e8d9ca] bg-[linear-gradient(180deg,#fffdfa_0%,#f8f1e8_100%)] p-10 text-center shadow-[0_20px_60px_rgba(24,21,18,0.06)] outline-none"
       >
-        {/* ✨ Glow background */}
-        <div className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_center,rgba(207,165,127,0.15),transparent_60%)]" />
-  
-        {/* ✨ Icon */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.9 }}
+          className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_center,rgba(207,165,127,0.16),transparent_58%)]"
+        />
+
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-28 overflow-hidden">
+          {confettiPieces.map((piece) => (
+            <motion.span
+              key={piece.id}
+              initial={{ y: -30, opacity: 0, rotate: 0 }}
+              animate={{
+                y: 180,
+                opacity: [0, piece.opacity, piece.opacity, 0],
+                rotate: piece.rotate,
+              }}
+              transition={{
+                duration: piece.duration,
+                delay: piece.delay,
+                ease: "easeOut",
+              }}
+              className="absolute top-0 rounded-full"
+              style={{
+                left: piece.left,
+                width: piece.width,
+                height: piece.height,
+                background:
+                  piece.id % 3 === 0
+                    ? "rgba(207,165,127,0.95)"
+                    : piece.id % 3 === 1
+                      ? "rgba(255,255,255,0.9)"
+                      : "rgba(232,217,202,0.95)",
+                boxShadow: "0 4px 12px rgba(24,21,18,0.08)",
+              }}
+            />
+          ))}
+        </div>
+
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.4 }}
-          className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-[#e7d5c5] bg-white text-[#181512] shadow-[0_10px_30px_rgba(24,21,18,0.05)]"
+          animate={{
+            scale: [0.86, 1.04, 1],
+            opacity: 1,
+          }}
+          transition={{ delay: 0.14, duration: 0.55 }}
+          className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-[#e7d5c5] bg-white text-[#181512] shadow-[0_10px_30px_rgba(24,21,18,0.05)]"
         >
-          <CheckCircle2 className="h-8 w-8" />
+          <motion.div
+            initial={{ opacity: 0.4, scale: 0.9 }}
+            animate={{ opacity: [0.35, 0.7, 0.35], scale: [1, 1.08, 1] }}
+            transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute inset-0 rounded-full border border-[#e6d4c3]"
+          />
+          <CheckCircle2 className="relative z-10 h-8 w-8" />
         </motion.div>
-  
-        {/* ✨ Title */}
+
         <motion.h3
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="mt-6 text-3xl font-semibold tracking-[-0.03em] text-[#181512]"
+          transition={{ delay: 0.22, duration: 0.45 }}
+          className="relative mt-6 text-3xl font-semibold tracking-[-0.03em] text-[#181512]"
         >
           {t("success.title")} ✨
         </motion.h3>
-  
-        {/* ✨ Description */}
+
         <motion.p
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="mx-auto mt-4 max-w-2xl text-base leading-8 text-[#6b5f55]"
+          transition={{ delay: 0.32, duration: 0.45 }}
+          className="relative mx-auto mt-4 max-w-2xl text-base leading-8 text-[#6b5f55]"
         >
           {t("success.description")}
         </motion.p>
