@@ -308,16 +308,13 @@
   "badge": "Création assistée par IA",
   "title": "Imaginez votre sculpture avant de lui donner vie.",
   "description": "Décrivez votre idée, choisissez un type de création, définissez un style, les couleurs et les options de présentation, puis générez un concept visuel avant de le transformer en sculpture sur mesure.",
-
   "promptEnrichedTitle": "Prompt enrichi",
   "promptEnrichedSuffix": "Style souhaité :",
-
   "creationTypes": {
     "wall": "Sculpture murale",
     "object": "Sculpture objet",
     "light": "Sculpture lumineuse"
   },
-
   "sizes": {
     "wall": {
       "small": "30 × 40 cm",
@@ -330,107 +327,99 @@
       "large": "Grand format"
     }
   },
-
   "frameColors": {
     "black": "Noir",
     "white": "Blanc",
     "gold": "Doré"
   },
-
   "frameMaterials": {
     "metal": "Métal",
     "wood": "Bois"
   },
-
   "objectUsage": {
     "table": "Table / console",
     "shelf": "Étagère",
     "floor": "Sol"
   },
-
   "objectFinish": {
     "matte": "Mat",
     "glossy": "Brillant",
     "metallic": "Métallique"
   },
-
   "lightTypes": {
     "tableLamp": "Lampe de table",
     "wallLight": "Applique murale",
     "ceilingLight": "Suspension / plafonnier",
     "lightSculpture": "Sculpture lumineuse"
   },
-
   "lightTemperature": {
     "warm": "Lumière chaude",
     "neutral": "Lumière neutre",
     "cool": "Lumière froide"
   },
-
   "lightIntensity": {
     "subtle": "Subtile",
     "medium": "Moyenne",
     "strong": "Forte"
   },
-
-  "colorPalettes": {
-    "neutral": "Neutre",
-    "blackGold": "Noir & doré",
-    "earthy": "Terreux",
-    "whiteBeige": "Blanc & beige",
-    "blueGreen": "Bleu & vert",
-    "multicolor": "Multicolore"
+  "colors": {
+    "black": "Noir",
+    "white": "Blanc",
+    "beige": "Beige",
+    "gold": "Doré",
+    "blue": "Bleu",
+    "green": "Vert",
+    "yellow": "Jaune",
+    "red": "Rouge",
+    "orange": "Orange",
+    "brown": "Brun",
+    "multicolor": "Multicolore",
+    "gradient": "Dégradé"
   },
-
   "form": {
     "label": "Décrivez votre idée",
     "placeholder": "Ex. Une sculpture contemporaine en papier mâché inspirée par les vagues, avec une présence élégante, une palette beige et dorée, et une finition artisanale raffinée.",
-
     "creationTypeLabel": "Type de création",
     "styleLabel": "Direction artistique",
     "paletteLabel": "Palette de couleurs",
-
+    "paletteHelpGradientAvailable": "Sélection multiple autorisée. Le dégradé est maintenant disponible.",
+    "paletteHelpGradientLocked": "Sélection multiple autorisée. Le dégradé apparaît à partir de 2 couleurs sélectionnées.",
+    "selectedColors": "Couleurs sélectionnées :",
     "sizeLabel": "Taille de l’œuvre",
     "optionsLabel": "Présentation de l’œuvre",
-
     "withFrame": "Cadre artistique ouvert",
     "withFrameDescription": "Intégration dans un cadre fin et ouvert, où la sculpture interagit avec la structure sans être enfermée.",
-
     "frameColor": "Couleur du cadre",
     "frameMaterial": "Matériau du cadre",
-
     "objectSizeLabel": "Taille de l’objet",
     "objectUsageLabel": "Usage",
     "objectFinishLabel": "Finition",
-
     "lightTypeLabel": "Type de luminaire",
     "lightTemperatureLabel": "Température de lumière",
     "lightIntensityLabel": "Intensité lumineuse"
   },
-
   "styles": {
-  "organic": {
-    "label": "Organique",
-    "prompt": "sculpture contemporaine en papier mâché, formes organiques fluides et harmonieuses, volumes sculpturaux inspirés de la nature, texture artisanale raffinée, présence élégante et sensible, esthétique haut de gamme"
+    "organic": {
+      "label": "Organique",
+      "prompt": "sculpture contemporaine en papier mâché, formes organiques fluides et harmonieuses, volumes sculpturaux inspirés de la nature, texture artisanale raffinée, présence élégante et sensible, esthétique haut de gamme"
+    },
+    "minimal": {
+      "label": "Minimal",
+      "prompt": "sculpture contemporaine en papier mâché, lignes pures et maîtrisées, composition minimaliste sophistiquée, volumes équilibrés, sobriété élégante, texture artisanale subtile, esthétique contemporaine premium"
+    },
+    "oceanic": {
+      "label": "Océanique",
+      "prompt": "sculpture contemporaine en papier mâché, formes inspirées de l’océan et du mouvement des vagues, relief fluide et poétique, profondeur organique, texture artisanale délicate, atmosphère apaisante et élégante"
+    },
+    "luminous": {
+      "label": "Lumineux",
+      "prompt": "sculpture contemporaine en papier mâché, présence lumineuse douce et raffinée, volumes sculpturaux inspirés par la lumière, relief subtil, texture artisanale élégante, ambiance sophistiquée et atmosphérique"
+    },
+    "origami": {
+      "label": "Origami",
+      "prompt": "sculpture contemporaine en papier mâché inspirée de l’origami, plis géométriques précis, facettes nettes et sculpturales, construction structurée, élégance graphique, texture artisanale haut de gamme"
+    }
   },
-  "minimal": {
-    "label": "Minimal",
-    "prompt": "sculpture contemporaine en papier mâché, lignes pures et maîtrisées, composition minimaliste sophistiquée, volumes équilibrés, sobriété élégante, texture artisanale subtile, esthétique contemporaine premium"
-  },
-  "oceanic": {
-    "label": "Océanique",
-    "prompt": "sculpture contemporaine en papier mâché, formes inspirées de l’océan et du mouvement des vagues, relief fluide et poétique, profondeur organique, texture artisanale délicate, atmosphère apaisante et élégante"
-  },
-  "luminous": {
-    "label": "Lumineux",
-    "prompt": "sculpture contemporaine en papier mâché, présence lumineuse douce et raffinée, volumes sculpturaux inspirés par la lumière, relief subtil, texture artisanale élégante, ambiance sophistiquée et atmosphérique"
-  },
-  "origami": {
-    "label": "Origami",
-    "prompt": "sculpture contemporaine en papier mâché inspirée de l’origami, plis géométriques précis, facettes nettes et sculpturales, construction structurée, élégance graphique, texture artisanale haut de gamme"
-  }
-},
-
   "buttons": {
     "generate": "Générer une image",
     "generating": "Génération...",
@@ -438,25 +427,21 @@
     "regenerate": "Régénérer",
     "order": "Donner vie à cette sculpture"
   },
-
   "result": {
     "emptyTitle": "Votre concept apparaîtra ici",
     "emptyDescription": "Générez une première vision de votre future sculpture puis affinez-la avant de lui donner vie dans l’atelier.",
     "generatedTitle": "Concept généré",
     "imageAlt": "Concept de sculpture généré par IA"
   },
-
   "footer": {
     "line1": "Chaque concept généré sert de base visuelle. La sculpture finale est ensuite réalisée à la main en atelier, avec une approche artisanale, sensible et entièrement sur mesure."
   },
-
   "errors": {
     "emptyPrompt": "Décrivez d’abord votre idée pour générer une image.",
     "generationFailed": "Erreur lors de la génération.",
     "noImageReturned": "Aucune image n’a été retournée.",
     "unknown": "Une erreur inconnue s’est produite."
   },
-
   "loading": {
     "title": "Création de votre image en cours",
     "description": "Cela peut prendre quelques instants. Merci de patienter jusqu’à la fin de la génération afin d’éviter toute interruption.",

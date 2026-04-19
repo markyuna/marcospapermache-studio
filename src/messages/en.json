@@ -307,17 +307,14 @@
 "AIExperience": {
   "badge": "AI-assisted creation",
   "title": "Imagine your sculpture before bringing it to life.",
-  "description": "Describe your idea, choose a creation type, define a style, colors, and presentation options, then generate a visual concept before turning it into a bespoke sculpture.",
-
-  "promptEnrichedTitle": "Enriched prompt",
+  "description": "Describe your idea, choose a type of creation, define a style, colors, and presentation options, then generate a visual concept before transforming it into a custom sculpture.",
+  "promptEnrichedTitle": "Enhanced prompt",
   "promptEnrichedSuffix": "Desired style:",
-
   "creationTypes": {
     "wall": "Wall sculpture",
-    "object": "Decorative object",
+    "object": "Object sculpture",
     "light": "Luminous sculpture"
   },
-
   "sizes": {
     "wall": {
       "small": "30 × 40 cm",
@@ -330,133 +327,121 @@
       "large": "Large format"
     }
   },
-
   "frameColors": {
     "black": "Black",
     "white": "White",
     "gold": "Gold"
   },
-
   "frameMaterials": {
     "metal": "Metal",
     "wood": "Wood"
   },
-
   "objectUsage": {
     "table": "Table / console",
     "shelf": "Shelf",
     "floor": "Floor"
   },
-
   "objectFinish": {
     "matte": "Matte",
     "glossy": "Glossy",
     "metallic": "Metallic"
   },
-
   "lightTypes": {
     "tableLamp": "Table lamp",
-    "wallLight": "Wall sconce",
+    "wallLight": "Wall light",
     "ceilingLight": "Pendant / ceiling light",
-    "lightSculpture": "Light sculpture"
+    "lightSculpture": "Luminous sculpture"
   },
-
   "lightTemperature": {
     "warm": "Warm light",
     "neutral": "Neutral light",
     "cool": "Cool light"
   },
-
   "lightIntensity": {
     "subtle": "Subtle",
     "medium": "Medium",
     "strong": "Strong"
   },
-
-  "colorPalettes": {
-    "neutral": "Neutral",
-    "blackGold": "Black & gold",
-    "earthy": "Earthy",
-    "whiteBeige": "White & beige",
-    "blueGreen": "Blue & green",
-    "multicolor": "Multicolor"
+  "colors": {
+    "black": "Black",
+    "white": "White",
+    "beige": "Beige",
+    "gold": "Gold",
+    "blue": "Blue",
+    "green": "Green",
+    "yellow": "Yellow",
+    "red": "Red",
+    "orange": "Orange",
+    "brown": "Brown",
+    "multicolor": "Multicolor",
+    "gradient": "Gradient"
   },
-
   "form": {
     "label": "Describe your idea",
-    "placeholder": "E.g. A contemporary papier-mâché sculpture inspired by ocean waves, with an elegant presence, a beige and gold palette, and a refined handcrafted finish.",
-
-    "creationTypeLabel": "Creation type",
-    "styleLabel": "Art direction",
+    "placeholder": "E.g. A contemporary papier-mâché sculpture inspired by waves, with an elegant presence, a beige and gold palette, and a refined handcrafted finish.",
+    "creationTypeLabel": "Type of creation",
+    "styleLabel": "Artistic direction",
     "paletteLabel": "Color palette",
-
+    "paletteHelpGradientAvailable": "Multiple selection allowed. Gradient is now available.",
+    "paletteHelpGradientLocked": "Multiple selection allowed. Gradient appears once 2 colors are selected.",
+    "selectedColors": "Selected colors:",
     "sizeLabel": "Artwork size",
     "optionsLabel": "Artwork presentation",
-
     "withFrame": "Open artistic frame",
-    "withFrameDescription": "Integrated into a thin open frame, where the sculpture interacts with the structure without being enclosed.",
-
+    "withFrameDescription": "Integrated into a slim open frame, where the sculpture interacts with the structure without being enclosed.",
     "frameColor": "Frame color",
     "frameMaterial": "Frame material",
-
     "objectSizeLabel": "Object size",
     "objectUsageLabel": "Usage",
     "objectFinishLabel": "Finish",
-
-    "lightTypeLabel": "Lighting type",
+    "lightTypeLabel": "Light type",
     "lightTemperatureLabel": "Light temperature",
     "lightIntensityLabel": "Light intensity"
   },
-
   "styles": {
-  "organic": {
-    "label": "Organic",
-    "prompt": "contemporary papier-mâché sculpture, fluid and harmonious organic forms, sculptural volumes inspired by nature, refined handcrafted texture, elegant and sensitive presence, high-end artistic aesthetic"
+    "organic": {
+      "label": "Organic",
+      "prompt": "contemporary papier-mâché sculpture, fluid and harmonious organic forms, sculptural volumes inspired by nature, refined handcrafted texture, elegant and sensitive presence, high-end aesthetic"
+    },
+    "minimal": {
+      "label": "Minimal",
+      "prompt": "contemporary papier-mâché sculpture, pure and controlled lines, sophisticated minimalist composition, balanced volumes, elegant restraint, subtle handcrafted texture, premium contemporary aesthetic"
+    },
+    "oceanic": {
+      "label": "Oceanic",
+      "prompt": "contemporary papier-mâché sculpture, forms inspired by the ocean and the movement of waves, fluid and poetic relief, organic depth, delicate handcrafted texture, soothing and elegant atmosphere"
+    },
+    "luminous": {
+      "label": "Luminous",
+      "prompt": "contemporary papier-mâché sculpture, soft and refined luminous presence, sculptural volumes inspired by light, subtle relief, elegant handcrafted texture, sophisticated and atmospheric ambiance"
+    },
+    "origami": {
+      "label": "Origami",
+      "prompt": "contemporary papier-mâché sculpture inspired by origami, precise geometric folds, crisp sculptural facets, structured construction, graphic elegance, premium handcrafted texture"
+    }
   },
-  "minimal": {
-    "label": "Minimal",
-    "prompt": "contemporary papier-mâché sculpture, clean and controlled lines, sophisticated minimalist composition, balanced volumes, understated elegance, subtle handcrafted texture, premium contemporary aesthetic"
-  },
-  "oceanic": {
-    "label": "Oceanic",
-    "prompt": "contemporary papier-mâché sculpture, forms inspired by the ocean and the movement of waves, fluid and poetic relief, organic depth, delicate handcrafted texture, calming and elegant atmosphere"
-  },
-  "luminous": {
-    "label": "Luminous",
-    "prompt": "contemporary papier-mâché sculpture, soft and refined luminous presence, sculptural volumes inspired by light, subtle relief, elegant handcrafted texture, sophisticated atmospheric mood"
-  },
-  "origami": {
-    "label": "Origami",
-    "prompt": "contemporary papier-mâché sculpture inspired by origami, precise geometric folds, crisp sculptural facets, structured construction, graphic elegance, high-end handcrafted texture"
-  }
-},
-
   "buttons": {
-    "generate": "Generate image",
+    "generate": "Generate an image",
     "generating": "Generating...",
     "reset": "Reset",
     "regenerate": "Regenerate",
     "order": "Bring this sculpture to life"
   },
-
   "result": {
     "emptyTitle": "Your concept will appear here",
-    "emptyDescription": "Generate a first visual direction for your future sculpture, then refine it before bringing it to life in the studio.",
+    "emptyDescription": "Generate a first vision of your future sculpture, then refine it before bringing it to life in the studio.",
     "generatedTitle": "Generated concept",
     "imageAlt": "AI-generated sculpture concept"
   },
-
   "footer": {
-    "line1": "Each generated concept serves as a visual foundation. The final sculpture is then handcrafted in the studio through a sensitive, artisanal, and fully bespoke process."
+    "line1": "Each generated concept serves as a visual foundation. The final sculpture is then handmade in the studio, with a sensitive, artisanal, and fully bespoke approach."
   },
-
   "errors": {
-    "emptyPrompt": "Please describe your idea first to generate an image.",
-    "generationFailed": "An error occurred during generation.",
+    "emptyPrompt": "First describe your idea to generate an image.",
+    "generationFailed": "Error during generation.",
     "noImageReturned": "No image was returned.",
     "unknown": "An unknown error occurred."
   },
-
   "loading": {
     "title": "Creating your image",
     "description": "This may take a few moments. Please wait until the generation is complete to avoid any interruption.",

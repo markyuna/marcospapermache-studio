@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   AlertCircle,
   ArrowRight,
@@ -48,13 +48,19 @@ type ObjectFinish = "matte" | "glossy" | "metallic";
 
 type LightType = "tableLamp" | "wallLight" | "ceilingLight" | "lightSculpture";
 
-type ColorPalette =
-  | "neutral"
-  | "blackGold"
-  | "earthy"
-  | "whiteBeige"
-  | "blueGreen"
-  | "multicolor";
+type ColorOption =
+  | "black"
+  | "white"
+  | "beige"
+  | "gold"
+  | "blue"
+  | "green"
+  | "yellow"
+  | "red"
+  | "orange"
+  | "brown"
+  | "multicolor"
+  | "gradient";
 
 type StylePresetId =
   | "organic"
@@ -270,7 +276,8 @@ export default function AIExperienceSection() {
     {
       id: "neutral",
       label: t("lightTemperature.neutral"),
-      prompt: "neutral light, balanced illumination, elegant and natural atmosphere",
+      prompt:
+        "neutral light, balanced illumination, elegant and natural atmosphere",
     },
     {
       id: "cool",
@@ -283,7 +290,8 @@ export default function AIExperienceSection() {
     {
       id: "subtle",
       label: t("lightIntensity.subtle"),
-      prompt: "subtle light intensity, soft atmospheric glow, discreet illumination",
+      prompt:
+        "subtle light intensity, soft atmospheric glow, discreet illumination",
     },
     {
       id: "medium",
@@ -299,41 +307,59 @@ export default function AIExperienceSection() {
     },
   ] as const;
 
-  const colorPalettes: readonly SelectOption<ColorPalette>[] = [
+  const colorOptions: readonly SelectOption<ColorOption>[] = [
+    { id: "black", label: t("colors.black"), prompt: "black color accents" },
+    { id: "white", label: t("colors.white"), prompt: "white tones" },
     {
-      id: "neutral",
-      label: t("colorPalettes.neutral"),
-      prompt: "neutral palette, off-white, beige, soft grey, refined understated tones",
+      id: "beige",
+      label: t("colors.beige"),
+      prompt: "beige tones, soft neutral warmth",
     },
     {
-      id: "blackGold",
-      label: t("colorPalettes.blackGold"),
-      prompt:
-        "black and gold palette, elegant contrast, sophisticated contemporary luxury accents",
+      id: "gold",
+      label: t("colors.gold"),
+      prompt: "gold accents, refined metallic highlights",
     },
     {
-      id: "earthy",
-      label: t("colorPalettes.earthy"),
-      prompt:
-        "earthy palette, clay, terracotta, sand, warm brown, organic natural tones",
+      id: "blue",
+      label: t("colors.blue"),
+      prompt: "blue tones, deep or soft variations",
     },
     {
-      id: "whiteBeige",
-      label: t("colorPalettes.whiteBeige"),
-      prompt:
-        "white and beige palette, soft luminous tones, calm elegant atmosphere",
+      id: "green",
+      label: t("colors.green"),
+      prompt: "green tones, natural organic feel",
     },
     {
-      id: "blueGreen",
-      label: t("colorPalettes.blueGreen"),
-      prompt:
-        "blue and green palette, aquatic nuances, fresh poetic tones, artistic depth",
+      id: "yellow",
+      label: t("colors.yellow"),
+      prompt: "yellow accents, warm luminous tones",
+    },
+    {
+      id: "red",
+      label: t("colors.red"),
+      prompt: "red accents, expressive artistic tone",
+    },
+    {
+      id: "orange",
+      label: t("colors.orange"),
+      prompt: "orange tones, warm vibrant energy",
+    },
+    {
+      id: "brown",
+      label: t("colors.brown"),
+      prompt: "brown tones, earthy material feel",
     },
     {
       id: "multicolor",
-      label: t("colorPalettes.multicolor"),
+      label: t("colors.multicolor"),
+      prompt: "rich multicolor composition, expressive handcrafted palette",
+    },
+    {
+      id: "gradient",
+      label: t("colors.gradient"),
       prompt:
-        "artistic multicolor palette, expressive chromatic accents, vibrant handcrafted finish",
+        "smooth gradient transitions between the selected colors, elegant blended tones across the sculpture",
     },
   ] as const;
 
@@ -362,8 +388,7 @@ export default function AIExperienceSection() {
   const [selectedLightIntensity, setSelectedLightIntensity] =
     useState<LightingIntensity>("medium");
 
-  const [selectedPalette, setSelectedPalette] =
-    useState<ColorPalette>("neutral");
+  const [selectedColors, setSelectedColors] = useState<ColorOption[]>([]);
 
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [lastPrompt, setLastPrompt] = useState("");
@@ -407,9 +432,36 @@ export default function AIExperienceSection() {
     return "aspect-square";
   }, [creationType, selectedWallSize, selectedLightType]);
 
+  const nonGradientSelectedColors = useMemo(
+    () => selectedColors.filter((color) => color !== "gradient"),
+    [selectedColors],
+  );
+
+  const canShowGradientOption = nonGradientSelectedColors.length >= 2;
+
+  const visibleColorOptions = useMemo(() => {
+    return colorOptions.filter(
+      (option) => option.id !== "gradient" || canShowGradientOption,
+    );
+  }, [colorOptions, canShowGradientOption]);
+
+  useEffect(() => {
+    if (!canShowGradientOption && selectedColors.includes("gradient")) {
+      setSelectedColors((current) => current.filter((item) => item !== "gradient"));
+    }
+  }, [canShowGradientOption, selectedColors]);
+
+  const selectedColorLabels = useMemo(() => {
+    return colorOptions
+      .filter((color) => selectedColors.includes(color.id))
+      .map((color) => color.label);
+  }, [colorOptions, selectedColors]);
+
   const fullPrompt = useMemo(() => {
     const preset = stylePresets.find((item) => item.id === selectedStyle);
-    const palette = colorPalettes.find((item) => item.id === selectedPalette);
+    const colors = colorOptions.filter((item) => selectedColors.includes(item.id));
+    const hasGradient = selectedColors.includes("gradient");
+    const baseSelectedColors = colors.filter((color) => color.id !== "gradient");
 
     let basePrompt = "";
 
@@ -423,8 +475,22 @@ export default function AIExperienceSection() {
 
     if (!basePrompt) return "";
 
-    if (palette) {
-      basePrompt += `, ${palette.prompt}`;
+    if (baseSelectedColors.length > 0) {
+      const colorPrompts = baseSelectedColors.map((color) => color.prompt).join(", ");
+      basePrompt += `, ${colorPrompts}`;
+
+      if (baseSelectedColors.length > 1) {
+        basePrompt +=
+          ", harmonious combination of the selected colors, balanced artistic composition";
+      }
+    }
+
+    if (hasGradient && baseSelectedColors.length >= 2) {
+      const gradientOption = colorOptions.find((item) => item.id === "gradient");
+
+      if (gradientOption) {
+        basePrompt += `, ${gradientOption.prompt}`;
+      }
     }
 
     if (creationType === "wall") {
@@ -536,7 +602,7 @@ export default function AIExperienceSection() {
 
     return basePrompt;
   }, [
-    colorPalettes,
+    colorOptions,
     creationType,
     frameColor,
     frameMaterial,
@@ -544,13 +610,13 @@ export default function AIExperienceSection() {
     objectSizeOptions,
     objectUsages,
     prompt,
+    selectedColors,
     selectedLightIntensity,
     selectedLightTemperature,
     selectedLightType,
     selectedObjectFinish,
     selectedObjectSize,
     selectedObjectUsage,
-    selectedPalette,
     selectedStyle,
     selectedWallSize,
     stylePresets,
@@ -563,6 +629,16 @@ export default function AIExperienceSection() {
     frameColors,
     frameMaterials,
   ]);
+
+  function toggleColor(colorId: ColorOption) {
+    setSelectedColors((current) => {
+      if (current.includes(colorId)) {
+        return current.filter((item) => item !== colorId);
+      }
+
+      return [...current, colorId];
+    });
+  }
 
   function scrollToResult(offset = 100) {
     if (!resultRef.current || typeof window === "undefined") return;
@@ -656,7 +732,7 @@ export default function AIExperienceSection() {
     setSelectedLightType("tableLamp");
     setSelectedLightTemperature("warm");
     setSelectedLightIntensity("medium");
-    setSelectedPalette("neutral");
+    setSelectedColors([]);
     setGeneratedImage(null);
     setLastPrompt("");
     setError("");
@@ -667,6 +743,8 @@ export default function AIExperienceSection() {
       sessionStorage.removeItem("generatedWallSize");
       sessionStorage.removeItem("generatedObjectSize");
       sessionStorage.removeItem("generatedPalette");
+      sessionStorage.removeItem("generatedPalettes");
+      sessionStorage.removeItem("generatedColors");
       sessionStorage.removeItem("generatedFrameColor");
       sessionStorage.removeItem("generatedFrameMaterial");
       sessionStorage.removeItem("generatedWithFrame");
@@ -686,7 +764,9 @@ export default function AIExperienceSection() {
       sessionStorage.setItem("generatedCreationType", creationType);
       sessionStorage.setItem("generatedWallSize", selectedWallSize);
       sessionStorage.setItem("generatedObjectSize", selectedObjectSize);
-      sessionStorage.setItem("generatedPalette", selectedPalette);
+      sessionStorage.setItem("generatedPalette", selectedColors.join(","));
+      sessionStorage.setItem("generatedPalettes", JSON.stringify(selectedColors));
+      sessionStorage.setItem("generatedColors", JSON.stringify(selectedColors));
       sessionStorage.setItem("generatedFrameColor", frameColor);
       sessionStorage.setItem("generatedFrameMaterial", frameMaterial);
       sessionStorage.setItem("generatedWithFrame", String(withFrame));
@@ -707,7 +787,7 @@ export default function AIExperienceSection() {
         creationType,
         wallSize: creationType === "wall" ? selectedWallSize : "none",
         objectSize: creationType === "object" ? selectedObjectSize : "none",
-        palette: selectedPalette,
+        palette: selectedColors.length > 0 ? selectedColors.join(",") : "none",
         frame: creationType === "wall" && withFrame ? "open" : "none",
         frameColor:
           creationType === "wall" && withFrame ? frameColor : "none",
@@ -731,7 +811,7 @@ export default function AIExperienceSection() {
     isActive: boolean,
     onClick: () => void,
     disabled = false,
-    icon?: React.ReactNode,
+    icon?: ReactNode,
   ) {
     return (
       <button
@@ -756,7 +836,7 @@ export default function AIExperienceSection() {
     isActive: boolean,
     onClick: () => void,
     disabled = false,
-    icon?: React.ReactNode,
+    icon?: ReactNode,
   ) {
     return (
       <button
@@ -796,23 +876,7 @@ export default function AIExperienceSection() {
           </p>
 
           <div className="mt-10 rounded-[2rem] border border-white/10 bg-white/[0.04] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] md:p-6">
-            <label
-              htmlFor="ai-prompt"
-              className="text-sm font-medium text-neutral-200"
-            >
-              {t("form.label")}
-            </label>
-
-            <textarea
-              id="ai-prompt"
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              placeholder={t("form.placeholder")}
-              disabled={isLoading}
-              className="mt-4 min-h-[170px] w-full resize-y rounded-[1.5rem] border border-white/10 bg-black/20 px-5 py-4 text-sm leading-7 text-white outline-none transition duration-300 placeholder:text-neutral-500 focus:border-[#caa27c] focus:bg-black/25 focus:ring-2 focus:ring-[#caa27c]/20 disabled:cursor-not-allowed disabled:opacity-70"
-            />
-
-            <div className="mt-7">
+            <div>
               <p className="text-sm font-medium text-neutral-200">
                 {t("form.creationTypeLabel")}
               </p>
@@ -851,14 +915,18 @@ export default function AIExperienceSection() {
                 {stylePresets.map((preset) => {
                   const isActive = selectedStyle === preset.id;
 
-                  return renderPillButton(
-                    preset.label,
-                    isActive,
-                    () =>
-                      setSelectedStyle((current) =>
-                        current === preset.id ? null : preset.id,
-                      ),
-                    isLoading,
+                  return (
+                    <div key={preset.id}>
+                      {renderPillButton(
+                        preset.label,
+                        isActive,
+                        () =>
+                          setSelectedStyle((current) =>
+                            current === preset.id ? null : preset.id,
+                          ),
+                        isLoading,
+                      )}
+                    </div>
                   );
                 })}
               </div>
@@ -869,16 +937,33 @@ export default function AIExperienceSection() {
                 {t("form.paletteLabel")}
               </p>
 
+              <p className="mt-2 text-xs leading-6 text-neutral-400">
+                {canShowGradientOption
+                  ? t("form.paletteHelpGradientAvailable")
+                  : t("form.paletteHelpGradientLocked")}
+              </p>
+
               <div className="mt-4 flex flex-wrap gap-3">
-                {colorPalettes.map((palette) =>
-                  renderPillButton(
-                    palette.label,
-                    selectedPalette === palette.id,
-                    () => setSelectedPalette(palette.id),
-                    isLoading,
-                  ),
-                )}
+                {visibleColorOptions.map((color) => (
+                  <div key={color.id}>
+                    {renderPillButton(
+                      color.label,
+                      selectedColors.includes(color.id),
+                      () => toggleColor(color.id),
+                      isLoading,
+                    )}
+                  </div>
+                ))}
               </div>
+
+              {selectedColorLabels.length > 0 ? (
+                <div className="mt-4 rounded-[1.25rem] border border-white/10 bg-black/20 px-4 py-3 text-sm text-neutral-300">
+                  <span className="font-medium text-white">
+                    {t("form.selectedColors")}
+                  </span>{" "}
+                  {selectedColorLabels.join(", ")}
+                </div>
+              ) : null}
             </div>
 
             {creationType === "wall" ? (
@@ -889,15 +974,17 @@ export default function AIExperienceSection() {
                   </p>
 
                   <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                    {wallSizeOptions.map((size) =>
-                      renderCardButton(
-                        size.label,
-                        selectedWallSize === size.id,
-                        () => setSelectedWallSize(size.id),
-                        isLoading,
-                        <Ruler className="h-4 w-4" />,
-                      ),
-                    )}
+                    {wallSizeOptions.map((size) => (
+                      <div key={size.id}>
+                        {renderCardButton(
+                          size.label,
+                          selectedWallSize === size.id,
+                          () => setSelectedWallSize(size.id),
+                          isLoading,
+                          <Ruler className="h-4 w-4" />,
+                        )}
+                      </div>
+                    ))}
                   </div>
                 </div>
 
@@ -948,14 +1035,16 @@ export default function AIExperienceSection() {
                       </p>
 
                       <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                        {frameColors.map((color) =>
-                          renderCardButton(
-                            color.label,
-                            frameColor === color.id,
-                            () => setFrameColor(color.id),
-                            isLoading,
-                          ),
-                        )}
+                        {frameColors.map((color) => (
+                          <div key={color.id}>
+                            {renderCardButton(
+                              color.label,
+                              frameColor === color.id,
+                              () => setFrameColor(color.id),
+                              isLoading,
+                            )}
+                          </div>
+                        ))}
                       </div>
                     </div>
 
@@ -965,14 +1054,16 @@ export default function AIExperienceSection() {
                       </p>
 
                       <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                        {frameMaterials.map((material) =>
-                          renderCardButton(
-                            material.label,
-                            frameMaterial === material.id,
-                            () => setFrameMaterial(material.id),
-                            isLoading,
-                          ),
-                        )}
+                        {frameMaterials.map((material) => (
+                          <div key={material.id}>
+                            {renderCardButton(
+                              material.label,
+                              frameMaterial === material.id,
+                              () => setFrameMaterial(material.id),
+                              isLoading,
+                            )}
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </>
@@ -988,15 +1079,17 @@ export default function AIExperienceSection() {
                   </p>
 
                   <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                    {objectSizeOptions.map((size) =>
-                      renderCardButton(
-                        size.label,
-                        selectedObjectSize === size.id,
-                        () => setSelectedObjectSize(size.id),
-                        isLoading,
-                        <Ruler className="h-4 w-4" />,
-                      ),
-                    )}
+                    {objectSizeOptions.map((size) => (
+                      <div key={size.id}>
+                        {renderCardButton(
+                          size.label,
+                          selectedObjectSize === size.id,
+                          () => setSelectedObjectSize(size.id),
+                          isLoading,
+                          <Ruler className="h-4 w-4" />,
+                        )}
+                      </div>
+                    ))}
                   </div>
                 </div>
 
@@ -1006,14 +1099,16 @@ export default function AIExperienceSection() {
                   </p>
 
                   <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                    {objectUsages.map((usage) =>
-                      renderCardButton(
-                        usage.label,
-                        selectedObjectUsage === usage.id,
-                        () => setSelectedObjectUsage(usage.id),
-                        isLoading,
-                      ),
-                    )}
+                    {objectUsages.map((usage) => (
+                      <div key={usage.id}>
+                        {renderCardButton(
+                          usage.label,
+                          selectedObjectUsage === usage.id,
+                          () => setSelectedObjectUsage(usage.id),
+                          isLoading,
+                        )}
+                      </div>
+                    ))}
                   </div>
                 </div>
 
@@ -1023,14 +1118,16 @@ export default function AIExperienceSection() {
                   </p>
 
                   <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                    {objectFinishes.map((finish) =>
-                      renderCardButton(
-                        finish.label,
-                        selectedObjectFinish === finish.id,
-                        () => setSelectedObjectFinish(finish.id),
-                        isLoading,
-                      ),
-                    )}
+                    {objectFinishes.map((finish) => (
+                      <div key={finish.id}>
+                        {renderCardButton(
+                          finish.label,
+                          selectedObjectFinish === finish.id,
+                          () => setSelectedObjectFinish(finish.id),
+                          isLoading,
+                        )}
+                      </div>
+                    ))}
                   </div>
                 </div>
               </>
@@ -1044,15 +1141,17 @@ export default function AIExperienceSection() {
                   </p>
 
                   <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                    {lightTypes.map((lightType) =>
-                      renderCardButton(
-                        lightType.label,
-                        selectedLightType === lightType.id,
-                        () => setSelectedLightType(lightType.id),
-                        isLoading,
-                        <Lamp className="h-4 w-4" />,
-                      ),
-                    )}
+                    {lightTypes.map((lightType) => (
+                      <div key={lightType.id}>
+                        {renderCardButton(
+                          lightType.label,
+                          selectedLightType === lightType.id,
+                          () => setSelectedLightType(lightType.id),
+                          isLoading,
+                          <Lamp className="h-4 w-4" />,
+                        )}
+                      </div>
+                    ))}
                   </div>
                 </div>
 
@@ -1062,14 +1161,16 @@ export default function AIExperienceSection() {
                   </p>
 
                   <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                    {lightTemperatures.map((temp) =>
-                      renderCardButton(
-                        temp.label,
-                        selectedLightTemperature === temp.id,
-                        () => setSelectedLightTemperature(temp.id),
-                        isLoading,
-                      ),
-                    )}
+                    {lightTemperatures.map((temp) => (
+                      <div key={temp.id}>
+                        {renderCardButton(
+                          temp.label,
+                          selectedLightTemperature === temp.id,
+                          () => setSelectedLightTemperature(temp.id),
+                          isLoading,
+                        )}
+                      </div>
+                    ))}
                   </div>
                 </div>
 
@@ -1079,18 +1180,38 @@ export default function AIExperienceSection() {
                   </p>
 
                   <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                    {lightIntensities.map((intensity) =>
-                      renderCardButton(
-                        intensity.label,
-                        selectedLightIntensity === intensity.id,
-                        () => setSelectedLightIntensity(intensity.id),
-                        isLoading,
-                      ),
-                    )}
+                    {lightIntensities.map((intensity) => (
+                      <div key={intensity.id}>
+                        {renderCardButton(
+                          intensity.label,
+                          selectedLightIntensity === intensity.id,
+                          () => setSelectedLightIntensity(intensity.id),
+                          isLoading,
+                        )}
+                      </div>
+                    ))}
                   </div>
                 </div>
               </>
             ) : null}
+
+            <div className="mt-7">
+              <label
+                htmlFor="ai-prompt"
+                className="text-sm font-medium text-neutral-200"
+              >
+                {t("form.label")}
+              </label>
+
+              <textarea
+                id="ai-prompt"
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                placeholder={t("form.placeholder")}
+                disabled={isLoading}
+                className="mt-4 min-h-[170px] w-full resize-y rounded-[1.5rem] border border-white/10 bg-black/20 px-5 py-4 text-sm leading-7 text-white outline-none transition duration-300 placeholder:text-neutral-500 focus:border-[#caa27c] focus:bg-black/25 focus:ring-2 focus:ring-[#caa27c]/20 disabled:cursor-not-allowed disabled:opacity-70"
+              />
+            </div>
 
             {fullPrompt ? (
               <div className="mt-6 rounded-[1.5rem] border border-[#d9b08c]/18 bg-gradient-to-br from-[#d9b08c]/10 to-transparent p-4 md:p-5">
