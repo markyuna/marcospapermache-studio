@@ -304,18 +304,31 @@
     "imageAlt": "Marcos Suárez trabajando en una escultura de papel maché en su taller",
     "quote": "Transformar la materia en presencia."
   },
-  "AIExperience": {
+"AIExperience": {
   "badge": "Creación asistida por IA",
   "title": "Imagina tu escultura antes de darle vida.",
-  "description": "Describe tu idea, elige una dirección artística, configura tu obra (tamaño, marco, materiales), genera un concepto visual y transfórmalo en una escultura a medida.",
+  "description": "Describe tu idea, elige un tipo de creación, define un estilo, los colores y las opciones de presentación, y genera un concepto visual antes de transformarlo en una escultura a medida.",
 
   "promptEnrichedTitle": "Prompt enriquecido",
   "promptEnrichedSuffix": "Estilo deseado:",
 
+  "creationTypes": {
+    "wall": "Escultura mural",
+    "object": "Objeto escultórico",
+    "light": "Escultura luminosa"
+  },
+
   "sizes": {
-    "small": "30 × 40 cm",
-    "medium": "50 × 70 cm",
-    "large": "70 × 100 cm"
+    "wall": {
+      "small": "30 × 40 cm",
+      "medium": "50 × 70 cm",
+      "large": "70 × 100 cm"
+    },
+    "object": {
+      "small": "Formato pequeño",
+      "medium": "Formato mediano",
+      "large": "Formato grande"
+    }
   },
 
   "frameColors": {
@@ -329,74 +342,124 @@
     "wood": "Madera"
   },
 
+  "objectUsage": {
+    "table": "Mesa / consola",
+    "shelf": "Estantería",
+    "floor": "Suelo"
+  },
+
+  "objectFinish": {
+    "matte": "Mate",
+    "glossy": "Brillante",
+    "metallic": "Metálico"
+  },
+
+  "lightTypes": {
+    "tableLamp": "Lámpara de mesa",
+    "wallLight": "Aplique mural",
+    "ceilingLight": "Suspensión / plafón",
+    "lightSculpture": "Escultura luminosa"
+  },
+
+  "lightTemperature": {
+    "warm": "Luz cálida",
+    "neutral": "Luz neutra",
+    "cool": "Luz fría"
+  },
+
+  "lightIntensity": {
+    "subtle": "Sutil",
+    "medium": "Media",
+    "strong": "Fuerte"
+  },
+
+  "colorPalettes": {
+    "neutral": "Neutra",
+    "blackGold": "Negro y dorado",
+    "earthy": "Terrosa",
+    "whiteBeige": "Blanco y beige",
+    "blueGreen": "Azul y verde",
+    "multicolor": "Multicolor"
+  },
+
   "form": {
     "label": "Describe tu idea",
-    "placeholder": "Ej. Una escultura mural orgánica blanca con toques dorados, inspirada en el movimiento de las olas, elegante y contemporánea.",
+    "placeholder": "Ej. Una escultura contemporánea de papel maché inspirada en las olas del mar, con una presencia elegante, una paleta beige y dorada y un acabado artesanal refinado.",
 
+    "creationTypeLabel": "Tipo de creación",
     "styleLabel": "Dirección artística",
-    "sizeLabel": "Tamaño de la obra",
+    "paletteLabel": "Paleta de colores",
 
+    "sizeLabel": "Tamaño de la obra",
     "optionsLabel": "Presentación de la obra",
 
     "withFrame": "Marco artístico abierto",
-    "withFrameDescription": "Integrada en un marco fino y abierto, donde la escultura interactúa con la estructura sin estar encerrada.",
+    "withFrameDescription": "Integración en un marco fino y abierto, donde la escultura interactúa con la estructura sin quedar encerrada.",
 
     "frameColor": "Color del marco",
-    "frameMaterial": "Material del marco"
+    "frameMaterial": "Material del marco",
+
+    "objectSizeLabel": "Tamaño del objeto",
+    "objectUsageLabel": "Uso",
+    "objectFinishLabel": "Acabado",
+
+    "lightTypeLabel": "Tipo de luminaria",
+    "lightTemperatureLabel": "Temperatura de luz",
+    "lightIntensityLabel": "Intensidad lumínica"
   },
 
   "styles": {
     "organic": {
       "label": "Orgánico",
-      "prompt": "escultura mural contemporánea de papel maché, formas orgánicas fluidas, relieve escultórico elegante, composición artesanal premium"
+      "prompt": "escultura contemporánea de papel maché, formas orgánicas fluidas y armoniosas, volúmenes escultóricos inspirados en la naturaleza, textura artesanal refinada, presencia elegante y sensible, estética artística de alta gama"
     },
     "minimal": {
       "label": "Minimal",
-      "prompt": "escultura mural contemporánea de papel maché, líneas limpias, composición minimalista refinada, relieve sobrio y elegante"
+      "prompt": "escultura contemporánea de papel maché, líneas limpias y controladas, composición minimalista sofisticada, volúmenes equilibrados, sobriedad elegante, textura artesanal sutil, estética contemporánea premium"
     },
     "oceanic": {
       "label": "Oceánico",
-      "prompt": "escultura mural contemporánea de papel maché, formas inspiradas en el océano, movimiento fluido, relieve orgánico que evoca olas y corrientes"
+      "prompt": "escultura contemporánea de papel maché, formas inspiradas en el océano y en el movimiento de las olas, relieve fluido y poético, profundidad orgánica, textura artesanal delicada, atmósfera serena y elegante"
     },
     "luminous": {
       "label": "Luminoso",
-      "prompt": "escultura mural contemporánea de papel maché, presencia luminosa sutil, relieve elegante, acentos refinados inspirados en la luz"
+      "prompt": "escultura contemporánea de papel maché, presencia luminosa suave y refinada, volúmenes escultóricos inspirados en la luz, relieve sutil, textura artesanal elegante, atmósfera sofisticada y envolvente"
     },
     "origami": {
       "label": "Origami",
-      "prompt": "escultura mural contemporánea de papel maché inspirada en el origami, pliegues geométricos, facetas escultóricas definidas, composición estructurada y elegante"
+      "prompt": "escultura contemporánea de papel maché inspirada en el origami, pliegues geométricos precisos, facetas escultóricas definidas, construcción estructurada, elegancia gráfica, textura artesanal de alta gama"
     }
   },
 
   "buttons": {
     "generate": "Generar imagen",
     "generating": "Generando...",
-    "reset": "Reiniciar",
+    "reset": "Restablecer",
     "regenerate": "Regenerar",
     "order": "Dar vida a esta escultura"
   },
 
   "result": {
     "emptyTitle": "Tu concepto aparecerá aquí",
-    "emptyDescription": "Genera una primera visión de tu futura escultura y luego refínala antes de darle vida en el taller.",
+    "emptyDescription": "Genera una primera visión de tu futura escultura y luego afínala antes de darle vida en el taller.",
     "generatedTitle": "Concepto generado",
     "imageAlt": "Concepto de escultura generado por IA"
   },
 
   "footer": {
-    "line1": "Cada concepto generado sirve como base visual. La escultura final se realiza a mano en el taller, con un enfoque artesanal, sensible y totalmente personalizado."
+    "line1": "Cada concepto generado sirve como base visual. La escultura final se realiza después a mano en el taller, con un enfoque artesanal, sensible y completamente a medida."
   },
 
   "errors": {
     "emptyPrompt": "Primero describe tu idea para generar una imagen.",
-    "generationFailed": "Error durante la generación.",
-    "noImageReturned": "No se ha devuelto ninguna imagen.",
-    "unknown": "Ha ocurrido un error desconocido."
+    "generationFailed": "Se produjo un error durante la generación.",
+    "noImageReturned": "No se devolvió ninguna imagen.",
+    "unknown": "Se produjo un error desconocido."
   },
 
   "loading": {
-    "title": "Tu imagen se está creando",
-    "description": "Esto puede tardar unos instantes. Espera hasta que termine la generación para evitar interrupciones.",
+    "title": "Creando tu imagen",
+    "description": "Esto puede tardar unos instantes. Espera hasta que termine la generación para evitar cualquier interrupción.",
     "notice": "No actualices ni cierres esta página"
   }
 },

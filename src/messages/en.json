@@ -304,18 +304,31 @@
     "imageAlt": "Marcos Suárez working on a papier-mâché sculpture in his studio",
     "quote": "Transforming material into presence."
   },
- "AIExperience": {
+"AIExperience": {
   "badge": "AI-assisted creation",
   "title": "Imagine your sculpture before bringing it to life.",
-  "description": "Describe your idea, choose an artistic direction, configure your artwork (size, frame, materials), generate a visual concept and transform it into a custom-made sculpture.",
+  "description": "Describe your idea, choose a creation type, define a style, colors, and presentation options, then generate a visual concept before turning it into a bespoke sculpture.",
 
-  "promptEnrichedTitle": "Enhanced prompt",
+  "promptEnrichedTitle": "Enriched prompt",
   "promptEnrichedSuffix": "Desired style:",
 
+  "creationTypes": {
+    "wall": "Wall sculpture",
+    "object": "Decorative object",
+    "light": "Luminous sculpture"
+  },
+
   "sizes": {
-    "small": "30 × 40 cm",
-    "medium": "50 × 70 cm",
-    "large": "70 × 100 cm"
+    "wall": {
+      "small": "30 × 40 cm",
+      "medium": "50 × 70 cm",
+      "large": "70 × 100 cm"
+    },
+    "object": {
+      "small": "Small format",
+      "medium": "Medium format",
+      "large": "Large format"
+    }
   },
 
   "frameColors": {
@@ -329,43 +342,93 @@
     "wood": "Wood"
   },
 
+  "objectUsage": {
+    "table": "Table / console",
+    "shelf": "Shelf",
+    "floor": "Floor"
+  },
+
+  "objectFinish": {
+    "matte": "Matte",
+    "glossy": "Glossy",
+    "metallic": "Metallic"
+  },
+
+  "lightTypes": {
+    "tableLamp": "Table lamp",
+    "wallLight": "Wall sconce",
+    "ceilingLight": "Pendant / ceiling light",
+    "lightSculpture": "Light sculpture"
+  },
+
+  "lightTemperature": {
+    "warm": "Warm light",
+    "neutral": "Neutral light",
+    "cool": "Cool light"
+  },
+
+  "lightIntensity": {
+    "subtle": "Subtle",
+    "medium": "Medium",
+    "strong": "Strong"
+  },
+
+  "colorPalettes": {
+    "neutral": "Neutral",
+    "blackGold": "Black & gold",
+    "earthy": "Earthy",
+    "whiteBeige": "White & beige",
+    "blueGreen": "Blue & green",
+    "multicolor": "Multicolor"
+  },
+
   "form": {
     "label": "Describe your idea",
-    "placeholder": "Ex. An organic white wall sculpture with golden accents, inspired by the movement of waves, elegant and contemporary.",
+    "placeholder": "E.g. A contemporary papier-mâché sculpture inspired by ocean waves, with an elegant presence, a beige and gold palette, and a refined handcrafted finish.",
 
-    "styleLabel": "Artistic direction",
+    "creationTypeLabel": "Creation type",
+    "styleLabel": "Art direction",
+    "paletteLabel": "Color palette",
+
     "sizeLabel": "Artwork size",
-
     "optionsLabel": "Artwork presentation",
 
     "withFrame": "Open artistic frame",
     "withFrameDescription": "Integrated into a thin open frame, where the sculpture interacts with the structure without being enclosed.",
 
     "frameColor": "Frame color",
-    "frameMaterial": "Frame material"
+    "frameMaterial": "Frame material",
+
+    "objectSizeLabel": "Object size",
+    "objectUsageLabel": "Usage",
+    "objectFinishLabel": "Finish",
+
+    "lightTypeLabel": "Lighting type",
+    "lightTemperatureLabel": "Light temperature",
+    "lightIntensityLabel": "Light intensity"
   },
 
   "styles": {
-    "organic": {
-      "label": "Organic",
-      "prompt": "contemporary papier-mâché wall sculpture, fluid organic forms, elegant sculptural relief, premium handcrafted composition"
-    },
-    "minimal": {
-      "label": "Minimal",
-      "prompt": "contemporary papier-mâché wall sculpture, clean lines, refined minimalist composition, restrained and elegant relief"
-    },
-    "oceanic": {
-      "label": "Oceanic",
-      "prompt": "contemporary papier-mâché wall sculpture, ocean-inspired forms, fluid movement, organic relief evoking waves and currents"
-    },
-    "luminous": {
-      "label": "Luminous",
-      "prompt": "contemporary papier-mâché wall sculpture, subtle luminous presence, elegant relief, refined light-inspired accents"
-    },
-    "origami": {
-      "label": "Origami",
-      "prompt": "contemporary papier-mâché wall sculpture inspired by origami, folded geometric planes, crisp sculptural facets, elegant structured composition"
-    }
+  "organic": {
+    "label": "Organic",
+    "prompt": "contemporary papier-mâché sculpture, fluid and harmonious organic forms, sculptural volumes inspired by nature, refined handcrafted texture, elegant and sensitive presence, high-end artistic aesthetic"
+  },
+  "minimal": {
+    "label": "Minimal",
+    "prompt": "contemporary papier-mâché sculpture, clean and controlled lines, sophisticated minimalist composition, balanced volumes, understated elegance, subtle handcrafted texture, premium contemporary aesthetic"
+  },
+  "oceanic": {
+    "label": "Oceanic",
+    "prompt": "contemporary papier-mâché sculpture, forms inspired by the ocean and the movement of waves, fluid and poetic relief, organic depth, delicate handcrafted texture, calming and elegant atmosphere"
+  },
+  "luminous": {
+    "label": "Luminous",
+    "prompt": "contemporary papier-mâché sculpture, soft and refined luminous presence, sculptural volumes inspired by light, subtle relief, elegant handcrafted texture, sophisticated atmospheric mood"
+  },
+  "origami": {
+    "label": "Origami",
+    "prompt": "contemporary papier-mâché sculpture inspired by origami, precise geometric folds, crisp sculptural facets, structured construction, graphic elegance, high-end handcrafted texture"
+  }
 },
 
   "buttons": {
@@ -378,25 +441,25 @@
 
   "result": {
     "emptyTitle": "Your concept will appear here",
-    "emptyDescription": "Generate a first vision of your future sculpture, then refine it before bringing it to life in the workshop.",
+    "emptyDescription": "Generate a first visual direction for your future sculpture, then refine it before bringing it to life in the studio.",
     "generatedTitle": "Generated concept",
-    "imageAlt": "AI generated sculpture concept"
+    "imageAlt": "AI-generated sculpture concept"
   },
 
   "footer": {
-    "line1": "Each generated concept serves as a visual base. The final sculpture is then handcrafted in the studio, with a sensitive and fully custom approach."
+    "line1": "Each generated concept serves as a visual foundation. The final sculpture is then handcrafted in the studio through a sensitive, artisanal, and fully bespoke process."
   },
 
   "errors": {
-    "emptyPrompt": "First describe your idea to generate an image.",
-    "generationFailed": "Error during generation.",
+    "emptyPrompt": "Please describe your idea first to generate an image.",
+    "generationFailed": "An error occurred during generation.",
     "noImageReturned": "No image was returned.",
     "unknown": "An unknown error occurred."
   },
 
   "loading": {
-    "title": "Your image is being created",
-    "description": "This may take a few moments. Please wait until the generation is complete to avoid interruption.",
+    "title": "Creating your image",
+    "description": "This may take a few moments. Please wait until the generation is complete to avoid any interruption.",
     "notice": "Do not refresh or close this page"
   }
 },

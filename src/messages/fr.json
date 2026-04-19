@@ -304,18 +304,31 @@
     "imageAlt": "Marcos Suárez en train de travailler une sculpture en papier mâché dans son atelier",
     "quote": "Transformer la matière en présence."
   },
- "AIExperience": {
+"AIExperience": {
   "badge": "Création assistée par IA",
   "title": "Imaginez votre sculpture avant de lui donner vie.",
-  "description": "Décrivez votre idée, choisissez une direction artistique, configurez votre œuvre (taille, cadre, matériaux), générez un concept visuel puis transformez-le en une sculpture sur mesure.",
+  "description": "Décrivez votre idée, choisissez un type de création, définissez un style, les couleurs et les options de présentation, puis générez un concept visuel avant de le transformer en sculpture sur mesure.",
 
   "promptEnrichedTitle": "Prompt enrichi",
   "promptEnrichedSuffix": "Style souhaité :",
 
+  "creationTypes": {
+    "wall": "Sculpture murale",
+    "object": "Sculpture objet",
+    "light": "Sculpture lumineuse"
+  },
+
   "sizes": {
-    "small": "30 × 40 cm",
-    "medium": "50 × 70 cm",
-    "large": "70 × 100 cm"
+    "wall": {
+      "small": "30 × 40 cm",
+      "medium": "50 × 70 cm",
+      "large": "70 × 100 cm"
+    },
+    "object": {
+      "small": "Petit format",
+      "medium": "Format moyen",
+      "large": "Grand format"
+    }
   },
 
   "frameColors": {
@@ -329,45 +342,94 @@
     "wood": "Bois"
   },
 
+  "objectUsage": {
+    "table": "Table / console",
+    "shelf": "Étagère",
+    "floor": "Sol"
+  },
+
+  "objectFinish": {
+    "matte": "Mat",
+    "glossy": "Brillant",
+    "metallic": "Métallique"
+  },
+
+  "lightTypes": {
+    "tableLamp": "Lampe de table",
+    "wallLight": "Applique murale",
+    "ceilingLight": "Suspension / plafonnier",
+    "lightSculpture": "Sculpture lumineuse"
+  },
+
+  "lightTemperature": {
+    "warm": "Lumière chaude",
+    "neutral": "Lumière neutre",
+    "cool": "Lumière froide"
+  },
+
+  "lightIntensity": {
+    "subtle": "Subtile",
+    "medium": "Moyenne",
+    "strong": "Forte"
+  },
+
+  "colorPalettes": {
+    "neutral": "Neutre",
+    "blackGold": "Noir & doré",
+    "earthy": "Terreux",
+    "whiteBeige": "Blanc & beige",
+    "blueGreen": "Bleu & vert",
+    "multicolor": "Multicolore"
+  },
+
   "form": {
     "label": "Décrivez votre idée",
-    "placeholder": "Ex. Une sculpture murale organique blanche avec des touches dorées, inspirée par le mouvement des vagues, élégante et contemporaine.",
+    "placeholder": "Ex. Une sculpture contemporaine en papier mâché inspirée par les vagues, avec une présence élégante, une palette beige et dorée, et une finition artisanale raffinée.",
 
+    "creationTypeLabel": "Type de création",
     "styleLabel": "Direction artistique",
-    "sizeLabel": "Taille de l’œuvre",
+    "paletteLabel": "Palette de couleurs",
 
+    "sizeLabel": "Taille de l’œuvre",
     "optionsLabel": "Présentation de l’œuvre",
 
     "withFrame": "Cadre artistique ouvert",
     "withFrameDescription": "Intégration dans un cadre fin et ouvert, où la sculpture interagit avec la structure sans être enfermée.",
 
     "frameColor": "Couleur du cadre",
-    "frameMaterial": "Matériau du cadre"
+    "frameMaterial": "Matériau du cadre",
+
+    "objectSizeLabel": "Taille de l’objet",
+    "objectUsageLabel": "Usage",
+    "objectFinishLabel": "Finition",
+
+    "lightTypeLabel": "Type de luminaire",
+    "lightTemperatureLabel": "Température de lumière",
+    "lightIntensityLabel": "Intensité lumineuse"
   },
 
   "styles": {
-    "organic": {
-      "label": "Organique",
-      "prompt": "sculpture murale contemporaine en papier mâché, formes organiques fluides, relief sculptural élégant, composition artisanale haut de gamme"
-    },
-    "minimal": {
-      "label": "Minimal",
-      "prompt": "sculpture murale contemporaine en papier mâché, lignes épurées, composition minimaliste raffinée, relief sobre et élégant"
-    },
-    "oceanic": {
-      "label": "Océanique",
-      "prompt": "sculpture murale contemporaine en papier mâché, formes inspirées de l’océan, mouvement fluide, relief organique évoquant les vagues et les courants"
-    },
-    "luminous": {
-      "label": "Lumineux",
-      "prompt": "sculpture murale contemporaine en papier mâché, présence lumineuse subtile, relief élégant, accents raffinés inspirés par la lumière"
-    },
-    "origami": {
-      "label": "Origami",
-      "prompt": "sculpture murale contemporaine en papier mâché inspirée de l’origami, plis géométriques, facettes sculpturales nettes, composition structurée et élégante"
-    }
-
+  "organic": {
+    "label": "Organique",
+    "prompt": "sculpture contemporaine en papier mâché, formes organiques fluides et harmonieuses, volumes sculpturaux inspirés de la nature, texture artisanale raffinée, présence élégante et sensible, esthétique haut de gamme"
   },
+  "minimal": {
+    "label": "Minimal",
+    "prompt": "sculpture contemporaine en papier mâché, lignes pures et maîtrisées, composition minimaliste sophistiquée, volumes équilibrés, sobriété élégante, texture artisanale subtile, esthétique contemporaine premium"
+  },
+  "oceanic": {
+    "label": "Océanique",
+    "prompt": "sculpture contemporaine en papier mâché, formes inspirées de l’océan et du mouvement des vagues, relief fluide et poétique, profondeur organique, texture artisanale délicate, atmosphère apaisante et élégante"
+  },
+  "luminous": {
+    "label": "Lumineux",
+    "prompt": "sculpture contemporaine en papier mâché, présence lumineuse douce et raffinée, volumes sculpturaux inspirés par la lumière, relief subtil, texture artisanale élégante, ambiance sophistiquée et atmosphérique"
+  },
+  "origami": {
+    "label": "Origami",
+    "prompt": "sculpture contemporaine en papier mâché inspirée de l’origami, plis géométriques précis, facettes nettes et sculpturales, construction structurée, élégance graphique, texture artisanale haut de gamme"
+  }
+},
 
   "buttons": {
     "generate": "Générer une image",
