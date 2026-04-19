@@ -155,6 +155,7 @@ export default function Navbar() {
               src="/logo.png"
               alt="Marcos Papermache"
               fill
+              sizes="(max-width: 768px) 140px, 220px"
               priority
               className="object-contain object-left transition duration-500 group-hover:scale-[1.02]"
             />

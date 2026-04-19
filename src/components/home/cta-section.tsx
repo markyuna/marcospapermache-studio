@@ -133,6 +133,12 @@ export function CtaSection() {
                       src="/Harmonie-naturelle.png"
                       alt={t("imageAlt")}
                       fill
+                      sizes="
+                        (max-width: 640px) 100vw,
+                        (max-width: 1024px) 50vw,
+                        (max-width: 1280px) 33vw,
+                        25vw
+                      "
                       priority
                       className="object-cover object-center transition duration-700 hover:scale-[1.03]"
                     />
