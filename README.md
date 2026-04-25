@@ -36,6 +36,10 @@ Some environment variables and backend logic are hidden for security reasons.
 
 ## 📸 Preview
 
+## ✨ Preview
+
+![Mockup](./public/screenshots/mockup.png)
+
 ### Homepage
 ![Homepage](./public/screenshots/home.png)
 
