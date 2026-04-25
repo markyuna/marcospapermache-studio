@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Marcos Papermache
 
-## Getting Started
+Premium handcrafted sculptures with an AI-powered creative experience.
 
-First, run the development server:
+## 🌐 Live Website
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+https://www.marcospapermache.com
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨ Concept
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+An immersive digital experience where users can:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* Describe an idea
+* Generate a visual concept using AI
+* Customize the style, format and details
+* Turn it into a real handcrafted sculpture
 
-## Learn More
+## 🎨 Features
 
-To learn more about Next.js, take a look at the following resources:
+* AI image generation (custom prompts)
+* Multiple creation types (wall, object, light)
+* Premium UI/UX with animations
+* Custom order workflow
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+* Next.js
+* Supabase
+* OpenAI API
+* Tailwind CSS
+* Framer Motion
 
-## Deploy on Vercel
+## ⚠️ Note
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Some environment variables and backend logic are hidden for security reasons.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📸 Preview
+
+### Homepage
+![Homepage](./public/screenshots/home.png)
+
+### Homepage
+![AI Generator](./public/screenshots/ai-generator.png)
+
+### Contact
+![Contact](./public/screenshots/contact.png)
