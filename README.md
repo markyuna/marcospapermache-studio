@@ -36,15 +36,23 @@ Some environment variables and backend logic are hidden for security reasons.
 
 ## 📸 Preview
 
-## ✨ Preview
+<p align="center">
+  <img src="./public/screenshots/mockup.png" width="500"/>
+</p>
 
-![Mockup](./public/screenshots/mockup.png)
+## 📸 Experience
 
 ### Homepage
-![Homepage](./public/screenshots/home.png)
+<p align="center">
+  <img src="./public/screenshots/home.png" width="500"/>
+</p>
 
-### Homepage
-![AI Generator](./public/screenshots/ai-generator.png)
+### AI Generator
+<p align="center">
+  <img src="./public/screenshots/ai-generator.png" width="500"/>
+</p>
 
 ### Contact
-![Contact](./public/screenshots/contact.png)
+<p align="center">
+  <img src="./public/screenshots/contact.png" width="500"/>
+</p>
