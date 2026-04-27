@@ -278,8 +278,8 @@
     "description": "Descripción",
     "details": "Detalles de la obra",
     "cta": {
-      "request": "Solicitar esta creación",
-      "etsy": "Ver en Etsy"
+      "etsy": "Ver en Etsy",
+      "recreate": "Recrear una pieza similar"
     }
   },
   "SculptureCard": {

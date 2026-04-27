@@ -21,19 +21,21 @@ type ArtworkWithAiPrompt = Awaited<ReturnType<typeof getArtworkBySlug>> & {
   ai_prompt?: string | null;
 };
 
+type FallbackAiPromptParams = {
+  title: string;
+  subtitle?: string | null;
+  category?: string | null;
+  materials?: string | null;
+  description?: string | null;
+};
+
 function buildFallbackAiPrompt({
   title,
   subtitle,
   category,
   materials,
   description,
-}: {
-  title: string;
-  subtitle?: string | null;
-  category?: string | null;
-  materials?: string | null;
-  description?: string | null;
-}) {
+}: FallbackAiPromptParams) {
   return [
     `Create a premium artistic piece inspired by "${title}".`,
     subtitle,
@@ -44,6 +46,29 @@ function buildFallbackAiPrompt({
   ]
     .filter(Boolean)
     .join(" ");
+}
+
+function isArtworkAvailableOnEtsy({
+  etsyUrl,
+  availability,
+}: {
+  etsyUrl?: string | null;
+  availability?: string | null;
+}) {
+  const normalizedAvailability = availability?.toLowerCase().trim() ?? "";
+
+  const isExplicitlyUnavailable =
+    normalizedAvailability.includes("non disponible") ||
+    normalizedAvailability.includes("indisponible") ||
+    normalizedAvailability.includes("vendue") ||
+    normalizedAvailability.includes("sold") ||
+    normalizedAvailability.includes("unavailable");
+
+  const isExplicitlyAvailable =
+    normalizedAvailability.includes("disponible") ||
+    normalizedAvailability.includes("available");
+
+  return Boolean(etsyUrl) && isExplicitlyAvailable && !isExplicitlyUnavailable;
 }
 
 export async function generateMetadata({
@@ -103,6 +128,11 @@ export default async function SculptureDetailPage({
   const recreateHref = `/${locale}/create?prompt=${encodeURIComponent(
     recreatePrompt
   )}`;
+
+  const isAvailableOnEtsy = isArtworkAvailableOnEtsy({
+    etsyUrl: localizedArtwork.etsy_url,
+    availability: localizedArtwork.availability,
+  });
 
   return (
     <main className="relative overflow-hidden bg-[linear-gradient(to_bottom,#fcfaf6,#f7f2ea,#fbf8f3)] py-24 md:py-32">
@@ -190,7 +220,7 @@ export default async function SculptureDetailPage({
             ) : null}
 
             <div className="mt-10 flex flex-wrap gap-4">
-              {localizedArtwork.etsy_url ? (
+              {isAvailableOnEtsy ? (
                 <Button asChild variant="default" size="lg">
                   <Link
                     href={localizedArtwork.etsy_url}
