@@ -1,4 +1,4 @@
-//src/app/[locale]/sculptures/[slug]/page.tsx
+// src/app/[locale]/sculptures/[slug]/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -16,6 +16,35 @@ type SculptureDetailPageProps = {
     slug: string;
   }>;
 };
+
+type ArtworkWithAiPrompt = Awaited<ReturnType<typeof getArtworkBySlug>> & {
+  ai_prompt?: string | null;
+};
+
+function buildFallbackAiPrompt({
+  title,
+  subtitle,
+  category,
+  materials,
+  description,
+}: {
+  title: string;
+  subtitle?: string | null;
+  category?: string | null;
+  materials?: string | null;
+  description?: string | null;
+}) {
+  return [
+    `Create a premium artistic piece inspired by "${title}".`,
+    subtitle,
+    category ? `Category: ${category}.` : null,
+    materials ? `Materials and texture inspiration: ${materials}.` : null,
+    description,
+    "Style: handmade papier-mâché sculpture, organic artistic shapes, refined contemporary design, neutral studio background, premium gallery lighting, elegant composition, unique handcrafted object.",
+  ]
+    .filter(Boolean)
+    .join(" ");
+}
 
 export async function generateMetadata({
   params,
@@ -49,7 +78,7 @@ export default async function SculptureDetailPage({
   params,
 }: SculptureDetailPageProps) {
   const { locale, slug } = await params;
-  const artwork = await getArtworkBySlug(slug);
+  const artwork = (await getArtworkBySlug(slug)) as ArtworkWithAiPrompt;
   const t = await getTranslations({
     locale,
     namespace: "SculptureDetailPage",
@@ -60,6 +89,20 @@ export default async function SculptureDetailPage({
   }
 
   const localizedArtwork = localizeArtwork(artwork, locale);
+
+  const recreatePrompt =
+    artwork.ai_prompt ||
+    buildFallbackAiPrompt({
+      title: localizedArtwork.title,
+      subtitle: localizedArtwork.subtitle,
+      category: localizedArtwork.category,
+      materials: localizedArtwork.materials,
+      description: localizedArtwork.description,
+    });
+
+  const recreateHref = `/${locale}/create?prompt=${encodeURIComponent(
+    recreatePrompt
+  )}`;
 
   return (
     <main className="relative overflow-hidden bg-[linear-gradient(to_bottom,#fcfaf6,#f7f2ea,#fbf8f3)] py-24 md:py-32">
@@ -147,12 +190,8 @@ export default async function SculptureDetailPage({
             ) : null}
 
             <div className="mt-10 flex flex-wrap gap-4">
-              <Button asChild variant="default" size="lg">
-                <Link href={`/${locale}/contact`}>{t("cta.request")}</Link>
-              </Button>
-
               {localizedArtwork.etsy_url ? (
-                <Button asChild variant="outline" size="lg">
+                <Button asChild variant="default" size="lg">
                   <Link
                     href={localizedArtwork.etsy_url}
                     target="_blank"
@@ -161,7 +200,11 @@ export default async function SculptureDetailPage({
                     {t("cta.etsy")}
                   </Link>
                 </Button>
-              ) : null}
+              ) : (
+                <Button asChild variant="default" size="lg">
+                  <Link href={recreateHref}>{t("cta.recreate")}</Link>
+                </Button>
+              )}
             </div>
           </aside>
         </div>
