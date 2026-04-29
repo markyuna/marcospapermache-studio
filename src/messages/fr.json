@@ -279,7 +279,7 @@
     "details": "Détails de l’œuvre",
     "cta": {
       "etsy": "Acheter sur Etsy",
-      "recreate": "Recréer une pièce similaire"
+      "requestSimilar": "Demander une pièce similaire"
     }
   },
   "SculptureCard": {

@@ -17,37 +17,6 @@ type SculptureDetailPageProps = {
   }>;
 };
 
-type ArtworkWithAiPrompt = Awaited<ReturnType<typeof getArtworkBySlug>> & {
-  ai_prompt?: string | null;
-};
-
-type FallbackAiPromptParams = {
-  title: string;
-  subtitle?: string | null;
-  category?: string | null;
-  materials?: string | null;
-  description?: string | null;
-};
-
-function buildFallbackAiPrompt({
-  title,
-  subtitle,
-  category,
-  materials,
-  description,
-}: FallbackAiPromptParams) {
-  return [
-    `Create a premium artistic piece inspired by "${title}".`,
-    subtitle,
-    category ? `Category: ${category}.` : null,
-    materials ? `Materials and texture inspiration: ${materials}.` : null,
-    description,
-    "Style: handmade papier-mâché sculpture, organic artistic shapes, refined contemporary design, neutral studio background, premium gallery lighting, elegant composition, unique handcrafted object.",
-  ]
-    .filter(Boolean)
-    .join(" ");
-}
-
 function isArtworkAvailableOnEtsy({
   etsyUrl,
   availability,
@@ -104,7 +73,7 @@ export default async function SculptureDetailPage({
   params,
 }: SculptureDetailPageProps) {
   const { locale, slug } = await params;
-  const artwork = (await getArtworkBySlug(slug)) as ArtworkWithAiPrompt;
+  const artwork = await getArtworkBySlug(slug);
 
   const t = await getTranslations({
     locale,
@@ -117,19 +86,7 @@ export default async function SculptureDetailPage({
 
   const localizedArtwork = localizeArtwork(artwork, locale);
 
-  const recreatePrompt =
-    artwork.ai_prompt ||
-    buildFallbackAiPrompt({
-      title: localizedArtwork.title,
-      subtitle: localizedArtwork.subtitle,
-      category: localizedArtwork.category,
-      materials: localizedArtwork.materials,
-      description: localizedArtwork.description,
-    });
-
-  const recreateHref = `/${locale}/create?prompt=${encodeURIComponent(
-    recreatePrompt
-  )}`;
+  const customCreationHref = `/${locale}/creations-sur-mesure`;
 
   const isAvailableOnEtsy = isArtworkAvailableOnEtsy({
     etsyUrl: localizedArtwork.etsy_url,
@@ -145,7 +102,7 @@ export default async function SculptureDetailPage({
     <main className="relative w-full overflow-x-clip bg-[linear-gradient(to_bottom,#fcfaf6,#f7f2ea,#fbf8f3)] py-20 md:py-32">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(214,191,163,0.14),transparent_28%),radial-gradient(circle_at_85%_10%,rgba(255,106,0,0.08),transparent_20%)]" />
 
-      <Container className="relative z-10 w-full max-w-full">
+      <Container className="relative z-10 w-full max-w-[1200px] px-4 md:px-6">
         <div className="grid w-full min-w-0 gap-10 lg:grid-cols-[minmax(0,1.06fr)_minmax(0,0.94fr)] xl:gap-20">
           <div className="w-full min-w-0 max-w-full">
             {localizedArtwork.images.length > 0 ? (
@@ -235,7 +192,9 @@ export default async function SculptureDetailPage({
                 </Button>
               ) : (
                 <Button asChild variant="default" size="lg">
-                  <Link href={recreateHref}>{t("cta.recreate")}</Link>
+                  <Link href={customCreationHref}>
+                    {t("cta.requestSimilar")}
+                  </Link>
                 </Button>
               )}
             </div>
