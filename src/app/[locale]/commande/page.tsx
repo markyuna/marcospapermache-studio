@@ -1,3 +1,4 @@
+// src/app/[locale]/commande/page.tsx
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { Container } from "@/components/layout/container";

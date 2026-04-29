@@ -1,4 +1,5 @@
 // src/app/[locale]/sculptures/page.tsx
+
 import type { Metadata } from "next";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
@@ -6,12 +7,25 @@ import { getTranslations } from "next-intl/server";
 import Gallery from "@/components/sculptures/Gallery";
 import { Container } from "@/components/layout/container";
 import { getArtworks } from "@/lib/artworks";
+import type { Artwork } from "@/types/artwork";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 type Props = {
   params: Promise<{
     locale: string;
   }>;
 };
+
+async function getSafeArtworks(): Promise<Artwork[]> {
+  try {
+    return await getArtworks();
+  } catch (error) {
+    console.log("Erreur lors du chargement des œuvres:", error);
+    return [];
+  }
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
@@ -26,7 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function SculpturesPage({ params }: Props) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "SculpturesPage" });
-  const artworks = await getArtworks();
+  const artworks = await getSafeArtworks();
 
   return (
     <main className="bg-[#f8f5ef] text-neutral-900">
@@ -37,7 +51,8 @@ export default async function SculpturesPage({ params }: Props) {
             alt={t("bannerAlt")}
             fill
             priority
-            className="object-cover object-[center_28%] md:object-[center_32%] scale-[1.03]"
+            sizes="100vw"
+            className="scale-[1.03] object-cover object-[center_28%] md:object-[center_32%]"
           />
 
           <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/25 to-transparent" />
@@ -78,7 +93,15 @@ export default async function SculpturesPage({ params }: Props) {
             </div>
           </div>
 
-          <Gallery artworks={artworks} />
+          {artworks.length > 0 ? (
+            <Gallery artworks={artworks} />
+          ) : (
+            <div className="mx-auto max-w-3xl rounded-3xl border border-black/10 bg-white/70 p-8 text-center shadow-sm backdrop-blur">
+              <p className="text-sm font-medium text-neutral-700">
+                Les œuvres ne sont pas disponibles pour le moment.
+              </p>
+            </div>
+          )}
         </Container>
       </section>
     </main>

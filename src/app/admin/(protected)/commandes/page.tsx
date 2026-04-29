@@ -1,19 +1,57 @@
+// src/app/admin/(protected)/commandes/page.tsx
+
 import { supabaseAdmin } from "@/lib/supabase";
 import DashboardCommandes from "@/components/admin/DashboardCommandes";
 import type { Commande } from "@/types/commande";
 
 export const dynamic = "force-dynamic";
 
-async function getCommandes(): Promise<{
+type GetCommandesResult = {
   commandes: Commande[];
   errorMessage: string | null;
-}> {
-  try {
-    console.time("getCommandes:query");
+};
 
+function getReadableError(error: unknown): string {
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  if (typeof error === "object" && error !== null) {
+    const possibleError = error as {
+      message?: unknown;
+      details?: unknown;
+      hint?: unknown;
+      code?: unknown;
+    };
+
+    const message =
+      typeof possibleError.message === "string"
+        ? possibleError.message
+        : null;
+
+    const details =
+      typeof possibleError.details === "string"
+        ? possibleError.details
+        : null;
+
+    const hint =
+      typeof possibleError.hint === "string" ? possibleError.hint : null;
+
+    const code =
+      typeof possibleError.code === "string" ? possibleError.code : null;
+
+    return [message, details, hint, code].filter(Boolean).join(" — ");
+  }
+
+  return "Impossible de charger les commandes.";
+}
+
+async function getCommandes(): Promise<GetCommandesResult> {
+  try {
     const { data, error } = await supabaseAdmin
       .from("commandes")
-      .select(`
+      .select(
+        `
         id,
         name,
         email,
@@ -25,14 +63,31 @@ async function getCommandes(): Promise<{
         created_at,
         image_url,
         file_url
-      `)
+      `
+      )
       .order("created_at", { ascending: false })
-      .limit(30);
-
-    console.timeEnd("getCommandes:query");
+      .limit(10);
 
     if (error) {
-      throw error;
+      const errorMessage = getReadableError(error);
+
+      console.log("Supabase commandes error:", {
+        message: errorMessage,
+        raw: Object.getOwnPropertyNames(error).reduce<Record<string, unknown>>(
+          (acc, key) => {
+            const errorRecord = error as unknown as Record<string, unknown>;
+            acc[key] = errorRecord[key];
+            return acc;
+          },
+          {}
+        ),
+      });
+
+      return {
+        commandes: [],
+        errorMessage:
+          errorMessage || "Impossible de charger les commandes depuis Supabase.",
+      };
     }
 
     return {
@@ -40,14 +95,17 @@ async function getCommandes(): Promise<{
       errorMessage: null,
     };
   } catch (error) {
-    console.error("Error loading commandes:", error);
+    const errorMessage = getReadableError(error);
+
+    console.log("Unexpected commandes error:", {
+      message: errorMessage,
+      error,
+    });
 
     return {
       commandes: [],
       errorMessage:
-        error instanceof Error
-          ? error.message
-          : "Impossible de charger les commandes.",
+        errorMessage || "Erreur inattendue lors du chargement des commandes.",
     };
   }
 }
@@ -55,22 +113,16 @@ async function getCommandes(): Promise<{
 export default async function AdminCommandesPage() {
   const { commandes, errorMessage } = await getCommandes();
 
-  if (errorMessage) {
-    return (
-      <main className="min-h-screen bg-[linear-gradient(to_bottom,#fffaf5,#fff7f1,#ffffff)] px-6 py-10">
-        <div className="mx-auto max-w-7xl">
-          <div className="rounded-3xl border border-red-200 bg-red-50 p-6 text-red-700 shadow-sm">
-            Erreur lors du chargement des commandes : {errorMessage}
-          </div>
-        </div>
-      </main>
-    );
-  }
-
   return (
     <main className="min-h-screen bg-[linear-gradient(to_bottom,#fffaf5,#fff7f1,#ffffff)] px-4 py-8 md:px-6 lg:px-10">
       <div className="mx-auto max-w-7xl">
-        <DashboardCommandes commandes={commandes} />
+        {errorMessage ? (
+          <div className="rounded-3xl border border-red-200 bg-red-50 p-6 text-red-700 shadow-sm">
+            Erreur lors du chargement des commandes : {errorMessage}
+          </div>
+        ) : (
+          <DashboardCommandes commandes={commandes} />
+        )}
       </div>
     </main>
   );
