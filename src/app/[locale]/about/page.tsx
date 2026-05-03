@@ -116,7 +116,7 @@ export default async function AboutPage({
             <div className="relative overflow-hidden rounded-[38%_62%_58%_42%/34%_36%_64%_66%] border border-white/60 bg-white/60 shadow-[0_30px_100px_rgba(86,57,29,0.14)] backdrop-blur-sm">
               <div className="relative aspect-[4/5]">
                 <Image
-                  src="/marcos.jpg"
+                  src="/support_vin.png"
                   alt={t("approach.imageAlt")}
                   fill
                   className="object-cover"

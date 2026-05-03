@@ -152,7 +152,7 @@ export default function Navbar() {
         >
           <div className="relative h-24 w-44 sm:h-28 sm:w-52 lg:h-32 lg:w-60 xl:h-36 xl:w-72">
             <Image
-              src="/logo.png"
+              src="/logo2.png"
               alt="Marcos Papermache"
               fill
               sizes="(max-width: 768px) 140px, 220px"
