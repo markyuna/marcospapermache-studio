@@ -16,6 +16,10 @@ const links = [
     href: "/admin/commandes",
     label: "Commandes",
   },
+  {
+    href: "/admin/analytics",
+    label: "Analytics",
+  },
 ];
 
 export default function AdminNav() {
