@@ -2,11 +2,14 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase/client";
-import { useRouter } from "next/navigation";
 
 export default function AdminLoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const nextPath = searchParams.get("next") || "/admin/artworks";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,17 +34,14 @@ export default function AdminLoginForm() {
       return;
     }
 
-    router.push("/admin/artworks");
+    router.replace(nextPath);
     router.refresh();
   }
 
   return (
-    <form
-      onSubmit={handleLogin}
-      className="space-y-5 w-full max-w-md mx-auto"
-    >
+    <form onSubmit={handleLogin} className="mx-auto w-full max-w-md space-y-5">
       <div>
-        <label className="block mb-2 text-sm font-medium">Email</label>
+        <label className="mb-2 block text-sm font-medium">Email</label>
         <input
           type="email"
           required
@@ -52,9 +52,7 @@ export default function AdminLoginForm() {
       </div>
 
       <div>
-        <label className="block mb-2 text-sm font-medium">
-          Mot de passe
-        </label>
+        <label className="mb-2 block text-sm font-medium">Mot de passe</label>
         <input
           type="password"
           required
@@ -64,14 +62,12 @@ export default function AdminLoginForm() {
         />
       </div>
 
-      {error && (
-        <p className="text-sm text-red-500">{error}</p>
-      )}
+      {error && <p className="text-sm text-red-500">{error}</p>}
 
       <button
         type="submit"
         disabled={loading}
-        className="w-full rounded-xl bg-black py-3 text-white"
+        className="w-full rounded-xl bg-black py-3 text-white disabled:cursor-not-allowed disabled:opacity-60"
       >
         {loading ? "Connexion..." : "Se connecter"}
       </button>

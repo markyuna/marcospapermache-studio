@@ -1,15 +1,16 @@
+// src/components/admin/AdminSessionGuard.tsx
 "use client";
 
-import { useEffect, useRef, useCallback } from "react";
+import { useCallback, useEffect, useRef } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase/client";
-import { useRouter, usePathname } from "next/navigation";
 
 const TIMEOUT = 30 * 60 * 1000;
 
 export default function AdminSessionGuard() {
   const router = useRouter();
   const pathname = usePathname();
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const resetTimer = useCallback(() => {
     if (pathname === "/admin/login") return;
@@ -20,32 +21,27 @@ export default function AdminSessionGuard() {
 
     timeoutRef.current = setTimeout(async () => {
       await supabase.auth.signOut();
-      router.replace("/admin/login");
+
+      const nextPath = encodeURIComponent(pathname);
+      router.replace(`/admin/login?next=${nextPath}`);
     }, TIMEOUT);
   }, [pathname, router]);
 
   useEffect(() => {
-    const events = ["mousemove", "keydown", "click", "scroll"];
+    const events = ["mousemove", "keydown", "click", "scroll", "touchstart"];
 
-    events.forEach((e) => window.addEventListener(e, resetTimer));
+    events.forEach((event) => window.addEventListener(event, resetTimer));
 
     resetTimer();
 
     return () => {
-      events.forEach((e) => window.removeEventListener(e, resetTimer));
+      events.forEach((event) => window.removeEventListener(event, resetTimer));
+
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
     };
   }, [resetTimer]);
-
-  useEffect(() => {
-    const handleUnload = () => {
-      supabase.auth.signOut();
-    };
-
-    window.addEventListener("beforeunload", handleUnload);
-
-    return () =>
-      window.removeEventListener("beforeunload", handleUnload);
-  }, []);
 
   return null;
 }

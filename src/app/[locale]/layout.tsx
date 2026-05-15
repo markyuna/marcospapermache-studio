@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import ClarityInit from "@/components/analytics/ClarityInit";
 import { routing } from "@/i18n/routing";
 
 type Props = {
@@ -53,6 +54,8 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
+      <ClarityInit />
+
       <div className="flex min-h-screen flex-col">
         <Navbar />
         <main className="flex-1">{children}</main>
