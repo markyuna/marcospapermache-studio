@@ -171,6 +171,11 @@
       "primaryCta": "Demander une création",
       "secondaryCta": "Voir les œuvres"
     },
+    "video": {
+      "badge": "Vidéo atelier",
+      "tag": "Plafonnier sur mesure",
+      "description": "Découvrez une pièce lumineuse façonnée à la main, pensée pour transformer la matière en présence sculpturale."
+    },
     "process": {
       "eyebrow": "Processus",
       "title": "Comment se déroule une commande"

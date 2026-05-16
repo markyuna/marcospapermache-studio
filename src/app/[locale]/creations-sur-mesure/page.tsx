@@ -8,6 +8,7 @@ import {
   Gem,
   HandHeart,
   Palette,
+  Play,
   Sparkles,
 } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -40,12 +41,12 @@ function CtaLink({
   variant = "primary",
 }: CtaLinkProps) {
   const baseClassName =
-    "group inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition duration-300";
+    "group inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d86208]/30 focus-visible:ring-offset-2";
 
   const variantClassName =
     variant === "primary"
       ? "border border-[#f3a34d]/40 bg-[linear-gradient(135deg,#ff9f43,#e76f16,#c85100)] text-white shadow-[0_18px_55px_rgba(231,111,22,0.28)] hover:-translate-y-0.5 hover:shadow-[0_24px_70px_rgba(231,111,22,0.36)]"
-      : "border border-[#ead7c2] bg-white/70 text-[#4f4338] shadow-[0_14px_40px_rgba(70,45,20,0.06)] backdrop-blur-xl hover:-translate-y-0.5 hover:border-[#e76f16]/35 hover:bg-white hover:text-[#c85100]";
+      : "border border-[#ead7c2] bg-white/75 text-[#4f4338] shadow-[0_14px_40px_rgba(70,45,20,0.06)] backdrop-blur-xl hover:-translate-y-0.5 hover:border-[#e76f16]/35 hover:bg-white hover:text-[#c85100]";
 
   return (
     <Link href={href} className={`${baseClassName} ${variantClassName}`}>
@@ -93,7 +94,7 @@ export default async function CustomCreationPage({ params }: Props) {
                 {t("hero.eyebrow")}
               </div>
 
-              <h1 className="mt-6 max-w-4xl text-5xl font-semibold tracking-[-0.055em] text-[#17120f] md:text-7xl">
+              <h1 className="mt-6 max-w-4xl bg-gradient-to-r from-[#17120f] via-[#8b5a32] to-[#e76f16] bg-clip-text text-5xl font-semibold tracking-[-0.055em] text-transparent md:text-7xl">
                 {t("hero.title")}
               </h1>
 
@@ -112,36 +113,40 @@ export default async function CustomCreationPage({ params }: Props) {
               </div>
             </div>
 
-            <div className="relative hidden lg:block">
-              <div className="absolute -inset-8 rounded-[3rem] bg-[radial-gradient(circle_at_top,#ff9f43_0%,transparent_48%)] opacity-25 blur-2xl" />
+            <div className="relative mt-2 lg:mt-0">
+              <div className="absolute -inset-4 rounded-[2.4rem] bg-[radial-gradient(circle_at_top,#ff9f43_0%,transparent_50%)] opacity-20 blur-2xl md:-inset-6 lg:-inset-8 lg:rounded-[3rem] lg:opacity-25" />
 
-              <div className="relative rounded-[2.5rem] border border-white/70 bg-white/55 p-5 shadow-[0_30px_100px_rgba(65,38,15,0.12)] backdrop-blur-2xl">
-                <div className="rounded-[2rem] border border-[#f0ddca] bg-[linear-gradient(145deg,#fffaf4,#fff0e2)] p-7">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#a86d3c]">
-                      Atelier
-                    </span>
-                    <span className="rounded-full bg-white/70 px-3 py-1 text-xs text-[#7a5c42]">
-                      Sur mesure
+              <div className="relative overflow-hidden rounded-[2rem] border border-[#f0ddca] bg-[#fff3e6]/70 p-3 shadow-[0_24px_80px_rgba(65,38,15,0.1)] backdrop-blur-2xl md:rounded-[2.35rem] md:p-4 lg:shadow-[0_30px_100px_rgba(65,38,15,0.12)]">
+                <div className="mb-3 flex flex-wrap items-center justify-between gap-3 md:mb-4">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-[#efcaa8] bg-white/75 px-3 py-2 shadow-[0_12px_30px_rgba(65,38,15,0.08)] backdrop-blur-xl md:px-4">
+                    <Play className="h-3.5 w-3.5 fill-[#c85100] text-[#c85100]" />
+                    <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-[#8f5a32] md:text-[10px] md:tracking-[0.24em]">
+                      {t("video.badge")}
                     </span>
                   </div>
 
-                  <div className="mt-16 space-y-4">
-                    <div className="h-32 rounded-[2rem] bg-[linear-gradient(135deg,#211713,#9c4f15,#f0a45b)] shadow-[inset_0_1px_0_rgba(255,255,255,0.24)]" />
-                    <div className="grid grid-cols-3 gap-3">
-                      <div className="h-24 rounded-[1.5rem] bg-[#f6d8bd]" />
-                      <div className="h-24 rounded-[1.5rem] bg-[#e6a260]" />
-                      <div className="h-24 rounded-[1.5rem] bg-[#2b1c16]" />
-                    </div>
-                  </div>
+                  <span className="rounded-full border border-[#efcaa8] bg-white/75 px-3 py-1.5 text-xs font-medium text-[#7a5c42] shadow-[0_12px_30px_rgba(65,38,15,0.06)] backdrop-blur-xl">
+                    {t("video.tag")}
+                  </span>
+                </div>
 
-                  <div className="mt-8 flex items-center gap-3 rounded-3xl border border-white/70 bg-white/65 p-4">
-                    <Sparkles className="h-5 w-5 text-[#d86208]" />
-                    <p className="text-sm leading-6 text-[#6b5b4f]">
-                      Une création pensée autour de votre histoire, de votre
-                      espace et de votre matière.
-                    </p>
-                  </div>
+                <div className="relative aspect-video overflow-hidden rounded-[1.5rem] bg-[#17120f] shadow-[0_20px_70px_rgba(65,38,15,0.18)] md:rounded-[1.8rem]">
+                  <iframe
+                    src="https://www.youtube.com/embed/VWDOuIVu2zk?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&loop=1&playlist=VWDOuIVu2zk"
+                    title="Luminaire plafonnier en papier mâché fabriqué à la main"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    className="absolute inset-0 h-full w-full"
+                  />
+
+                  <div className="pointer-events-none absolute inset-0 rounded-[1.5rem] ring-1 ring-white/20 md:rounded-[1.8rem]" />
+                </div>
+
+                <div className="mt-3 flex items-start gap-3 rounded-[1.35rem] border border-[#f0ddca] bg-white/65 p-4 backdrop-blur-xl md:mt-4 md:rounded-[1.5rem]">
+                  <Sparkles className="mt-0.5 h-5 w-5 shrink-0 text-[#d86208]" />
+                  <p className="text-sm leading-6 text-[#6b5b4f]">
+                    {t("video.description")}
+                  </p>
                 </div>
               </div>
             </div>

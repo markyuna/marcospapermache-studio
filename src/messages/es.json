@@ -171,6 +171,11 @@
       "primaryCta": "Solicitar una creación",
       "secondaryCta": "Ver las obras"
     },
+    "video": {
+      "badge": "Video del taller",
+      "tag": "Plafón a medida",
+      "description": "Descubre una pieza luminosa hecha a mano, diseñada para transformar la materia en una presencia escultórica."
+    },
     "process": {
       "eyebrow": "Proceso",
       "title": "Cómo se desarrolla un encargo"

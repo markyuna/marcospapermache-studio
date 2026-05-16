@@ -195,10 +195,13 @@ export function HeroSection() {
               </span>
             </div>
 
-            <h1 className="mt-7 text-[2.9rem] font-medium leading-[0.92] tracking-[-0.065em] text-[#181512] sm:text-6xl md:text-7xl xl:text-[6.2rem]">
-              {t("title.line1")}
-              <br className="hidden sm:block" />
-              <span className="block">{t("title.line2")}</span>
+            <h1 className="mt-7 max-w-4xl text-[3.05rem] font-medium leading-[0.9] tracking-[-0.075em] sm:text-6xl md:text-7xl xl:text-[6.6rem]">
+              <span className="block bg-gradient-to-r from-[#17130f] via-[#8a633d] to-[#c6a06f] bg-clip-text text-transparent">
+                {t("title.line1")}
+              </span>
+              <span className="block bg-gradient-to-r from-[#c6a06f] via-[#6f4b2d] to-[#17130f] bg-clip-text text-transparent">
+                {t("title.line2")}
+              </span>
             </h1>
 
             <p className="mt-7 max-w-xl text-base leading-8 text-[#5f5348] md:text-lg">

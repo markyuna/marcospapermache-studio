@@ -171,6 +171,11 @@
       "primaryCta": "Request a creation",
       "secondaryCta": "View the works"
     },
+    "video": {
+      "badge": "Studio video",
+      "tag": "Custom ceiling light",
+      "description": "Discover a handcrafted lighting sculpture designed to transform material into sculptural presence."
+    },
     "process": {
       "eyebrow": "Process",
       "title": "How a commission unfolds"
