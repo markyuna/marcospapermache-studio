@@ -22,6 +22,24 @@ function sumNumber(rows: Record<string, unknown>[], key: string) {
   }, 0);
 }
 
+async function fetchClarity(token: string, params: URLSearchParams) {
+  const response = await fetch(`${CLARITY_API_URL}?${params.toString()}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    cache: "no-store",
+  });
+
+  const text = await response.text();
+
+  if (!response.ok) {
+    throw new Error(`Clarity API error ${response.status}: ${text || "empty response"}`);
+  }
+
+  return JSON.parse(text) as ClarityMetric[];
+}
+
 export async function GET() {
   const token = process.env.CLARITY_API_TOKEN;
 
@@ -33,67 +51,35 @@ export async function GET() {
   }
 
   try {
-    const [trafficResponse, deviceResponse, urlResponse] = await Promise.all([
-      fetch(`${CLARITY_API_URL}?numOfDays=1`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        next: { revalidate: 60 * 60 },
-      }),
-      fetch(`${CLARITY_API_URL}?numOfDays=1&dimension1=Device`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        next: { revalidate: 60 * 60 },
-      }),
-      fetch(`${CLARITY_API_URL}?numOfDays=1&dimension1=URL`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        next: { revalidate: 60 * 60 },
-      }),
+    const [trafficData, deviceData, pagesData] = await Promise.all([
+      fetchClarity(token, new URLSearchParams({ numOfDays: "3" })),
+      fetchClarity(
+        token,
+        new URLSearchParams({ numOfDays: "3", dimension1: "Device" })
+      ),
+      fetchClarity(
+        token,
+        new URLSearchParams({ numOfDays: "3", dimension1: "PopularPages" })
+      ),
     ]);
-
-    if (!trafficResponse.ok || !deviceResponse.ok || !urlResponse.ok) {
-      return NextResponse.json(
-        {
-          error: "Unable to fetch Clarity analytics.",
-          status: {
-            traffic: trafficResponse.status,
-            device: deviceResponse.status,
-            url: urlResponse.status,
-          },
-        },
-        { status: 502 }
-      );
-    }
-
-    const [trafficData, deviceData, urlData] = (await Promise.all([
-      trafficResponse.json(),
-      deviceResponse.json(),
-      urlResponse.json(),
-    ])) as [ClarityMetric[], ClarityMetric[], ClarityMetric[]];
 
     const trafficRows = getMetric(trafficData, "Traffic");
     const deviceRows = getMetric(deviceData, "Traffic");
-    const urlRows = getMetric(urlData, "Traffic");
+    const pageRows = getMetric(pagesData, "PopularPages");
 
     const sessions = sumNumber(trafficRows, "totalSessionCount");
     const botSessions = sumNumber(trafficRows, "totalBotSessionCount");
     const users = sumNumber(trafficRows, "distantUserCount");
 
     const mobileRows = deviceRows.filter((row) =>
-      String(row.Device ?? "").toLowerCase().includes("mobile")
+      String(row.Device ?? row.device ?? "").toLowerCase().includes("mobile")
     );
 
     const mobileSessions = sumNumber(mobileRows, "totalSessionCount");
 
-    const topPages = urlRows
+    const topPages = pageRows
       .map((row) => ({
-        url: String(row.URL ?? "Unknown"),
+        url: String(row.url ?? row.URL ?? "Unknown"),
         sessions: Number(row.totalSessionCount ?? 0),
         users: Number(row.distantUserCount ?? 0),
       }))
@@ -102,7 +88,7 @@ export async function GET() {
       .slice(0, 6);
 
     return NextResponse.json({
-      period: "last_24_hours",
+      period: "last_3_days",
       stats: {
         sessions,
         botSessions,
@@ -115,14 +101,19 @@ export async function GET() {
       raw: {
         traffic: trafficData,
         device: deviceData,
-        url: urlData,
+        pages: pagesData,
       },
     });
   } catch (error) {
     console.error("[CLARITY_ANALYTICS_ERROR]", error);
 
     return NextResponse.json(
-      { error: "Unexpected Clarity analytics error." },
+      {
+        error:
+          error instanceof Error
+            ? error.message
+            : "Unexpected Clarity analytics error.",
+      },
       { status: 500 }
     );
   }
