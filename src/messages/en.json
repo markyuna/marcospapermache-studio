@@ -73,21 +73,56 @@
   },
   "ProcessSection": {
     "badge": "Process",
-    "title": "From idea to sculpture",
+    "title": "From material to artwork",
+    "description": "Each sculpture is born from a dialogue between imagination, recycled materials and handcrafted work. A creative process designed to transform an idea into a unique sculptural presence.",
     "steps": {
-      "imagine": {
-        "title": "Imagine",
-        "description": "Describe an intention, an emotion, a material or a sculptural presence."
+      "inspiration": {
+        "title": "Inspiration & concept",
+        "description": "Every creation begins with an idea, an emotion or an atmosphere imagined together with you.",
+        "detail": "Art references • AI • Creative direction"
       },
-      "generate": {
-        "title": "Generate",
-        "description": "AI suggests a visual direction inspired by the Marcos Papermache universe."
+      "materials": {
+        "title": "Recycled materials",
+        "description": "Egg cartons, kraft paper, recycled newspapers, reclaimed cardboard and papier-mâché pulp are transformed by hand in the studio to create unique sculptural pieces.",
+        "detail": "Recycled paper • Reused materials"
       },
-      "transform": {
-        "title": "Transform",
-        "description": "The concept becomes the foundation of a real creation, designed and crafted to measure."
+      "sculpting": {
+        "title": "Handcrafted sculpting",
+        "description": "The structure gradually takes shape through patient manual work, modeling and construction.",
+        "detail": "Handmade process • One-of-a-kind piece"
+      },
+      "textures": {
+        "title": "Textures & reliefs",
+        "description": "Surfaces are crafted to create depth, light and a strong sculptural presence.",
+        "detail": "Organic textures • Artistic reliefs"
+      },
+      "finishing": {
+        "title": "Artistic finishing",
+        "description": "Final layers, shades and details reveal the sculpture’s unique identity.",
+        "detail": "Matte finishes • Premium details"
       }
-    }
+    },
+    "eco": {
+      "badge": "Responsible approach",
+      "title": "A conscious way of creating",
+      "description": "Each artwork follows a thoughtful artisanal process using reused materials and small-scale production.",
+      "items": {
+        "recycled": {
+          "title": "Recycled materials",
+          "description": "Paper, cardboard and reused materials transformed into new artistic pieces."
+        },
+        "handmade": {
+          "title": "Handcrafted production",
+          "description": "Every sculpture is entirely shaped by hand in the studio."
+        },
+        "lowImpact": {
+          "title": "Thoughtful production",
+          "description": "Small-batch creations far from industrial manufacturing."
+        }
+      }
+    },
+    "quote": "Each sculpture carries the marks of gesture, time and material.",
+    "cta": "Start a custom creation"
   },
   "Footer": {
     "description": "Handcrafted papier-mâché sculptures blending contemporary design, recycled materials and unique artistic expression.",

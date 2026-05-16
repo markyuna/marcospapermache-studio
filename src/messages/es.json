@@ -73,21 +73,56 @@
   },
   "ProcessSection": {
     "badge": "Proceso",
-    "title": "De la idea a la escultura",
+    "title": "De la materia a la obra",
+    "description": "Cada escultura nace de un diálogo entre imaginación, materiales reciclados y trabajo artesanal. Un proceso pensado para transformar una idea en una presencia escultórica única.",
     "steps": {
-      "imagine": {
-        "title": "Imagina",
-        "description": "Describe una intención, una emoción, una materia o una presencia escultórica."
+      "inspiration": {
+        "title": "Inspiración y concepto",
+        "description": "Cada creación comienza con una idea, una emoción o una atmósfera imaginada junto a usted.",
+        "detail": "Referencias artísticas • IA • Dirección creativa"
       },
-      "generate": {
-        "title": "Genera",
-        "description": "La IA propone una dirección visual inspirada en el universo de Marcos Papermache."
+      "materials": {
+        "title": "Materiales reciclados",
+        "description": "Cartones de huevos, papel kraft, periódicos reciclados, cartón reutilizado y pasta de papel maché son transformados a mano en el atelier para dar vida a esculturas únicas.",
+        "detail": "Papel reciclado • Materiales reutilizados"
       },
-      "transform": {
-        "title": "Transforma",
-        "description": "El concepto se convierte en la base de una creación real, pensada y elaborada a medida."
+      "sculpting": {
+        "title": "Escultura artesanal",
+        "description": "La estructura toma forma manualmente mediante un trabajo paciente de modelado y construcción.",
+        "detail": "Fabricación manual • Pieza única"
+      },
+      "textures": {
+        "title": "Texturas y relieves",
+        "description": "Las superficies se trabajan para crear profundidad, luz y presencia escultórica.",
+        "detail": "Texturas orgánicas • Relieves artísticos"
+      },
+      "finishing": {
+        "title": "Acabados artísticos",
+        "description": "Las últimas capas, matices y detalles revelan la identidad final de la escultura.",
+        "detail": "Acabados mate • Detalles premium"
       }
-    }
+    },
+    "eco": {
+      "badge": "Enfoque responsable",
+      "title": "Una fabricación consciente",
+      "description": "Cada obra prioriza un enfoque artesanal y responsable, utilizando materiales reutilizados y producción en pequeñas series.",
+      "items": {
+        "recycled": {
+          "title": "Materiales reciclados",
+          "description": "Papel, cartón y materiales transformados para dar vida a una nueva obra."
+        },
+        "handmade": {
+          "title": "Fabricación artesanal",
+          "description": "Cada escultura es moldeada completamente a mano en el atelier."
+        },
+        "lowImpact": {
+          "title": "Producción responsable",
+          "description": "Creaciones realizadas en pequeñas series, lejos de la fabricación industrial."
+        }
+      }
+    },
+    "quote": "Cada escultura conserva las huellas del gesto, el tiempo y la materia.",
+    "cta": "Comenzar una creación personalizada"
   },
   "Footer": {
     "description": "Esculturas artesanales en papel maché que combinan diseño contemporáneo, materiales reciclados y una expresión artística única.",

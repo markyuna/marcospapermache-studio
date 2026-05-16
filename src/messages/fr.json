@@ -72,23 +72,58 @@
   }
 },
   "ProcessSection": {
-    "badge": "Processus",
-    "title": "De l’idée à la sculpture",
-    "steps": {
-      "imagine": {
-        "title": "Imaginez",
-        "description": "Décrivez une intention, une émotion, une matière ou une présence sculpturale."
+  "badge": "Processus",
+  "title": "De la matière à l’œuvre",
+  "description": "Chaque sculpture naît d’un dialogue entre imagination, matières recyclées et travail artisanal. Un processus pensé pour transformer une idée en présence sculpturale unique.",
+  "steps": {
+    "inspiration": {
+      "title": "Inspiration & concept",
+      "description": "Chaque création commence par une idée, une émotion ou une atmosphère imaginée avec vous.",
+      "detail": "Références artistiques • IA • Direction créative"
+    },
+    "materials": {
+      "title": "Matières recyclées",
+      "description": "Cartons d’œufs, papier kraft, journaux recyclés, carton récupéré et pâte de papier mâché sont transformés à la main dans l’atelier pour donner naissance à des sculptures uniques.",
+      "detail": "Papier recyclé • Matières réutilisées"
+    },
+    "sculpting": {
+      "title": "Sculpture artisanale",
+      "description": "La structure prend forme manuellement grâce à un travail patient de modelage, de construction et d’équilibre.",
+      "detail": "Fabrication à la main • Pièce unique"
+    },
+    "textures": {
+      "title": "Textures & reliefs",
+      "description": "Les surfaces sont travaillées pour créer profondeur, lumière et présence sculpturale.",
+      "detail": "Textures organiques • Reliefs artistiques"
+    },
+    "finishing": {
+      "title": "Finitions artistiques",
+      "description": "Les dernières couches, nuances et détails viennent révéler l’identité finale de la sculpture.",
+      "detail": "Finitions mates • Détails premium"
+    }
+  },
+  "eco": {
+    "badge": "Approche responsable",
+    "title": "Une fabrication pensée avec conscience",
+    "description": "Chaque œuvre privilégie une approche artisanale et raisonnée, avec des matériaux réutilisés et une production en petite série.",
+    "items": {
+      "recycled": {
+        "title": "Matériaux recyclés",
+        "description": "Papier, cartons et matières transformés pour donner naissance à une nouvelle œuvre."
       },
-      "generate": {
-        "title": "Générez",
-        "description": "L’IA propose une direction visuelle inspirée de l’univers Marcos Papermache."
+      "handmade": {
+        "title": "Fabrication artisanale",
+        "description": "Chaque sculpture est façonnée manuellement dans l’atelier."
       },
-      "transform": {
-        "title": "Transformez",
-        "description": "Le concept devient la base d’une création réelle, pensée et façonnée sur mesure."
+      "lowImpact": {
+        "title": "Production raisonnée",
+        "description": "Créations réalisées en petite série, loin des logiques industrielles."
       }
     }
   },
+  "quote": "Chaque sculpture porte les traces du geste, du temps et de la matière.",
+  "cta": "Commencer une création sur mesure"
+},
   "Footer": {
     "description": "Sculptures artisanales en papier mâché, mêlant design contemporain, matières recyclées et expression artistique unique.",
     "navigation": "Navigation",
