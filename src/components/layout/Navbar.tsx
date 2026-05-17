@@ -154,7 +154,7 @@ export default function Navbar() {
           </div>
         </Link>
 
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden items-center gap-4 lg:flex">
           <nav
             className={clsx(
               space.className,
@@ -162,9 +162,7 @@ export default function Navbar() {
             )}
           >
             <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-b from-white/85 via-white/35 to-[#f5eadc]/35" />
-
             <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent" />
-
             <div className="pointer-events-none absolute -left-24 top-1/2 h-24 w-24 -translate-y-1/2 rounded-full bg-[#d9a15e]/10 blur-2xl transition-transform duration-700 group-hover/nav:translate-x-20" />
 
             {navLinks.map((link) => {
@@ -208,11 +206,8 @@ export default function Navbar() {
             })}
           </nav>
 
-          <div className="relative overflow-hidden rounded-full border border-black/10 bg-white/55 px-2 py-2 shadow-[0_24px_80px_rgba(20,20,20,0.075)] backdrop-blur-2xl supports-[backdrop-filter]:bg-white/42">
-            <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-b from-white/80 to-[#f5eadc]/30" />
-            <div className="relative z-10">
-              <LocaleSwitcher />
-            </div>
+          <div className="relative flex items-center">
+            <LocaleSwitcher />
           </div>
         </div>
 

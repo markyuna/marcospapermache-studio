@@ -11,7 +11,7 @@ import {
 } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
-
+import { Button } from "@/components/ui/button";
 import { Container } from "@/components/layout/container";
 import { Link } from "@/i18n/navigation";
 
@@ -209,12 +209,13 @@ export function HeroSection() {
             </p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+           
               <Link
                 href="/create"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#181512] px-6 py-3.5 text-sm font-medium text-white no-underline shadow-[0_18px_40px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#2a241f] hover:shadow-[0_24px_55px_rgba(0,0,0,0.16)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/20 focus-visible:ring-offset-2 [&_svg]:text-white"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-linear-to-r from-[#ff7a1a] via-[#ff9a3d] to-[#ffb15f] px-6 py-3.5 text-sm font-medium text-white no-underline shadow-[0_18px_40px_rgba(255,122,26,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_55px_rgba(255,122,26,0.38)]"
               >
-                <span className="text-white">{t("ctaPrimary")}</span>
-                <ArrowRight className="h-4 w-4 shrink-0 text-white" />
+                <span>{t("ctaPrimary")}</span>
+                <ArrowRight className="h-4 w-4 shrink-0" />
               </Link>
 
               <Link
