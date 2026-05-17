@@ -256,7 +256,7 @@ function ImageLightbox({
           </button>
         </div>
 
-        <div className="relative flex max-h-[82vh] min-h-[420px] items-center justify-center overflow-hidden rounded-[1.5rem] bg-[#0b0b0c]">
+        <div className="relative flex max-h-[82vh] min-h-105 items-center justify-center overflow-hidden rounded-[1.5rem] bg-[#0b0b0c]">
           <div className="relative h-[82vh] w-full">
             <Image
               src={preview.url}
