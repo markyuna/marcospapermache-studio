@@ -236,11 +236,11 @@ function ImageLightbox({
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-100 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-6xl rounded-[2rem] border border-white/10 bg-[#111111] p-3 shadow-2xl md:p-4"
+        className="relative w-full max-w-6xl rounded-4xl border border-white/10 bg-[#111111] p-3 shadow-2xl md:p-4"
         onClick={(event) => event.stopPropagation()}
       >
         <div className="mb-3 flex items-center justify-between gap-3">
@@ -256,7 +256,7 @@ function ImageLightbox({
           </button>
         </div>
 
-        <div className="relative flex max-h-[82vh] min-h-105 items-center justify-center overflow-hidden rounded-[1.5rem] bg-[#0b0b0c]">
+        <div className="relative flex max-h-[82vh] min-h-105 items-center justify-center overflow-hidden rounded-3xl bg-[#0b0b0c]">
           <div className="relative h-[82vh] w-full">
             <Image
               src={preview.url}
@@ -322,7 +322,7 @@ function MobileCommandeCard({
                     alt: commande.name || `Commande ${commande.id}`,
                   })
                 }
-                className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-black/55 via-black/10 to-transparent p-4 text-white"
+                className="absolute inset-0 flex items-end justify-center bg-linear-to-t from-black/55 via-black/10 to-transparent p-4 text-white"
               >
                 <span className="rounded-full border border-white/20 bg-white/15 px-4 py-2 text-xs font-medium backdrop-blur-sm">
                   Voir en grand
@@ -497,16 +497,16 @@ function DesktopCommandesTable({
   return (
     <div className="overflow-hidden rounded-3xl border border-white/70 bg-white/90 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[1180px] table-fixed text-left">
+        <table className="w-full min-w-295 table-fixed text-left">
           <thead className="bg-[linear-gradient(to_right,#fff4ea,#fffaf6)] text-sm text-neutral-600">
             <tr>
-              <th className="w-[130px] px-4 py-4 font-medium">Image</th>
-              <th className="w-[270px] px-4 py-4 font-medium">Client</th>
-              <th className="w-[180px] px-4 py-4 font-medium">Projet</th>
-              <th className="w-[130px] px-4 py-4 font-medium">Budget</th>
-              <th className="w-[100px] px-4 py-4 font-medium">Date</th>
-              <th className="w-[220px] px-4 py-4 font-medium">Statut</th>
-              <th className="w-[170px] px-4 py-4 font-medium">Actions</th>
+              <th className="w-32.5 px-4 py-4 font-medium">Image</th>
+              <th className="w-67.5 px-4 py-4 font-medium">Client</th>
+              <th className="w-45 px-4 py-4 font-medium">Projet</th>
+              <th className="w-32.5 px-4 py-4 font-medium">Budget</th>
+              <th className="w-25 px-4 py-4 font-medium">Date</th>
+              <th className="w-55 px-4 py-4 font-medium">Statut</th>
+              <th className="w-42.5 px-4 py-4 font-medium">Actions</th>
             </tr>
           </thead>
 
@@ -556,7 +556,7 @@ function DesktopCommandesTable({
                   </td>
 
                   <td className="px-4 py-4">
-                    <div className="max-w-[250px]">
+                    <div className="max-w-62.5">
                       <p className="truncate text-[15px] font-semibold text-neutral-900">
                         {commande.name}
                       </p>
@@ -580,7 +580,7 @@ function DesktopCommandesTable({
                   </td>
 
                   <td className="px-4 py-4">
-                    <div className="max-w-[170px]">
+                    <div className="max-w-42.5">
                       <p className="text-sm font-medium text-neutral-800">
                         {commande.project_type || "Non précisé"}
                       </p>
@@ -602,7 +602,7 @@ function DesktopCommandesTable({
                   </td>
 
                   <td className="px-4 py-4">
-                    <div className="w-[195px] space-y-2.5">
+                    <div className="w-48.75 space-y-2.5">
                       <span
                         className={clsx(
                           "inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium",
@@ -624,7 +624,7 @@ function DesktopCommandesTable({
                   </td>
 
                   <td className="px-4 py-4">
-                    <div className="flex max-w-[160px] flex-col gap-2">
+                    <div className="flex max-w-40 flex-col gap-2">
                       <Link
                         href={`/admin/commandes/${commande.id}`}
                         className="inline-flex items-center gap-2 rounded-xl border border-neutral-200 bg-white px-3 py-2 text-sm font-medium text-neutral-700 transition hover:border-orange-200 hover:bg-orange-50"
