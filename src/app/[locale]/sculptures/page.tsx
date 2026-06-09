@@ -27,9 +27,15 @@ async function getSafeArtworks(): Promise<Artwork[]> {
   }
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: Props): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "SculpturesPage" });
+
+  const t = await getTranslations({
+    locale,
+    namespace: "SculpturesPage",
+  });
 
   return {
     title: t("metadata.title"),
@@ -39,26 +45,38 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function SculpturesPage({ params }: Props) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "SculpturesPage" });
+
+  const t = await getTranslations({
+    locale,
+    namespace: "SculpturesPage",
+  });
+
   const artworks = await getSafeArtworks();
 
   return (
     <main className="bg-[#f8f5ef] text-neutral-900">
+      {/* Hero Banner */}
       <section className="relative isolate overflow-hidden">
-        <div className="relative h-[42vh] min-h-[320px] w-full md:h-[50vh] md:min-h-[420px]">
+        <div className="relative h-[240px] w-full sm:h-[280px] md:h-[300px] lg:h-[320px] xl:h-[340px] 2xl:h-[360px]">
           <Image
             src="/banniere.png"
             alt={t("bannerAlt")}
             fill
             priority
             sizes="100vw"
-            className="scale-[1.03] object-cover object-[center_28%] md:object-[center_32%]"
+            className="object-cover object-[center_30%] md:object-[center_34%]"
           />
 
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/25 to-transparent" />
+          {/* Overlay cinematic */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/20 to-transparent" />
+
+          {/* Soft fade bottom */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-[#f8f5ef]" />
+
+          {/* Blend into page */}
           <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-[#f8f5ef] md:h-32" />
 
+          {/* Content */}
           <div className="absolute inset-0 flex items-end">
             <Container className="pb-10 md:pb-14">
               <div className="max-w-3xl">
@@ -68,7 +86,7 @@ export default async function SculpturesPage({ params }: Props) {
 
                 <div className="mt-4 h-px w-14 bg-white/40 md:mt-5" />
 
-                <h1 className="mt-6 mb-20 max-w-3xl bg-gradient-to-br from-white via-[#ffe7d1] to-[#d07a2d] bg-clip-text text-4xl font-semibold tracking-[-0.05em] text-transparent drop-shadow-[0_0_18px_rgba(208,122,45,0.16)] md:text-6xl">
+                <h1 className="mt-5 mb-4 max-w-3xl bg-gradient-to-br from-white via-[#ffe7d1] to-[#d07a2d] bg-clip-text text-3xl font-semibold tracking-[-0.05em] text-transparent drop-shadow-[0_0_18px_rgba(208,122,45,0.16)] md:mb-6 md:text-5xl">            
                   {t("title")}
                 </h1>
               </div>
@@ -77,6 +95,7 @@ export default async function SculpturesPage({ params }: Props) {
         </div>
       </section>
 
+      {/* Gallery Section */}
       <section className="relative -mt-2 py-14 md:-mt-4 md:py-20">
         <Container>
           <div className="mx-auto max-w-5xl">
