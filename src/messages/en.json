@@ -317,6 +317,9 @@
     "materials": "Materials",
     "description": "Description",
     "details": "Work details",
+    "breadcrumb": {
+      "sculptures": "Sculptures"
+    },
     "cta": {
       "etsy": "Buy on Etsy",
       "requestSimilar": "Request a similar piece"

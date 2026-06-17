@@ -10,6 +10,8 @@ export const siteConfig = {
   locales: ["fr", "en", "es"] as const,
   creator: "Marcos Suarez",
   instagram: "https://www.instagram.com/marcospapermache",
+  defaultOgImage: "/images/og/marcospapermache-og.png",
+  logo: "/images/logo.png",
   description:
     "Atelier d’art contemporain en papier mâché. Sculptures uniques, œuvres murales et créations sur mesure façonnées à la main.",
   keywords: [
@@ -49,21 +51,27 @@ function getLocalizedPath(path: string) {
   return cleanPath(path).replace(/^\/(fr|en|es)/, "");
 }
 
+export function getAbsoluteUrl(pathOrUrl: string) {
+  if (pathOrUrl.startsWith("http")) return pathOrUrl;
+
+  const safePath = pathOrUrl.startsWith("/") ? pathOrUrl : `/${pathOrUrl}`;
+
+  return `${siteConfig.domain}${safePath}`;
+}
+
 export function createMetadata({
   title,
   description = siteConfig.description,
   path = "",
   locale = siteConfig.defaultLocale,
-  image = "/images/og/marcospapermache-og.jpg",
+  image = siteConfig.defaultOgImage,
   type = "website",
   noIndex = false,
 }: SeoParams): Metadata {
   const safePath = cleanPath(path);
   const localizedPath = getLocalizedPath(safePath);
   const url = `${siteConfig.domain}${safePath}`;
-  const imageUrl = image.startsWith("http")
-    ? image
-    : `${siteConfig.domain}${image}`;
+  const imageUrl = getAbsoluteUrl(image);
 
   return {
     metadataBase: new URL(siteConfig.domain),
