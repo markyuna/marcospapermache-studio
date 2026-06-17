@@ -1,20 +1,18 @@
 // src/components/layout/Footer.tsx
+
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  Mail,
-  ArrowUpRight,
-  Sparkles,
-} from "lucide-react";
-
+import { ArrowUpRight, Mail, Sparkles } from "lucide-react";
 import { RiInstagramLine } from "react-icons/ri";
 import { useTranslations } from "next-intl";
+
 import { Link } from "@/i18n/navigation";
 
 const navLinks = [
   { href: "/", key: "home" },
   { href: "/sculptures", key: "sculptures" },
+  { href: "/artiste-papier-mache", key: "artist" },
   { href: "/creations-sur-mesure", key: "custom" },
   { href: "/create", key: "ai" },
   { href: "/contact", key: "contact" },
@@ -132,9 +130,7 @@ export default function Footer() {
             © {new Date().getFullYear()} Marcos Papermache — {t("rights")}
           </p>
 
-          <p className="text-neutral-400">
-            Papier-mâché sculptures · Paris
-          </p>
+          <p className="text-neutral-400">Papier-mâché sculptures · Paris</p>
         </div>
       </motion.div>
     </footer>
