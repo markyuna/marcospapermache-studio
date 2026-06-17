@@ -1,3 +1,5 @@
+// src/components/home/HeroSection.tsx
+
 "use client";
 
 import Image from "next/image";
@@ -11,7 +13,7 @@ import {
 } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
+
 import { Container } from "@/components/layout/container";
 import { Link } from "@/i18n/navigation";
 
@@ -56,19 +58,19 @@ export function HeroSection() {
 
   const smoothScale = useSpring(imageScale, {
     stiffness: 150,
-    damping: 20,
+    damping: 22,
     mass: 0.78,
   });
 
   const smoothDepthX = useSpring(depthX, {
     stiffness: 120,
-    damping: 20,
+    damping: 22,
     mass: 0.8,
   });
 
   const smoothDepthY = useSpring(depthY, {
     stiffness: 120,
-    damping: 20,
+    damping: 22,
     mass: 0.8,
   });
 
@@ -84,27 +86,28 @@ export function HeroSection() {
     mass: 0.9,
   });
 
-  const overlayX = useTransform(smoothRotateY, [-10, 10], [-18, 18]);
-  const overlayY = useTransform(smoothRotateX, [-10, 10], [18, -18]);
+  const overlayX = useTransform(smoothRotateY, [-8, 8], [-12, 12]);
+  const overlayY = useTransform(smoothRotateX, [-8, 8], [12, -12]);
 
-  const imageX = useTransform(smoothDepthX, [-1, 1], [-20, 20]);
-  const imageY = useTransform(smoothDepthY, [-1, 1], [-20, 20]);
+  const imageX = useTransform(smoothDepthX, [-1, 1], [-8, 8]);
+  const imageY = useTransform(smoothDepthY, [-1, 1], [-8, 8]);
 
-  const frontLayerX = useTransform(smoothDepthX, [-1, 1], [-30, 30]);
-  const frontLayerY = useTransform(smoothDepthY, [-1, 1], [-30, 30]);
+  const frontLayerX = useTransform(smoothDepthX, [-1, 1], [-16, 16]);
+  const frontLayerY = useTransform(smoothDepthY, [-1, 1], [-16, 16]);
 
-  const infoCardX = useTransform(smoothRotateY, [-10, 10], [-10, 10]);
-  const infoCardY = useTransform(smoothRotateX, [-10, 10], [10, -10]);
+  const infoCardX = useTransform(smoothRotateY, [-8, 8], [-4, 4]);
+  const infoCardY = useTransform(smoothRotateX, [-8, 8], [4, -4]);
 
-  const shadowX = useTransform(smoothRotateY, [-10, 10], [-26, 26]);
-  const shadowY = useTransform(smoothRotateX, [-10, 10], [-18, 18]);
+  const shadowX = useTransform(smoothRotateY, [-8, 8], [-16, 16]);
+  const shadowY = useTransform(smoothRotateX, [-8, 8], [-12, 12]);
 
   const shimmerOpacity = useTransform(
     [smoothRotateX, smoothRotateY],
     (values) => {
       const [x, y] = values as number[];
       const intensity = (Math.abs(x) + Math.abs(y)) / 14;
-      return Math.min(0.34, 0.14 + intensity * 0.22);
+
+      return Math.min(0.28, 0.1 + intensity * 0.16);
     }
   );
 
@@ -121,8 +124,8 @@ export function HeroSection() {
   const specularBackground = useMotionTemplate`
     radial-gradient(
       circle at ${smoothPointerX}% ${smoothPointerY}%,
-      rgba(255,248,238,0.36) 0%,
-      rgba(255,248,238,0.12) 12%,
+      rgba(255,248,238,0.3) 0%,
+      rgba(255,248,238,0.1) 12%,
       transparent 28%
     )
   `;
@@ -150,13 +153,13 @@ export function HeroSection() {
     const percentX = (x / width - 0.5) * 2;
     const percentY = (y / height - 0.5) * 2;
 
-    rotateY.set(percentX * 7.2);
-    rotateX.set(percentY * -7.2);
+    rotateY.set(percentX * 5);
+    rotateX.set(percentY * -5);
 
     depthX.set(percentX);
     depthY.set(percentY);
 
-    imageScale.set(1.045);
+    imageScale.set(1.01);
 
     pointerX.set((x / width) * 100);
     pointerY.set((y / height) * 100);
@@ -209,7 +212,6 @@ export function HeroSection() {
             </p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
-           
               <Link
                 href="/create"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-linear-to-r from-[#ff7a1a] via-[#ff9a3d] to-[#ffb15f] px-6 py-3.5 text-sm font-medium text-white no-underline shadow-[0_18px_40px_rgba(255,122,26,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_55px_rgba(255,122,26,0.38)]"
@@ -260,11 +262,11 @@ export function HeroSection() {
                   rotateY: smoothRotateY,
                   transformStyle: "preserve-3d",
                 }}
-                className="group relative overflow-visible rounded-[2.2rem] border border-black/4 bg-linear-to-br from-[#fffaf5] via-[#f8efe5] to-[#f1e5d8] p-5 shadow-[0_24px_70px_rgba(70,48,24,0.10)] transition-shadow duration-500 hover:shadow-[0_38px_120px_rgba(70,48,24,0.18)] md:p-6"
+                className="group relative overflow-visible rounded-[2.2rem] border border-black/4 bg-linear-to-br from-[#fffaf5] via-[#f8efe5] to-[#f1e5d8] p-4 shadow-[0_24px_70px_rgba(70,48,24,0.10)] transition-shadow duration-500 hover:shadow-[0_38px_120px_rgba(70,48,24,0.18)] md:p-5"
               >
                 <motion.div
                   style={{ x: shadowX, y: shadowY }}
-                  className="pointer-events-none absolute inset-[8%] -z-10 rounded-[2.2rem] bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.24),rgba(0,0,0,0.10),transparent_70%)] blur-3xl"
+                  className="pointer-events-none absolute inset-[8%] -z-10 rounded-[2.2rem] bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.2),rgba(0,0,0,0.08),transparent_70%)] blur-3xl"
                 />
 
                 <div
@@ -290,12 +292,12 @@ export function HeroSection() {
                     className="absolute inset-0 will-change-transform"
                   >
                     <div
-                      className="absolute inset-[16%] rounded-4xl bg-black/18 blur-3xl"
+                      className="absolute inset-[20%] rounded-4xl bg-black/12 blur-3xl"
                       style={{ transform: "translateZ(8px)" }}
                     />
 
                     <div
-                      className="absolute inset-[6%] opacity-30 blur-[22px]"
+                      className="absolute inset-x-[15%] inset-y-[12%] opacity-24 blur-[22px]"
                       style={{ transform: "translateZ(16px)" }}
                     >
                       <Image
@@ -308,7 +310,7 @@ export function HeroSection() {
                     </div>
 
                     <div
-                      className="absolute inset-[2%]"
+                      className="absolute inset-x-[15%] inset-y-[10%] sm:inset-x-[13%] sm:inset-y-[9%] md:inset-x-[11%] md:inset-y-[8%]"
                       style={{ transform: "translateZ(38px)" }}
                     >
                       <Image
@@ -321,7 +323,7 @@ export function HeroSection() {
                         fill
                         priority
                         sizes="(max-width: 1024px) 100vw, 42vw"
-                        className="object-contain object-center drop-shadow-[0_30px_45px_rgba(74,48,18,0.22)]"
+                        className="object-contain object-center drop-shadow-[0_24px_38px_rgba(74,48,18,0.2)]"
                       />
                     </div>
                   </motion.div>
@@ -365,21 +367,21 @@ export function HeroSection() {
                       y: infoCardY,
                       transformStyle: "preserve-3d",
                     }}
-                    className="relative z-10 flex h-full items-end p-6 md:p-7"
+                    className="relative z-10 flex h-full items-end p-4 sm:p-5 md:p-6"
                   >
                     <div
-                      className="max-w-xs rounded-[1.55rem] border border-white/25 bg-linear-to-b from-white/24 via-white/11 to-white/6 p-6 shadow-[0_16px_45px_rgba(50,30,12,0.18)] backdrop-blur-md"
+                      className="w-full max-w-[13.25rem] rounded-[1.1rem] border border-white/25 bg-linear-to-b from-white/24 via-white/12 to-white/7 p-3.5 shadow-[0_12px_30px_rgba(50,30,12,0.14)] backdrop-blur-md sm:max-w-[14.5rem] sm:p-4 md:max-w-[15.5rem] md:p-5"
                       style={{ transform: "translateZ(118px)" }}
                     >
-                      <p className="text-[10px] uppercase tracking-[0.34em] text-black/55">
+                      <p className="text-[8px] uppercase tracking-[0.28em] text-black/55 sm:text-[9px]">
                         {t("signature.label")}
                       </p>
 
-                      <h2 className="mt-3 text-2xl font-medium tracking-[-0.03em] text-black/90">
+                      <h2 className="mt-1.5 text-base font-medium tracking-[-0.03em] text-black/90 sm:text-lg md:text-xl">
                         {t("signature.title")}
                       </h2>
 
-                      <p className="mt-3 text-sm leading-7 text-black/70">
+                      <p className="mt-1.5 line-clamp-2 text-[11px] leading-5 text-black/70 sm:text-xs sm:leading-6 md:text-[13px]">
                         {t("signature.description")}
                       </p>
                     </div>
