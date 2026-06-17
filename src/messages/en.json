@@ -124,6 +124,33 @@
     "quote": "Each sculpture carries the marks of gesture, time and material.",
     "cta": "Start a custom creation"
   },
+  "GoogleReviews": {
+  "badge": "Google Reviews",
+  "title": "They talk about my studio",
+  "description": "Authentic feedback about handmade creations, imagined as unique and meaningful sculptural pieces.",
+  "ratingLabel": "Customer reviews published on Google",
+  "button": "See all reviews",
+  "source": "Google Review",
+  "starsAria": "{rating} stars",
+  "reviews": [
+    {
+      "name": "MARIO VENTURA",
+      "initials": "MV",
+      "meta": "3 reviews · 1 photo",
+      "text": "I am very happy with the custom order I made with MarkPepperMaché! The work is distinctive, original, and you can truly feel the passion behind each creation. This is an artist to discover absolutely. I highly recommend him!",
+      "date": "June 2025",
+      "rating": 5
+    },
+    {
+      "name": "Samia SAM",
+      "initials": "SS",
+      "meta": "Local Guide · 19 reviews",
+      "text": "I ordered a sculpture from MarkPepperMaché and I am absolutely delighted! Marcos created it custom-made for me and the result was simply magnificent. He is a true artist, talented and attentive. Everything is made from recycled and eco-friendly materials, which makes his work even more admirable. I highly recommend him!",
+      "date": "June 2025",
+      "rating": 5
+    }
+  ]
+},
   "Footer": {
     "description": "Handcrafted papier-mâché sculptures blending contemporary design, recycled materials and unique artistic expression.",
     "navigation": "Navigation",

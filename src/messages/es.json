@@ -124,6 +124,33 @@
     "quote": "Cada escultura conserva las huellas del gesto, el tiempo y la materia.",
     "cta": "Comenzar una creación personalizada"
   },
+  "GoogleReviews": {
+  "badge": "Reseñas Google",
+  "title": "Hablan de mi atelier",
+  "description": "Opiniones auténticas sobre creaciones hechas a mano, pensadas como piezas únicas, sensibles y con carácter.",
+  "ratingLabel": "Reseñas de clientes publicadas en Google",
+  "button": "Ver todas las reseñas",
+  "source": "Reseña Google",
+  "starsAria": "{rating} estrellas",
+  "reviews": [
+    {
+      "name": "MARIO VENTURA",
+      "initials": "MV",
+      "meta": "3 reseñas · 1 foto",
+      "text": "Estoy muy contento con el pedido personalizado que hice en MarkPepperMaché. El trabajo es original, con carácter, y se siente realmente la pasión detrás de cada creación. Es un artista que hay que descubrir absolutamente. ¡Lo recomiendo muchísimo!",
+      "date": "Junio 2025",
+      "rating": 5
+    },
+    {
+      "name": "Samia SAM",
+      "initials": "SS",
+      "meta": "Local Guide · 19 reseñas",
+      "text": "Encargué una escultura en MarkPepperMaché y estoy absolutamente encantada. Marcos la realizó a medida para mí y el resultado fue simplemente magnífico. Es un verdadero artista, talentoso y atento. Todo está fabricado con materiales reciclados y ecológicos, lo que hace que su trabajo sea todavía más admirable. ¡Lo recomiendo muchísimo!",
+      "date": "Junio 2025",
+      "rating": 5
+    }
+  ]
+},
   "Footer": {
     "description": "Esculturas artesanales en papel maché que combinan diseño contemporáneo, materiales reciclados y una expresión artística única.",
     "navigation": "Navegación",
