@@ -60,7 +60,7 @@ export default function AdminNav() {
                   prefetch
                   aria-current={isActive ? "page" : undefined}
                   className={clsx(
-                    "inline-flex min-h-[40px] items-center justify-center rounded-xl px-4 py-2 text-sm font-medium transition-all duration-200",
+                    "inline-flex min-h-10 items-center justify-center rounded-xl px-4 py-2 text-sm font-medium transition-all duration-200",
                     isActive
                       ? "border border-black bg-black text-white shadow-[0_8px_24px_rgba(0,0,0,0.12)]"
                       : "border border-neutral-300 bg-white text-neutral-800 hover:border-neutral-900 hover:bg-neutral-50 hover:text-neutral-900"

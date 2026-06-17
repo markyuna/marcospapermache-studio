@@ -161,8 +161,8 @@ export default function Navbar() {
               "group/nav relative flex h-16 items-center gap-8 overflow-hidden rounded-full border border-black/10 bg-white/55 px-9 shadow-[0_24px_80px_rgba(20,20,20,0.075)] backdrop-blur-2xl supports-[backdrop-filter]:bg-white/42 xl:gap-10"
             )}
           >
-            <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-b from-white/85 via-white/35 to-[#f5eadc]/35" />
-            <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent" />
+            <div className="pointer-events-none absolute inset-0 rounded-full bg-linear-to-b from-white/85 via-white/35 to-[#f5eadc]/35" />
+            <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-linear-to-r from-transparent via-white/90 to-transparent" />
             <div className="pointer-events-none absolute -left-24 top-1/2 h-24 w-24 -translate-y-1/2 rounded-full bg-[#d9a15e]/10 blur-2xl transition-transform duration-700 group-hover/nav:translate-x-20" />
 
             {navLinks.map((link) => {
@@ -186,7 +186,7 @@ export default function Navbar() {
 
                   <span
                     className={clsx(
-                      "absolute bottom-[15px] left-1/2 h-px w-full -translate-x-1/2 origin-center rounded-full bg-gradient-to-r from-transparent via-[#c88a45] to-transparent transition-all duration-500",
+                      "absolute bottom-[15px] left-1/2 h-px w-full -translate-x-1/2 origin-center rounded-full bg-linear-to-r from-transparent via-[#c88a45] to-transparent transition-all duration-500",
                       isActive
                         ? "scale-x-100 opacity-100"
                         : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100"
@@ -256,7 +256,7 @@ export default function Navbar() {
 
                   <span
                     className={clsx(
-                      "h-px w-8 rounded-full bg-gradient-to-r from-[#b77b42] to-[#f4d7a1] transition",
+                      "h-px w-8 rounded-full bg-linear-to-r from-[#b77b42] to-[#f4d7a1] transition",
                       isActive
                         ? "opacity-100"
                         : "opacity-0 group-hover:opacity-100"

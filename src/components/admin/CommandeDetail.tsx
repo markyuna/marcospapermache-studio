@@ -149,7 +149,7 @@ export default function CommandeDetail({
 
   return (
     <div className="mx-auto max-w-5xl space-y-6">
-      <div className="rounded-[2rem] border border-white/70 bg-white/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)] md:p-8">
+      <div className="rounded-4xl border border-white/70 bg-white/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)] md:p-8">
         <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
           <div>
             <p className="text-xs uppercase tracking-[0.28em] text-orange-500">
@@ -174,9 +174,9 @@ export default function CommandeDetail({
       </div>
 
       {previewImage ? (
-        <div className="overflow-hidden rounded-[2rem] border border-white/70 bg-white/90 p-4 shadow-[0_10px_30px_rgba(15,23,42,0.06)] md:p-6">
-          <div className="relative overflow-hidden rounded-[1.5rem] bg-neutral-100">
-            <div className="relative h-[320px] w-full md:h-[480px]">
+        <div className="overflow-hidden rounded-4xl border border-white/70 bg-white/90 p-4 shadow-[0_10px_30px_rgba(15,23,42,0.06)] md:p-6">
+          <div className="relative overflow-hidden rounded-3xl bg-neutral-100">
+            <div className="relative h-80 w-full md:h-180">
               <Image
                 src={previewImage}
                 alt={`Commande ${commande.id}`}
@@ -218,7 +218,7 @@ export default function CommandeDetail({
 
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
         <div className="space-y-6">
-          <div className="rounded-[2rem] border border-white/70 bg-white/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
+          <div className="rounded-4xl border border-white/70 bg-white/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
             <h2 className="text-lg font-semibold text-neutral-900">
               Informations de la commande
             </h2>
@@ -280,7 +280,7 @@ export default function CommandeDetail({
             </div>
           </div>
 
-          <div className="rounded-[2rem] border border-white/70 bg-white/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
+          <div className="rounded-4xl border border-white/70 bg-white/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
             <h2 className="text-lg font-semibold text-neutral-900">
               Message du client
             </h2>
@@ -294,7 +294,7 @@ export default function CommandeDetail({
         </div>
 
         <aside className="space-y-6">
-          <div className="rounded-[2rem] border border-white/70 bg-white/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
+          <div className="rounded-4xl border border-white/70 bg-white/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
             <h2 className="text-lg font-semibold text-neutral-900">
               Gestion du statut
             </h2>
@@ -336,7 +336,7 @@ export default function CommandeDetail({
             </div>
           </div>
 
-          <div className="rounded-[2rem] border border-white/70 bg-white/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
+          <div className="rounded-4xl border border-white/70 bg-white/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
             <h2 className="text-lg font-semibold text-neutral-900">
               Actions rapides
             </h2>

@@ -71,7 +71,7 @@ export function ProcessSection() {
 
   return (
     <section className="relative overflow-hidden bg-[#fbf6ef] py-24 md:py-32">
-      <div className="pointer-events-none absolute left-[-12%] top-20 h-[26rem] w-[26rem] rounded-full bg-[#ff6a00]/10 blur-3xl" />
+      <div className="pointer-events-none absolute left-[-12%] top-20 h-104 w-104 rounded-full bg-[#ff6a00]/10 blur-3xl" />
       <div className="pointer-events-none absolute bottom-0 right-[-10%] h-[30rem] w-[30rem] rounded-full bg-[#9a6b47]/10 blur-3xl" />
 
       <Container>

@@ -196,10 +196,10 @@ export function HeroSection() {
             </div>
 
             <h1 className="mt-7 max-w-4xl text-[3.05rem] font-medium leading-[0.9] tracking-[-0.075em] sm:text-6xl md:text-7xl xl:text-[6.6rem]">
-              <span className="block bg-gradient-to-r from-[#17130f] via-[#8a633d] to-[#c6a06f] bg-clip-text text-transparent">
+              <span className="block bg-linear-to-r from-[#17130f] via-[#8a633d] to-[#c6a06f] bg-clip-text text-transparent">
                 {t("title.line1")}
               </span>
-              <span className="block bg-gradient-to-r from-[#c6a06f] via-[#6f4b2d] to-[#17130f] bg-clip-text text-transparent">
+              <span className="block bg-linear-to-r from-[#c6a06f] via-[#6f4b2d] to-[#17130f] bg-clip-text text-transparent">
                 {t("title.line2")}
               </span>
             </h1>
@@ -260,7 +260,7 @@ export function HeroSection() {
                   rotateY: smoothRotateY,
                   transformStyle: "preserve-3d",
                 }}
-                className="group relative overflow-visible rounded-[2.2rem] border border-black/[0.04] bg-gradient-to-br from-[#fffaf5] via-[#f8efe5] to-[#f1e5d8] p-5 shadow-[0_24px_70px_rgba(70,48,24,0.10)] transition-shadow duration-500 hover:shadow-[0_38px_120px_rgba(70,48,24,0.18)] md:p-6"
+                className="group relative overflow-visible rounded-[2.2rem] border border-black/4 bg-linear-to-br from-[#fffaf5] via-[#f8efe5] to-[#f1e5d8] p-5 shadow-[0_24px_70px_rgba(70,48,24,0.10)] transition-shadow duration-500 hover:shadow-[0_38px_120px_rgba(70,48,24,0.18)] md:p-6"
               >
                 <motion.div
                   style={{ x: shadowX, y: shadowY }}
@@ -268,7 +268,7 @@ export function HeroSection() {
                 />
 
                 <div
-                  className="relative aspect-[4/5] overflow-hidden rounded-[1.8rem] border border-white/40 bg-[linear-gradient(180deg,#faf3eb_0%,#f0e1d1_100%)]"
+                  className="relative aspect-4/5 overflow-hidden rounded-[1.8rem] border border-white/40 bg-[linear-gradient(180deg,#faf3eb_0%,#f0e1d1_100%)]"
                   style={{ transformStyle: "preserve-3d" }}
                 >
                   <motion.div
@@ -290,7 +290,7 @@ export function HeroSection() {
                     className="absolute inset-0 will-change-transform"
                   >
                     <div
-                      className="absolute inset-[16%] rounded-[2rem] bg-black/18 blur-3xl"
+                      className="absolute inset-[16%] rounded-4xl bg-black/18 blur-3xl"
                       style={{ transform: "translateZ(8px)" }}
                     />
 
@@ -368,7 +368,7 @@ export function HeroSection() {
                     className="relative z-10 flex h-full items-end p-6 md:p-7"
                   >
                     <div
-                      className="max-w-xs rounded-[1.55rem] border border-white/25 bg-gradient-to-b from-white/24 via-white/11 to-white/6 p-6 shadow-[0_16px_45px_rgba(50,30,12,0.18)] backdrop-blur-md"
+                      className="max-w-xs rounded-[1.55rem] border border-white/25 bg-linear-to-b from-white/24 via-white/11 to-white/6 p-6 shadow-[0_16px_45px_rgba(50,30,12,0.18)] backdrop-blur-md"
                       style={{ transform: "translateZ(118px)" }}
                     >
                       <p className="text-[10px] uppercase tracking-[0.34em] text-black/55">
