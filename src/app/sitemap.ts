@@ -13,6 +13,7 @@ const staticRoutes = [
   "/commande",
   "/create",
   "/contact",
+  "/artiste-papier-mache",
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
