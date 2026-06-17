@@ -181,11 +181,11 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative overflow-hidden pb-24 pt-24 md:pb-32 md:pt-32 xl:pb-40 xl:pt-40">
+    <section className="relative overflow-hidden pb-20 pt-10 md:pb-28 md:pt-14 xl:pb-36 xl:pt-16">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(180,150,110,0.10),transparent_30%),radial-gradient(circle_at_82%_12%,rgba(218,198,172,0.18),transparent_24%),linear-gradient(to_bottom,#fffaf6,#f8f1e7,#fffaf6)]" />
 
       <Container className="relative z-10">
-        <div className="grid items-center gap-14 lg:grid-cols-[1.02fr_0.98fr] lg:gap-20">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.02fr_0.98fr] lg:gap-18">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -262,11 +262,11 @@ export function HeroSection() {
                   rotateY: smoothRotateY,
                   transformStyle: "preserve-3d",
                 }}
-                className="group relative overflow-visible rounded-[2.2rem] border border-black/4 bg-linear-to-br from-[#fffaf5] via-[#f8efe5] to-[#f1e5d8] p-4 shadow-[0_24px_70px_rgba(70,48,24,0.10)] transition-shadow duration-500 hover:shadow-[0_38px_120px_rgba(70,48,24,0.18)] md:p-5"
+                className="group relative overflow-visible rounded-[2.2rem] border border-black/4 bg-linear-to-br from-[#fffaf5] via-[#f8efe5] to-[#f1e5d8] p-5 shadow-[0_24px_70px_rgba(70,48,24,0.10)] transition-shadow duration-500 hover:shadow-[0_38px_120px_rgba(70,48,24,0.18)] md:p-6"
               >
                 <motion.div
                   style={{ x: shadowX, y: shadowY }}
-                  className="pointer-events-none absolute inset-[8%] -z-10 rounded-[2.2rem] bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.2),rgba(0,0,0,0.08),transparent_70%)] blur-3xl"
+                  className="pointer-events-none absolute inset-[8%] -z-10 rounded-[2.2rem] bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.24),rgba(0,0,0,0.10),transparent_70%)] blur-3xl"
                 />
 
                 <div
@@ -292,12 +292,12 @@ export function HeroSection() {
                     className="absolute inset-0 will-change-transform"
                   >
                     <div
-                      className="absolute inset-[20%] rounded-4xl bg-black/12 blur-3xl"
+                      className="absolute inset-[16%] rounded-4xl bg-black/18 blur-3xl"
                       style={{ transform: "translateZ(8px)" }}
                     />
 
                     <div
-                      className="absolute inset-x-[15%] inset-y-[12%] opacity-24 blur-[22px]"
+                      className="absolute inset-[6%] opacity-30 blur-[22px]"
                       style={{ transform: "translateZ(16px)" }}
                     >
                       <Image
@@ -310,7 +310,7 @@ export function HeroSection() {
                     </div>
 
                     <div
-                      className="absolute inset-x-[15%] inset-y-[10%] sm:inset-x-[13%] sm:inset-y-[9%] md:inset-x-[11%] md:inset-y-[8%]"
+                      className="absolute inset-x-[15%] inset-y-[10%] sm:inset-x-[13%] sm:inset-y-[9%] md:inset-x-[11%] md:inset-y-[8%] xl:inset-[2%]"
                       style={{ transform: "translateZ(38px)" }}
                     >
                       <Image
@@ -323,7 +323,7 @@ export function HeroSection() {
                         fill
                         priority
                         sizes="(max-width: 1024px) 100vw, 42vw"
-                        className="object-contain object-center drop-shadow-[0_24px_38px_rgba(74,48,18,0.2)]"
+                        className="object-contain object-center drop-shadow-[0_30px_45px_rgba(74,48,18,0.22)]"
                       />
                     </div>
                   </motion.div>
