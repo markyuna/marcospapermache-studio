@@ -12,7 +12,7 @@ import { Link } from "@/i18n/navigation";
 const navLinks = [
   { href: "/", key: "home" },
   { href: "/sculptures", key: "sculptures" },
-  { href: "/artiste-papier-mache", key: "artist" },
+  { href: "/about", key: "about" },
   { href: "/creations-sur-mesure", key: "custom" },
   { href: "/create", key: "ai" },
   { href: "/contact", key: "contact" },
@@ -99,6 +99,7 @@ export default function Footer() {
                   <Mail size={17} className="text-[#a56b32]" />
                   contact@marcospapermache.com
                 </span>
+
                 <ArrowUpRight
                   size={16}
                   className="transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -116,6 +117,7 @@ export default function Footer() {
                   <RiInstagramLine size={17} className="text-[#a56b32]" />
                   Instagram
                 </span>
+
                 <ArrowUpRight
                   size={16}
                   className="transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5"

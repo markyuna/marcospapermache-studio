@@ -1,7 +1,15 @@
 // src/app/[locale]/artiste-papier-mache/page.tsx
 
 import type { Metadata } from "next";
-import { ArrowRight, Brush, Gem, HandHeart, Recycle } from "lucide-react";
+import {
+  ArrowRight,
+  Brush,
+  Gem,
+  HandHeart,
+  MapPin,
+  Recycle,
+  Sparkles,
+} from "lucide-react";
 import { setRequestLocale } from "next-intl/server";
 
 import { Container } from "@/components/layout/container";
@@ -18,133 +26,185 @@ type Props = {
 
 const pageContent = {
   fr: {
-    seoTitle: "Artiste papier mâché en France",
+    seoTitle:
+      "Artiste papier mâché en France | Sculptures sur mesure et œuvres murales",
     seoDescription:
-      "Découvrez l’univers de Marcos Suarez, artiste sculpteur en papier mâché, créateur de sculptures contemporaines, œuvres murales et pièces sur mesure façonnées à la main.",
-    badge: "Artiste papier mâché",
-    title: "Un artiste papier mâché entre matière, émotion et sculpture contemporaine.",
+      "Vous recherchez un artiste papier mâché en France ? Marcos Suarez crée des sculptures contemporaines, œuvres murales, luminaires et pièces sur mesure façonnées à la main.",
+    badge: "Artiste papier mâché en France",
+    title:
+      "Sculptures en papier mâché sur mesure, œuvres murales et créations artisanales.",
     description:
-      "Marcos Suarez développe un univers sculptural où le papier mâché devient matière vivante. Chaque œuvre est façonnée à la main avec une attention particulière portée aux volumes, aux textures, à la lumière et à la présence de la pièce dans l’espace.",
+      "Vous recherchez une sculpture en papier mâché unique pour votre intérieur, un projet décoratif, une œuvre murale ou une création personnalisée ? Marcos Suarez réalise des pièces contemporaines façonnées à la main à partir de papier, carton et matières recyclées.",
     primaryCta: "Découvrir les sculptures",
     secondaryCta: "Commander une création",
-    introEyebrow: "Une pratique artisanale et contemporaine",
-    introTitle: "Transformer le papier en présence sculpturale.",
+    introEyebrow: "Créations artisanales en papier mâché",
+    introTitle: "Des pièces uniques pour particuliers, décorateurs et projets d’intérieur.",
     introText:
-      "Le papier mâché permet de créer des œuvres légères, expressives et profondément texturées. Dans l’atelier, le papier, le carton et les matières recyclées sont transformés en sculptures murales, objets d’art, luminaires sculpturaux ou pièces décoratives uniques.",
+      "Chaque sculpture est imaginée comme une présence décorative forte : une œuvre murale, un objet sculptural, un luminaire, une pièce symbolique ou une création sur mesure. Le papier mâché permet de créer du relief, de la texture, de la légèreté et une esthétique organique adaptée aux intérieurs contemporains.",
     blocks: [
       {
-        title: "Sculptures uniques",
-        text: "Chaque création est pensée comme une pièce singulière, avec ses reliefs, ses imperfections sensibles et son identité propre.",
+        title: "Sculptures sur mesure",
+        text: "Création d’une pièce personnalisée à partir d’une idée, d’un souvenir, d’un symbole, d’un espace ou d’une intention décorative.",
+      },
+      {
+        title: "Œuvres murales",
+        text: "Réalisation de sculptures murales en papier mâché pour apporter du volume, de la matière et une présence artistique à un mur.",
+      },
+      {
+        title: "Décoration intérieure",
+        text: "Pièces pensées pour dialoguer avec un salon, une entrée, une chambre, une boutique, un restaurant ou un espace créatif.",
       },
       {
         title: "Matières recyclées",
-        text: "Le papier, le carton et les matériaux réutilisés deviennent une base artistique pour donner naissance à des formes nouvelles.",
-      },
-      {
-        title: "Création sur mesure",
-        text: "Une œuvre peut être imaginée à partir d’un souvenir, d’un lieu, d’un portrait, d’un objet symbolique ou d’une intention décorative.",
-      },
-      {
-        title: "Univers contemporain",
-        text: "L’approche mêle geste artisanal, recherche de forme, textures organiques et esthétique contemporaine.",
+        text: "Utilisation de papier, carton et matériaux réutilisés transformés en formes sculpturales contemporaines.",
       },
     ],
-    processEyebrow: "Pourquoi choisir le papier mâché ?",
-    processTitle: "Une matière expressive, durable et profondément artisanale.",
+    processEyebrow: "Pourquoi choisir une sculpture en papier mâché ?",
+    processTitle:
+      "Une matière légère, expressive et idéale pour les créations personnalisées.",
     processText:
-      "Le papier mâché offre une liberté rare : il permet de modeler des formes organiques, de créer du relief, d’intégrer la lumière et de donner une présence très personnelle à chaque sculpture. Cette matière humble devient un langage artistique capable de transformer un intérieur.",
+      "Le papier mâché offre une grande liberté de forme. Il permet de créer des volumes organiques, des textures profondes et des pièces légères qui peuvent s’intégrer facilement dans un intérieur. Chaque œuvre est façonnée à la main, ce qui rend chaque relief, chaque finition et chaque détail véritablement unique.",
+    servicesEyebrow: "Ce que vous pouvez commander",
+    servicesTitle: "Une création adaptée à votre espace et à votre intention.",
+    services: [
+      "Sculpture décorative en papier mâché",
+      "Œuvre murale texturée",
+      "Luminaire sculptural",
+      "Pièce personnalisée à partir d’un souvenir",
+      "Création pour boutique, restaurant ou lieu culturel",
+      "Objet artistique pour décoration intérieure",
+    ],
+    locationEyebrow: "Disponibilité",
+    locationTitle: "Un artiste papier mâché basé en France.",
+    locationText:
+      "Les créations peuvent être réalisées pour des projets en France. Chaque demande est étudiée selon les dimensions, le style recherché, les contraintes de livraison et le niveau de personnalisation souhaité.",
     finalTitle: "Vous cherchez une sculpture en papier mâché sur mesure ?",
     finalDescription:
-      "Vous pouvez découvrir les œuvres existantes ou envoyer une demande pour imaginer une création personnalisée adaptée à votre espace, votre histoire ou votre univers décoratif.",
+      "Envoyez votre idée, vos inspirations, les dimensions souhaitées ou quelques photos de votre espace. Nous pourrons imaginer ensemble une création artisanale adaptée à votre univers.",
     finalCta: "Parler de mon projet",
   },
   en: {
-    seoTitle: "Paper mâché artist in France",
+    seoTitle:
+      "Paper mâché artist in France | Custom sculptures and wall artworks",
     seoDescription:
-      "Discover the world of Marcos Suarez, a paper mâché sculptor creating contemporary sculptures, wall artworks and bespoke handmade pieces.",
-    badge: "Paper mâché artist",
-    title: "A paper mâché artist blending material, emotion and contemporary sculpture.",
+      "Looking for a paper mâché artist in France? Marcos Suarez creates contemporary sculptures, wall artworks, sculptural lighting and bespoke handmade pieces.",
+    badge: "Paper mâché artist in France",
+    title:
+      "Custom paper mâché sculptures, wall artworks and handmade creations.",
     description:
-      "Marcos Suarez creates a sculptural universe where paper mâché becomes a living material. Each artwork is handmade with special attention to volume, texture, light and the presence of the piece within a space.",
+      "Looking for a unique paper mâché sculpture for your interior, a decorative project, a wall artwork or a personalized piece? Marcos Suarez creates contemporary handmade works using paper, cardboard and recycled materials.",
     primaryCta: "Discover the sculptures",
     secondaryCta: "Order a custom piece",
-    introEyebrow: "A handcrafted and contemporary practice",
-    introTitle: "Turning paper into sculptural presence.",
+    introEyebrow: "Handmade paper mâché creations",
+    introTitle: "Unique pieces for homes, decorators and interior projects.",
     introText:
-      "Paper mâché makes it possible to create lightweight, expressive and deeply textured works. In the studio, paper, cardboard and recycled materials are transformed into wall sculptures, art objects, sculptural lighting and unique decorative pieces.",
+      "Each sculpture is imagined as a strong decorative presence: a wall artwork, a sculptural object, a light piece, a symbolic work or a bespoke creation. Paper mâché makes it possible to create relief, texture, lightness and an organic aesthetic suited to contemporary interiors.",
     blocks: [
       {
-        title: "Unique sculptures",
-        text: "Each creation is conceived as a singular piece, with its own reliefs, sensitive imperfections and identity.",
+        title: "Custom sculptures",
+        text: "Creation of a personalized piece based on an idea, a memory, a symbol, a space or a decorative intention.",
+      },
+      {
+        title: "Wall artworks",
+        text: "Paper mâché wall sculptures designed to bring volume, material and artistic presence to a wall.",
+      },
+      {
+        title: "Interior decoration",
+        text: "Pieces designed to interact with a living room, entrance, bedroom, boutique, restaurant or creative space.",
       },
       {
         title: "Recycled materials",
-        text: "Paper, cardboard and reused materials become an artistic foundation for new sculptural forms.",
-      },
-      {
-        title: "Bespoke creation",
-        text: "A piece can be imagined from a memory, a place, a portrait, a symbolic object or a decorative intention.",
-      },
-      {
-        title: "Contemporary universe",
-        text: "The approach combines handcrafted gesture, formal research, organic textures and contemporary aesthetics.",
+        text: "Paper, cardboard and reused materials transformed into contemporary sculptural forms.",
       },
     ],
-    processEyebrow: "Why choose paper mâché?",
-    processTitle: "An expressive, sustainable and deeply artisanal material.",
+    processEyebrow: "Why choose a paper mâché sculpture?",
+    processTitle:
+      "A lightweight, expressive material ideal for personalized creations.",
     processText:
-      "Paper mâché offers rare freedom: it allows organic forms to be modeled, relief to be created, light to be integrated and a very personal presence to be given to each sculpture. This humble material becomes an artistic language capable of transforming an interior.",
+      "Paper mâché offers great freedom of form. It makes it possible to create organic volumes, deep textures and lightweight pieces that can easily fit into an interior. Each artwork is handmade, making every relief, finish and detail truly unique.",
+    servicesEyebrow: "What you can order",
+    servicesTitle: "A creation adapted to your space and intention.",
+    services: [
+      "Decorative paper mâché sculpture",
+      "Textured wall artwork",
+      "Sculptural lighting",
+      "Personalized piece based on a memory",
+      "Creation for a boutique, restaurant or cultural space",
+      "Art object for interior decoration",
+    ],
+    locationEyebrow: "Availability",
+    locationTitle: "A paper mâché artist based in France.",
+    locationText:
+      "Creations can be made for projects in France. Each request is studied according to dimensions, desired style, delivery constraints and the level of personalization required.",
     finalTitle: "Looking for a custom paper mâché sculpture?",
     finalDescription:
-      "You can discover existing works or send a request to imagine a personalized creation adapted to your space, your story or your decorative universe.",
+      "Send your idea, inspirations, desired dimensions or a few photos of your space. Together, we can imagine a handmade creation adapted to your universe.",
     finalCta: "Discuss my project",
   },
   es: {
-    seoTitle: "Artista de papel maché en Francia",
+    seoTitle:
+      "Artista de papel maché en Francia | Esculturas personalizadas y obras murales",
     seoDescription:
-      "Descubre el universo de Marcos Suarez, artista escultor en papel maché, creador de esculturas contemporáneas, obras murales y piezas personalizadas hechas a mano.",
-    badge: "Artista de papel maché",
-    title: "Un artista de papel maché entre materia, emoción y escultura contemporánea.",
+      "¿Buscas un artista de papel maché en Francia? Marcos Suarez crea esculturas contemporáneas, obras murales, luminarias escultóricas y piezas personalizadas hechas a mano.",
+    badge: "Artista de papel maché en Francia",
+    title:
+      "Esculturas de papel maché personalizadas, obras murales y creaciones artesanales.",
     description:
-      "Marcos Suarez desarrolla un universo escultórico donde el papel maché se convierte en una materia viva. Cada obra está hecha a mano con una atención especial al volumen, la textura, la luz y la presencia de la pieza en el espacio.",
+      "¿Buscas una escultura de papel maché única para tu interior, un proyecto decorativo, una obra mural o una pieza personalizada? Marcos Suarez realiza obras contemporáneas hechas a mano a partir de papel, cartón y materiales reciclados.",
     primaryCta: "Descubrir las esculturas",
     secondaryCta: "Encargar una creación",
-    introEyebrow: "Una práctica artesanal y contemporánea",
-    introTitle: "Transformar el papel en presencia escultórica.",
+    introEyebrow: "Creaciones artesanales en papel maché",
+    introTitle:
+      "Piezas únicas para particulares, decoradores y proyectos de interior.",
     introText:
-      "El papel maché permite crear obras ligeras, expresivas y profundamente texturizadas. En el taller, el papel, el cartón y los materiales reciclados se transforman en esculturas murales, objetos artísticos, luminarias escultóricas y piezas decorativas únicas.",
+      "Cada escultura se imagina como una presencia decorativa fuerte: una obra mural, un objeto escultórico, una luminaria, una pieza simbólica o una creación personalizada. El papel maché permite crear relieve, textura, ligereza y una estética orgánica adaptada a interiores contemporáneos.",
     blocks: [
       {
-        title: "Esculturas únicas",
-        text: "Cada creación se piensa como una pieza singular, con sus relieves, imperfecciones sensibles e identidad propia.",
+        title: "Esculturas personalizadas",
+        text: "Creación de una pieza a medida a partir de una idea, un recuerdo, un símbolo, un espacio o una intención decorativa.",
+      },
+      {
+        title: "Obras murales",
+        text: "Realización de esculturas murales en papel maché para aportar volumen, materia y presencia artística a una pared.",
+      },
+      {
+        title: "Decoración interior",
+        text: "Piezas pensadas para dialogar con un salón, una entrada, una habitación, una tienda, un restaurante o un espacio creativo.",
       },
       {
         title: "Materiales reciclados",
-        text: "El papel, el cartón y los materiales reutilizados se convierten en una base artística para dar vida a nuevas formas.",
-      },
-      {
-        title: "Creación personalizada",
-        text: "Una obra puede imaginarse a partir de un recuerdo, un lugar, un retrato, un objeto simbólico o una intención decorativa.",
-      },
-      {
-        title: "Universo contemporáneo",
-        text: "El enfoque mezcla gesto artesanal, búsqueda de forma, texturas orgánicas y estética contemporánea.",
+        text: "Uso de papel, cartón y materiales reutilizados transformados en formas escultóricas contemporáneas.",
       },
     ],
-    processEyebrow: "¿Por qué elegir el papel maché?",
-    processTitle: "Una materia expresiva, sostenible y profundamente artesanal.",
+    processEyebrow: "¿Por qué elegir una escultura de papel maché?",
+    processTitle:
+      "Una materia ligera, expresiva e ideal para creaciones personalizadas.",
     processText:
-      "El papel maché ofrece una libertad especial: permite modelar formas orgánicas, crear relieve, integrar la luz y dar una presencia muy personal a cada escultura. Esta materia humilde se convierte en un lenguaje artístico capaz de transformar un interior.",
+      "El papel maché ofrece una gran libertad de forma. Permite crear volúmenes orgánicos, texturas profundas y piezas ligeras que pueden integrarse fácilmente en un interior. Cada obra está hecha a mano, lo que hace que cada relieve, acabado y detalle sea verdaderamente único.",
+    servicesEyebrow: "Qué puedes encargar",
+    servicesTitle: "Una creación adaptada a tu espacio y a tu intención.",
+    services: [
+      "Escultura decorativa en papel maché",
+      "Obra mural texturizada",
+      "Luminaria escultórica",
+      "Pieza personalizada a partir de un recuerdo",
+      "Creación para tienda, restaurante o espacio cultural",
+      "Objeto artístico para decoración interior",
+    ],
+    locationEyebrow: "Disponibilidad",
+    locationTitle: "Un artista de papel maché basado en Francia.",
+    locationText:
+      "Las creaciones pueden realizarse para proyectos en Francia. Cada solicitud se estudia según las dimensiones, el estilo deseado, las condiciones de entrega y el nivel de personalización requerido.",
     finalTitle: "¿Buscas una escultura personalizada en papel maché?",
     finalDescription:
-      "Puedes descubrir las obras existentes o enviar una solicitud para imaginar una creación personalizada adaptada a tu espacio, tu historia o tu universo decorativo.",
+      "Envía tu idea, tus inspiraciones, las dimensiones deseadas o algunas fotos de tu espacio. Juntos podremos imaginar una creación artesanal adaptada a tu universo.",
     finalCta: "Hablar de mi proyecto",
   },
 };
 
 type LocaleKey = keyof typeof pageContent;
 
-const icons = [Gem, Recycle, HandHeart, Brush];
+const icons = [HandHeart, Brush, Gem, Recycle];
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -203,7 +263,7 @@ export default async function ArtistePapierMachePage({ params }: Props) {
     "@id": `${pageUrl}#paper-mache-service`,
     name: content.seoTitle,
     description: content.seoDescription,
-    serviceType: "Création artistique en papier mâché",
+    serviceType: "Création artistique en papier mâché sur mesure",
     provider: {
       "@type": "Person",
       "@id": `${siteConfig.domain}/${locale}#artist`,
@@ -216,6 +276,15 @@ export default async function ArtistePapierMachePage({ params }: Props) {
       name: "France",
     },
     url: pageUrl,
+    offers: {
+      "@type": "Offer",
+      availability: "https://schema.org/InStock",
+      itemOffered: {
+        "@type": "Service",
+        name: content.seoTitle,
+        description: content.seoDescription,
+      },
+    },
   };
 
   const breadcrumbJsonLd = {
@@ -273,7 +342,7 @@ export default async function ArtistePapierMachePage({ params }: Props) {
                   href="/sculptures"
                   className="group inline-flex items-center justify-center gap-2 rounded-full border border-[#f3a34d]/40 bg-[linear-gradient(135deg,#ff9f43,#e76f16,#c85100)] px-6 py-3 text-sm font-semibold text-white shadow-[0_18px_55px_rgba(231,111,22,0.28)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_70px_rgba(231,111,22,0.36)]"
                 >
-                  {content.primaryCta}
+                  <span>{content.primaryCta}</span>
                   <ArrowRight className="h-4 w-4 transition duration-300 group-hover:translate-x-1" />
                 </Link>
 
@@ -353,6 +422,65 @@ export default async function ArtistePapierMachePage({ params }: Props) {
           </Container>
         </section>
 
+        <section className="relative py-20 md:py-24">
+          <Container>
+            <div className="grid gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.34em] text-[#a8754d]">
+                  {content.servicesEyebrow}
+                </p>
+
+                <h2 className="mt-5 text-4xl font-semibold tracking-[-0.045em] text-[#181512] md:text-6xl">
+                  {content.servicesTitle}
+                </h2>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                {content.services.map((service) => (
+                  <div
+                    key={service}
+                    className="flex items-start gap-4 rounded-[1.5rem] border border-white/70 bg-white/72 p-5 shadow-[0_18px_55px_rgba(65,38,15,0.06)] backdrop-blur-xl"
+                  >
+                    <div className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#fff1e5] text-[#c85100]">
+                      <Sparkles className="h-4 w-4" />
+                    </div>
+
+                    <p className="text-sm font-medium leading-7 text-[#4f4338]">
+                      {service}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        <section className="relative py-20 md:py-24">
+          <Container>
+            <div className="rounded-[2.5rem] border border-[#ead7c2] bg-white/72 p-8 shadow-[0_24px_75px_rgba(65,38,15,0.08)] backdrop-blur-xl md:p-12">
+              <div className="flex flex-col gap-6 md:flex-row md:items-start">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-[#efd8c1] bg-[#fff4e9] text-[#c85100] shadow-sm">
+                  <MapPin className="h-6 w-6" />
+                </div>
+
+                <div className="max-w-4xl">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.34em] text-[#a8754d]">
+                    {content.locationEyebrow}
+                  </p>
+
+                  <h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-[#181512] md:text-5xl">
+                    {content.locationTitle}
+                  </h2>
+
+                  <p className="mt-5 text-base leading-8 text-[#66584d] md:text-lg md:leading-9">
+                    {content.locationText}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Container>
+        </section>
+
         <section className="relative pb-24 pt-10 md:pb-32">
           <Container>
             <div className="rounded-[2.75rem] border border-[#ead7c2] bg-[#181512] p-8 text-white shadow-[0_30px_100px_rgba(24,21,18,0.22)] md:p-12">
@@ -367,13 +495,18 @@ export default async function ArtistePapierMachePage({ params }: Props) {
                   </p>
                 </div>
 
-                <Link
-                  href="/contact"
-                  className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#181512] transition duration-300 hover:-translate-y-0.5 hover:bg-[#fff2e6]"
-                >
-                  {content.finalCta}
-                  <ArrowRight className="h-4 w-4 transition duration-300 group-hover:translate-x-1" />
-                </Link>
+                <div className="flex justify-start lg:justify-end">
+                  <Link
+                    href="/contact"
+                    className="group inline-flex w-fit items-center justify-center gap-2 rounded-full border border-white/80 bg-white px-7 py-4 text-sm font-semibold text-[#181512] shadow-[0_18px_55px_rgba(255,255,255,0.12)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#fff2e6] focus:outline-none focus:ring-2 focus:ring-white/70 focus:ring-offset-2 focus:ring-offset-[#181512]"
+                  >
+                    <span className="whitespace-nowrap text-[#181512]">
+                      {content.finalCta}
+                    </span>
+
+                    <ArrowRight className="h-4 w-4 shrink-0 text-[#181512] transition duration-300 group-hover:translate-x-1" />
+                  </Link>
+                </div>
               </div>
             </div>
           </Container>
