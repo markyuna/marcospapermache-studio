@@ -1,5 +1,7 @@
 // src/app/api/admin/clarity/route.ts
 import { NextResponse } from "next/server";
+import { unstable_cache } from "next/cache";
+import { requireAdmin } from "@/lib/admin-auth";
 
 export const dynamic = "force-dynamic";
 
@@ -26,41 +28,26 @@ async function fetchClarity(token: string, params: URLSearchParams) {
   const response = await fetch(`${CLARITY_API_URL}?${params.toString()}`, {
     headers: {
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
     },
-    cache: "no-store",
+    // Cache at the fetch level for 1 hour so repeated calls don't burn the daily limit
+    next: { revalidate: 3600 },
   });
 
   const text = await response.text();
 
   if (!response.ok) {
-    throw new Error(`Clarity API error ${response.status}: ${text || "empty response"}`);
+    throw new Error(`Clarity API ${response.status}: ${text || "empty response"}`);
   }
 
   return JSON.parse(text) as ClarityMetric[];
 }
 
-export async function GET() {
-  const token = process.env.CLARITY_API_TOKEN;
-
-  if (!token) {
-    return NextResponse.json(
-      { error: "Missing CLARITY_API_TOKEN environment variable." },
-      { status: 500 }
-    );
-  }
-
-  try {
+const getClarityData = unstable_cache(
+  async (token: string) => {
     const [trafficData, deviceData, pagesData] = await Promise.all([
       fetchClarity(token, new URLSearchParams({ numOfDays: "3" })),
-      fetchClarity(
-        token,
-        new URLSearchParams({ numOfDays: "3", dimension1: "Device" })
-      ),
-      fetchClarity(
-        token,
-        new URLSearchParams({ numOfDays: "3", dimension1: "PopularPages" })
-      ),
+      fetchClarity(token, new URLSearchParams({ numOfDays: "3", dimension1: "Device" })),
+      fetchClarity(token, new URLSearchParams({ numOfDays: "3", dimension1: "PopularPages" })),
     ]);
 
     const trafficRows = getMetric(trafficData, "Traffic");
@@ -74,7 +61,6 @@ export async function GET() {
     const mobileRows = deviceRows.filter((row) =>
       String(row.Device ?? row.device ?? "").toLowerCase().includes("mobile")
     );
-
     const mobileSessions = sumNumber(mobileRows, "totalSessionCount");
 
     const topPages = pageRows
@@ -85,9 +71,9 @@ export async function GET() {
       }))
       .filter((page) => page.sessions > 0)
       .sort((a, b) => b.sessions - a.sessions)
-      .slice(0, 6);
+      .slice(0, 8);
 
-    return NextResponse.json({
+    return {
       period: "last_3_days",
       stats: {
         sessions,
@@ -98,21 +84,34 @@ export async function GET() {
           sessions > 0 ? Math.round((mobileSessions / sessions) * 100) : 0,
       },
       topPages,
-      raw: {
-        traffic: trafficData,
-        device: deviceData,
-        pages: pagesData,
-      },
-    });
-  } catch (error) {
-    console.error("[CLARITY_ANALYTICS_ERROR]", error);
+    };
+  },
+  ["clarity-analytics"],
+  { revalidate: 3600, tags: ["clarity"] }
+);
 
+export async function GET() {
+  const authError = await requireAdmin();
+  if (authError) return authError;
+
+  const token = process.env.CLARITY_API_TOKEN;
+
+  if (!token) {
+    return NextResponse.json(
+      { error: "Missing CLARITY_API_TOKEN." },
+      { status: 500 }
+    );
+  }
+
+  try {
+    const data = await getClarityData(token);
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error("[CLARITY]", error);
     return NextResponse.json(
       {
         error:
-          error instanceof Error
-            ? error.message
-            : "Unexpected Clarity analytics error.",
+          error instanceof Error ? error.message : "Unexpected error.",
       },
       { status: 500 }
     );

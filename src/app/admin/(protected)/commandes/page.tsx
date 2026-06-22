@@ -10,7 +10,6 @@ export const dynamic = "force-dynamic";
 
 const getCachedCommandes = unstable_cache(
   async (): Promise<Commande[]> => {
-    const t0 = Date.now();
     const result = await pool.query<{
       id: number;
       name: string;
@@ -30,7 +29,6 @@ const getCachedCommandes = unstable_cache(
        ORDER BY created_at DESC
        LIMIT 10`
     );
-    console.log(`[commandes] DB query: ${Date.now() - t0}ms`);
     return result.rows.map((r) => ({
       ...r,
       created_at: r.created_at.toISOString(),

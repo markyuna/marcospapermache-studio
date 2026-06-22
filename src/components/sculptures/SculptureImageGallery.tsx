@@ -63,7 +63,7 @@ export default function SculptureImageGallery({ images, title }: Props) {
               fill
               priority
               sizes="(max-width: 1024px) 100vw, 60vw"
-              className="object-cover transition duration-700 ease-out group-hover:scale-[1.02]"
+              className="object-contain transition duration-700 ease-out group-hover:scale-[1.02]"
             />
           </div>
 

@@ -804,13 +804,9 @@ export default function DashboardCommandes({ commandes }: Props) {
             <p className="text-xs uppercase tracking-[0.32em] text-orange-500">
               Administration
             </p>
-            <h1 className="mt-3 text-4xl font-semibold tracking-tight text-neutral-950 md:text-5xl">
-              Dashboard commandes
+            <h1 className="mt-2 text-2xl font-semibold tracking-tight text-neutral-950 md:text-3xl">
+              Commandes
             </h1>
-            <p className="mt-3 max-w-2xl text-sm leading-6 text-neutral-600 md:text-base">
-              Gérez les demandes clients, filtrez rapidement et visualisez les
-              projets dans une interface plus premium.
-            </p>
           </div>
 
           <div className="rounded-2xl border border-orange-100 bg-white/80 px-4 py-3 text-sm text-neutral-600 shadow-sm">

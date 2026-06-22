@@ -58,6 +58,17 @@ function truncateText(value: string, maxLength = 155) {
   return `${value.slice(0, maxLength).trim()}…`;
 }
 
+function getAvailabilityBadgeStyle(availability?: string | null): string {
+  const n = availability?.toLowerCase().trim() ?? "";
+  if (n.includes("vendue") || n.includes("sold") || n.includes("vendida")) {
+    return "border-rose-200 bg-rose-50 text-rose-700";
+  }
+  if (n.includes("disponible") || n.includes("available")) {
+    return "border-emerald-200 bg-emerald-50 text-emerald-800";
+  }
+  return "border-[#eadcc8] bg-[#f3ece2] text-[#5c4632]";
+}
+
 function getArtworkSeoDescription({
   description,
   subtitle,
@@ -275,86 +286,119 @@ export default async function SculptureDetailPage({
             </div>
 
             <aside className="w-full min-w-0 max-w-full break-words lg:sticky lg:top-28 lg:h-fit">
-              <p className="text-[10px] uppercase tracking-[0.26em] text-neutral-400 md:text-[11px] md:tracking-[0.32em]">
-                {localizedArtwork.category || t("fallbackCategory")}
-              </p>
 
-              <h1 className="mt-4 max-w-full text-3xl font-medium tracking-[-0.045em] text-[#181512] sm:text-4xl md:text-5xl xl:text-[3.4rem]">
+              {/* Category — link back to gallery */}
+              <Link
+                href={`/${locale}/sculptures`}
+                className="inline-block text-[10px] uppercase tracking-[0.32em] text-neutral-400 transition-colors hover:text-[#d07a2d] md:text-[11px] md:tracking-[0.36em]"
+              >
+                {localizedArtwork.category || t("fallbackCategory")}
+              </Link>
+
+              {/* Title */}
+              <h1 className="mt-3 max-w-full text-3xl font-medium tracking-[-0.045em] text-[#181512] sm:text-4xl md:text-5xl xl:text-[3.2rem]">
                 {localizedArtwork.title}
               </h1>
 
+              {/* Subtitle */}
               {localizedArtwork.subtitle ? (
-                <p className="mt-4 max-w-2xl text-base leading-7 text-neutral-500 md:text-xl md:leading-8">
+                <p className="mt-3 text-base leading-7 text-neutral-500 md:text-lg md:leading-8">
                   {localizedArtwork.subtitle}
                 </p>
               ) : null}
 
-              <div className="mt-6 flex max-w-full flex-wrap items-center gap-3">
-                {localizedArtwork.availability ? (
-                  <span className="max-w-full rounded-full border border-[#eadcc8] bg-[#f3ece2] px-4 py-2 text-sm font-medium text-[#5c4632]">
-                    {localizedArtwork.availability}
-                  </span>
-                ) : null}
+              {/* Divider */}
+              <div className="mt-7 h-px w-full bg-black/[0.07]" />
 
-                {localizedArtwork.year ? (
-                  <span className="rounded-full border border-black/5 bg-white/75 px-4 py-2 text-sm text-neutral-600 backdrop-blur-sm">
-                    {localizedArtwork.year}
-                  </span>
-                ) : null}
-              </div>
-
-              {localizedArtwork.dimensions || localizedArtwork.materials ? (
-                <div className="mt-8 w-full min-w-0 space-y-5 rounded-[24px] border border-black/[0.04] bg-white/72 p-5 shadow-[0_16px_45px_rgba(0,0,0,0.05)] backdrop-blur-sm md:rounded-[28px] md:p-6">
-                  {localizedArtwork.dimensions ? (
-                    <div className="min-w-0">
-                      <p className="text-[11px] uppercase tracking-[0.24em] text-neutral-400">
-                        {t("dimensions")}
-                      </p>
-                      <p className="mt-2 text-base text-neutral-700">
-                        {localizedArtwork.dimensions}
-                      </p>
-                    </div>
+              {/* Price + Availability */}
+              {(localizedArtwork.price || localizedArtwork.availability) ? (
+                <div className="mt-6 flex flex-wrap items-center gap-4">
+                  {localizedArtwork.price ? (
+                    <span className="text-3xl font-semibold tracking-[-0.03em] text-[#d07a2d] md:text-4xl">
+                      €{localizedArtwork.price}
+                    </span>
                   ) : null}
-
-                  {localizedArtwork.materials ? (
-                    <div className="min-w-0">
-                      <p className="text-[11px] uppercase tracking-[0.24em] text-neutral-400">
-                        {t("materials")}
-                      </p>
-                      <p className="mt-2 text-base leading-7 text-neutral-700">
-                        {localizedArtwork.materials}
-                      </p>
-                    </div>
+                  {localizedArtwork.availability ? (
+                    <span className={`rounded-full border px-3.5 py-1.5 text-[12px] font-medium ${getAvailabilityBadgeStyle(localizedArtwork.availability)}`}>
+                      {localizedArtwork.availability}
+                    </span>
                   ) : null}
                 </div>
               ) : null}
 
-              {localizedArtwork.description ? (
-                <div className="mt-8 min-w-0">
-                  <p className="text-[11px] uppercase tracking-[0.24em] text-neutral-400">
-                    {t("description")}
-                  </p>
-                  <p className="mt-4 text-base leading-8 text-neutral-600 md:text-lg">
-                    {localizedArtwork.description}
-                  </p>
-                </div>
-              ) : null}
-
-              <div className="mt-10 flex w-full flex-wrap gap-4">
+              {/* Primary CTA — right after price */}
+              <div className="mt-5">
                 {etsyUrl ? (
-                  <Button asChild variant="default" size="lg">
+                  <Button asChild variant="default" size="lg" className="w-full sm:w-auto">
                     <Link href={etsyUrl} target="_blank" rel="noreferrer">
                       {t("cta.etsy")}
                     </Link>
                   </Button>
                 ) : (
-                  <Button asChild variant="default" size="lg">
+                  <Button asChild variant="default" size="lg" className="w-full sm:w-auto">
                     <Link href={customCreationHref}>
-                      {t("cta.requestSimilar")}
+                      {t("cta.requestThis")}
                     </Link>
                   </Button>
                 )}
               </div>
+
+              {/* Specs table — Année + Dimensions side-by-side, Matériaux full width */}
+              {(localizedArtwork.year || localizedArtwork.dimensions || localizedArtwork.materials) ? (
+                <div className="mt-7 overflow-hidden rounded-[20px] border border-black/[0.05] bg-white/80 shadow-[0_8px_28px_rgba(0,0,0,0.05)] backdrop-blur-sm">
+                  {(localizedArtwork.year && localizedArtwork.dimensions) ? (
+                    <div className="grid grid-cols-2 divide-x divide-black/[0.05]">
+                      <div className="px-4 py-3">
+                        <p className="text-[10px] uppercase tracking-[0.22em] text-neutral-400">{t("year")}</p>
+                        <p className="mt-1 text-sm font-medium text-neutral-800">{localizedArtwork.year}</p>
+                      </div>
+                      <div className="px-4 py-3">
+                        <p className="text-[10px] uppercase tracking-[0.22em] text-neutral-400">{t("dimensions")}</p>
+                        <p className="mt-1 text-sm font-medium text-neutral-800">{localizedArtwork.dimensions}</p>
+                      </div>
+                    </div>
+                  ) : localizedArtwork.year ? (
+                    <div className="px-4 py-3">
+                      <p className="text-[10px] uppercase tracking-[0.22em] text-neutral-400">{t("year")}</p>
+                      <p className="mt-1 text-sm font-medium text-neutral-800">{localizedArtwork.year}</p>
+                    </div>
+                  ) : localizedArtwork.dimensions ? (
+                    <div className="px-4 py-3">
+                      <p className="text-[10px] uppercase tracking-[0.22em] text-neutral-400">{t("dimensions")}</p>
+                      <p className="mt-1 text-sm font-medium text-neutral-800">{localizedArtwork.dimensions}</p>
+                    </div>
+                  ) : null}
+
+                  {localizedArtwork.materials ? (
+                    <div className={`px-4 py-3${(localizedArtwork.year || localizedArtwork.dimensions) ? " border-t border-black/[0.05]" : ""}`}>
+                      <p className="text-[10px] uppercase tracking-[0.22em] text-neutral-400">{t("materials")}</p>
+                      <p className="mt-1 text-sm font-medium leading-6 text-neutral-800">{localizedArtwork.materials}</p>
+                    </div>
+                  ) : null}
+                </div>
+              ) : null}
+
+              {/* Description */}
+              {localizedArtwork.description ? (
+                <div className="mt-8 min-w-0">
+                  <p className="text-[11px] uppercase tracking-[0.24em] text-neutral-400">
+                    {t("description")}
+                  </p>
+                  <p className="mt-3 text-base leading-8 text-neutral-600 md:text-[17px]">
+                    {localizedArtwork.description}
+                  </p>
+                </div>
+              ) : null}
+
+              {/* Secondary CTA */}
+              <div className="mt-10 border-t border-black/[0.06] pt-7">
+                <Button asChild variant="outline" size="default" className="w-full sm:w-auto">
+                  <Link href={customCreationHref}>
+                    {t("cta.requestSimilar")}
+                  </Link>
+                </Button>
+              </div>
+
             </aside>
           </div>
         </Container>

@@ -213,6 +213,8 @@ export default function ArtworkDetailManager({ artwork }: Props) {
   const [feedback, setFeedback] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  const [activeLang, setActiveLang] = useState<"fr" | "en" | "es">("fr");
+
   const sortedImages = useMemo(() => {
     return [...artwork.artwork_images].sort((a, b) => {
       if (a.is_cover !== b.is_cover) {
@@ -525,48 +527,32 @@ export default function ArtworkDetailManager({ artwork }: Props) {
     }
   }
 
+  const inputCls = "w-full rounded-xl border border-neutral-200 bg-white px-4 py-2.5 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60";
+  const labelCls = "text-xs font-medium uppercase tracking-[0.1em] text-neutral-500";
+
   return (
-    <main className="min-h-screen bg-[#f8f5ef] px-6 py-10 md:px-10">
+    <main className="min-h-screen bg-[#f8f5ef] px-4 py-8 md:px-8 md:py-10">
       <div className="mx-auto max-w-7xl">
-        <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+
+        {/* Header */}
+        <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <Link
               href="/admin/artworks"
-              className="inline-flex items-center gap-2 text-sm font-medium text-neutral-500 transition hover:text-neutral-900"
+              className="inline-flex items-center gap-1.5 text-sm text-neutral-500 transition hover:text-neutral-900"
             >
-              <ArrowLeft className="h-4 w-4" />
-              Retour à la galerie admin
+              <ArrowLeft className="h-3.5 w-3.5" />
+              Galerie admin
             </Link>
-
-            <h1 className="mt-4 text-3xl font-semibold tracking-tight text-neutral-950 md:text-4xl">
+            <h1 className="mt-2 text-2xl font-semibold tracking-tight text-neutral-950 md:text-3xl">
               {title.trim() || artwork.title}
             </h1>
-
-            {subtitle.trim() ? (
-              <p className="mt-2 max-w-3xl text-sm text-neutral-600">
-                {subtitle}
-              </p>
-            ) : null}
-
-            <div className="mt-3 flex flex-wrap gap-2 text-sm text-neutral-600">
-              <span className="rounded-full bg-white px-3 py-1 shadow-sm ring-1 ring-black/5">
-                Slug: {slug || artwork.slug}
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              <span className="rounded-full bg-white px-2.5 py-1 text-xs text-neutral-500 ring-1 ring-black/5">
+                {slug || artwork.slug}
               </span>
-
-              {(category || artwork.category) ? (
-                <span className="rounded-full bg-white px-3 py-1 shadow-sm ring-1 ring-black/5">
-                  Catégorie: {category || artwork.category}
-                </span>
-              ) : null}
-
-              {(year || artwork.year) ? (
-                <span className="rounded-full bg-white px-3 py-1 shadow-sm ring-1 ring-black/5">
-                  Année: {year || artwork.year}
-                </span>
-              ) : null}
-
               {isFeatured ? (
-                <span className="rounded-full bg-amber-400 px-3 py-1 text-neutral-900 shadow-sm ring-1 ring-amber-300/70">
+                <span className="rounded-full bg-amber-400 px-2.5 py-1 text-xs font-medium text-neutral-900 ring-1 ring-amber-300/70">
                   Featured
                 </span>
               ) : null}
@@ -576,697 +562,304 @@ export default function ArtworkDetailManager({ artwork }: Props) {
           <button
             type="button"
             onClick={handleDeleteArtwork}
-            disabled={isDeletingArtwork || isBusy}
-            className="inline-flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-medium text-red-700 transition hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-60"
+            disabled={isBusy}
+            className="inline-flex items-center gap-2 self-start rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-medium text-red-700 transition hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {isDeletingArtwork ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <Trash2 className="h-4 w-4" />
-            )}
+            {isDeletingArtwork ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
             Supprimer l’œuvre
           </button>
         </div>
 
-        {(feedback || errorMessage) && (
-          <div className="mb-6 space-y-3">
+        {/* Feedback */}
+        {(feedback || errorMessage) ? (
+          <div className="mb-5 space-y-2">
             {feedback ? (
-              <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
-                {feedback}
-              </div>
+              <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">{feedback}</div>
             ) : null}
-
             {errorMessage ? (
-              <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                {errorMessage}
-              </div>
+              <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{errorMessage}</div>
             ) : null}
           </div>
-        )}
+        ) : null}
 
-        <div className="mb-8 rounded-3xl border border-black/5 bg-white p-5 shadow-sm">
-          <div className="mb-5 flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#f6efe5]">
-              <Save className="h-5 w-5 text-neutral-900" />
-            </div>
+        {/* Two-column layout */}
+        <div className="grid gap-5 lg:grid-cols-[3fr_2fr]">
 
-            <div>
-              <h2 className="text-lg font-semibold text-neutral-950">
-                Modifier l’œuvre
-              </h2>
-              <p className="text-sm text-neutral-500">
-                Modifie ici les informations principales, multilingues,
-                artistiques et commerciales.
-              </p>
-            </div>
-          </div>
+          {/* ── LEFT: Form ── */}
+          <form onSubmit={handleSaveArtwork} className="space-y-4">
 
-          <form
-            onSubmit={handleSaveArtwork}
-            className="grid gap-6 md:grid-cols-2"
-          >
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-neutral-700">
-                Titre (FR)
-              </label>
-              <input
-                value={title}
-                onChange={(e) => handleTitleChange(e.target.value)}
-                disabled={isBusy}
-                className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                placeholder="Titre de l’œuvre"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-neutral-700">
-                Slug
-              </label>
-              <input
-                value={slug}
-                onChange={(e) => setSlug(normalizeSlug(e.target.value))}
-                disabled={isBusy}
-                className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                placeholder="slug-de-l-oeuvre"
-              />
-            </div>
-
-            <div className="rounded-2xl border border-neutral-200 bg-[#fcfaf7] p-4 md:col-span-2">
-              <div className="mb-4">
-                <h3 className="text-base font-semibold text-neutral-900">
-                  Français
-                </h3>
-                <p className="mt-1 text-sm text-neutral-500">
-                  Contenu principal utilisé comme base.
-                </p>
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2 md:col-span-2">
-                  <label className="text-sm font-medium text-neutral-700">
-                    Sous-titre (FR)
-                  </label>
-                  <input
-                    value={subtitle}
-                    onChange={(e) => setSubtitle(e.target.value)}
-                    disabled={isBusy}
-                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                    placeholder="Sculpture murale contemporaine"
-                  />
+            {/* General info */}
+            <div className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
+              <p className={`mb-4 ${labelCls}`}>Informations générales</p>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div className="space-y-1.5">
+                  <label className={labelCls}>Titre (FR) *</label>
+                  <input value={title} onChange={(e) => handleTitleChange(e.target.value)} disabled={isBusy} className={inputCls} placeholder="Titre de l’œuvre" />
                 </div>
-
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-neutral-700">
-                    Catégorie (FR)
-                  </label>
-                  <input
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    disabled={isBusy}
-                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                    placeholder="Sculpture murale"
-                  />
+                <div className="space-y-1.5">
+                  <label className={labelCls}>Slug</label>
+                  <input value={slug} onChange={(e) => setSlug(normalizeSlug(e.target.value))} disabled={isBusy} className={inputCls} placeholder="slug-de-l-oeuvre" />
                 </div>
-
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-neutral-700">
-                    Disponibilité (FR)
-                  </label>
-                  <input
-                    value={availability}
-                    onChange={(e) => setAvailability(e.target.value)}
-                    disabled={isBusy}
-                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                    placeholder="Disponible sur demande"
-                  />
+                <div className="space-y-1.5">
+                  <label className={labelCls}>Année</label>
+                  <input type="number" inputMode="numeric" value={year} onChange={(e) => setYear(e.target.value)} disabled={isBusy} className={inputCls} placeholder="2025" />
                 </div>
-
-                <div className="space-y-2 md:col-span-2">
-                  <label className="text-sm font-medium text-neutral-700">
-                    Matériaux (FR)
-                  </label>
-                  <input
-                    value={materials}
-                    onChange={(e) => setMaterials(e.target.value)}
-                    disabled={isBusy}
-                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                    placeholder="Papier mâché, carton recyclé, capsules..."
-                  />
+                <div className="space-y-1.5">
+                  <label className={labelCls}>Dimensions</label>
+                  <input value={dimensions} onChange={(e) => setDimensions(e.target.value)} disabled={isBusy} className={inputCls} placeholder="50 × 70 cm" />
                 </div>
-
-                <div className="space-y-2 md:col-span-2">
-                  <label className="text-sm font-medium text-neutral-700">
-                    Description (FR)
+                <div className="space-y-1.5">
+                  <label className={labelCls}>Prix</label>
+                  <input value={price} onChange={(e) => setPrice(e.target.value)} disabled={isBusy} className={inputCls} placeholder="2 000 €" />
+                </div>
+                <div className="space-y-1.5">
+                  <label className={labelCls}>URL Etsy</label>
+                  <input type="url" value={etsyUrl} onChange={(e) => setEtsyUrl(e.target.value)} disabled={isBusy} className={inputCls} placeholder="https://etsy.com/…" />
+                </div>
+                <div className="sm:col-span-2">
+                  <label className="flex items-center gap-3 rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3">
+                    <input type="checkbox" checked={isFeatured} onChange={(e) => setIsFeatured(e.target.checked)} disabled={isBusy} className="h-4 w-4 rounded border-neutral-300" />
+                    <span className="text-sm text-neutral-700">Marquer comme œuvre mise en avant</span>
                   </label>
-                  <textarea
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    rows={6}
-                    disabled={isBusy}
-                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                    placeholder="Description de l’œuvre"
-                  />
                 </div>
               </div>
             </div>
 
-            <div className="rounded-2xl border border-neutral-200 bg-[#fcfaf7] p-4 md:col-span-2">
-              <div className="mb-4">
-                <h3 className="text-base font-semibold text-neutral-900">
-                  English
-                </h3>
-                <p className="mt-1 text-sm text-neutral-500">
-                  Optional. If empty, French can be used as fallback.
-                </p>
+            {/* Multilingual content with tabs */}
+            <div className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
+              <p className={`mb-4 ${labelCls}`}>Contenu multilingue</p>
+
+              {/* Tab buttons */}
+              <div className="mb-5 flex w-fit rounded-xl border border-neutral-200 bg-neutral-50 p-1 gap-1">
+                {(["fr", "en", "es"] as const).map((lang) => (
+                  <button
+                    key={lang}
+                    type="button"
+                    onClick={() => setActiveLang(lang)}
+                    className={`rounded-lg px-5 py-1.5 text-sm font-medium transition ${
+                      activeLang === lang
+                        ? "bg-white text-neutral-900 shadow-sm"
+                        : "text-neutral-400 hover:text-neutral-700"
+                    }`}
+                  >
+                    {lang.toUpperCase()}
+                  </button>
+                ))}
               </div>
 
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-neutral-700">
-                    Title (EN)
-                  </label>
-                  <input
-                    value={titleEn}
-                    onChange={(e) => setTitleEn(e.target.value)}
-                    disabled={isBusy}
-                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                    placeholder="Artwork title"
-                  />
+              {/* FR */}
+              {activeLang === "fr" ? (
+                <div className="space-y-3">
+                  <div className="space-y-1.5">
+                    <label className={labelCls}>Sous-titre</label>
+                    <input value={subtitle} onChange={(e) => setSubtitle(e.target.value)} disabled={isBusy} className={inputCls} placeholder="Sculpture murale contemporaine" />
+                  </div>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div className="space-y-1.5">
+                      <label className={labelCls}>Catégorie</label>
+                      <input value={category} onChange={(e) => setCategory(e.target.value)} disabled={isBusy} className={inputCls} placeholder="Sculpture murale" />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className={labelCls}>Disponibilité</label>
+                      <input value={availability} onChange={(e) => setAvailability(e.target.value)} disabled={isBusy} className={inputCls} placeholder="Disponible sur demande" />
+                    </div>
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className={labelCls}>Matériaux</label>
+                    <input value={materials} onChange={(e) => setMaterials(e.target.value)} disabled={isBusy} className={inputCls} placeholder="Papier mâché, carton recyclé…" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className={labelCls}>Description</label>
+                    <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={5} disabled={isBusy} className={inputCls} placeholder="Description de l’œuvre" />
+                  </div>
                 </div>
+              ) : null}
 
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-neutral-700">
-                    Subtitle (EN)
-                  </label>
-                  <input
-                    value={subtitleEn}
-                    onChange={(e) => setSubtitleEn(e.target.value)}
-                    disabled={isBusy}
-                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                    placeholder="Contemporary wall sculpture"
-                  />
+              {/* EN */}
+              {activeLang === "en" ? (
+                <div className="space-y-3">
+                  <div className="space-y-1.5">
+                    <label className={labelCls}>Title (EN)</label>
+                    <input value={titleEn} onChange={(e) => setTitleEn(e.target.value)} disabled={isBusy} className={inputCls} placeholder="Artwork title" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className={labelCls}>Subtitle</label>
+                    <input value={subtitleEn} onChange={(e) => setSubtitleEn(e.target.value)} disabled={isBusy} className={inputCls} placeholder="Contemporary wall sculpture" />
+                  </div>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div className="space-y-1.5">
+                      <label className={labelCls}>Category</label>
+                      <input value={categoryEn} onChange={(e) => setCategoryEn(e.target.value)} disabled={isBusy} className={inputCls} placeholder="Wall sculpture" />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className={labelCls}>Availability</label>
+                      <input value={availabilityEn} onChange={(e) => setAvailabilityEn(e.target.value)} disabled={isBusy} className={inputCls} placeholder="Available on request" />
+                    </div>
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className={labelCls}>Materials</label>
+                    <input value={materialsEn} onChange={(e) => setMaterialsEn(e.target.value)} disabled={isBusy} className={inputCls} placeholder="Papier-mâché, recycled cardboard…" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className={labelCls}>Description</label>
+                    <textarea value={descriptionEn} onChange={(e) => setDescriptionEn(e.target.value)} rows={5} disabled={isBusy} className={inputCls} placeholder="Artwork description in English" />
+                  </div>
                 </div>
+              ) : null}
 
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-neutral-700">
-                    Category (EN)
-                  </label>
-                  <input
-                    value={categoryEn}
-                    onChange={(e) => setCategoryEn(e.target.value)}
-                    disabled={isBusy}
-                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                    placeholder="Wall sculpture"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-neutral-700">
-                    Availability (EN)
-                  </label>
-                  <input
-                    value={availabilityEn}
-                    onChange={(e) => setAvailabilityEn(e.target.value)}
-                    disabled={isBusy}
-                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                    placeholder="Available on request"
-                  />
-                </div>
-
-                <div className="space-y-2 md:col-span-2">
-                  <label className="text-sm font-medium text-neutral-700">
-                    Materials (EN)
-                  </label>
-                  <input
-                    value={materialsEn}
-                    onChange={(e) => setMaterialsEn(e.target.value)}
-                    disabled={isBusy}
-                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                    placeholder="Papier-mâché, recycled cardboard..."
-                  />
-                </div>
-
-                <div className="space-y-2 md:col-span-2">
-                  <label className="text-sm font-medium text-neutral-700">
-                    Description (EN)
-                  </label>
-                  <textarea
-                    value={descriptionEn}
-                    onChange={(e) => setDescriptionEn(e.target.value)}
-                    rows={6}
-                    disabled={isBusy}
-                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                    placeholder="Artwork description in English"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="rounded-2xl border border-neutral-200 bg-[#fcfaf7] p-4 md:col-span-2">
-              <div className="mb-4">
-                <h3 className="text-base font-semibold text-neutral-900">
-                  Español
-                </h3>
-                <p className="mt-1 text-sm text-neutral-500">
-                  Opcional. Si está vacío, el francés puede servir como base.
-                </p>
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-neutral-700">
-                    Título (ES)
-                  </label>
-                  <input
-                    value={titleEs}
-                    onChange={(e) => setTitleEs(e.target.value)}
-                    disabled={isBusy}
-                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                    placeholder="Título de la obra"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-neutral-700">
-                    Subtítulo (ES)
-                  </label>
-                  <input
-                    value={subtitleEs}
-                    onChange={(e) => setSubtitleEs(e.target.value)}
-                    disabled={isBusy}
-                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                    placeholder="Escultura mural contemporánea"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-neutral-700">
-                    Categoría (ES)
-                  </label>
-                  <input
-                    value={categoryEs}
-                    onChange={(e) => setCategoryEs(e.target.value)}
-                    disabled={isBusy}
-                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                    placeholder="Escultura mural"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-neutral-700">
-                    Disponibilidad (ES)
-                  </label>
-                  <input
-                    value={availabilityEs}
-                    onChange={(e) => setAvailabilityEs(e.target.value)}
-                    disabled={isBusy}
-                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                    placeholder="Disponible por encargo"
-                  />
-                </div>
-
-                <div className="space-y-2 md:col-span-2">
-                  <label className="text-sm font-medium text-neutral-700">
-                    Materiales (ES)
-                  </label>
-                  <input
-                    value={materialsEs}
-                    onChange={(e) => setMaterialsEs(e.target.value)}
-                    disabled={isBusy}
-                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                    placeholder="Papel maché, cartón reciclado..."
-                  />
-                </div>
-
-                <div className="space-y-2 md:col-span-2">
-                  <label className="text-sm font-medium text-neutral-700">
-                    Descripción (ES)
-                  </label>
-                  <textarea
-                    value={descriptionEs}
-                    onChange={(e) => setDescriptionEs(e.target.value)}
-                    rows={6}
-                    disabled={isBusy}
-                    className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                    placeholder="Descripción de la obra en español"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-neutral-700">
-                Année
-              </label>
-              <input
-                type="number"
-                inputMode="numeric"
-                value={year}
-                onChange={(e) => setYear(e.target.value)}
-                disabled={isBusy}
-                className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                placeholder="2025"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-neutral-700">
-                Dimensions
-              </label>
-              <input
-                value={dimensions}
-                onChange={(e) => setDimensions(e.target.value)}
-                disabled={isBusy}
-                className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                placeholder="50 x 70 cm"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-neutral-700">
-                Prix
-              </label>
-              <input
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                disabled={isBusy}
-                className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                placeholder="2000 €"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-neutral-700">
-                URL Etsy
-              </label>
-              <input
-                type="url"
-                value={etsyUrl}
-                onChange={(e) => setEtsyUrl(e.target.value)}
-                disabled={isBusy}
-                className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60"
-                placeholder="https://markpaper.etsy.com/..."
-              />
-            </div>
-
-            <div className="space-y-2 md:col-span-2">
-              <label className="flex items-center gap-3 rounded-2xl border border-neutral-200 bg-[#fcfaf7] px-4 py-3">
-                <input
-                  type="checkbox"
-                  checked={isFeatured}
-                  onChange={(e) => setIsFeatured(e.target.checked)}
-                  disabled={isBusy}
-                  className="h-4 w-4 rounded border-neutral-300"
-                />
-                <span className="text-sm font-medium text-neutral-700">
-                  Marquer comme œuvre mise en avant
-                </span>
-              </label>
-            </div>
-
-            <div className="md:col-span-2">
-              <button
-                type="submit"
-                disabled={isBusy}
-                className="inline-flex items-center gap-2 rounded-xl bg-neutral-950 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {isSavingArtwork ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Save className="h-4 w-4" />
-                )}
-                Enregistrer les modifications
-              </button>
-            </div>
-          </form>
-        </div>
-
-        <div className="mb-8 rounded-3xl border border-black/5 bg-white p-5 shadow-sm">
-          <div className="mb-4 flex items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#f6efe5]">
-              <Upload className="h-5 w-5 text-neutral-800" />
-            </div>
-            <div>
-              <h2 className="text-lg font-semibold text-neutral-950">
-                Ajouter des images
-              </h2>
-              <p className="text-sm text-neutral-500">
-                Ajoute une ou plusieurs images à cette œuvre.
-              </p>
-            </div>
-          </div>
-
-          <form onSubmit={handleUploadImages} className="space-y-4">
-            <div className="rounded-2xl border border-dashed border-neutral-300 bg-[#fcfaf7] p-5">
-              <label className="mb-3 block text-sm font-medium text-neutral-700">
-                Sélectionner des images
-              </label>
-
-              <input
-                ref={fileInputRef}
-                type="file"
-                name="images"
-                accept="image/*"
-                multiple
-                disabled={isBusy}
-                onChange={(e) => {
-                  const files = Array.from(e.target.files ?? []);
-                  setSelectedFiles(files);
-                }}
-                className="block w-full rounded-xl border border-neutral-200 bg-white px-3 py-3 text-sm text-neutral-700 file:mr-4 file:rounded-lg file:border-0 file:bg-neutral-900 file:px-4 file:py-2 file:text-sm file:font-medium file:text-white hover:file:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
-              />
-
-              <p className="mt-3 text-xs text-neutral-500">
-                Tu peux sélectionner plusieurs fichiers à la fois.
-              </p>
-
-              {selectedFiles.length > 0 ? (
-                <div className="mt-4 rounded-xl bg-white p-3 ring-1 ring-black/5">
-                  <p className="text-sm font-medium text-neutral-800">
-                    {selectedFiles.length} fichier
-                    {selectedFiles.length > 1
-                      ? "s sélectionnés"
-                      : " sélectionné"}
-                  </p>
-
-                  <div className="mt-2 space-y-1 text-xs text-neutral-500">
-                    {selectedFiles.map((file) => (
-                      <div key={`${file.name}-${file.size}`}>{file.name}</div>
-                    ))}
+              {/* ES */}
+              {activeLang === "es" ? (
+                <div className="space-y-3">
+                  <div className="space-y-1.5">
+                    <label className={labelCls}>Título (ES)</label>
+                    <input value={titleEs} onChange={(e) => setTitleEs(e.target.value)} disabled={isBusy} className={inputCls} placeholder="Título de la obra" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className={labelCls}>Subtítulo</label>
+                    <input value={subtitleEs} onChange={(e) => setSubtitleEs(e.target.value)} disabled={isBusy} className={inputCls} placeholder="Escultura mural contemporánea" />
+                  </div>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div className="space-y-1.5">
+                      <label className={labelCls}>Categoría</label>
+                      <input value={categoryEs} onChange={(e) => setCategoryEs(e.target.value)} disabled={isBusy} className={inputCls} placeholder="Escultura mural" />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className={labelCls}>Disponibilidad</label>
+                      <input value={availabilityEs} onChange={(e) => setAvailabilityEs(e.target.value)} disabled={isBusy} className={inputCls} placeholder="Disponible por encargo" />
+                    </div>
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className={labelCls}>Materiales</label>
+                    <input value={materialsEs} onChange={(e) => setMaterialsEs(e.target.value)} disabled={isBusy} className={inputCls} placeholder="Papel maché, cartón reciclado…" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className={labelCls}>Descripción</label>
+                    <textarea value={descriptionEs} onChange={(e) => setDescriptionEs(e.target.value)} rows={5} disabled={isBusy} className={inputCls} placeholder="Descripción de la obra en español" />
                   </div>
                 </div>
               ) : null}
             </div>
 
+            {/* Save button */}
             <button
               type="submit"
-              disabled={isBusy || selectedFiles.length === 0}
-              className="inline-flex items-center gap-2 rounded-xl bg-neutral-950 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
+              disabled={isBusy}
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-neutral-950 py-3 text-sm font-medium text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {isUploading ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                <Upload className="h-4 w-4" />
-              )}
-              Ajouter les images
+              {isSavingArtwork ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+              Enregistrer les modifications
             </button>
           </form>
-        </div>
 
-        <div className="grid gap-8 xl:grid-cols-[1.1fr_0.9fr]">
-          <section className="rounded-3xl border border-black/5 bg-white p-5 shadow-sm">
-            <div className="relative overflow-hidden rounded-2xl bg-neutral-100">
-              {coverImage ? (
-                <Image
-                  src={coverImage.image_url}
-                  alt={coverImage.alt_text || title || artwork.title}
-                  width={1600}
-                  height={1200}
-                  className="h-auto w-full object-cover"
-                  priority
-                />
-              ) : (
-                <div className="flex aspect-[4/3] items-center justify-center text-sm text-neutral-400">
-                  Aucune image disponible
+          {/* ── RIGHT: Images ── */}
+          <div className="space-y-4 lg:sticky lg:top-6 lg:h-fit">
+
+            {/* Thumbnail grid */}
+            <div className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
+              <div className="mb-4 flex items-center justify-between">
+                <p className={labelCls}>Images</p>
+                <span className="rounded-full bg-[#f6efe5] px-2.5 py-1 text-xs font-medium text-neutral-600">
+                  {imageCount} image{imageCount > 1 ? "s" : ""}
+                </span>
+              </div>
+
+              {imageCount === 0 ? (
+                <div className="rounded-xl border border-dashed border-neutral-200 bg-neutral-50 py-10 text-center text-sm text-neutral-400">
+                  Aucune image pour cette œuvre
                 </div>
-              )}
-            </div>
-
-            <div className="mt-5 grid gap-4 md:grid-cols-2">
-              {(subtitle || dimensions || price || availability || materials) ? (
-                <>
-                  {subtitle ? (
-                    <div className="rounded-2xl bg-[#fcfaf7] p-4 ring-1 ring-black/5">
-                      <p className="text-xs uppercase tracking-[0.2em] text-neutral-400">
-                        Sous-titre
-                      </p>
-                      <p className="mt-2 text-sm text-neutral-700">
-                        {subtitle}
-                      </p>
-                    </div>
-                  ) : null}
-
-                  {dimensions ? (
-                    <div className="rounded-2xl bg-[#fcfaf7] p-4 ring-1 ring-black/5">
-                      <p className="text-xs uppercase tracking-[0.2em] text-neutral-400">
-                        Dimensions
-                      </p>
-                      <p className="mt-2 text-sm text-neutral-700">
-                        {dimensions}
-                      </p>
-                    </div>
-                  ) : null}
-
-                  {price ? (
-                    <div className="rounded-2xl bg-[#fcfaf7] p-4 ring-1 ring-black/5">
-                      <p className="text-xs uppercase tracking-[0.2em] text-neutral-400">
-                        Prix
-                      </p>
-                      <p className="mt-2 text-sm text-neutral-700">{price}</p>
-                    </div>
-                  ) : null}
-
-                  {availability ? (
-                    <div className="rounded-2xl bg-[#fcfaf7] p-4 ring-1 ring-black/5">
-                      <p className="text-xs uppercase tracking-[0.2em] text-neutral-400">
-                        Disponibilité
-                      </p>
-                      <p className="mt-2 text-sm text-neutral-700">
-                        {availability}
-                      </p>
-                    </div>
-                  ) : null}
-                </>
-              ) : null}
-            </div>
-
-            {materials ? (
-              <div className="mt-4 rounded-2xl bg-[#fcfaf7] p-4 ring-1 ring-black/5">
-                <p className="text-xs uppercase tracking-[0.2em] text-neutral-400">
-                  Matériaux
-                </p>
-                <p className="mt-2 text-sm leading-7 text-neutral-700">
-                  {materials}
-                </p>
-              </div>
-            ) : null}
-
-            {(description || artwork.description) ? (
-              <div className="mt-4 rounded-2xl bg-[#fcfaf7] p-4 text-sm leading-7 text-neutral-700 ring-1 ring-black/5">
-                <p className="mb-2 text-xs uppercase tracking-[0.2em] text-neutral-400">
-                  Description
-                </p>
-                {description || artwork.description}
-              </div>
-            ) : null}
-
-            {etsyUrl ? (
-              <div className="mt-4">
-                <a
-                  href={etsyUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center rounded-xl border border-neutral-300 px-4 py-2.5 text-sm font-medium text-neutral-800 transition hover:border-black hover:text-black"
-                >
-                  Voir l’annonce Etsy
-                </a>
-              </div>
-            ) : null}
-          </section>
-
-          <section className="rounded-3xl border border-black/5 bg-white p-5 shadow-sm">
-            <div className="mb-5 flex items-center justify-between">
-              <h2 className="text-xl font-semibold text-neutral-950">
-                Images de l’œuvre
-              </h2>
-
-              <span className="rounded-full bg-[#f6efe5] px-3 py-1 text-xs font-medium text-neutral-700">
-                {imageCount} image{imageCount > 1 ? "s" : ""}
-              </span>
-            </div>
-
-            {imageCount === 0 ? (
-              <div className="rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 px-6 py-12 text-center text-sm text-neutral-500">
-                Cette œuvre n’a pas encore d’images.
-              </div>
-            ) : (
-              <div className="grid gap-4 sm:grid-cols-2">
-                {sortedImages.map((image) => {
-                  const isCurrentImageProcessing = processingImageId === image.id;
-
-                  return (
-                    <article
-                      key={image.id}
-                      className="overflow-hidden rounded-2xl border border-black/5 bg-[#fffdf9] shadow-sm"
-                    >
-                      <div className="relative aspect-[4/3] bg-neutral-100">
+              ) : (
+                <div className="grid grid-cols-3 gap-2">
+                  {sortedImages.map((image) => {
+                    const isProcessing = processingImageId === image.id;
+                    return (
+                      <div
+                        key={image.id}
+                        className="group relative aspect-square overflow-hidden rounded-xl bg-neutral-100"
+                      >
                         <Image
                           src={image.image_url}
                           alt={image.alt_text || title || artwork.title}
                           fill
                           className="object-cover"
+                          sizes="(max-width: 1024px) 33vw, 20vw"
                         />
 
+                        {/* Cover badge */}
                         {image.is_cover ? (
-                          <div className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-amber-400/95 px-2.5 py-1 text-xs font-semibold text-neutral-900 shadow">
-                            <Star className="h-3.5 w-3.5 fill-current" />
+                          <div className="absolute left-1.5 top-1.5 flex items-center gap-0.5 rounded-full bg-amber-400/95 px-1.5 py-0.5 text-[10px] font-semibold text-neutral-900 shadow">
+                            <Star className="h-2.5 w-2.5 fill-current" />
                             Cover
                           </div>
                         ) : null}
-                      </div>
 
-                      <div className="space-y-3 p-4">
-                        <div className="text-xs text-neutral-500">
-                          Position: {image.position ?? "—"}
-                        </div>
-
-                        <div className="text-xs text-neutral-500">
-                          Alt: {image.alt_text || "—"}
-                        </div>
-
-                        <div className="flex flex-wrap gap-2">
+                        {/* Hover overlay */}
+                        <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 bg-black/55 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
                           {!image.is_cover ? (
                             <button
                               type="button"
                               onClick={() => handleSetCover(image.id)}
                               disabled={isBusy}
-                              className="inline-flex items-center gap-2 rounded-xl bg-neutral-950 px-3.5 py-2 text-sm font-medium text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
+                              className="inline-flex items-center gap-1 rounded-lg bg-white/90 px-2.5 py-1.5 text-[11px] font-medium text-neutral-900 transition hover:bg-white disabled:opacity-50"
                             >
-                              {isCurrentImageProcessing ? (
-                                <Loader2 className="h-4 w-4 animate-spin" />
-                              ) : (
-                                <Star className="h-4 w-4" />
-                              )}
-                              Définir comme cover
+                              <Star className="h-3 w-3" />
+                              Définir cover
                             </button>
-                          ) : (
-                            <div className="inline-flex items-center gap-2 rounded-xl bg-amber-50 px-3.5 py-2 text-sm font-medium text-amber-700 ring-1 ring-amber-200">
-                              <Star className="h-4 w-4 fill-current" />
-                              Image de couverture
-                            </div>
-                          )}
-
+                          ) : null}
                           <button
                             type="button"
                             onClick={() => handleDeleteImage(image.id)}
                             disabled={isBusy}
-                            className="inline-flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-3.5 py-2 text-sm font-medium text-red-700 transition hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-60"
+                            className="inline-flex items-center gap-1 rounded-lg bg-red-500/90 px-2.5 py-1.5 text-[11px] font-medium text-white transition hover:bg-red-500 disabled:opacity-50"
                           >
-                            {isCurrentImageProcessing ? (
-                              <Loader2 className="h-4 w-4 animate-spin" />
-                            ) : (
-                              <Trash2 className="h-4 w-4" />
-                            )}
+                            <Trash2 className="h-3 w-3" />
                             Supprimer
                           </button>
                         </div>
+
+                        {/* Processing spinner */}
+                        {isProcessing ? (
+                          <div className="absolute inset-0 flex items-center justify-center bg-white/70">
+                            <Loader2 className="h-5 w-5 animate-spin text-neutral-700" />
+                          </div>
+                        ) : null}
                       </div>
-                    </article>
-                  );
-                })}
-              </div>
-            )}
-          </section>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            {/* Upload form */}
+            <div className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
+              <p className={`mb-4 ${labelCls}`}>Ajouter des images</p>
+              <form onSubmit={handleUploadImages} className="space-y-3">
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  name="images"
+                  accept="image/*"
+                  multiple
+                  disabled={isBusy}
+                  onChange={(e) => setSelectedFiles(Array.from(e.target.files ?? []))}
+                  className="block w-full rounded-xl border border-dashed border-neutral-300 bg-neutral-50 px-3 py-3 text-sm text-neutral-700 file:mr-3 file:rounded-lg file:border-0 file:bg-neutral-900 file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-white hover:file:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
+                />
+                {selectedFiles.length > 0 ? (
+                  <p className="text-xs text-neutral-500">
+                    {selectedFiles.length} fichier{selectedFiles.length > 1 ? "s" : ""} sélectionné{selectedFiles.length > 1 ? "s" : ""}
+                  </p>
+                ) : null}
+                <button
+                  type="submit"
+                  disabled={isBusy || selectedFiles.length === 0}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-neutral-950 py-2.5 text-sm font-medium text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
+                  Ajouter les images
+                </button>
+              </form>
+            </div>
+
+          </div>
         </div>
       </div>
     </main>

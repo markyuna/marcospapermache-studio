@@ -8,7 +8,6 @@ import {
   FolderKanban,
   Mail,
   Palette,
-  Ruler,
   Wallet,
 } from "lucide-react";
 
@@ -145,10 +144,6 @@ export default async function AdminCommandeDetailPage({ params }: PageProps) {
               <h1 className="mt-3 text-3xl font-semibold tracking-tight text-neutral-900 md:text-4xl">
                 Commande #{commande.id}
               </h1>
-
-              <p className="mt-2 text-neutral-600">
-                Détail complet de la demande et gestion de son avancement.
-              </p>
             </div>
           </div>
 
@@ -251,42 +246,6 @@ export default async function AdminCommandeDetailPage({ params }: PageProps) {
                   commandeId={commande.id}
                   initialStatus={commande.status}
                 />
-              </div>
-            </div>
-
-            <div className="rounded-3xl border border-white/70 bg-white/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
-              <h2 className="text-lg font-semibold text-neutral-900">
-                Résumé rapide
-              </h2>
-
-              <div className="mt-4 space-y-3">
-                <div className="rounded-2xl bg-neutral-50 p-4">
-                  <p className="text-xs uppercase tracking-wide text-neutral-400">
-                    Nom client
-                  </p>
-                  <p className="mt-1 text-sm font-medium text-neutral-900">
-                    {commande.name || "—"}
-                  </p>
-                </div>
-
-                <div className="rounded-2xl bg-neutral-50 p-4">
-                  <p className="text-xs uppercase tracking-wide text-neutral-400">
-                    Dimensions
-                  </p>
-                  <p className="mt-1 flex items-start gap-2 text-sm font-medium text-neutral-900">
-                    <Ruler className="mt-0.5 h-4 w-4 shrink-0 text-neutral-400" />
-                    <span>{commande.dimensions || "Non précisées"}</span>
-                  </p>
-                </div>
-
-                <div className="rounded-2xl bg-neutral-50 p-4">
-                  <p className="text-xs uppercase tracking-wide text-neutral-400">
-                    Pièce jointe
-                  </p>
-                  <p className="mt-1 text-sm font-medium text-neutral-900">
-                    {commande.file_url ? "Disponible" : "Aucun fichier"}
-                  </p>
-                </div>
               </div>
             </div>
 

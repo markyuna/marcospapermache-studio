@@ -45,112 +45,112 @@
     "sold": "Vendu"
   },
   "CTA": {
-  "badge": "EXPÉRIENCE PREMIUM",
-  "title": "Donnez forme à une idée et transformez-la en œuvre sculpturale.",
-  "description": "Lancez l’expérience IA ou envoyez une demande de création sur mesure pensée pour votre espace.",
-  "ctaPrimary": "Créer avec l’IA",
-  "ctaSecondary": "Demander une pièce sur mesure",
-  "promptCta": "Voir le prompt",
-  "promptHelper": "Exemple de visualisation générée avec l’IA",
-  "imageBadge": "VISUALISATION IA",
-  "imageAlt": "Visualisation IA d’une sculpture dans un intérieur contemporain",
-  "floatingCard": {
-    "badge": "INSPIRATION",
-    "description": "Découvrez un exemple de prompt pour imaginer une sculpture murale dans votre propre univers."
+    "badge": "EXPÉRIENCE PREMIUM",
+    "title": "Donnez forme à une idée et transformez-la en œuvre sculpturale.",
+    "description": "Lancez l’expérience IA ou envoyez une demande de création sur mesure pensée pour votre espace.",
+    "ctaPrimary": "Créer avec l’IA",
+    "ctaSecondary": "Demander une pièce sur mesure",
+    "promptCta": "Voir le prompt",
+    "promptHelper": "Exemple de visualisation générée avec l’IA",
+    "imageBadge": "VISUALISATION IA",
+    "imageAlt": "Visualisation IA d’une sculpture dans un intérieur contemporain",
+    "floatingCard": {
+      "badge": "INSPIRATION",
+      "description": "Découvrez un exemple de prompt pour imaginer une sculpture murale dans votre propre univers."
+    },
+    "promptModal": {
+      "badge": "PROMPT D’INSPIRATION",
+      "title": "Un exemple de prompt pour générer une sculpture dans cet esprit",
+      "description": "Utilisez ce prompt comme point de départ, puis adaptez les formes, les couleurs, les matériaux ou l’ambiance pour créer une œuvre plus personnelle.",
+      "examplePrompt": "Créer une sculpture murale contemporaine en papier mâché inspirée de formes organiques et florales en relief, intégrée dans un cadre fin en métal noir. La composition doit évoquer un mouvement naturel, avec des fleurs sculpturales, des feuilles ondulantes, des racines fluides et des volumes élégants qui semblent sortir du cadre. Palette raffinée de blanc cassé, vert végétal, or patiné et brun chaud. Texture artisanale haut de gamme, rendu réaliste, pièce unique, esthétique galerie d’art contemporaine, lumière douce, grande présence murale, style sophistiqué et poétique.",
+      "copy": "Copier le prompt",
+      "copySuccess": "Prompt copié",
+      "createCta": "Créer avec l’IA",
+      "close": "Fermer",
+      "closeAriaLabel": "Fermer la fenêtre",
+      "tip": "Conseil : gardez la structure du prompt, puis changez la palette, le sujet ou le style pour obtenir des résultats plus variés."
+    }
   },
-  "promptModal": {
-    "badge": "PROMPT D’INSPIRATION",
-    "title": "Un exemple de prompt pour générer une sculpture dans cet esprit",
-    "description": "Utilisez ce prompt comme point de départ, puis adaptez les formes, les couleurs, les matériaux ou l’ambiance pour créer une œuvre plus personnelle.",
-    "examplePrompt": "Créer une sculpture murale contemporaine en papier mâché inspirée de formes organiques et florales en relief, intégrée dans un cadre fin en métal noir. La composition doit évoquer un mouvement naturel, avec des fleurs sculpturales, des feuilles ondulantes, des racines fluides et des volumes élégants qui semblent sortir du cadre. Palette raffinée de blanc cassé, vert végétal, or patiné et brun chaud. Texture artisanale haut de gamme, rendu réaliste, pièce unique, esthétique galerie d’art contemporaine, lumière douce, grande présence murale, style sophistiqué et poétique.",
-    "copy": "Copier le prompt",
-    "copySuccess": "Prompt copié",
-    "createCta": "Créer avec l’IA",
-    "close": "Fermer",
-    "closeAriaLabel": "Fermer la fenêtre",
-    "tip": "Conseil : gardez la structure du prompt, puis changez la palette, le sujet ou le style pour obtenir des résultats plus variés."
-  }
-},
   "ProcessSection": {
-  "badge": "Processus",
-  "title": "De la matière à l’œuvre",
-  "description": "Chaque sculpture naît d’un dialogue entre imagination, matières recyclées et travail artisanal. Un processus pensé pour transformer une idée en présence sculpturale unique.",
-  "steps": {
-    "inspiration": {
-      "title": "Inspiration & concept",
-      "description": "Chaque création commence par une idée, une émotion ou une atmosphère imaginée avec vous.",
-      "detail": "Références artistiques • IA • Direction créative"
-    },
-    "materials": {
-      "title": "Matières recyclées",
-      "description": "Cartons d’œufs, papier kraft, journaux recyclés, carton récupéré et pâte de papier mâché sont transformés à la main dans l’atelier pour donner naissance à des sculptures uniques.",
-      "detail": "Papier recyclé • Matières réutilisées"
-    },
-    "sculpting": {
-      "title": "Sculpture artisanale",
-      "description": "La structure prend forme manuellement grâce à un travail patient de modelage, de construction et d’équilibre.",
-      "detail": "Fabrication à la main • Pièce unique"
-    },
-    "textures": {
-      "title": "Textures & reliefs",
-      "description": "Les surfaces sont travaillées pour créer profondeur, lumière et présence sculpturale.",
-      "detail": "Textures organiques • Reliefs artistiques"
-    },
-    "finishing": {
-      "title": "Finitions artistiques",
-      "description": "Les dernières couches, nuances et détails viennent révéler l’identité finale de la sculpture.",
-      "detail": "Finitions mates • Détails premium"
-    }
-  },
-  "eco": {
-    "badge": "Approche responsable",
-    "title": "Une fabrication pensée avec conscience",
-    "description": "Chaque œuvre privilégie une approche artisanale et raisonnée, avec des matériaux réutilisés et une production en petite série.",
-    "items": {
-      "recycled": {
-        "title": "Matériaux recyclés",
-        "description": "Papier, cartons et matières transformés pour donner naissance à une nouvelle œuvre."
+    "badge": "Processus",
+    "title": "De la matière à l’œuvre",
+    "description": "Chaque sculpture naît d’un dialogue entre imagination, matières recyclées et travail artisanal. Un processus pensé pour transformer une idée en présence sculpturale unique.",
+    "steps": {
+      "inspiration": {
+        "title": "Inspiration & concept",
+        "description": "Chaque création commence par une idée, une émotion ou une atmosphère imaginée avec vous.",
+        "detail": "Références artistiques • IA • Direction créative"
       },
-      "handmade": {
-        "title": "Fabrication artisanale",
-        "description": "Chaque sculpture est façonnée manuellement dans l’atelier."
+      "materials": {
+        "title": "Matières recyclées",
+        "description": "Cartons d’œufs, papier kraft, journaux recyclés, carton récupéré et pâte de papier mâché sont transformés à la main dans l’atelier pour donner naissance à des sculptures uniques.",
+        "detail": "Papier recyclé • Matières réutilisées"
       },
-      "lowImpact": {
-        "title": "Production raisonnée",
-        "description": "Créations réalisées en petite série, loin des logiques industrielles."
+      "sculpting": {
+        "title": "Sculpture artisanale",
+        "description": "La structure prend forme manuellement grâce à un travail patient de modelage, de construction et d’équilibre.",
+        "detail": "Fabrication à la main • Pièce unique"
+      },
+      "textures": {
+        "title": "Textures & reliefs",
+        "description": "Les surfaces sont travaillées pour créer profondeur, lumière et présence sculpturale.",
+        "detail": "Textures organiques • Reliefs artistiques"
+      },
+      "finishing": {
+        "title": "Finitions artistiques",
+        "description": "Les dernières couches, nuances et détails viennent révéler l’identité finale de la sculpture.",
+        "detail": "Finitions mates • Détails premium"
       }
-    }
-  },
-  "quote": "Chaque sculpture porte les traces du geste, du temps et de la matière.",
-  "cta": "Commencer une création sur mesure"
-},
-  "GoogleReviews": {
-  "badge": "Avis Google",
-  "title": "Ils parlent de mon atelier",
-  "description": "Des retours authentiques autour de créations façonnées à la main, pensées comme des pièces uniques et sensibles.",
-  "ratingLabel": "Avis clients publiés sur Google",
-  "button": "Voir tous les avis",
-  "source": "Avis Google",
-  "starsAria": "{rating} étoiles",
-  "reviews": [
-    {
-      "name": "MARIO VENTURA",
-      "initials": "MV",
-      "meta": "3 avis · 1 photo",
-      "text": "Je suis très content de ma commande que j’ai faite sur mesure chez MarkPepperMaché ! Le travail est signé, original, et on sent vraiment la passion derrière chaque création. C’est un artiste à découvrir absolument. Je recommande vivement !",
-      "date": "Juin 2025",
-      "rating": 5
     },
-    {
-      "name": "Samia SAM",
-      "initials": "SS",
-      "meta": "Local Guide · 19 avis",
-      "text": "J’ai commandé une sculpture chez MarkPepperMaché et je suis absolument ravie ! Marcos me l’a réalisée sur mesure et le résultat était tout simplement magnifique. C’est un véritable artiste, talentueux et à l’écoute. Tout est fabriqué à partir de matériaux recyclés et écologiques, ce qui rend son travail encore plus admirable. Je recommande vivement !",
-      "date": "Juin 2025",
-      "rating": 5
-    }
-  ]
-},
+    "eco": {
+      "badge": "Approche responsable",
+      "title": "Une fabrication pensée avec conscience",
+      "description": "Chaque œuvre privilégie une approche artisanale et raisonnée, avec des matériaux réutilisés et une production en petite série.",
+      "items": {
+        "recycled": {
+          "title": "Matériaux recyclés",
+          "description": "Papier, cartons et matières transformés pour donner naissance à une nouvelle œuvre."
+        },
+        "handmade": {
+          "title": "Fabrication artisanale",
+          "description": "Chaque sculpture est façonnée manuellement dans l’atelier."
+        },
+        "lowImpact": {
+          "title": "Production raisonnée",
+          "description": "Créations réalisées en petite série, loin des logiques industrielles."
+        }
+      }
+    },
+    "quote": "Chaque sculpture porte les traces du geste, du temps et de la matière.",
+    "cta": "Commencer une création sur mesure"
+  },
+  "GoogleReviews": {
+    "badge": "Avis Google",
+    "title": "Ils parlent de mon atelier",
+    "description": "Des retours authentiques autour de créations façonnées à la main, pensées comme des pièces uniques et sensibles.",
+    "ratingLabel": "Avis clients publiés sur Google",
+    "button": "Voir tous les avis",
+    "source": "Avis Google",
+    "starsAria": "{rating} étoiles",
+    "reviews": [
+      {
+        "name": "MARIO VENTURA",
+        "initials": "MV",
+        "meta": "3 avis · 1 photo",
+        "text": "Je suis très content de ma commande que j’ai faite sur mesure chez MarkPepperMaché ! Le travail est signé, original, et on sent vraiment la passion derrière chaque création. C’est un artiste à découvrir absolument. Je recommande vivement !",
+        "date": "Juin 2025",
+        "rating": 5
+      },
+      {
+        "name": "Samia SAM",
+        "initials": "SS",
+        "meta": "Local Guide · 19 avis",
+        "text": "J’ai commandé une sculpture chez MarkPepperMaché et je suis absolument ravie ! Marcos me l’a réalisée sur mesure et le résultat était tout simplement magnifique. C’est un véritable artiste, talentueux et à l’écoute. Tout est fabriqué à partir de matériaux recyclés et écologiques, ce qui rend son travail encore plus admirable. Je recommande vivement !",
+        "date": "Juin 2025",
+        "rating": 5
+      }
+    ]
+  },
   "Footer": {
     "description": "Sculptures artisanales en papier mâché, mêlant design contemporain, matières recyclées et expression artistique unique.",
     "navigation": "Navigation",
@@ -282,37 +282,37 @@
     "discover": "Découvrir l’œuvre"
   },
   "CommandeForm": {
-  "success": {
-    "title": "Demande envoyée ✨",
-    "description": "Merci. Je vous répondrai rapidement pour discuter de votre projet."
+    "success": {
+      "title": "Demande envoyée ✨",
+      "description": "Merci. Je vous répondrai rapidement pour discuter de votre projet."
+    },
+    "generatedConcept": {
+      "badge": "Concept généré par IA",
+      "description": "Cette image générée sert de base visuelle pour votre demande. Vous pouvez la conserver comme référence pour votre création sur mesure.",
+      "remove": "Supprimer",
+      "imageAlt": "Concept généré par IA"
+    },
+    "fields": {
+      "name": "Nom",
+      "email": "Email",
+      "projectType": "Type de projet (murale, objet, etc.)",
+      "dimensions": "Dimensions souhaitées",
+      "budget": "Budget estimé (€)",
+      "message": "Décrivez votre idée...",
+      "referenceImage": "Image de référence",
+      "imagePreviewAlt": "Aperçu de l’image",
+      "imageHint": "JPG, PNG ou WEBP — max 5 MB"
+    },
+    "actions": {
+      "remove": "Supprimer",
+      "sending": "Envoi...",
+      "submit": "Envoyer la demande"
+    },
+    "errors": {
+      "invalidResponse": "Le serveur a retourné une réponse invalide.",
+      "generic": "Une erreur est survenue."
+    }
   },
-  "generatedConcept": {
-    "badge": "Concept généré par IA",
-    "description": "Cette image générée sert de base visuelle pour votre demande. Vous pouvez la conserver comme référence pour votre création sur mesure.",
-    "remove": "Supprimer",
-    "imageAlt": "Concept généré par IA"
-  },
-  "fields": {
-    "name": "Nom",
-    "email": "Email",
-    "projectType": "Type de projet (murale, objet, etc.)",
-    "dimensions": "Dimensions souhaitées",
-    "budget": "Budget estimé (€)",
-    "message": "Décrivez votre idée...",
-    "referenceImage": "Image de référence",
-    "imagePreviewAlt": "Aperçu de l’image",
-    "imageHint": "JPG, PNG ou WEBP — max 5 MB"
-  },
-  "actions": {
-    "remove": "Supprimer",
-    "sending": "Envoi...",
-    "submit": "Envoyer la demande"
-  },
-  "errors": {
-    "invalidResponse": "Le serveur a retourné une réponse invalide.",
-    "generic": "Une erreur est survenue."
-  }
-},
   "CommandePage": {
     "badge": "Commande",
     "title": "Demande de création personnalisée.",
@@ -350,8 +350,10 @@
     },
     "cta": {
       "etsy": "Acheter sur Etsy",
-      "requestSimilar": "Demander une pièce similaire"
-    }
+      "requestSimilar": "Demander une pièce similaire",
+      "requestThis": "Demander cette pièce"
+    },
+    "year": "Année"
   },
   "SculptureCard": {
     "status": {
@@ -375,150 +377,150 @@
     "imageAlt": "Marcos Suárez en train de travailler une sculpture en papier mâché dans son atelier",
     "quote": "Transformer la matière en présence."
   },
-"AIExperience": {
-  "badge": "Création assistée par IA",
-  "title": "Imaginez votre sculpture avant de lui donner vie.",
-  "description": "Décrivez votre idée, choisissez un type de création, définissez un style, les couleurs et les options de présentation, puis générez un concept visuel avant de le transformer en sculpture sur mesure.",
-  "promptEnrichedTitle": "Prompt enrichi",
-  "promptEnrichedSuffix": "Style souhaité :",
-  "creationTypes": {
-    "wall": "Sculpture murale",
-    "object": "Sculpture objet",
-    "light": "Sculpture lumineuse"
-  },
-  "sizes": {
-    "wall": {
-      "small": "30 × 40 cm",
-      "medium": "50 × 70 cm",
-      "large": "70 × 100 cm"
+  "AIExperience": {
+    "badge": "Création assistée par IA",
+    "title": "Imaginez votre sculpture avant de lui donner vie.",
+    "description": "Décrivez votre idée, choisissez un type de création, définissez un style, les couleurs et les options de présentation, puis générez un concept visuel avant de le transformer en sculpture sur mesure.",
+    "promptEnrichedTitle": "Prompt enrichi",
+    "promptEnrichedSuffix": "Style souhaité :",
+    "creationTypes": {
+      "wall": "Sculpture murale",
+      "object": "Sculpture objet",
+      "light": "Sculpture lumineuse"
     },
-    "object": {
-      "small": "Petit format",
-      "medium": "Format moyen",
-      "large": "Grand format"
+    "sizes": {
+      "wall": {
+        "small": "30 × 40 cm",
+        "medium": "50 × 70 cm",
+        "large": "70 × 100 cm"
+      },
+      "object": {
+        "small": "Petit format",
+        "medium": "Format moyen",
+        "large": "Grand format"
+      }
+    },
+    "frameColors": {
+      "black": "Noir",
+      "white": "Blanc",
+      "gold": "Doré"
+    },
+    "frameMaterials": {
+      "metal": "Métal",
+      "wood": "Bois"
+    },
+    "objectUsage": {
+      "table": "Table / console",
+      "shelf": "Étagère",
+      "floor": "Sol"
+    },
+    "objectFinish": {
+      "matte": "Mat",
+      "glossy": "Brillant",
+      "metallic": "Métallique"
+    },
+    "lightTypes": {
+      "tableLamp": "Lampe de table",
+      "wallLight": "Applique murale",
+      "ceilingLight": "Suspension / plafonnier",
+      "lightSculpture": "Sculpture lumineuse"
+    },
+    "lightTemperature": {
+      "warm": "Lumière chaude",
+      "neutral": "Lumière neutre",
+      "cool": "Lumière froide"
+    },
+    "lightIntensity": {
+      "subtle": "Subtile",
+      "medium": "Moyenne",
+      "strong": "Forte"
+    },
+    "colors": {
+      "black": "Noir",
+      "white": "Blanc",
+      "beige": "Beige",
+      "gold": "Doré",
+      "blue": "Bleu",
+      "green": "Vert",
+      "yellow": "Jaune",
+      "red": "Rouge",
+      "orange": "Orange",
+      "brown": "Brun",
+      "multicolor": "Multicolore",
+      "gradient": "Dégradé"
+    },
+    "form": {
+      "label": "Décrivez votre idée",
+      "placeholder": "Ex. Une sculpture contemporaine en papier mâché inspirée par les vagues, avec une présence élégante, une palette beige et dorée, et une finition artisanale raffinée.",
+      "creationTypeLabel": "Type de création",
+      "styleLabel": "Direction artistique",
+      "paletteLabel": "Palette de couleurs",
+      "paletteHelpGradientAvailable": "Sélection multiple autorisée. Le dégradé est maintenant disponible.",
+      "paletteHelpGradientLocked": "Sélection multiple autorisée. Le dégradé apparaît à partir de 2 couleurs sélectionnées.",
+      "selectedColors": "Couleurs sélectionnées :",
+      "sizeLabel": "Taille de l’œuvre",
+      "optionsLabel": "Présentation de l’œuvre",
+      "withFrame": "Cadre artistique ouvert",
+      "withFrameDescription": "Intégration dans un cadre fin et ouvert, où la sculpture interagit avec la structure sans être enfermée.",
+      "frameColor": "Couleur du cadre",
+      "frameMaterial": "Matériau du cadre",
+      "objectSizeLabel": "Taille de l’objet",
+      "objectUsageLabel": "Usage",
+      "objectFinishLabel": "Finition",
+      "lightTypeLabel": "Type de luminaire",
+      "lightTemperatureLabel": "Température de lumière",
+      "lightIntensityLabel": "Intensité lumineuse"
+    },
+    "styles": {
+      "organic": {
+        "label": "Organique",
+        "prompt": "sculpture contemporaine en papier mâché, formes organiques fluides et harmonieuses, volumes sculpturaux inspirés de la nature, texture artisanale raffinée, présence élégante et sensible, esthétique haut de gamme"
+      },
+      "minimal": {
+        "label": "Minimal",
+        "prompt": "sculpture contemporaine en papier mâché, lignes pures et maîtrisées, composition minimaliste sophistiquée, volumes équilibrés, sobriété élégante, texture artisanale subtile, esthétique contemporaine premium"
+      },
+      "oceanic": {
+        "label": "Océanique",
+        "prompt": "sculpture contemporaine en papier mâché, formes inspirées de l’océan et du mouvement des vagues, relief fluide et poétique, profondeur organique, texture artisanale délicate, atmosphère apaisante et élégante"
+      },
+      "luminous": {
+        "label": "Lumineux",
+        "prompt": "sculpture contemporaine en papier mâché, présence lumineuse douce et raffinée, volumes sculpturaux inspirés par la lumière, relief subtil, texture artisanale élégante, ambiance sophistiquée et atmosphérique"
+      },
+      "origami": {
+        "label": "Origami",
+        "prompt": "sculpture contemporaine en papier mâché inspirée de l’origami, plis géométriques précis, facettes nettes et sculpturales, construction structurée, élégance graphique, texture artisanale haut de gamme"
+      }
+    },
+    "buttons": {
+      "generate": "Générer une image",
+      "generating": "Génération...",
+      "reset": "Réinitialiser",
+      "regenerate": "Régénérer",
+      "order": "Donner vie à cette sculpture"
+    },
+    "result": {
+      "emptyTitle": "Votre concept apparaîtra ici",
+      "emptyDescription": "Générez une première vision de votre future sculpture puis affinez-la avant de lui donner vie dans l’atelier.",
+      "generatedTitle": "Concept généré",
+      "imageAlt": "Concept de sculpture généré par IA"
+    },
+    "footer": {
+      "line1": "Chaque concept généré sert de base visuelle. La sculpture finale est ensuite réalisée à la main en atelier, avec une approche artisanale, sensible et entièrement sur mesure."
+    },
+    "errors": {
+      "emptyPrompt": "Décrivez d’abord votre idée pour générer une image.",
+      "generationFailed": "Erreur lors de la génération.",
+      "noImageReturned": "Aucune image n’a été retournée.",
+      "unknown": "Une erreur inconnue s’est produite."
+    },
+    "loading": {
+      "title": "Création de votre image en cours",
+      "description": "Cela peut prendre quelques instants. Merci de patienter jusqu’à la fin de la génération afin d’éviter toute interruption.",
+      "notice": "N’actualisez pas et ne fermez pas cette page"
     }
   },
-  "frameColors": {
-    "black": "Noir",
-    "white": "Blanc",
-    "gold": "Doré"
-  },
-  "frameMaterials": {
-    "metal": "Métal",
-    "wood": "Bois"
-  },
-  "objectUsage": {
-    "table": "Table / console",
-    "shelf": "Étagère",
-    "floor": "Sol"
-  },
-  "objectFinish": {
-    "matte": "Mat",
-    "glossy": "Brillant",
-    "metallic": "Métallique"
-  },
-  "lightTypes": {
-    "tableLamp": "Lampe de table",
-    "wallLight": "Applique murale",
-    "ceilingLight": "Suspension / plafonnier",
-    "lightSculpture": "Sculpture lumineuse"
-  },
-  "lightTemperature": {
-    "warm": "Lumière chaude",
-    "neutral": "Lumière neutre",
-    "cool": "Lumière froide"
-  },
-  "lightIntensity": {
-    "subtle": "Subtile",
-    "medium": "Moyenne",
-    "strong": "Forte"
-  },
-  "colors": {
-    "black": "Noir",
-    "white": "Blanc",
-    "beige": "Beige",
-    "gold": "Doré",
-    "blue": "Bleu",
-    "green": "Vert",
-    "yellow": "Jaune",
-    "red": "Rouge",
-    "orange": "Orange",
-    "brown": "Brun",
-    "multicolor": "Multicolore",
-    "gradient": "Dégradé"
-  },
-  "form": {
-    "label": "Décrivez votre idée",
-    "placeholder": "Ex. Une sculpture contemporaine en papier mâché inspirée par les vagues, avec une présence élégante, une palette beige et dorée, et une finition artisanale raffinée.",
-    "creationTypeLabel": "Type de création",
-    "styleLabel": "Direction artistique",
-    "paletteLabel": "Palette de couleurs",
-    "paletteHelpGradientAvailable": "Sélection multiple autorisée. Le dégradé est maintenant disponible.",
-    "paletteHelpGradientLocked": "Sélection multiple autorisée. Le dégradé apparaît à partir de 2 couleurs sélectionnées.",
-    "selectedColors": "Couleurs sélectionnées :",
-    "sizeLabel": "Taille de l’œuvre",
-    "optionsLabel": "Présentation de l’œuvre",
-    "withFrame": "Cadre artistique ouvert",
-    "withFrameDescription": "Intégration dans un cadre fin et ouvert, où la sculpture interagit avec la structure sans être enfermée.",
-    "frameColor": "Couleur du cadre",
-    "frameMaterial": "Matériau du cadre",
-    "objectSizeLabel": "Taille de l’objet",
-    "objectUsageLabel": "Usage",
-    "objectFinishLabel": "Finition",
-    "lightTypeLabel": "Type de luminaire",
-    "lightTemperatureLabel": "Température de lumière",
-    "lightIntensityLabel": "Intensité lumineuse"
-  },
-  "styles": {
-    "organic": {
-      "label": "Organique",
-      "prompt": "sculpture contemporaine en papier mâché, formes organiques fluides et harmonieuses, volumes sculpturaux inspirés de la nature, texture artisanale raffinée, présence élégante et sensible, esthétique haut de gamme"
-    },
-    "minimal": {
-      "label": "Minimal",
-      "prompt": "sculpture contemporaine en papier mâché, lignes pures et maîtrisées, composition minimaliste sophistiquée, volumes équilibrés, sobriété élégante, texture artisanale subtile, esthétique contemporaine premium"
-    },
-    "oceanic": {
-      "label": "Océanique",
-      "prompt": "sculpture contemporaine en papier mâché, formes inspirées de l’océan et du mouvement des vagues, relief fluide et poétique, profondeur organique, texture artisanale délicate, atmosphère apaisante et élégante"
-    },
-    "luminous": {
-      "label": "Lumineux",
-      "prompt": "sculpture contemporaine en papier mâché, présence lumineuse douce et raffinée, volumes sculpturaux inspirés par la lumière, relief subtil, texture artisanale élégante, ambiance sophistiquée et atmosphérique"
-    },
-    "origami": {
-      "label": "Origami",
-      "prompt": "sculpture contemporaine en papier mâché inspirée de l’origami, plis géométriques précis, facettes nettes et sculpturales, construction structurée, élégance graphique, texture artisanale haut de gamme"
-    }
-  },
-  "buttons": {
-    "generate": "Générer une image",
-    "generating": "Génération...",
-    "reset": "Réinitialiser",
-    "regenerate": "Régénérer",
-    "order": "Donner vie à cette sculpture"
-  },
-  "result": {
-    "emptyTitle": "Votre concept apparaîtra ici",
-    "emptyDescription": "Générez une première vision de votre future sculpture puis affinez-la avant de lui donner vie dans l’atelier.",
-    "generatedTitle": "Concept généré",
-    "imageAlt": "Concept de sculpture généré par IA"
-  },
-  "footer": {
-    "line1": "Chaque concept généré sert de base visuelle. La sculpture finale est ensuite réalisée à la main en atelier, avec une approche artisanale, sensible et entièrement sur mesure."
-  },
-  "errors": {
-    "emptyPrompt": "Décrivez d’abord votre idée pour générer une image.",
-    "generationFailed": "Erreur lors de la génération.",
-    "noImageReturned": "Aucune image n’a été retournée.",
-    "unknown": "Une erreur inconnue s’est produite."
-  },
-  "loading": {
-    "title": "Création de votre image en cours",
-    "description": "Cela peut prendre quelques instants. Merci de patienter jusqu’à la fin de la génération afin d’éviter toute interruption.",
-    "notice": "N’actualisez pas et ne fermez pas cette page"
-  }
-},
   "ContactPage": {
     "metadata": {
       "title": "Contact | Marcos Papermache",

@@ -125,32 +125,32 @@
     "cta": "Comenzar una creación personalizada"
   },
   "GoogleReviews": {
-  "badge": "Reseñas Google",
-  "title": "Hablan de mi atelier",
-  "description": "Opiniones auténticas sobre creaciones hechas a mano, pensadas como piezas únicas, sensibles y con carácter.",
-  "ratingLabel": "Reseñas de clientes publicadas en Google",
-  "button": "Ver todas las reseñas",
-  "source": "Reseña Google",
-  "starsAria": "{rating} estrellas",
-  "reviews": [
-    {
-      "name": "MARIO VENTURA",
-      "initials": "MV",
-      "meta": "3 reseñas · 1 foto",
-      "text": "Estoy muy contento con el pedido personalizado que hice en MarkPepperMaché. El trabajo es original, con carácter, y se siente realmente la pasión detrás de cada creación. Es un artista que hay que descubrir absolutamente. ¡Lo recomiendo muchísimo!",
-      "date": "Junio 2025",
-      "rating": 5
-    },
-    {
-      "name": "Samia SAM",
-      "initials": "SS",
-      "meta": "Local Guide · 19 reseñas",
-      "text": "Encargué una escultura en MarkPepperMaché y estoy absolutamente encantada. Marcos la realizó a medida para mí y el resultado fue simplemente magnífico. Es un verdadero artista, talentoso y atento. Todo está fabricado con materiales reciclados y ecológicos, lo que hace que su trabajo sea todavía más admirable. ¡Lo recomiendo muchísimo!",
-      "date": "Junio 2025",
-      "rating": 5
-    }
-  ]
-},
+    "badge": "Reseñas Google",
+    "title": "Hablan de mi atelier",
+    "description": "Opiniones auténticas sobre creaciones hechas a mano, pensadas como piezas únicas, sensibles y con carácter.",
+    "ratingLabel": "Reseñas de clientes publicadas en Google",
+    "button": "Ver todas las reseñas",
+    "source": "Reseña Google",
+    "starsAria": "{rating} estrellas",
+    "reviews": [
+      {
+        "name": "MARIO VENTURA",
+        "initials": "MV",
+        "meta": "3 reseñas · 1 foto",
+        "text": "Estoy muy contento con el pedido personalizado que hice en MarkPepperMaché. El trabajo es original, con carácter, y se siente realmente la pasión detrás de cada creación. Es un artista que hay que descubrir absolutamente. ¡Lo recomiendo muchísimo!",
+        "date": "Junio 2025",
+        "rating": 5
+      },
+      {
+        "name": "Samia SAM",
+        "initials": "SS",
+        "meta": "Local Guide · 19 reseñas",
+        "text": "Encargué una escultura en MarkPepperMaché y estoy absolutamente encantada. Marcos la realizó a medida para mí y el resultado fue simplemente magnífico. Es un verdadero artista, talentoso y atento. Todo está fabricado con materiales reciclados y ecológicos, lo que hace que su trabajo sea todavía más admirable. ¡Lo recomiendo muchísimo!",
+        "date": "Junio 2025",
+        "rating": 5
+      }
+    ]
+  },
   "Footer": {
     "description": "Esculturas artesanales en papel maché que combinan diseño contemporáneo, materiales reciclados y una expresión artística única.",
     "navigation": "Navegación",
@@ -282,37 +282,37 @@
     "discover": "Descubrir la obra"
   },
   "CommandeForm": {
-  "success": {
-    "title": "Solicitud enviada ✨",
-    "description": "Gracias. Te responderé rápidamente para hablar sobre tu proyecto."
+    "success": {
+      "title": "Solicitud enviada ✨",
+      "description": "Gracias. Te responderé rápidamente para hablar sobre tu proyecto."
+    },
+    "generatedConcept": {
+      "badge": "Concepto generado por IA",
+      "description": "Esta imagen generada sirve como base visual para tu solicitud. Puedes conservarla como referencia para tu creación a medida.",
+      "remove": "Eliminar",
+      "imageAlt": "Concepto de escultura generado por IA"
+    },
+    "fields": {
+      "name": "Nombre",
+      "email": "Email",
+      "projectType": "Tipo de proyecto (mural, objeto, etc.)",
+      "dimensions": "Dimensiones deseadas",
+      "budget": "Presupuesto estimado (€)",
+      "message": "Describe tu idea...",
+      "referenceImage": "Imagen de referencia",
+      "imagePreviewAlt": "Vista previa de la imagen",
+      "imageHint": "JPG, PNG o WEBP — máx. 5 MB"
+    },
+    "actions": {
+      "remove": "Eliminar",
+      "sending": "Enviando...",
+      "submit": "Enviar solicitud"
+    },
+    "errors": {
+      "invalidResponse": "El servidor devolvió una respuesta inválida.",
+      "generic": "Se ha producido un error."
+    }
   },
-  "generatedConcept": {
-    "badge": "Concepto generado por IA",
-    "description": "Esta imagen generada sirve como base visual para tu solicitud. Puedes conservarla como referencia para tu creación a medida.",
-    "remove": "Eliminar",
-    "imageAlt": "Concepto de escultura generado por IA"
-  },
-  "fields": {
-    "name": "Nombre",
-    "email": "Email",
-    "projectType": "Tipo de proyecto (mural, objeto, etc.)",
-    "dimensions": "Dimensiones deseadas",
-    "budget": "Presupuesto estimado (€)",
-    "message": "Describe tu idea...",
-    "referenceImage": "Imagen de referencia",
-    "imagePreviewAlt": "Vista previa de la imagen",
-    "imageHint": "JPG, PNG o WEBP — máx. 5 MB"
-  },
-  "actions": {
-    "remove": "Eliminar",
-    "sending": "Enviando...",
-    "submit": "Enviar solicitud"
-  },
-  "errors": {
-    "invalidResponse": "El servidor devolvió una respuesta inválida.",
-    "generic": "Se ha producido un error."
-  }
-},
   "CommandePage": {
     "badge": "Encargo",
     "title": "Solicitud de creación personalizada.",
@@ -350,8 +350,10 @@
     },
     "cta": {
       "etsy": "Comprar en Etsy",
-      "requestSimilar": "Solicitar una pieza similar"
-    }
+      "requestSimilar": "Solicitar una pieza similar",
+      "requestThis": "Solicitar esta pieza"
+    },
+    "year": "Año"
   },
   "SculptureCard": {
     "status": {
@@ -375,150 +377,150 @@
     "imageAlt": "Marcos Suárez trabajando en una escultura de papel maché en su taller",
     "quote": "Transformar la materia en presencia."
   },
-"AIExperience": {
-  "badge": "Creación asistida por IA",
-  "title": "Imagina tu escultura antes de darle vida.",
-  "description": "Describe tu idea, elige un tipo de creación, define un estilo, los colores y las opciones de presentación, y luego genera un concepto visual antes de transformarlo en una escultura personalizada.",
-  "promptEnrichedTitle": "Prompt enriquecido",
-  "promptEnrichedSuffix": "Estilo deseado:",
-  "creationTypes": {
-    "wall": "Escultura mural",
-    "object": "Escultura objeto",
-    "light": "Escultura luminosa"
-  },
-  "sizes": {
-    "wall": {
-      "small": "30 × 40 cm",
-      "medium": "50 × 70 cm",
-      "large": "70 × 100 cm"
+  "AIExperience": {
+    "badge": "Creación asistida por IA",
+    "title": "Imagina tu escultura antes de darle vida.",
+    "description": "Describe tu idea, elige un tipo de creación, define un estilo, los colores y las opciones de presentación, y luego genera un concepto visual antes de transformarlo en una escultura personalizada.",
+    "promptEnrichedTitle": "Prompt enriquecido",
+    "promptEnrichedSuffix": "Estilo deseado:",
+    "creationTypes": {
+      "wall": "Escultura mural",
+      "object": "Escultura objeto",
+      "light": "Escultura luminosa"
     },
-    "object": {
-      "small": "Formato pequeño",
-      "medium": "Formato medio",
-      "large": "Formato grande"
+    "sizes": {
+      "wall": {
+        "small": "30 × 40 cm",
+        "medium": "50 × 70 cm",
+        "large": "70 × 100 cm"
+      },
+      "object": {
+        "small": "Formato pequeño",
+        "medium": "Formato medio",
+        "large": "Formato grande"
+      }
+    },
+    "frameColors": {
+      "black": "Negro",
+      "white": "Blanco",
+      "gold": "Dorado"
+    },
+    "frameMaterials": {
+      "metal": "Metal",
+      "wood": "Madera"
+    },
+    "objectUsage": {
+      "table": "Mesa / consola",
+      "shelf": "Estantería",
+      "floor": "Suelo"
+    },
+    "objectFinish": {
+      "matte": "Mate",
+      "glossy": "Brillante",
+      "metallic": "Metálico"
+    },
+    "lightTypes": {
+      "tableLamp": "Lámpara de mesa",
+      "wallLight": "Aplique de pared",
+      "ceilingLight": "Suspensión / plafón",
+      "lightSculpture": "Escultura luminosa"
+    },
+    "lightTemperature": {
+      "warm": "Luz cálida",
+      "neutral": "Luz neutra",
+      "cool": "Luz fría"
+    },
+    "lightIntensity": {
+      "subtle": "Sutil",
+      "medium": "Media",
+      "strong": "Fuerte"
+    },
+    "colors": {
+      "black": "Negro",
+      "white": "Blanco",
+      "beige": "Beige",
+      "gold": "Dorado",
+      "blue": "Azul",
+      "green": "Verde",
+      "yellow": "Amarillo",
+      "red": "Rojo",
+      "orange": "Naranja",
+      "brown": "Marrón",
+      "multicolor": "Multicolor",
+      "gradient": "Degradado"
+    },
+    "form": {
+      "label": "Describe tu idea",
+      "placeholder": "Ej. Una escultura contemporánea en papel maché inspirada en las olas, con una presencia elegante, una paleta beige y dorada, y un acabado artesanal refinado.",
+      "creationTypeLabel": "Tipo de creación",
+      "styleLabel": "Dirección artística",
+      "paletteLabel": "Paleta de colores",
+      "paletteHelpGradientAvailable": "Selección múltiple permitida. El degradado ya está disponible.",
+      "paletteHelpGradientLocked": "Selección múltiple permitida. El degradado aparece a partir de 2 colores seleccionados.",
+      "selectedColors": "Colores seleccionados:",
+      "sizeLabel": "Tamaño de la obra",
+      "optionsLabel": "Presentación de la obra",
+      "withFrame": "Marco artístico abierto",
+      "withFrameDescription": "Integración en un marco fino y abierto, donde la escultura interactúa con la estructura sin quedar encerrada.",
+      "frameColor": "Color del marco",
+      "frameMaterial": "Material del marco",
+      "objectSizeLabel": "Tamaño del objeto",
+      "objectUsageLabel": "Uso",
+      "objectFinishLabel": "Acabado",
+      "lightTypeLabel": "Tipo de luminaria",
+      "lightTemperatureLabel": "Temperatura de luz",
+      "lightIntensityLabel": "Intensidad luminosa"
+    },
+    "styles": {
+      "organic": {
+        "label": "Orgánico",
+        "prompt": "escultura contemporánea en papel maché, formas orgánicas fluidas y armoniosas, volúmenes escultóricos inspirados en la naturaleza, textura artesanal refinada, presencia elegante y sensible, estética de alta gama"
+      },
+      "minimal": {
+        "label": "Minimal",
+        "prompt": "escultura contemporánea en papel maché, líneas puras y controladas, composición minimalista sofisticada, volúmenes equilibrados, sobriedad elegante, textura artesanal sutil, estética contemporánea premium"
+      },
+      "oceanic": {
+        "label": "Oceánico",
+        "prompt": "escultura contemporánea en papel maché, formas inspiradas en el océano y en el movimiento de las olas, relieve fluido y poético, profundidad orgánica, textura artesanal delicada, atmósfera serena y elegante"
+      },
+      "luminous": {
+        "label": "Luminoso",
+        "prompt": "escultura contemporánea en papel maché, presencia luminosa suave y refinada, volúmenes escultóricos inspirados por la luz, relieve sutil, textura artesanal elegante, ambiente sofisticado y atmosférico"
+      },
+      "origami": {
+        "label": "Origami",
+        "prompt": "escultura contemporánea en papel maché inspirada en el origami, pliegues geométricos precisos, facetas nítidas y escultóricas, construcción estructurada, elegancia gráfica, textura artesanal de alta gama"
+      }
+    },
+    "buttons": {
+      "generate": "Generar una imagen",
+      "generating": "Generando...",
+      "reset": "Restablecer",
+      "regenerate": "Regenerar",
+      "order": "Dar vida a esta escultura"
+    },
+    "result": {
+      "emptyTitle": "Tu concepto aparecerá aquí",
+      "emptyDescription": "Genera una primera visión de tu futura escultura y luego refínala antes de darle vida en el taller.",
+      "generatedTitle": "Concepto generado",
+      "imageAlt": "Concepto de escultura generado por IA"
+    },
+    "footer": {
+      "line1": "Cada concepto generado sirve como base visual. La escultura final se realiza después a mano en el taller, con un enfoque artesanal, sensible y completamente a medida."
+    },
+    "errors": {
+      "emptyPrompt": "Describe primero tu idea para generar una imagen.",
+      "generationFailed": "Error durante la generación.",
+      "noImageReturned": "No se devolvió ninguna imagen.",
+      "unknown": "Ocurrió un error desconocido."
+    },
+    "loading": {
+      "title": "Creación de tu imagen en curso",
+      "description": "Esto puede tardar unos instantes. Espera hasta que la generación termine para evitar cualquier interrupción.",
+      "notice": "No actualices ni cierres esta página"
     }
   },
-  "frameColors": {
-    "black": "Negro",
-    "white": "Blanco",
-    "gold": "Dorado"
-  },
-  "frameMaterials": {
-    "metal": "Metal",
-    "wood": "Madera"
-  },
-  "objectUsage": {
-    "table": "Mesa / consola",
-    "shelf": "Estantería",
-    "floor": "Suelo"
-  },
-  "objectFinish": {
-    "matte": "Mate",
-    "glossy": "Brillante",
-    "metallic": "Metálico"
-  },
-  "lightTypes": {
-    "tableLamp": "Lámpara de mesa",
-    "wallLight": "Aplique de pared",
-    "ceilingLight": "Suspensión / plafón",
-    "lightSculpture": "Escultura luminosa"
-  },
-  "lightTemperature": {
-    "warm": "Luz cálida",
-    "neutral": "Luz neutra",
-    "cool": "Luz fría"
-  },
-  "lightIntensity": {
-    "subtle": "Sutil",
-    "medium": "Media",
-    "strong": "Fuerte"
-  },
-  "colors": {
-    "black": "Negro",
-    "white": "Blanco",
-    "beige": "Beige",
-    "gold": "Dorado",
-    "blue": "Azul",
-    "green": "Verde",
-    "yellow": "Amarillo",
-    "red": "Rojo",
-    "orange": "Naranja",
-    "brown": "Marrón",
-    "multicolor": "Multicolor",
-    "gradient": "Degradado"
-  },
-  "form": {
-    "label": "Describe tu idea",
-    "placeholder": "Ej. Una escultura contemporánea en papel maché inspirada en las olas, con una presencia elegante, una paleta beige y dorada, y un acabado artesanal refinado.",
-    "creationTypeLabel": "Tipo de creación",
-    "styleLabel": "Dirección artística",
-    "paletteLabel": "Paleta de colores",
-    "paletteHelpGradientAvailable": "Selección múltiple permitida. El degradado ya está disponible.",
-    "paletteHelpGradientLocked": "Selección múltiple permitida. El degradado aparece a partir de 2 colores seleccionados.",
-    "selectedColors": "Colores seleccionados:",
-    "sizeLabel": "Tamaño de la obra",
-    "optionsLabel": "Presentación de la obra",
-    "withFrame": "Marco artístico abierto",
-    "withFrameDescription": "Integración en un marco fino y abierto, donde la escultura interactúa con la estructura sin quedar encerrada.",
-    "frameColor": "Color del marco",
-    "frameMaterial": "Material del marco",
-    "objectSizeLabel": "Tamaño del objeto",
-    "objectUsageLabel": "Uso",
-    "objectFinishLabel": "Acabado",
-    "lightTypeLabel": "Tipo de luminaria",
-    "lightTemperatureLabel": "Temperatura de luz",
-    "lightIntensityLabel": "Intensidad luminosa"
-  },
-  "styles": {
-    "organic": {
-      "label": "Orgánico",
-      "prompt": "escultura contemporánea en papel maché, formas orgánicas fluidas y armoniosas, volúmenes escultóricos inspirados en la naturaleza, textura artesanal refinada, presencia elegante y sensible, estética de alta gama"
-    },
-    "minimal": {
-      "label": "Minimal",
-      "prompt": "escultura contemporánea en papel maché, líneas puras y controladas, composición minimalista sofisticada, volúmenes equilibrados, sobriedad elegante, textura artesanal sutil, estética contemporánea premium"
-    },
-    "oceanic": {
-      "label": "Oceánico",
-      "prompt": "escultura contemporánea en papel maché, formas inspiradas en el océano y en el movimiento de las olas, relieve fluido y poético, profundidad orgánica, textura artesanal delicada, atmósfera serena y elegante"
-    },
-    "luminous": {
-      "label": "Luminoso",
-      "prompt": "escultura contemporánea en papel maché, presencia luminosa suave y refinada, volúmenes escultóricos inspirados por la luz, relieve sutil, textura artesanal elegante, ambiente sofisticado y atmosférico"
-    },
-    "origami": {
-      "label": "Origami",
-      "prompt": "escultura contemporánea en papel maché inspirada en el origami, pliegues geométricos precisos, facetas nítidas y escultóricas, construcción estructurada, elegancia gráfica, textura artesanal de alta gama"
-    }
-  },
-  "buttons": {
-    "generate": "Generar una imagen",
-    "generating": "Generando...",
-    "reset": "Restablecer",
-    "regenerate": "Regenerar",
-    "order": "Dar vida a esta escultura"
-  },
-  "result": {
-    "emptyTitle": "Tu concepto aparecerá aquí",
-    "emptyDescription": "Genera una primera visión de tu futura escultura y luego refínala antes de darle vida en el taller.",
-    "generatedTitle": "Concepto generado",
-    "imageAlt": "Concepto de escultura generado por IA"
-  },
-  "footer": {
-    "line1": "Cada concepto generado sirve como base visual. La escultura final se realiza después a mano en el taller, con un enfoque artesanal, sensible y completamente a medida."
-  },
-  "errors": {
-    "emptyPrompt": "Describe primero tu idea para generar una imagen.",
-    "generationFailed": "Error durante la generación.",
-    "noImageReturned": "No se devolvió ninguna imagen.",
-    "unknown": "Ocurrió un error desconocido."
-  },
-  "loading": {
-    "title": "Creación de tu imagen en curso",
-    "description": "Esto puede tardar unos instantes. Espera hasta que la generación termine para evitar cualquier interrupción.",
-    "notice": "No actualices ni cierres esta página"
-  }
-},
   "ContactPage": {
     "metadata": {
       "title": "Contacto | Marcos Papermache",
