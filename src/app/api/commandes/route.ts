@@ -43,7 +43,7 @@ async function uploadFileToSupabase(file: File) {
 }
 
 async function uploadBase64ImageToSupabase(dataUrl: string): Promise<string> {
-  const matches = dataUrl.match(/^data:([a-zA-Z0-9+/]+\/[a-zA-Z0-9+/]+);base64,(.+)$/s);
+  const matches = dataUrl.match(/^data:([a-zA-Z0-9+/]+\/[a-zA-Z0-9+/]+);base64,(.+)$/);
   if (!matches) {
     throw new Error("Invalid data URL");
   }
