@@ -36,11 +36,13 @@ async function getClarityAnalytics(): Promise<ClarityAnalytics | null> {
     const headersList = await headers();
     const host = headersList.get("host");
     const protocol = headersList.get("x-forwarded-proto") ?? "http";
+    const cookie = headersList.get("cookie") ?? "";
 
     if (!host) return null;
 
     const response = await fetch(`${protocol}://${host}/api/admin/clarity`, {
       cache: "no-store",
+      headers: { cookie },
     });
 
     if (!response.ok) return null;
