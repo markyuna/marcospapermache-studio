@@ -4,6 +4,7 @@
 import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { supabaseAdmin } from "@/lib/supabase";
+import { requireAdmin } from "@/lib/admin-auth";
 
 type RouteContext = {
   params: Promise<{
@@ -45,6 +46,11 @@ function sanitizeFileName(fileName: string): string {
 }
 
 export async function POST(request: Request, context: RouteContext) {
+  const auth = await requireAdmin();
+  if (!auth.ok) {
+    return NextResponse.json({ error: auth.error }, { status: auth.status });
+  }
+
   try {
     const { id: artworkId } = await context.params;
 

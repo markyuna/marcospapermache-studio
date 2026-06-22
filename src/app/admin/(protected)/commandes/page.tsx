@@ -1,128 +1,83 @@
 // src/app/admin/(protected)/commandes/page.tsx
 
+import { Suspense } from "react";
 import { supabaseAdmin } from "@/lib/supabase";
 import DashboardCommandes from "@/components/admin/DashboardCommandes";
 import type { Commande } from "@/types/commande";
 
 export const dynamic = "force-dynamic";
 
-type GetCommandesResult = {
-  commandes: Commande[];
-  errorMessage: string | null;
-};
-
-function getReadableError(error: unknown): string {
-  if (error instanceof Error) {
-    return error.message;
-  }
-
-  if (typeof error === "object" && error !== null) {
-    const possibleError = error as {
-      message?: unknown;
-      details?: unknown;
-      hint?: unknown;
-      code?: unknown;
-    };
-
-    const message =
-      typeof possibleError.message === "string"
-        ? possibleError.message
-        : null;
-
-    const details =
-      typeof possibleError.details === "string"
-        ? possibleError.details
-        : null;
-
-    const hint =
-      typeof possibleError.hint === "string" ? possibleError.hint : null;
-
-    const code =
-      typeof possibleError.code === "string" ? possibleError.code : null;
-
-    return [message, details, hint, code].filter(Boolean).join(" — ");
-  }
-
-  return "Impossible de charger les commandes.";
-}
-
-async function getCommandes(): Promise<GetCommandesResult> {
-  try {
-    const { data, error } = await supabaseAdmin
-      .from("commandes")
-      .select(
-        `
-        id,
-        name,
-        email,
-        project_type,
-        message,
-        budget,
-        dimensions,
-        status,
-        created_at,
-        image_url,
-        file_url
+async function CommandesData() {
+  const t0 = Date.now();
+  const { data, error } = await supabaseAdmin
+    .from("commandes")
+    .select(
       `
-      )
-      .order("created_at", { ascending: false })
-      .limit(10);
+      id,
+      name,
+      email,
+      project_type,
+      message,
+      budget,
+      dimensions,
+      status,
+      created_at,
+      image_url,
+      file_url
+    `
+    )
+    .order("created_at", { ascending: false })
+    .limit(10);
 
-    if (error) {
-      const errorMessage = getReadableError(error);
+  console.log(`[commandes] DB query: ${Date.now() - t0}ms`);
 
-      console.log("Supabase commandes error:", {
-        message: errorMessage,
-        raw: Object.getOwnPropertyNames(error).reduce<Record<string, unknown>>(
-          (acc, key) => {
-            const errorRecord = error as unknown as Record<string, unknown>;
-            acc[key] = errorRecord[key];
-            return acc;
-          },
-          {}
-        ),
-      });
-
-      return {
-        commandes: [],
-        errorMessage:
-          errorMessage || "Impossible de charger les commandes depuis Supabase.",
-      };
-    }
-
-    return {
-      commandes: (data ?? []) as Commande[],
-      errorMessage: null,
-    };
-  } catch (error) {
-    const errorMessage = getReadableError(error);
-
-    console.log("Unexpected commandes error:", {
-      message: errorMessage,
-      error,
-    });
-
-    return {
-      commandes: [],
-      errorMessage:
-        errorMessage || "Erreur inattendue lors du chargement des commandes.",
-    };
+  if (error) {
+    return (
+      <div className="rounded-3xl border border-red-200 bg-red-50 p-6 text-red-700 shadow-sm">
+        Erreur lors du chargement des commandes : {error.message}
+      </div>
+    );
   }
+
+  return <DashboardCommandes commandes={(data ?? []) as Commande[]} />;
 }
 
-export default async function AdminCommandesPage() {
-  const { commandes, errorMessage } = await getCommandes();
+function CommandesSkeleton() {
+  return (
+    <div className="rounded-3xl border border-white/70 bg-white/90 p-8 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
+      <div className="animate-pulse space-y-4">
+        {Array.from({ length: 4 }).map((_, index) => (
+          <div
+            key={index}
+            className="grid gap-4 rounded-2xl border border-neutral-100 p-4 md:grid-cols-[100px_1.2fr_0.8fr_0.6fr]"
+          >
+            <div className="h-20 w-20 rounded-2xl bg-neutral-200" />
+            <div className="space-y-3">
+              <div className="h-4 w-40 rounded-full bg-neutral-200" />
+              <div className="h-4 w-56 rounded-full bg-neutral-100" />
+            </div>
+            <div className="space-y-3">
+              <div className="h-4 w-32 rounded-full bg-neutral-200" />
+              <div className="h-4 w-24 rounded-full bg-neutral-100" />
+            </div>
+            <div className="space-y-3">
+              <div className="h-10 w-28 rounded-2xl bg-neutral-200" />
+              <div className="h-10 w-24 rounded-2xl bg-neutral-100" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
+export default function AdminCommandesPage() {
   return (
     <main className="min-h-screen bg-[linear-gradient(to_bottom,#fffaf5,#fff7f1,#ffffff)] px-4 py-8 md:px-6 lg:px-10">
       <div className="mx-auto max-w-7xl">
-        {errorMessage ? (
-          <div className="rounded-3xl border border-red-200 bg-red-50 p-6 text-red-700 shadow-sm">
-            Erreur lors du chargement des commandes : {errorMessage}
-          </div>
-        ) : (
-          <DashboardCommandes commandes={commandes} />
-        )}
+        <Suspense fallback={<CommandesSkeleton />}>
+          <CommandesData />
+        </Suspense>
       </div>
     </main>
   );

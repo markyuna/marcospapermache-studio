@@ -11,7 +11,9 @@ export default async function ProtectedAdminLayout({
 }: {
   children: ReactNode;
 }) {
+  const t0 = Date.now();
   await requireAdminPageAccess();
+  console.log(`[admin layout] auth: ${Date.now() - t0}ms`);
 
   return (
     <>
