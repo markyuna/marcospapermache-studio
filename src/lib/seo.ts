@@ -14,22 +14,6 @@ export const siteConfig = {
   logo: "/images/logo.png",
   description:
     "Atelier d’art contemporain en papier mâché. Sculptures uniques, œuvres murales et créations sur mesure façonnées à la main.",
-  keywords: [
-    "papier mâché",
-    "sculpture papier mâché",
-    "artiste papier mâché",
-    "art papier mâché",
-    "sculpture artisanale",
-    "sculpture contemporaine",
-    "œuvre murale artisanale",
-    "création sur mesure",
-    "artiste papier mâché France",
-    "Marcos Paper Mâché",
-    "paper mache artist",
-    "paper mache sculpture",
-    "escultura papel maché",
-    "arte en papel maché",
-  ],
 };
 
 type SeoParams = {
@@ -76,13 +60,9 @@ export function createMetadata({
   return {
     metadataBase: new URL(siteConfig.domain),
 
-    title: {
-      default: title,
-      template: `%s | ${siteConfig.name}`,
-    },
+    title,
 
     description,
-    keywords: siteConfig.keywords,
 
     authors: [{ name: siteConfig.creator }],
     creator: siteConfig.creator,

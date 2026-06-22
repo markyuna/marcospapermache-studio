@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
-import ClarityInit from "@/components/analytics/ClarityInit";
 import "./globals.css";
+import { siteConfig } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.marcospapermache.com"),
+  metadataBase: new URL(siteConfig.domain),
   title: {
-    default: "Marcos Papermache",
-    template: "%s | Marcos Papermache",
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.name}`,
   },
-  description:
-    "Sculptures contemporaines en papier mâché et expérience de création assistée par IA.",
+  description: siteConfig.description,
 };
 
 export default function RootLayout({
@@ -23,7 +22,6 @@ export default function RootLayout({
       <body className="min-h-screen antialiased">
         {children}
         <Analytics />
-        <ClarityInit />
       </body>
     </html>
   );
