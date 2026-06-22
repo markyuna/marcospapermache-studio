@@ -1,5 +1,6 @@
 // src/lib/admin-auth.ts
 import "server-only";
+import { cache } from "react";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
@@ -10,7 +11,8 @@ function getAllowedAdminEmails() {
     .filter(Boolean);
 }
 
-export async function getAuthenticatedUser() {
+// Deduplicates auth.getUser() within a single request render pass
+export const getAuthenticatedUser = cache(async () => {
   const supabase = await createSupabaseServerClient();
 
   const {
@@ -23,7 +25,7 @@ export async function getAuthenticatedUser() {
   }
 
   return user;
-}
+});
 
 export async function requireAdmin() {
   const user = await getAuthenticatedUser();

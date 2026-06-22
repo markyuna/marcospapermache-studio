@@ -42,6 +42,29 @@ async function uploadFileToSupabase(file: File) {
   return data.publicUrl;
 }
 
+async function uploadBase64ImageToSupabase(dataUrl: string): Promise<string> {
+  const matches = dataUrl.match(/^data:([a-zA-Z0-9+/]+\/[a-zA-Z0-9+/]+);base64,(.+)$/s);
+  if (!matches) {
+    throw new Error("Invalid data URL");
+  }
+
+  const mimeType = matches[1];
+  const ext = mimeType.split("/")[1]?.replace("jpeg", "jpg") ?? "png";
+  const fileName = `ai-${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+  const buffer = Buffer.from(matches[2], "base64");
+
+  const { error } = await supabaseAdmin.storage
+    .from("commandes")
+    .upload(fileName, buffer, { contentType: mimeType, upsert: false });
+
+  if (error) {
+    throw new Error(`Supabase upload failed: ${error.message}`);
+  }
+
+  const { data } = supabaseAdmin.storage.from("commandes").getPublicUrl(fileName);
+  return data.publicUrl;
+}
+
 /**
  * Route
  */
@@ -99,10 +122,26 @@ export async function POST(request: Request) {
     }
 
     /**
+     * Upload base64 AI image to Storage if needed
+     */
+    let imageUrl: string | null = null;
+    if (generatedImage) {
+      if (generatedImage.startsWith("data:")) {
+        try {
+          imageUrl = await uploadBase64ImageToSupabase(generatedImage);
+        } catch (uploadErr) {
+          console.error("AI image upload error:", uploadErr);
+        }
+      } else {
+        imageUrl = generatedImage;
+      }
+    }
+
+    /**
      * Preview image for emails
      * Priority: uploaded file > generated image URL
      */
-    const previewImage = fileUrl || generatedImage;
+    const previewImage = fileUrl || imageUrl;
 
     /**
      * Insert into Supabase
@@ -117,7 +156,7 @@ export async function POST(request: Request) {
           dimensions,
           budget,
           message,
-          image_url: generatedImage,
+          image_url: imageUrl,
           file_url: fileUrl,
           source: generatedImage ? "ai" : "manual",
           // status: "pending",

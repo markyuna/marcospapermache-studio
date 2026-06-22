@@ -1,13 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { supabaseAdmin } from "@/lib/supabase";
-
-type ArtworkImageRow = {
-  artwork_id: number;
-  image_url: string;
-  is_cover: boolean;
-  position: number | null;
-};
+import { prisma } from "@/lib/prisma";
 
 type ArtworkImage = {
   image_url: string;
@@ -40,95 +33,70 @@ type Artwork = {
   artwork_images: ArtworkImage[] | null;
 };
 
+type ArtworkRow = Omit<Artwork, "artwork_images"> & {
+  img_url: string | null;
+  img_is_cover: boolean | null;
+  img_position: number | null;
+};
+
 async function getArtworks(): Promise<Artwork[]> {
   try {
-    const { data: artworksData, error: artworksError } = await supabaseAdmin
-      .from("artworks")
-      .select(`
-        id,
-        title,
-        title_en,
-        title_es,
-        slug,
-        category,
-        category_en,
-        category_es,
-        year,
-        subtitle,
-        subtitle_en,
-        subtitle_es,
-        materials,
-        materials_en,
-        materials_es,
-        availability,
-        availability_en,
-        availability_es,
-        etsy_url,
-        price,
-        is_featured,
-        created_at
-      `)
-      .order("created_at", { ascending: false });
+    const rows = await prisma.$queryRawUnsafe<ArtworkRow[]>(`
+      SELECT
+        a.id, a.title, a.title_en, a.title_es, a.slug,
+        a.category, a.category_en, a.category_es,
+        a.year, a.subtitle, a.subtitle_en, a.subtitle_es,
+        a.materials, a.materials_en, a.materials_es,
+        a.availability, a.availability_en, a.availability_es,
+        a.etsy_url, a.price, a.is_featured,
+        ai.image_url AS img_url,
+        ai.is_cover  AS img_is_cover,
+        ai.position  AS img_position
+      FROM artworks a
+      LEFT JOIN artwork_images ai ON ai.artwork_id = a.id
+      ORDER BY a.created_at DESC, ai.position ASC NULLS LAST
+    `);
 
-    if (artworksError) {
-      console.error("Error loading artworks table:", {
-        message: artworksError.message,
-        details: artworksError.details,
-        hint: artworksError.hint,
-        code: artworksError.code,
-      });
-      return [];
+    const artworkMap = new Map<number, Artwork>();
+
+    for (const row of rows) {
+      if (!artworkMap.has(row.id)) {
+        artworkMap.set(row.id, {
+          id: row.id,
+          title: row.title,
+          title_en: row.title_en,
+          title_es: row.title_es,
+          slug: row.slug,
+          category: row.category,
+          category_en: row.category_en,
+          category_es: row.category_es,
+          year: row.year,
+          subtitle: row.subtitle,
+          subtitle_en: row.subtitle_en,
+          subtitle_es: row.subtitle_es,
+          materials: row.materials,
+          materials_en: row.materials_en,
+          materials_es: row.materials_es,
+          availability: row.availability,
+          availability_en: row.availability_en,
+          availability_es: row.availability_es,
+          etsy_url: row.etsy_url,
+          price: row.price,
+          is_featured: row.is_featured,
+          artwork_images: [],
+        });
+      }
+
+      if (row.img_url) {
+        artworkMap.get(row.id)!.artwork_images!.push({
+          image_url: row.img_url,
+          is_cover: row.img_is_cover ?? false,
+          position: row.img_position,
+        });
+      }
     }
 
-    const artworks = (artworksData ?? []) as Omit<Artwork, "artwork_images">[];
-
-    if (artworks.length === 0) {
-      return [];
-    }
-
-    const artworkIds = artworks.map((artwork) => artwork.id);
-
-    const { data: imagesData, error: imagesError } = await supabaseAdmin
-      .from("artwork_images")
-      .select(`
-        artwork_id,
-        image_url,
-        is_cover,
-        position
-      `)
-      .in("artwork_id", artworkIds)
-      .order("position", { ascending: true });
-
-    if (imagesError) {
-      console.error("Error loading artwork_images table:", {
-        message: imagesError.message,
-        details: imagesError.details,
-        hint: imagesError.hint,
-        code: imagesError.code,
-      });
-
-      return artworks.map((artwork) => ({
-        ...artwork,
-        artwork_images: [],
-      }));
-    }
-
-    const imagesByArtworkId = new Map<number, ArtworkImage[]>();
-
-    for (const image of (imagesData ?? []) as ArtworkImageRow[]) {
-      const current = imagesByArtworkId.get(image.artwork_id) ?? [];
-      current.push({
-        image_url: image.image_url,
-        is_cover: image.is_cover,
-        position: image.position,
-      });
-      imagesByArtworkId.set(image.artwork_id, current);
-    }
-
-    return artworks.map((artwork) => ({
-      ...artwork,
-      artwork_images: imagesByArtworkId.get(artwork.id) ?? [],
-    }));
+    return Array.from(artworkMap.values());
   } catch (error) {
     console.error("Unexpected error loading artworks:", error);
     return [];

@@ -1,45 +1,59 @@
 // src/app/admin/(protected)/commandes/page.tsx
 
 import { Suspense } from "react";
-import { supabaseAdmin } from "@/lib/supabase";
+import { unstable_cache } from "next/cache";
+import { pool } from "@/lib/prisma";
 import DashboardCommandes from "@/components/admin/DashboardCommandes";
 import type { Commande } from "@/types/commande";
 
 export const dynamic = "force-dynamic";
 
+const getCachedCommandes = unstable_cache(
+  async (): Promise<Commande[]> => {
+    const t0 = Date.now();
+    const result = await pool.query<{
+      id: number;
+      name: string;
+      email: string;
+      project_type: string | null;
+      message: string | null;
+      budget: string | null;
+      dimensions: string | null;
+      status: string | null;
+      created_at: Date;
+      image_url: string | null;
+      file_url: string | null;
+    }>(
+      `SELECT id, name, email, project_type, message, budget, dimensions,
+              status, created_at, image_url, file_url
+       FROM commandes
+       ORDER BY created_at DESC
+       LIMIT 10`
+    );
+    console.log(`[commandes] DB query: ${Date.now() - t0}ms`);
+    return result.rows.map((r) => ({
+      ...r,
+      created_at: r.created_at.toISOString(),
+    })) as Commande[];
+  },
+  ["admin-commandes"],
+  { revalidate: 60, tags: ["commandes"] }
+);
+
 async function CommandesData() {
-  const t0 = Date.now();
-  const { data, error } = await supabaseAdmin
-    .from("commandes")
-    .select(
-      `
-      id,
-      name,
-      email,
-      project_type,
-      message,
-      budget,
-      dimensions,
-      status,
-      created_at,
-      image_url,
-      file_url
-    `
-    )
-    .order("created_at", { ascending: false })
-    .limit(10);
-
-  console.log(`[commandes] DB query: ${Date.now() - t0}ms`);
-
-  if (error) {
+  let rows: Commande[];
+  try {
+    rows = await getCachedCommandes();
+  } catch (err) {
+    console.error("[commandes] DB query error:", err);
     return (
       <div className="rounded-3xl border border-red-200 bg-red-50 p-6 text-red-700 shadow-sm">
-        Erreur lors du chargement des commandes : {error.message}
+        Erreur lors du chargement des commandes.
       </div>
     );
   }
 
-  return <DashboardCommandes commandes={(data ?? []) as Commande[]} />;
+  return <DashboardCommandes commandes={rows} />;
 }
 
 function CommandesSkeleton() {

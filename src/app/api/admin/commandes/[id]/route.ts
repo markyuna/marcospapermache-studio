@@ -1,5 +1,6 @@
 // src/app/api/admin/commandes/[id]/route.ts
 import { NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
 import { supabaseAdmin } from "@/lib/supabase";
 import { requireAdmin } from "@/lib/admin-auth";
 
@@ -42,6 +43,7 @@ export async function DELETE(_request: Request, context: RouteContext) {
       );
     }
 
+    revalidateTag("commandes");
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("DELETE /api/admin/commandes/[id] error:", error);
