@@ -43,7 +43,7 @@ export async function DELETE(_request: Request, context: RouteContext) {
       );
     }
 
-    revalidateTag("commandes");
+    revalidateTag("commandes", {});
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("DELETE /api/admin/commandes/[id] error:", error);

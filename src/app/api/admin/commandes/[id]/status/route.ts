@@ -61,7 +61,7 @@ export async function PATCH(request: Request, context: RouteContext) {
       );
     }
 
-    revalidateTag("commandes");
+    revalidateTag("commandes", {});
     return NextResponse.json({
       success: true,
       commande: data,
