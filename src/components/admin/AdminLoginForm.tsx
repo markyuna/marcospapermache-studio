@@ -41,33 +41,37 @@ export default function AdminLoginForm() {
   return (
     <form onSubmit={handleLogin} className="mx-auto w-full max-w-md space-y-5">
       <div>
-        <label className="mb-2 block text-sm font-medium">Email</label>
+        <label className="mb-2 block text-sm font-medium text-neutral-700">Email</label>
         <input
           type="email"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full rounded-xl border px-4 py-3"
+          className="w-full rounded-xl border border-neutral-200 px-4 py-3 text-sm outline-none transition focus:border-neutral-400"
         />
       </div>
 
       <div>
-        <label className="mb-2 block text-sm font-medium">Mot de passe</label>
+        <label className="mb-2 block text-sm font-medium text-neutral-700">Mot de passe</label>
         <input
           type="password"
           required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full rounded-xl border px-4 py-3"
+          className="w-full rounded-xl border border-neutral-200 px-4 py-3 text-sm outline-none transition focus:border-neutral-400"
         />
       </div>
 
-      {error && <p className="text-sm text-red-500">{error}</p>}
+      {error && (
+        <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          {error}
+        </p>
+      )}
 
       <button
         type="submit"
         disabled={loading}
-        className="w-full rounded-xl bg-black py-3 text-white disabled:cursor-not-allowed disabled:opacity-60"
+        className="w-full rounded-xl bg-neutral-950 py-3 text-sm font-medium text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {loading ? "Connexion..." : "Se connecter"}
       </button>
