@@ -2,7 +2,7 @@
 
 
 import { NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { supabaseAdmin } from "@/lib/supabase";
 import { requireAdmin } from "@/lib/admin-auth";
 
@@ -165,6 +165,7 @@ export async function POST(request: Request, context: RouteContext) {
         throw new Error(insertError.message);
       }
 
+      revalidateTag("artworks", {});
       revalidatePath("/admin/artworks");
       revalidatePath(`/admin/artworks/${artworkId}`);
 

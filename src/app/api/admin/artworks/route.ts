@@ -1,6 +1,6 @@
 // src/app/api/admin/artworks/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { supabaseAdmin } from "@/lib/supabase";
 import { requireAdmin } from "@/lib/admin-auth";
 
@@ -226,14 +226,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    revalidateTag("artworks", {});
     revalidatePath("/admin/artworks");
-    revalidatePath("/sculptures");
-    revalidatePath("/fr/sculptures");
-    revalidatePath("/en/sculptures");
-    revalidatePath("/es/sculptures");
-    revalidatePath(`/fr/sculptures/${artwork.slug}`);
-    revalidatePath(`/en/sculptures/${artwork.slug}`);
-    revalidatePath(`/es/sculptures/${artwork.slug}`);
 
     return NextResponse.redirect(new URL("/admin/artworks", request.url), {
       status: 303,

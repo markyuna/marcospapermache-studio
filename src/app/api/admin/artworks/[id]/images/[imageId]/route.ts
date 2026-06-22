@@ -1,6 +1,6 @@
 // src/app/api/admin/artworks/[id]/images/[imageId]/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { supabaseAdmin } from "@/lib/supabase";
 import { requireAdmin } from "@/lib/admin-auth";
 
@@ -73,6 +73,7 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
       );
     }
 
+    revalidateTag("artworks", {});
     revalidatePath("/admin/artworks");
     revalidatePath(`/admin/artworks/${artworkId}`);
 
@@ -165,6 +166,7 @@ export async function DELETE(_request: NextRequest, context: RouteContext) {
       }
     }
 
+    revalidateTag("artworks", {});
     revalidatePath("/admin/artworks");
     revalidatePath(`/admin/artworks/${artworkId}`);
 

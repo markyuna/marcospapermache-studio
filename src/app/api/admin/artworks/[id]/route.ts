@@ -1,6 +1,6 @@
 // src/app/api/admin/artworks/[id]/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { supabaseAdmin } from "@/lib/supabase";
 
 type RouteContext = {
@@ -138,12 +138,9 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
       );
     }
 
+    revalidateTag("artworks", {});
     revalidatePath("/admin/artworks");
     revalidatePath(`/admin/artworks/${id}`);
-    revalidatePath("/sculptures");
-    revalidatePath("/fr/sculptures");
-    revalidatePath("/en/sculptures");
-    revalidatePath("/es/sculptures");
 
     return NextResponse.json({ success: true });
   } catch (error) {
@@ -226,17 +223,8 @@ export async function DELETE(_request: NextRequest, context: RouteContext) {
       );
     }
 
+    revalidateTag("artworks", {});
     revalidatePath("/admin/artworks");
-    revalidatePath("/sculptures");
-    revalidatePath("/fr/sculptures");
-    revalidatePath("/en/sculptures");
-    revalidatePath("/es/sculptures");
-
-    if (artworkSlug) {
-      revalidatePath(`/fr/sculptures/${artworkSlug}`);
-      revalidatePath(`/en/sculptures/${artworkSlug}`);
-      revalidatePath(`/es/sculptures/${artworkSlug}`);
-    }
 
     return NextResponse.json({ success: true });
   } catch (error) {

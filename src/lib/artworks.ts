@@ -1,4 +1,6 @@
 // src/lib/artworks.ts
+import { cache } from "react";
+import { unstable_cache } from "next/cache";
 import { supabaseAdmin } from "@/lib/supabase";
 import type { Artwork } from "@/types/artwork";
 
@@ -106,36 +108,54 @@ const artworkSelect = `
   )
 `;
 
-export async function getArtworks(): Promise<Artwork[]> {
-  const { data, error } = await supabaseAdmin
-    .from("artworks")
-    .select(artworkSelect)
-    .order("created_at", { ascending: false });
+const _getCachedArtworks = unstable_cache(
+  async (): Promise<Artwork[]> => {
+    const { data, error } = await supabaseAdmin
+      .from("artworks")
+      .select(artworkSelect)
+      .order("created_at", { ascending: false });
 
-  if (error) {
-    throw new Error(`Erreur lors du chargement des œuvres : ${error.message}`);
-  }
-
-  return ((data ?? []) as ArtworkRow[]).map(normalizeArtwork);
-}
-
-export async function getArtworkBySlug(slug: string): Promise<Artwork | null> {
-  const { data, error } = await supabaseAdmin
-    .from("artworks")
-    .select(artworkSelect)
-    .eq("slug", slug)
-    .single();
-
-  if (error) {
-    if (error.code === "PGRST116") {
-      return null;
+    if (error) {
+      throw new Error(`Erreur lors du chargement des œuvres : ${error.message}`);
     }
 
-    throw new Error(`Erreur lors du chargement de l'œuvre : ${error.message}`);
-  }
+    return ((data ?? []) as ArtworkRow[]).map(normalizeArtwork);
+  },
+  ["artworks-list"],
+  { revalidate: 300, tags: ["artworks"] }
+);
 
-  return normalizeArtwork(data as ArtworkRow);
+export async function getArtworks(): Promise<Artwork[]> {
+  return _getCachedArtworks();
 }
+
+const _getCachedArtworkBySlug = unstable_cache(
+  async (slug: string): Promise<Artwork | null> => {
+    const { data, error } = await supabaseAdmin
+      .from("artworks")
+      .select(artworkSelect)
+      .eq("slug", slug)
+      .single();
+
+    if (error) {
+      if (error.code === "PGRST116") {
+        return null;
+      }
+
+      throw new Error(`Erreur lors du chargement de l'œuvre : ${error.message}`);
+    }
+
+    return normalizeArtwork(data as ArtworkRow);
+  },
+  ["artwork-by-slug"],
+  { revalidate: 300, tags: ["artworks"] }
+);
+
+export const getArtworkBySlug = cache(
+  async (slug: string): Promise<Artwork | null> => {
+    return _getCachedArtworkBySlug(slug);
+  }
+);
 
 export async function getArtworksBySlugs(slugs: string[]): Promise<Artwork[]> {
   if (slugs.length === 0) {

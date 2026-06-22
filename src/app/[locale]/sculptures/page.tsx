@@ -13,7 +13,6 @@ import { createMetadata, getAbsoluteUrl, siteConfig } from "@/lib/seo";
 import type { Artwork } from "@/types/artwork";
 
 export const dynamic = "force-dynamic";
-export const revalidate = 0;
 
 type Props = {
   params: Promise<{
