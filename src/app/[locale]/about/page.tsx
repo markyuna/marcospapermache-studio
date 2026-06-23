@@ -83,7 +83,7 @@ export default async function AboutPage({ params }: Props) {
     "@id": `${siteConfig.domain}/${locale}#artist`,
     name: siteConfig.creator,
     alternateName: siteConfig.name,
-    jobTitle: "Artiste sculpteur en papier mâché",
+    jobTitle: t("metadata.jobTitle"),
     description: t("metadata.description"),
     url: `${siteConfig.domain}/${locale}/about`,
     image: getAbsoluteUrl(siteConfig.defaultOgImage),
@@ -200,12 +200,14 @@ export default async function AboutPage({ params }: Props) {
               </div>
 
               <div className="mt-12 grid gap-6 lg:grid-cols-3">
-                {values.map((value) => (
+                {values.map((value, index) => (
                   <article
                     key={value.title}
                     className="rounded-[2rem] border border-[#efe2d6] bg-[linear-gradient(180deg,rgba(255,255,255,0.92),rgba(255,248,242,0.82))] p-6 shadow-[0_16px_40px_rgba(0,0,0,0.04)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_55px_rgba(140,95,42,0.10)]"
                   >
-                    <div className="h-10 w-10 rounded-full bg-[radial-gradient(circle_at_30%_30%,#ffd5a8,#f4b06f)] opacity-80" />
+                    <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#f4b06f]/20 text-sm font-semibold text-[#c07a3a]">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
 
                     <h3 className="mt-5 text-xl font-medium tracking-[-0.03em] text-[#1d1915]">
                       {value.title}

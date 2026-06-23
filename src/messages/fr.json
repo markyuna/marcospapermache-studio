@@ -171,8 +171,9 @@
   },
   "AboutPage": {
     "metadata": {
-      "title": "À propos",
-      "description": "Découvrez l’univers de Marcos Suarez, artiste spécialisé dans la sculpture en papier mâché, entre matière, lumière et création contemporaine."
+      "title": "À propos de Marcos Suarez",
+      "description": "Découvrez l’univers de Marcos Suarez, artiste spécialisé dans la sculpture en papier mâché, entre matière, lumière et création contemporaine.",
+      "jobTitle": "Artiste sculpteur en papier mâché"
     },
     "hero": {
       "badge": "À propos",

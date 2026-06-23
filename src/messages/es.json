@@ -171,8 +171,9 @@
   },
   "AboutPage": {
     "metadata": {
-      "title": "Sobre mí",
-      "description": "Descubre el universo de Marcos Suarez, artista especializado en escultura de papel maché, entre materia, luz y creación contemporánea."
+      "title": "Sobre Marcos Suarez",
+      "description": "Descubre el universo de Marcos Suarez, artista especializado en escultura de papel maché, entre materia, luz y creación contemporánea.",
+      "jobTitle": "Artista escultor en papel maché"
     },
     "hero": {
       "badge": "Sobre mí",

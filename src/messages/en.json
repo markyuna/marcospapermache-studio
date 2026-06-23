@@ -171,8 +171,9 @@
   },
   "AboutPage": {
     "metadata": {
-      "title": "About",
-      "description": "Discover the world of Marcos Suarez, an artist specializing in papier-mâché sculpture, where material, light and contemporary creation meet."
+      "title": "About Marcos Suarez",
+      "description": "Discover the world of Marcos Suarez, an artist specializing in papier-mâché sculpture, where material, light and contemporary creation meet.",
+      "jobTitle": "Papier-mâché sculptor and artist"
     },
     "hero": {
       "badge": "About",
