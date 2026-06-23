@@ -17,10 +17,11 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
 
+  const t = await getTranslations({ locale, namespace: "AIExperience" });
+
   return createMetadata({
-    title: "Créer une sculpture avec l’IA",
-    description:
-      "Imaginez une sculpture en papier mâché avec l’aide de l’intelligence artificielle, puis transformez votre idée en création artisanale sur mesure.",
+    title: t("title"),
+    description: t("description"),
     path: `/${locale}/create`,
     locale,
     image: siteConfig.defaultOgImage,

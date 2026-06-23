@@ -2,28 +2,28 @@ import { NextResponse } from "next/server";
 
 type RequestBody = {
   prompt?: string;
-  size?: "30x40" | "50x70" | "70x100";
+  creationType?: "wall" | "object" | "light";
   withFrame?: boolean;
 };
 
-function getImageSize(size?: RequestBody["size"]) {
-  switch (size) {
-    case "30x40":
-      return "1024x1536";
-    case "70x100":
-      return "1024x1536";
-    case "50x70":
-    default:
-      return "1024x1536";
-  }
-}
-
 export async function POST(request: Request) {
   try {
+    // Basic origin guard — prevents direct API abuse from other domains
+    const origin = request.headers.get("origin") ?? "";
+    const referer = request.headers.get("referer") ?? "";
+    if (
+      process.env.NODE_ENV === "production" &&
+      !origin.includes("marcospapermache.com") &&
+      !referer.includes("marcospapermache.com")
+    ) {
+      return NextResponse.json({ error: "Non autorisé." }, { status: 403 });
+    }
+
     const body = (await request.json()) as RequestBody;
     const prompt = body?.prompt?.trim();
-    const imageSize = getImageSize(body?.size);
+    const creationType = body?.creationType ?? "wall";
     const withFrame = Boolean(body?.withFrame);
+    const imageSize = creationType === "wall" ? "1024x1536" : "1024x1024";
 
     if (!prompt) {
       return NextResponse.json({ error: "Prompt manquant." }, { status: 400 });

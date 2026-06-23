@@ -674,12 +674,6 @@ export default function AIExperienceSection() {
         },
         body: JSON.stringify({
           prompt: fullPrompt,
-          size:
-            creationType === "wall"
-              ? selectedWallSize
-              : creationType === "object"
-                ? selectedObjectSize
-                : selectedLightType,
           creationType,
           withFrame: creationType === "wall" ? withFrame : false,
         }),
@@ -698,10 +692,6 @@ export default function AIExperienceSection() {
       setGeneratedImage(data.image);
       setLastPrompt(fullPrompt);
 
-      requestAnimationFrame(() => {
-        scrollToResult(90);
-      });
-
       setTimeout(() => {
         scrollToResult(90);
       }, 250);
@@ -709,10 +699,6 @@ export default function AIExperienceSection() {
       const message =
         err instanceof Error ? err.message : t("errors.unknown");
       setError(message);
-
-      requestAnimationFrame(() => {
-        scrollToResult(90);
-      });
     } finally {
       setIsLoading(false);
     }
@@ -739,20 +725,6 @@ export default function AIExperienceSection() {
 
     if (typeof window !== "undefined") {
       sessionStorage.removeItem("generatedImage");
-      sessionStorage.removeItem("generatedCreationType");
-      sessionStorage.removeItem("generatedWallSize");
-      sessionStorage.removeItem("generatedObjectSize");
-      sessionStorage.removeItem("generatedPalette");
-      sessionStorage.removeItem("generatedPalettes");
-      sessionStorage.removeItem("generatedColors");
-      sessionStorage.removeItem("generatedFrameColor");
-      sessionStorage.removeItem("generatedFrameMaterial");
-      sessionStorage.removeItem("generatedWithFrame");
-      sessionStorage.removeItem("generatedLightType");
-      sessionStorage.removeItem("generatedLightTemperature");
-      sessionStorage.removeItem("generatedLightIntensity");
-      sessionStorage.removeItem("generatedObjectUsage");
-      sessionStorage.removeItem("generatedObjectFinish");
     }
   }
 
@@ -761,48 +733,11 @@ export default function AIExperienceSection() {
 
     if (typeof window !== "undefined") {
       sessionStorage.setItem("generatedImage", generatedImage);
-      sessionStorage.setItem("generatedCreationType", creationType);
-      sessionStorage.setItem("generatedWallSize", selectedWallSize);
-      sessionStorage.setItem("generatedObjectSize", selectedObjectSize);
-      sessionStorage.setItem("generatedPalette", selectedColors.join(","));
-      sessionStorage.setItem("generatedPalettes", JSON.stringify(selectedColors));
-      sessionStorage.setItem("generatedColors", JSON.stringify(selectedColors));
-      sessionStorage.setItem("generatedFrameColor", frameColor);
-      sessionStorage.setItem("generatedFrameMaterial", frameMaterial);
-      sessionStorage.setItem("generatedWithFrame", String(withFrame));
-      sessionStorage.setItem("generatedLightType", selectedLightType);
-      sessionStorage.setItem(
-        "generatedLightTemperature",
-        selectedLightTemperature,
-      );
-      sessionStorage.setItem("generatedLightIntensity", selectedLightIntensity);
-      sessionStorage.setItem("generatedObjectUsage", selectedObjectUsage);
-      sessionStorage.setItem("generatedObjectFinish", selectedObjectFinish);
     }
 
     router.push({
       pathname: "/commande",
-      query: {
-        prompt: lastPrompt,
-        creationType,
-        wallSize: creationType === "wall" ? selectedWallSize : "none",
-        objectSize: creationType === "object" ? selectedObjectSize : "none",
-        palette: selectedColors.length > 0 ? selectedColors.join(",") : "none",
-        frame: creationType === "wall" && withFrame ? "open" : "none",
-        frameColor:
-          creationType === "wall" && withFrame ? frameColor : "none",
-        frameMaterial:
-          creationType === "wall" && withFrame ? frameMaterial : "none",
-        lightType: creationType === "light" ? selectedLightType : "none",
-        lightTemperature:
-          creationType === "light" ? selectedLightTemperature : "none",
-        lightIntensity:
-          creationType === "light" ? selectedLightIntensity : "none",
-        objectUsage:
-          creationType === "object" ? selectedObjectUsage : "none",
-        objectFinish:
-          creationType === "object" ? selectedObjectFinish : "none",
-      },
+      query: { prompt: lastPrompt },
     });
   }
 
