@@ -1,119 +1,12 @@
 // src/components/home/FeaturedSection.tsx
 
-import Image from "next/image";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
+import { FeaturedCardsGrid } from "@/components/home/FeaturedCardsGrid";
 import { Container } from "@/components/layout/container";
 import { Link } from "@/i18n/navigation";
 import { getArtworksBySlugs } from "@/lib/artworks";
-
-type SculptureCardProps = {
-  slug: string;
-  title: string;
-  subtitle?: string | null;
-  image: string;
-  availability?: string | null;
-  index: number;
-  discoverLabel: string;
-  soldLabel: string;
-};
-
-function SculptureCard({
-  slug,
-  title,
-  subtitle,
-  image,
-  availability,
-  index,
-  discoverLabel,
-  soldLabel,
-}: SculptureCardProps) {
-  const normalizedAvailability = availability?.toLowerCase() ?? "";
-
-  const isSold =
-    normalizedAvailability.includes("vendue") ||
-    normalizedAvailability.includes("vendido") ||
-    normalizedAvailability.includes("sold");
-
-  return (
-    <Link
-      href={`/sculptures/${slug}`}
-      className="group relative block overflow-hidden rounded-[2.4rem] bg-white/62 p-3 shadow-[0_24px_80px_rgba(70,45,22,0.08)] ring-1 ring-[#eadfce]/70 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:bg-white/82 hover:shadow-[0_34px_100px_rgba(120,75,32,0.15)] hover:ring-[#ff8a2a]/25 md:p-4"
-    >
-      <div className="pointer-events-none absolute inset-0 rounded-[2.4rem] bg-[radial-gradient(circle_at_18%_8%,rgba(255,255,255,0.95),transparent_30%),radial-gradient(circle_at_82%_0%,rgba(255,138,42,0.13),transparent_28%),linear-gradient(145deg,rgba(255,250,246,0.85),rgba(248,238,227,0.72))]" />
-
-      <div className="pointer-events-none absolute inset-x-12 top-0 h-px bg-gradient-to-r from-transparent via-[#ff8a2a]/45 to-transparent opacity-0 transition duration-500 group-hover:opacity-100" />
-
-      <div className="relative overflow-hidden rounded-[2rem] bg-[#f7efe5] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.65)]">
-        <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem]">
-          <Image
-            src={image}
-            alt={title}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-            className="object-cover transition duration-700 ease-out group-hover:scale-[1.045]"
-            priority={index === 0}
-          />
-
-          <div className="absolute inset-0 bg-gradient-to-t from-[#181512]/48 via-[#181512]/5 to-white/5 transition duration-500 group-hover:from-[#181512]/38" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,transparent_0%,transparent_45%,rgba(24,21,18,0.25)_100%)]" />
-
-          <div className="absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-white/70 bg-white/82 text-xs font-medium text-[#9c6e47] shadow-[0_10px_30px_rgba(0,0,0,0.08)] backdrop-blur-md md:left-5 md:top-5">
-            {String(index + 1).padStart(2, "0")}
-          </div>
-
-          {isSold && (
-            <div className="absolute right-4 top-4 rounded-full border border-white/30 bg-[#181512]/76 px-3 py-1 text-[10px] uppercase tracking-[0.24em] text-white shadow-sm backdrop-blur-md md:right-5 md:top-5">
-              {soldLabel}
-            </div>
-          )}
-
-          <div className="absolute inset-x-4 bottom-4 rounded-[1.45rem] border border-white/25 bg-white/16 p-4 shadow-[0_18px_50px_rgba(0,0,0,0.16)] backdrop-blur-md transition duration-500 group-hover:bg-white/22 md:inset-x-5 md:bottom-5 md:p-5">
-            {subtitle && (
-              <p className="text-[10px] uppercase tracking-[0.28em] text-white/78">
-                {subtitle}
-              </p>
-            )}
-
-            <h3 className="mt-2 text-2xl font-medium tracking-[-0.04em] text-white md:text-[1.7rem]">
-              {title}
-            </h3>
-
-            {availability && !isSold && (
-              <p className="mt-2 line-clamp-1 text-sm leading-6 text-white/78">
-                {availability}
-              </p>
-            )}
-          </div>
-        </div>
-      </div>
-
-      <div className="relative z-10 px-3 pb-4 pt-5 md:px-4 md:pb-5 md:pt-6">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <p className="text-[10px] uppercase tracking-[0.28em] text-[#b08a67]">
-              Papier mâché
-            </p>
-
-            <p className="mt-1 text-sm leading-6 text-[#6c5d50]">
-              Sculpture lumineuse artisanale
-            </p>
-          </div>
-
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#ead9cb] bg-white text-[#7a5a40] shadow-[0_12px_30px_rgba(0,0,0,0.06)] transition duration-300 group-hover:border-[#ff8a2a]/35 group-hover:bg-[#fff7ef] group-hover:text-[#c65400]">
-            <ArrowRight className="h-4 w-4 transition duration-300 group-hover:translate-x-0.5" />
-          </div>
-        </div>
-
-        <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-[#7a5a40] transition duration-300 group-hover:text-[#c65400]">
-          {discoverLabel}
-          <span className="h-px w-8 bg-current opacity-35 transition-all duration-300 group-hover:w-12" />
-        </span>
-      </div>
-    </Link>
-  );
-}
 
 export async function FeaturedSection() {
   const t = await getTranslations("Featured");
@@ -166,29 +59,28 @@ export async function FeaturedSection() {
           </Link>
         </div>
 
-        <div className="grid gap-7 md:grid-cols-2 xl:grid-cols-3">
-          {featuredSculptures.map((artwork, index) => {
-            const coverImage =
-              artwork.images.find((image) => image.is_cover)?.image_url ??
-              artwork.images[0]?.image_url;
+        <FeaturedCardsGrid
+          cards={featuredSculptures
+            .map((artwork, index) => {
+              const coverImage =
+                artwork.images.find((image) => image.is_cover)?.image_url ??
+                artwork.images[0]?.image_url;
 
-            if (!coverImage) return null;
+              if (!coverImage) return null;
 
-            return (
-              <SculptureCard
-                key={artwork.slug}
-                slug={artwork.slug}
-                title={artwork.title}
-                subtitle={artwork.subtitle}
-                image={coverImage}
-                availability={artwork.availability}
-                index={index}
-                discoverLabel={t("discover")}
-                soldLabel={t("sold")}
-              />
-            );
-          })}
-        </div>
+              return {
+                slug: artwork.slug,
+                title: artwork.title,
+                subtitle: artwork.subtitle,
+                image: coverImage,
+                availability: artwork.availability,
+                index,
+                discoverLabel: t("discover"),
+                soldLabel: t("sold"),
+              };
+            })
+            .filter((card) => card !== null)}
+        />
       </Container>
     </section>
   );

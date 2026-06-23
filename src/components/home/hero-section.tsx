@@ -3,7 +3,7 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   motion,
   useMotionValue,
@@ -63,15 +63,6 @@ export function HeroSection() {
   const sculptureX = useTransform(smoothDepthX, [-1, 1], [-18, 18]);
   const sculptureY = useTransform(smoothDepthY, [-1, 1], [-14, 14]);
   const sculptureRotate = useTransform(smoothDepthX, [-1, 1], [-2, 2]);
-
-  const highlights = useMemo(
-    () => [
-      t("highlights.unique"),
-      t("highlights.custom"),
-      t("highlights.artistic"),
-    ],
-    [t]
-  );
 
   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
     const element = cardRef.current;
@@ -150,17 +141,6 @@ export function HeroSection() {
             </div>
 
             <p className="mt-5 text-sm text-[#7a6a5c]">{t("trustLine")}</p>
-
-            <div className="mt-10 flex flex-wrap gap-3">
-              {highlights.map((item) => (
-                <span
-                  key={item}
-                  className="rounded-full border border-black/5 bg-white/65 px-4 py-2 text-[11px] uppercase tracking-[0.22em] text-[#8a7a6a] backdrop-blur-sm"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
           </motion.div>
 
           <motion.div
@@ -244,21 +224,13 @@ export function HeroSection() {
                 <div className="pointer-events-none absolute inset-0 rounded-[1.8rem] ring-1 ring-white/28" />
               </div>
 
-              <div className="mt-4 grid gap-3 sm:grid-cols-[1fr_auto]">
-                <div className="rounded-2xl border border-black/5 bg-white/60 px-4 py-4 backdrop-blur-sm">
-                  <p className="text-[10px] uppercase tracking-[0.28em] text-[#a48a73]">
-                    {t("universe.label")}
-                  </p>
-                  <p className="mt-2 text-sm leading-6 text-[#181512]">
-                    {t("universe.value")}
-                  </p>
-                </div>
-
-                <div className="flex items-center justify-center rounded-2xl border border-black/5 bg-white/55 px-5 py-4 backdrop-blur-sm">
-                  <div className="relative h-11 w-11 rounded-full border border-black/5 bg-gradient-to-br from-[#f7efe4] to-[#eee1d0]">
-                    <div className="absolute inset-2 rounded-full bg-white/55 blur-[2px]" />
-                  </div>
-                </div>
+              <div className="mt-4 rounded-2xl border border-black/5 bg-white/60 px-4 py-4 backdrop-blur-sm">
+                <p className="text-[10px] uppercase tracking-[0.28em] text-[#a48a73]">
+                  {t("universe.label")}
+                </p>
+                <p className="mt-2 text-sm leading-6 text-[#181512]">
+                  {t("universe.value")}
+                </p>
               </div>
             </div>
           </motion.div>

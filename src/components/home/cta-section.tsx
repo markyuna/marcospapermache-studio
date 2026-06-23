@@ -73,6 +73,7 @@ export function CtaSection() {
         <Container>
           <div className="relative overflow-hidden rounded-[2.5rem] border border-black/5 bg-[linear-gradient(135deg,#f8f1ea_0%,#f2e8dc_45%,#eadccf_100%)] shadow-[0_35px_120px_rgba(35,25,15,0.10)]">
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.65),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(255,140,60,0.08),transparent_30%)]" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#ff8a2a]/35 to-transparent" />
 
             <div className="relative grid items-center gap-12 px-8 py-10 md:px-12 md:py-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-16 lg:py-16">
               <div className="max-w-2xl">
