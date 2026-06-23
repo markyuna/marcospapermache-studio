@@ -15,6 +15,7 @@ import {
 type CommandeFormProps = {
   defaultPrompt?: string;
   defaultImage?: string;
+  dark?: boolean;
 };
 
 type ConfettiPiece = {
@@ -31,6 +32,7 @@ type ConfettiPiece = {
 export default function CommandeForm({
   defaultPrompt = "",
   defaultImage = "",
+  dark = false,
 }: CommandeFormProps) {
   const t = useTranslations("CommandeForm");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -286,10 +288,13 @@ export default function CommandeForm({
     }
   }
 
-  const inputClassName =
-    "w-full rounded-[1rem] border border-[#e4d6c8] bg-white px-4 py-3.5 text-sm text-[#181512] outline-none transition duration-200 placeholder:text-[#9a8a7d] focus:border-[#cfa57f] focus:ring-4 focus:ring-[#cfa57f]/10";
+  const inputClassName = dark
+    ? "w-full rounded-[1rem] border border-[#2d2420] bg-[#1c1713] px-4 py-3.5 text-sm text-white outline-none transition duration-200 placeholder:text-white/25 focus:border-[#c07040]/60 focus:ring-4 focus:ring-[#c07040]/10"
+    : "w-full rounded-[1rem] border border-[#e4d6c8] bg-white px-4 py-3.5 text-sm text-[#181512] outline-none transition duration-200 placeholder:text-[#9a8a7d] focus:border-[#cfa57f] focus:ring-4 focus:ring-[#cfa57f]/10";
 
-  const labelClassName = "mb-2 block text-sm font-medium text-[#5f5348]";
+  const labelClassName = dark
+    ? "mb-2 block text-[10px] font-semibold uppercase tracking-[0.22em] text-white/40"
+    : "mb-2 block text-sm font-medium text-[#5f5348]";
 
   if (success) {
     return (
@@ -382,14 +387,18 @@ export default function CommandeForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-[2rem] border border-[#e7dbcf] bg-white/80 p-6 shadow-[0_18px_50px_rgba(24,21,18,0.04)] backdrop-blur-sm md:p-8"
+      className={
+        dark
+          ? "rounded-[2rem] border border-[#2d2420] bg-[#161210]/90 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl md:p-8"
+          : "rounded-[2rem] border border-[#e7dbcf] bg-white/80 p-6 shadow-[0_18px_50px_rgba(24,21,18,0.04)] backdrop-blur-sm md:p-8"
+      }
     >
       {showSuccessToast ? (
-        <div className="mb-6 flex items-start gap-3 rounded-[1.2rem] border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800 shadow-[0_10px_30px_rgba(16,185,129,0.08)]">
+        <div className={`mb-6 flex items-start gap-3 rounded-[1.2rem] border px-4 py-3 text-sm ${dark ? "border-emerald-800/40 bg-emerald-950/60 text-emerald-300" : "border-emerald-200 bg-emerald-50 text-emerald-800"} shadow-[0_10px_30px_rgba(16,185,129,0.08)]`}>
           <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0" />
           <div>
             <p className="font-medium">{t("success.title")}</p>
-            <p className="mt-1 text-emerald-700/90">
+            <p className={`mt-1 ${dark ? "text-emerald-400/80" : "text-emerald-700/90"}`}>
               {t("success.description")}
             </p>
           </div>
@@ -397,15 +406,15 @@ export default function CommandeForm({
       ) : null}
 
       {generatedImage ? (
-        <div className="mb-8 border-b border-[#eee3d8] pb-8">
+        <div className={`mb-8 border-b pb-8 ${dark ? "border-[#2d2420]" : "border-[#eee3d8]"}`}>
           <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
             <div className="max-w-2xl">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#e6d8ca] bg-[#fcf8f3] px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.24em] text-[#8a7667]">
+              <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.24em] ${dark ? "border-[#3a2e26] bg-[#231d18] text-[#a07860]" : "border-[#e6d8ca] bg-[#fcf8f3] text-[#8a7667]"}`}>
                 <Sparkles className="h-3.5 w-3.5" />
                 {t("generatedConcept.badge")}
               </div>
 
-              <p className="mt-4 text-sm leading-7 text-[#5f5348]">
+              <p className={`mt-4 text-sm leading-7 ${dark ? "text-white/45" : "text-[#5f5348]"}`}>
                 {t("generatedConcept.description")}
               </p>
             </div>
@@ -413,14 +422,14 @@ export default function CommandeForm({
             <button
               type="button"
               onClick={handleRemoveGeneratedImage}
-              className="inline-flex items-center gap-2 self-start rounded-full border border-[#e1d2c4] bg-white px-4 py-2 text-xs font-medium text-[#181512] transition hover:bg-[#f8f4ef]"
+              className={`inline-flex items-center gap-2 self-start rounded-full border px-4 py-2 text-xs font-medium transition ${dark ? "border-[#3a2e26] bg-[#231d18] text-white/60 hover:bg-[#2d2420] hover:text-white/80" : "border-[#e1d2c4] bg-white text-[#181512] hover:bg-[#f8f4ef]"}`}
             >
               <Trash2 className="h-3.5 w-3.5" />
               {t("generatedConcept.remove")}
             </button>
           </div>
 
-          <div className="mt-5 overflow-hidden rounded-[1.4rem] border border-[#e5d8cb] bg-white">
+          <div className={`mt-5 overflow-hidden rounded-[1.4rem] border ${dark ? "border-[#2d2420] bg-[#1c1713]" : "border-[#e5d8cb] bg-white"}`}>
             <div className="relative aspect-[4/5] w-full max-w-md">
               <Image
                 src={generatedImage}
@@ -538,10 +547,10 @@ export default function CommandeForm({
           type="file"
           accept="image/png,image/jpeg,image/webp"
           onChange={handleImageChange}
-          className="block w-full rounded-[1rem] border border-[#e4d6c8] bg-white px-4 py-3 text-sm text-[#5f5348] file:mr-4 file:rounded-full file:border-0 file:bg-[#181512] file:px-4 file:py-2 file:text-sm file:font-medium file:text-white"
+          className={`block w-full rounded-[1rem] border px-4 py-3 text-sm transition ${dark ? "border-[#2d2420] bg-[#1c1713] text-white/50 file:mr-4 file:rounded-full file:border-0 file:bg-[linear-gradient(135deg,#e07030,#c85100)] file:px-4 file:py-2 file:text-sm file:font-medium file:text-white" : "border-[#e4d6c8] bg-white text-[#5f5348] file:mr-4 file:rounded-full file:border-0 file:bg-[#181512] file:px-4 file:py-2 file:text-sm file:font-medium file:text-white"}`}
         />
 
-        <p className="mt-2 text-xs text-[#8a7667]">{t("fields.imageHint")}</p>
+        <p className={`mt-2 text-xs ${dark ? "text-white/30" : "text-[#8a7667]"}`}>{t("fields.imageHint")}</p>
 
         {imagePreview ? (
           <div className="relative mt-4 overflow-hidden rounded-[1.25rem] border border-[#e5d8cb] bg-white">
@@ -569,7 +578,7 @@ export default function CommandeForm({
       </div>
 
       {errorMessage ? (
-        <div className="mt-6 flex items-start gap-3 rounded-[1rem] border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className={`mt-6 flex items-start gap-3 rounded-[1rem] border px-4 py-3 text-sm ${dark ? "border-red-900/40 bg-red-950/50 text-red-400" : "border-red-200 bg-red-50 text-red-700"}`}>
           <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
           <span>{errorMessage}</span>
         </div>
@@ -579,7 +588,7 @@ export default function CommandeForm({
         <button
           type="submit"
           disabled={loading}
-          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#181512] px-6 py-3.5 text-sm font-medium text-white transition duration-300 hover:bg-[#2a241f] disabled:cursor-not-allowed disabled:opacity-60"
+          className={`inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold transition duration-300 disabled:cursor-not-allowed disabled:opacity-50 ${dark ? "bg-[linear-gradient(135deg,#ff9f43,#e76f16,#c85100)] text-white shadow-[0_14px_45px_rgba(231,111,22,0.3)] hover:-translate-y-0.5 hover:shadow-[0_18px_55px_rgba(231,111,22,0.4)]" : "bg-[#181512] text-white hover:bg-[#2a241f]"}`}
         >
           {loading ? (
             <>
