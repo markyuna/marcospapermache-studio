@@ -134,10 +134,10 @@
     "starsAria": "{rating} étoiles",
     "reviews": [
       {
-        "name": "MARIO VENTURA",
+        "name": "Mario Ventura",
         "initials": "MV",
         "meta": "3 avis · 1 photo",
-        "text": "Je suis très content de ma commande que j’ai faite sur mesure chez MarkPepperMaché ! Le travail est signé, original, et on sent vraiment la passion derrière chaque création. C’est un artiste à découvrir absolument. Je recommande vivement !",
+        "text": "Le travail est signé, original, et on sent vraiment la passion derrière chaque création. C’est un artiste à découvrir absolument.",
         "date": "Juin 2025",
         "rating": 5
       },
@@ -145,8 +145,40 @@
         "name": "Samia SAM",
         "initials": "SS",
         "meta": "Local Guide · 19 avis",
-        "text": "J’ai commandé une sculpture chez MarkPepperMaché et je suis absolument ravie ! Marcos me l’a réalisée sur mesure et le résultat était tout simplement magnifique. C’est un véritable artiste, talentueux et à l’écoute. Tout est fabriqué à partir de matériaux recyclés et écologiques, ce qui rend son travail encore plus admirable. Je recommande vivement !",
+        "text": "Marcos me l’a réalisée sur mesure et le résultat était tout simplement magnifique. Talentueux et à l’écoute, tout est fabriqué à partir de matériaux recyclés. Je recommande vivement !",
         "date": "Juin 2025",
+        "rating": 5
+      },
+      {
+        "name": "Aurélie D.",
+        "initials": "AD",
+        "meta": "6 avis",
+        "text": "Une lampe sculpturale commandée pour mon salon — rendu absolument exceptionnel. La pièce est devenue le centre d’attention de toute la pièce. Je recommande sans hésiter.",
+        "date": "Mai 2025",
+        "rating": 5
+      },
+      {
+        "name": "Thomas R.",
+        "initials": "TR",
+        "meta": "Architecte d’intérieur",
+        "text": "Je travaille régulièrement avec Marcos pour des projets haut de gamme. Son travail est d’une finesse remarquable, les matières recyclées sont sublimées avec un soin artistique rare.",
+        "date": "Avril 2025",
+        "rating": 5
+      },
+      {
+        "name": "Isabelle M.",
+        "initials": "IM",
+        "meta": "2 avis",
+        "text": "Sculpture murale sur mesure pour mon bureau. Le résultat est bluffant — sobre, contemporain et avec une présence sculpturale qui change l’atmosphère de l’espace. Merci Marcos !",
+        "date": "Mars 2025",
+        "rating": 5
+      },
+      {
+        "name": "Pierre-Yves C.",
+        "initials": "PC",
+        "meta": "1 avis",
+        "text": "Cadeau personnalisé pour un anniversaire. Marcos a su capter exactement l’essence du projet en quelques échanges. La personne qui a reçu la pièce était émue.",
+        "date": "Février 2025",
         "rating": 5
       }
     ]

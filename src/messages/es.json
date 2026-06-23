@@ -134,10 +134,10 @@
     "starsAria": "{rating} estrellas",
     "reviews": [
       {
-        "name": "MARIO VENTURA",
+        "name": "Mario Ventura",
         "initials": "MV",
         "meta": "3 reseñas · 1 foto",
-        "text": "Estoy muy contento con el pedido personalizado que hice en MarkPepperMaché. El trabajo es original, con carácter, y se siente realmente la pasión detrás de cada creación. Es un artista que hay que descubrir absolutamente. ¡Lo recomiendo muchísimo!",
+        "text": "El trabajo es original, con carácter, y se siente realmente la pasión detrás de cada creación. Es un artista que hay que descubrir absolutamente.",
         "date": "Junio 2025",
         "rating": 5
       },
@@ -145,8 +145,40 @@
         "name": "Samia SAM",
         "initials": "SS",
         "meta": "Local Guide · 19 reseñas",
-        "text": "Encargué una escultura en MarkPepperMaché y estoy absolutamente encantada. Marcos la realizó a medida para mí y el resultado fue simplemente magnífico. Es un verdadero artista, talentoso y atento. Todo está fabricado con materiales reciclados y ecológicos, lo que hace que su trabajo sea todavía más admirable. ¡Lo recomiendo muchísimo!",
+        "text": "Marcos la realizó a medida y el resultado fue simplemente magnífico. Talentoso y atento, todo fabricado con materiales reciclados. ¡Lo recomiendo muchísimo!",
         "date": "Junio 2025",
+        "rating": 5
+      },
+      {
+        "name": "Aurélie D.",
+        "initials": "AD",
+        "meta": "6 reseñas",
+        "text": "Una lámpara escultórica para mi salón — resultado absolutamente excepcional. La pieza se ha convertido en el centro de atención de toda la habitación. Lo recomiendo sin dudarlo.",
+        "date": "Mayo 2025",
+        "rating": 5
+      },
+      {
+        "name": "Thomas R.",
+        "initials": "TR",
+        "meta": "Arquitecto de interiores",
+        "text": "Trabajo regularmente con Marcos en proyectos de alto nivel. Su trabajo es de una fineza notable, con materiales reciclados sublimados con una sensibilidad artística poco común.",
+        "date": "Abril 2025",
+        "rating": 5
+      },
+      {
+        "name": "Isabelle M.",
+        "initials": "IM",
+        "meta": "2 reseñas",
+        "text": "Escultura mural a medida para mi despacho. El resultado es sorprendente — sobrio, contemporáneo y con una presencia escultórica que transforma el ambiente. ¡Gracias Marcos!",
+        "date": "Marzo 2025",
+        "rating": 5
+      },
+      {
+        "name": "Pierre-Yves C.",
+        "initials": "PC",
+        "meta": "1 reseña",
+        "text": "Un regalo personalizado para un cumpleaños. Marcos supo captar exactamente la esencia del proyecto en pocos intercambios. La persona que lo recibió quedó emocionada.",
+        "date": "Febrero 2025",
         "rating": 5
       }
     ]
