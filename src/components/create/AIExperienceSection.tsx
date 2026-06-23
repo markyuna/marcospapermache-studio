@@ -84,6 +84,8 @@ type SelectOption<T extends string> = {
   prompt: string;
 };
 
+const GENERATION_LIMIT = 2;
+
 export default function AIExperienceSection() {
   const t = useTranslations("AIExperience");
   const router = useRouter();
@@ -394,6 +396,10 @@ export default function AIExperienceSection() {
   const [lastPrompt, setLastPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [generationCount, setGenerationCount] = useState<number>(() => {
+    if (typeof window === "undefined") return 0;
+    return parseInt(sessionStorage.getItem("generationCount") ?? "0", 10);
+  });
 
   const resultRef = useRef<HTMLDivElement | null>(null);
 
@@ -692,6 +698,10 @@ export default function AIExperienceSection() {
       setGeneratedImage(data.image);
       setLastPrompt(fullPrompt);
 
+      const newCount = generationCount + 1;
+      setGenerationCount(newCount);
+      sessionStorage.setItem("generationCount", String(newCount));
+
       setTimeout(() => {
         scrollToResult(90);
       }, 250);
@@ -754,7 +764,7 @@ export default function AIExperienceSection() {
         disabled={disabled}
         onClick={onClick}
         className={[
-          "inline-flex items-center justify-center gap-2 rounded-full border px-4 py-2 text-sm transition duration-300 disabled:cursor-not-allowed disabled:opacity-60",
+          "inline-flex items-center justify-center gap-1.5 rounded-full border px-3.5 py-1.5 text-sm transition duration-300 disabled:cursor-not-allowed disabled:opacity-60",
           isActive
             ? "border-[#d9b08c] bg-[#d9b08c]/14 text-white shadow-[0_0_0_1px_rgba(217,176,140,0.22)]"
             : "border-white/10 bg-white/[0.05] text-neutral-300 hover:border-white/20 hover:bg-white/[0.09] hover:text-white",
@@ -779,7 +789,7 @@ export default function AIExperienceSection() {
         disabled={disabled}
         onClick={onClick}
         className={[
-          "flex items-center justify-center gap-2 rounded-[1.2rem] border px-4 py-3 text-sm transition duration-300 disabled:cursor-not-allowed disabled:opacity-60",
+          "flex items-center justify-center gap-2 rounded-[1.2rem] border px-3 py-2 text-sm transition duration-300 disabled:cursor-not-allowed disabled:opacity-60",
           isActive
             ? "border-[#d9b08c] bg-[#d9b08c]/14 text-white shadow-[0_0_0_1px_rgba(217,176,140,0.22)]"
             : "border-white/10 bg-white/[0.05] text-neutral-300 hover:border-white/20 hover:bg-white/[0.09] hover:text-white",
@@ -792,25 +802,25 @@ export default function AIExperienceSection() {
   }
 
   return (
-    <section className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-[#0b0b0d] p-6 text-white shadow-[0_30px_120px_rgba(0,0,0,0.38)] md:p-10">
+    <section className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-[#0b0b0d] p-5 text-white shadow-[0_30px_120px_rgba(0,0,0,0.38)] md:p-8">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(205,164,124,0.18),transparent_24%),radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.04),transparent_24%)]" />
 
-      <div className="relative grid gap-10 xl:grid-cols-[0.96fr_1.04fr] xl:gap-10">
+      <div className="relative grid gap-6 lg:grid-cols-[1fr_1fr] lg:gap-8">
         <div>
           <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-xs uppercase tracking-[0.28em] text-neutral-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
             <Sparkles className="h-4 w-4" />
             {t("badge")}
           </p>
 
-          <h1 className="mt-6 max-w-3xl bg-gradient-to-br from-white via-[#ffe7d1] to-[#d07a2d] bg-clip-text text-4xl font-semibold tracking-[-0.05em] text-transparent drop-shadow-[0_0_18px_rgba(208,122,45,0.16)] md:text-6xl">
+          <h1 className="mt-5 max-w-3xl bg-gradient-to-br from-white via-[#ffe7d1] to-[#d07a2d] bg-clip-text text-3xl font-semibold tracking-[-0.05em] text-transparent drop-shadow-[0_0_18px_rgba(208,122,45,0.16)] md:text-5xl">
             {t("title")}
           </h1>
 
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-neutral-300">
+          <p className="mt-4 max-w-2xl text-base leading-7 text-neutral-300">
             {t("description")}
           </p>
 
-          <div className="mt-10 rounded-[2rem] border border-white/10 bg-white/[0.04] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] md:p-6">
+          <div className="mt-7 rounded-[2rem] border border-white/10 bg-white/[0.04] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] md:p-5">
             <div>
               <p className="text-sm font-medium text-neutral-200">
                 {t("form.creationTypeLabel")}
@@ -841,7 +851,7 @@ export default function AIExperienceSection() {
               </div>
             </div>
 
-            <div className="mt-7">
+            <div className="mt-5">
               <p className="text-sm font-medium text-neutral-200">
                 {t("form.styleLabel")}
               </p>
@@ -867,7 +877,7 @@ export default function AIExperienceSection() {
               </div>
             </div>
 
-            <div className="mt-7">
+            <div className="mt-5">
               <p className="text-sm font-medium text-neutral-200">
                 {t("form.paletteLabel")}
               </p>
@@ -903,7 +913,7 @@ export default function AIExperienceSection() {
 
             {creationType === "wall" ? (
               <>
-                <div className="mt-7">
+                <div className="mt-5">
                   <p className="text-sm font-medium text-neutral-200">
                     {t("form.sizeLabel")}
                   </p>
@@ -923,7 +933,7 @@ export default function AIExperienceSection() {
                   </div>
                 </div>
 
-                <div className="mt-7">
+                <div className="mt-5">
                   <p className="text-sm font-medium text-neutral-200">
                     {t("form.optionsLabel")}
                   </p>
@@ -964,7 +974,7 @@ export default function AIExperienceSection() {
 
                 {withFrame ? (
                   <>
-                    <div className="mt-7">
+                    <div className="mt-5">
                       <p className="text-sm font-medium text-neutral-200">
                         {t("form.frameColor")}
                       </p>
@@ -983,7 +993,7 @@ export default function AIExperienceSection() {
                       </div>
                     </div>
 
-                    <div className="mt-7">
+                    <div className="mt-5">
                       <p className="text-sm font-medium text-neutral-200">
                         {t("form.frameMaterial")}
                       </p>
@@ -1008,7 +1018,7 @@ export default function AIExperienceSection() {
 
             {creationType === "object" ? (
               <>
-                <div className="mt-7">
+                <div className="mt-5">
                   <p className="text-sm font-medium text-neutral-200">
                     {t("form.objectSizeLabel")}
                   </p>
@@ -1028,7 +1038,7 @@ export default function AIExperienceSection() {
                   </div>
                 </div>
 
-                <div className="mt-7">
+                <div className="mt-5">
                   <p className="text-sm font-medium text-neutral-200">
                     {t("form.objectUsageLabel")}
                   </p>
@@ -1047,7 +1057,7 @@ export default function AIExperienceSection() {
                   </div>
                 </div>
 
-                <div className="mt-7">
+                <div className="mt-5">
                   <p className="text-sm font-medium text-neutral-200">
                     {t("form.objectFinishLabel")}
                   </p>
@@ -1070,7 +1080,7 @@ export default function AIExperienceSection() {
 
             {creationType === "light" ? (
               <>
-                <div className="mt-7">
+                <div className="mt-5">
                   <p className="text-sm font-medium text-neutral-200">
                     {t("form.lightTypeLabel")}
                   </p>
@@ -1090,7 +1100,7 @@ export default function AIExperienceSection() {
                   </div>
                 </div>
 
-                <div className="mt-7">
+                <div className="mt-5">
                   <p className="text-sm font-medium text-neutral-200">
                     {t("form.lightTemperatureLabel")}
                   </p>
@@ -1109,7 +1119,7 @@ export default function AIExperienceSection() {
                   </div>
                 </div>
 
-                <div className="mt-7">
+                <div className="mt-5">
                   <p className="text-sm font-medium text-neutral-200">
                     {t("form.lightIntensityLabel")}
                   </p>
@@ -1130,7 +1140,7 @@ export default function AIExperienceSection() {
               </>
             ) : null}
 
-            <div className="mt-7">
+            <div className="mt-5">
               <label
                 htmlFor="ai-prompt"
                 className="text-sm font-medium text-neutral-200"
@@ -1144,16 +1154,16 @@ export default function AIExperienceSection() {
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder={t("form.placeholder")}
                 disabled={isLoading}
-                className="mt-4 min-h-[170px] w-full resize-y rounded-[1.5rem] border border-white/10 bg-black/20 px-5 py-4 text-sm leading-7 text-white outline-none transition duration-300 placeholder:text-neutral-500 focus:border-[#caa27c] focus:bg-black/25 focus:ring-2 focus:ring-[#caa27c]/20 disabled:cursor-not-allowed disabled:opacity-70"
+                className="mt-3 min-h-[110px] w-full resize-y rounded-[1.5rem] border border-white/10 bg-black/20 px-4 py-3 text-sm leading-7 text-white outline-none transition duration-300 placeholder:text-neutral-500 focus:border-[#caa27c] focus:bg-black/25 focus:ring-2 focus:ring-[#caa27c]/20 disabled:cursor-not-allowed disabled:opacity-70"
               />
             </div>
 
             {fullPrompt ? (
-              <div className="mt-6 rounded-[1.5rem] border border-[#d9b08c]/18 bg-gradient-to-br from-[#d9b08c]/10 to-transparent p-4 md:p-5">
-                <p className="text-xs uppercase tracking-[0.24em] text-[#e3bf9d]">
+              <div className="mt-4 rounded-[1.25rem] border border-[#d9b08c]/18 bg-gradient-to-br from-[#d9b08c]/10 to-transparent p-3 md:p-4">
+                <p className="text-[10px] uppercase tracking-[0.24em] text-[#e3bf9d]">
                   {t("promptEnrichedTitle")}
                 </p>
-                <p className="mt-3 text-sm leading-8 text-neutral-200">
+                <p className="mt-2 max-h-24 overflow-y-auto text-xs leading-5 text-neutral-300">
                   {fullPrompt}
                 </p>
               </div>
@@ -1166,41 +1176,83 @@ export default function AIExperienceSection() {
               </div>
             ) : null}
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <button
-                type="button"
-                onClick={handleGenerate}
-                disabled={isLoading}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition duration-300 hover:scale-[1.015] hover:bg-neutral-200 disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {isLoading ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    {t("buttons.generating")}
-                  </>
-                ) : (
-                  <>
-                    <Wand2 className="h-4 w-4" />
-                    {t("buttons.generate")}
-                  </>
-                )}
-              </button>
+            {generationCount >= GENERATION_LIMIT ? (
+              <div className="mt-5 rounded-[1.5rem] border border-[#d9b08c]/25 bg-gradient-to-br from-[#d9b08c]/12 to-[#d9b08c]/5 p-4 md:p-5">
+                <div className="flex items-start gap-3">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#d9b08c]/30 bg-[#d9b08c]/15">
+                    <Sparkles className="h-4 w-4 text-[#e3bf9d]" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-white">{t("limit.title")}</p>
+                    <p className="mt-1.5 text-xs leading-5 text-neutral-400">{t("limit.description")}</p>
+                  </div>
+                </div>
 
-              <button
-                type="button"
-                onClick={handleReset}
-                disabled={isLoading}
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-6 py-3 text-sm font-medium text-white transition duration-300 hover:bg-white/[0.09] disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                <RefreshCcw className="h-4 w-4" />
-                {t("buttons.reset")}
-              </button>
-            </div>
+                <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (generatedImage && typeof window !== "undefined") {
+                        sessionStorage.setItem("generatedImage", generatedImage);
+                      }
+                      router.push({
+                        pathname: "/commande",
+                        query: lastPrompt ? { prompt: lastPrompt } : {},
+                      });
+                    }}
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#d9b08c] px-5 py-2.5 text-sm font-medium text-black transition duration-300 hover:scale-[1.015] hover:bg-[#e5c4a6]"
+                  >
+                    {generatedImage ? t("limit.cta") : t("limit.ctaNew")}
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleReset}
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-5 py-2.5 text-sm font-medium text-white transition duration-300 hover:bg-white/[0.09]"
+                  >
+                    <RefreshCcw className="h-4 w-4" />
+                    {t("buttons.reset")}
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="mt-5 flex flex-col gap-2.5 sm:flex-row">
+                <button
+                  type="button"
+                  onClick={handleGenerate}
+                  disabled={isLoading}
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition duration-300 hover:scale-[1.015] hover:bg-neutral-200 disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      {t("buttons.generating")}
+                    </>
+                  ) : (
+                    <>
+                      <Wand2 className="h-4 w-4" />
+                      {t("buttons.generate")}
+                    </>
+                  )}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleReset}
+                  disabled={isLoading}
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-6 py-3 text-sm font-medium text-white transition duration-300 hover:bg-white/[0.09] disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  <RefreshCcw className="h-4 w-4" />
+                  {t("buttons.reset")}
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
         <div ref={resultRef} className="flex flex-col">
-          <div className="relative flex min-h-[640px] flex-1 items-center justify-center overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] md:min-h-[760px] md:p-6 xl:min-h-[860px] xl:p-7">
+          <div className="relative flex min-h-[360px] flex-1 items-center justify-center overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] md:min-h-[440px] md:p-5 xl:p-6">
             {!generatedImage && !isLoading ? (
               <div className="mx-auto max-w-md text-center">
                 <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-white/[0.05]">
@@ -1270,7 +1322,7 @@ export default function AIExperienceSection() {
           </div>
 
           {generatedImage ? (
-            <div className="mt-5 rounded-[1.5rem] border border-white/10 bg-black/20 p-4 md:p-5">
+            <div className="mt-4 rounded-[1.25rem] border border-white/10 bg-black/20 p-3 md:p-4">
               <p className="text-xs uppercase tracking-[0.22em] text-neutral-400">
                 {t("result.generatedTitle")}
               </p>
@@ -1280,11 +1332,11 @@ export default function AIExperienceSection() {
             </div>
           ) : null}
 
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-4 flex flex-col gap-2.5 sm:flex-row">
             <button
               type="button"
               onClick={handleGenerate}
-              disabled={isLoading || !lastPrompt}
+              disabled={isLoading || !lastPrompt || generationCount >= GENERATION_LIMIT}
               className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-5 py-3 text-sm font-medium text-white transition duration-300 hover:bg-white/[0.09] disabled:cursor-not-allowed disabled:opacity-50"
             >
               <RefreshCcw className="h-4 w-4" />
@@ -1307,7 +1359,7 @@ export default function AIExperienceSection() {
             </button>
           </div>
 
-          <div className="mt-5 space-y-3">
+          <div className="mt-3 space-y-2">
             <p className="text-sm leading-7 text-neutral-300">
               {t("footer.line1")}
             </p>

@@ -509,6 +509,12 @@
     "footer": {
       "line1": "Each generated concept serves as a visual foundation. The final sculpture is then handmade in the studio, with a sensitive, artisanal, and fully bespoke approach."
     },
+    "limit": {
+      "title": "You've used your 2 free visualisations",
+      "description": "Transform your idea into a handmade sculpture — each piece is crafted by hand in the studio.",
+      "cta": "Order this creation",
+      "ctaNew": "Order a custom sculpture"
+    },
     "errors": {
       "emptyPrompt": "First describe your idea to generate an image.",
       "generationFailed": "Error during generation.",

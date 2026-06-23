@@ -509,6 +509,12 @@
     "footer": {
       "line1": "Cada concepto generado sirve como base visual. La escultura final se realiza después a mano en el taller, con un enfoque artesanal, sensible y completamente a medida."
     },
+    "limit": {
+      "title": "Has utilizado tus 2 visualizaciones gratuitas",
+      "description": "Transforma tu idea en una escultura artesanal a medida — cada pieza se crea a mano en el taller.",
+      "cta": "Pedir esta creación",
+      "ctaNew": "Pedir una escultura a medida"
+    },
     "errors": {
       "emptyPrompt": "Describe primero tu idea para generar una imagen.",
       "generationFailed": "Error durante la generación.",

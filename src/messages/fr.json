@@ -509,6 +509,12 @@
     "footer": {
       "line1": "Chaque concept généré sert de base visuelle. La sculpture finale est ensuite réalisée à la main en atelier, avec une approche artisanale, sensible et entièrement sur mesure."
     },
+    "limit": {
+      "title": "Vous avez utilisé vos 2 visualisations gratuites",
+      "description": "Transformez votre idée en sculpture artisanale sur mesure — chaque pièce est façonnée à la main en atelier.",
+      "cta": "Commander cette création",
+      "ctaNew": "Commander une sculpture sur mesure"
+    },
     "errors": {
       "emptyPrompt": "Décrivez d’abord votre idée pour générer une image.",
       "generationFailed": "Erreur lors de la génération.",
