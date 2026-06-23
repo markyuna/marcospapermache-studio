@@ -124,6 +124,15 @@ body.lightbox-open {
 }
 
 /* Subtle fade for fullscreen artwork environment */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@theme {
+  --animate-marquee: marquee 42s linear infinite;
+}
+
 @keyframes lightbox-fade-in {
   from {
     opacity: 0;

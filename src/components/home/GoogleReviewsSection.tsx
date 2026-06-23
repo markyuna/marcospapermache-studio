@@ -20,10 +20,65 @@ type GoogleReview = {
 function Stars({ rating, label }: { rating: number; label: string }) {
   return (
     <div className="flex items-center gap-0.5" aria-label={label}>
-      {Array.from({ length: rating }).map((_, index) => (
-        <Star key={index} className="h-3 w-3 fill-[#c8873f] text-[#c8873f]" />
+      {Array.from({ length: rating }).map((_, i) => (
+        <Star key={i} className="h-3 w-3 fill-[#c8873f] text-[#c8873f]" />
       ))}
     </div>
+  );
+}
+
+function ReviewCard({
+  review,
+  source,
+  starsLabel,
+}: {
+  review: GoogleReview;
+  source: string;
+  starsLabel: string;
+}) {
+  return (
+    <article className="group relative flex w-[300px] shrink-0 flex-col overflow-hidden rounded-[1.75rem] border border-[#e4d6c1]/90 bg-white/72 p-5 shadow-[0_12px_40px_rgba(24,21,18,0.055)] backdrop-blur transition duration-300 hover:-translate-y-1 hover:bg-white/92 hover:shadow-[0_20px_55px_rgba(24,21,18,0.09)]">
+      {/* Top shine */}
+      <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[#c8873f]/30 to-transparent" />
+      <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-[#e9a35f]/8 blur-2xl transition duration-500 group-hover:bg-[#e9a35f]/14" />
+
+      {/* Header */}
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#eadfce] bg-[#f8f0e6] text-[11px] font-semibold text-[#9b6a35]">
+            {review.initials}
+          </div>
+          <div>
+            <p className="text-sm font-semibold leading-none text-[#181512]">
+              {review.name}
+            </p>
+            <p className="mt-1 text-[11px] text-neutral-400">{review.meta}</p>
+          </div>
+        </div>
+
+        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#f7f0e6] text-[#c8873f] ring-1 ring-[#eadfce]">
+          <Quote className="h-3 w-3" />
+        </div>
+      </div>
+
+      {/* Stars */}
+      <div className="mt-3.5">
+        <Stars rating={review.rating} label={starsLabel} />
+      </div>
+
+      {/* Text */}
+      <p className="mt-3 flex-1 text-[13px] leading-7 text-neutral-600">
+        "{review.text}"
+      </p>
+
+      {/* Footer */}
+      <div className="mt-4 flex items-center justify-between border-t border-[#eadfce] pt-3.5">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-neutral-400">
+          {source}
+        </p>
+        <p className="text-[11px] text-neutral-400">{review.date}</p>
+      </div>
+    </article>
   );
 }
 
@@ -32,14 +87,13 @@ export default function GoogleReviewsSection() {
   const reviews = t.raw("reviews") as GoogleReview[];
 
   return (
-    <section className="relative isolate overflow-hidden bg-[#f7f0e6] px-6 py-24 text-neutral-950 md:py-32">
+    <section className="relative isolate overflow-hidden bg-[#f7f0e6] py-24 text-neutral-950 md:py-32">
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_15%_10%,rgba(200,135,63,0.15),transparent_32%),radial-gradient(circle_at_85%_35%,rgba(255,168,94,0.10),transparent_34%)]" />
       <div className="pointer-events-none absolute left-1/2 top-10 -z-10 h-[340px] w-[340px] -translate-x-1/2 rounded-full bg-white/30 blur-3xl" />
 
-      <div className="relative mx-auto max-w-7xl">
-
-        {/* Header */}
-        <div className="mb-12 grid gap-8 md:mb-14 lg:grid-cols-[1fr_auto] lg:items-end">
+      {/* Header */}
+      <div className="relative mx-auto mb-12 max-w-7xl px-6 md:mb-14">
+        <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -60,7 +114,6 @@ export default function GoogleReviewsSection() {
             </p>
           </motion.div>
 
-          {/* Rating + CTA */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -91,68 +144,27 @@ export default function GoogleReviewsSection() {
             </a>
           </motion.div>
         </div>
+      </div>
 
-        {/* Reviews grid */}
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {reviews.map((review, index) => (
-            <motion.article
+      {/* Marquee */}
+      <div className="group relative overflow-hidden">
+        {/* Left fade */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[#f7f0e6] to-transparent" />
+        {/* Right fade */}
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[#f7f0e6] to-transparent" />
+
+        {/* Track — duplicated for seamless loop, pauses on group hover */}
+        <div
+          className="animate-marquee group-hover:[animation-play-state:paused] flex gap-4 py-4"
+          style={{ width: "max-content" }}
+        >
+          {[...reviews, ...reviews].map((review, index) => (
+            <ReviewCard
               key={`${review.name}-${index}`}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{
-                duration: 0.6,
-                delay: index * 0.08,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="group relative flex flex-col overflow-hidden rounded-[1.75rem] border border-[#e4d6c1]/90 bg-white/68 p-5 shadow-[0_12px_40px_rgba(24,21,18,0.055)] backdrop-blur transition duration-400 hover:-translate-y-1 hover:bg-white/90 hover:shadow-[0_20px_55px_rgba(24,21,18,0.09)]"
-            >
-              {/* Top shine */}
-              <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[#c8873f]/30 to-transparent" />
-              <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-[#e9a35f]/8 blur-2xl transition duration-500 group-hover:bg-[#e9a35f]/14" />
-
-              {/* Header */}
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#eadfce] bg-[#f8f0e6] text-[11px] font-semibold text-[#9b6a35]">
-                    {review.initials}
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold leading-none text-[#181512]">
-                      {review.name}
-                    </p>
-                    <p className="mt-1 text-[11px] text-neutral-400">
-                      {review.meta}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#f7f0e6] text-[#c8873f] ring-1 ring-[#eadfce]">
-                  <Quote className="h-3 w-3" />
-                </div>
-              </div>
-
-              {/* Stars */}
-              <div className="mt-3.5">
-                <Stars
-                  rating={review.rating}
-                  label={t("starsAria", { rating: review.rating })}
-                />
-              </div>
-
-              {/* Review text */}
-              <p className="mt-3 flex-1 text-[13px] leading-7 text-neutral-600">
-                "{review.text}"
-              </p>
-
-              {/* Footer */}
-              <div className="mt-4 flex items-center justify-between border-t border-[#eadfce] pt-3.5">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-neutral-400">
-                  {t("source")}
-                </p>
-                <p className="text-[11px] text-neutral-400">{review.date}</p>
-              </div>
-            </motion.article>
+              review={review}
+              source={t("source")}
+              starsLabel={t("starsAria", { rating: review.rating })}
+            />
           ))}
         </div>
       </div>
