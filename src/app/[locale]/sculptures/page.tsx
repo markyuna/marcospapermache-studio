@@ -2,11 +2,13 @@
 
 import type { Metadata } from "next";
 import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { Container } from "@/components/layout/container";
 import Gallery from "@/components/sculptures/Gallery";
 import JsonLd from "@/components/seo/JsonLd";
+import { Link } from "@/i18n/navigation";
 import { localizeArtwork } from "@/lib/artwork-i18n";
 import { getArtworks } from "@/lib/artworks";
 import { createMetadata, getAbsoluteUrl, siteConfig } from "@/lib/seo";
@@ -118,7 +120,7 @@ export default async function SculpturesPage({ params }: Props) {
       <main className="bg-[#f8f5ef] text-neutral-900">
         {/* Hero Banner */}
         <section className="relative isolate overflow-hidden">
-          <div className="relative h-[240px] w-full sm:h-[280px] md:h-[300px] lg:h-[320px] xl:h-[340px] 2xl:h-[360px]">
+          <div className="relative h-[360px] w-full sm:h-[420px] md:h-[480px] lg:h-[540px] xl:h-[580px]">
             <Image
               src="/banniere.png"
               alt={t("bannerAlt")}
@@ -128,28 +130,39 @@ export default async function SculpturesPage({ params }: Props) {
               className="object-cover object-[center_30%] md:object-[center_34%]"
             />
 
-            {/* Overlay cinematic */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/20 to-transparent" />
+            {/* Cinematic overlay */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/68 via-black/28 to-transparent" />
 
-            {/* Soft fade bottom */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-[#f8f5ef]" />
+            {/* Atmospheric depth */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/12 via-transparent to-transparent" />
 
-            {/* Blend into page */}
-            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-[#f8f5ef] md:h-32" />
+            {/* Bottom blend into page */}
+            <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-b from-transparent to-[#f8f5ef] md:h-48" />
 
             {/* Content */}
             <div className="absolute inset-0 flex items-end">
-              <Container className="pb-10 md:pb-14">
-                <div className="max-w-3xl">
-                  <p className="text-[11px] uppercase tracking-[0.38em] text-white/70 md:text-xs">
+              <Container className="pb-14 md:pb-20 lg:pb-24">
+                <div className="max-w-2xl">
+                  <p className="text-[11px] uppercase tracking-[0.38em] text-white/55 md:text-xs">
                     {t("eyebrow")}
                   </p>
 
-                  <div className="mt-4 h-px w-14 bg-white/40 md:mt-5" />
+                  <div className="mt-4 h-px w-14 bg-white/30 md:mt-5" />
 
-                  <h1 className="mt-5 mb-4 max-w-3xl bg-gradient-to-br from-white via-[#ffe7d1] to-[#d07a2d] bg-clip-text text-3xl font-semibold tracking-[-0.05em] text-transparent drop-shadow-[0_0_18px_rgba(208,122,45,0.16)] md:mb-6 md:text-5xl">
+                  <h1 className="mt-5 mb-3 bg-gradient-to-br from-white via-[#ffe7d1] to-[#d07a2d] bg-clip-text text-4xl font-semibold tracking-[-0.05em] text-transparent drop-shadow-[0_0_18px_rgba(208,122,45,0.16)] md:text-5xl lg:text-6xl">
                     {t("title")}
                   </h1>
+
+                  <p className="mt-3 max-w-md text-sm leading-7 text-white/58 drop-shadow-sm md:text-[15px] md:leading-8">
+                    {t("subtitle")}
+                  </p>
+
+                  {artworks.length > 0 && (
+                    <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/6 px-3.5 py-1.5 text-[11px] font-medium text-white/50 backdrop-blur-sm">
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#c8873f]" />
+                      {artworks.length} œuvres
+                    </div>
+                  )}
                 </div>
               </Container>
             </div>
@@ -157,20 +170,24 @@ export default async function SculpturesPage({ params }: Props) {
         </section>
 
         {/* Gallery Section */}
-        <section className="relative -mt-2 py-14 md:-mt-4 md:py-20">
+        <section className="relative -mt-4 py-12 md:py-16 lg:py-20">
           <Container>
-            <div className="mx-auto max-w-5xl">
-              <div className="mb-10 flex flex-col gap-4 border-t border-black/10 pt-8 md:mb-12 md:pt-10">
-                <div className="max-w-2xl">
-                  <p className="text-[11px] uppercase tracking-[0.32em] text-neutral-400">
-                    {t("collectionLabel")}
-                  </p>
-
-                  <h2 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-neutral-900 md:text-3xl">
-                    {t("collectionTitle")}
-                  </h2>
-                </div>
+            {/* Section header */}
+            <div className="mb-12 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between md:mb-16">
+              <div>
+                <p className="text-[11px] uppercase tracking-[0.32em] text-neutral-400">
+                  {t("collectionLabel")}
+                </p>
+                <h2 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-neutral-900 md:text-3xl lg:text-4xl">
+                  {t("collectionTitle")}
+                </h2>
               </div>
+
+              {artworks.length > 0 && (
+                <p className="shrink-0 text-sm text-neutral-400">
+                  {artworks.length} pièces
+                </p>
+              )}
             </div>
 
             {artworks.length > 0 ? (
@@ -182,6 +199,40 @@ export default async function SculpturesPage({ params }: Props) {
                 </p>
               </div>
             )}
+          </Container>
+        </section>
+
+        {/* Dark CTA section */}
+        <section className="relative overflow-hidden bg-[#0d0b09] py-20 md:py-28">
+          {/* Ambient glow */}
+          <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#c85100]/6 blur-[130px]" />
+          <div className="pointer-events-none absolute right-0 top-0 h-[300px] w-[300px] rounded-full bg-[#ff9f43]/4 blur-[100px]" />
+
+          {/* Top shimmer line */}
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c85100]/22 to-transparent" />
+
+          <Container>
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="mb-4 text-[11px] uppercase tracking-[0.32em] text-white/30">
+                {t("collectionLabel")}
+              </p>
+
+              <h2 className="bg-gradient-to-br from-white via-[#ffe7d1] to-[#d9956a] bg-clip-text text-3xl font-semibold tracking-[-0.045em] text-transparent md:text-4xl">
+                {t("ctaTitle")}
+              </h2>
+
+              <p className="mt-4 text-base leading-8 text-white/42">
+                {t("ctaSubtitle")}
+              </p>
+
+              <Link
+                href="/contact"
+                className="mt-8 inline-flex items-center gap-2.5 rounded-full bg-[linear-gradient(135deg,#ff9f43,#e76f16,#c85100)] px-7 py-3.5 text-sm font-semibold text-white shadow-[0_14px_45px_rgba(231,111,22,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_55px_rgba(231,111,22,0.40)]"
+              >
+                {t("ctaButton")}
+                <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
           </Container>
         </section>
       </main>

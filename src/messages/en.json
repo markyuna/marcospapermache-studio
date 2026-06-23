@@ -365,7 +365,11 @@
     "title": "Sculptures",
     "bannerAlt": "Sculptures page banner",
     "collectionLabel": "Gallery",
-    "collectionTitle": "Original works and distinctive pieces"
+    "collectionTitle": "Original works and distinctive pieces",
+    "subtitle": "Hand-crafted papier-mâché sculptures shaped from recycled materials, light and contemporary presence.",
+    "ctaTitle": "A unique piece, designed for your space.",
+    "ctaSubtitle": "Every sculpture begins with a conversation — tell me your idea.",
+    "ctaButton": "Request a custom creation"
   },
   "SculptureDetailPage": {
     "metadata": {

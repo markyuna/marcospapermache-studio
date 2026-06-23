@@ -365,7 +365,11 @@
     "title": "Sculptures",
     "bannerAlt": "Bannière de la page sculptures",
     "collectionLabel": "Galerie",
-    "collectionTitle": "Œuvres originales et pièces de caractère"
+    "collectionTitle": "Œuvres originales et pièces de caractère",
+    "subtitle": "Sculptures en papier mâché façonnées à la main, entre matière recyclée, lumière et présence contemporaine.",
+    "ctaTitle": "Une pièce unique, pensée pour votre espace.",
+    "ctaSubtitle": "Chaque sculpture peut naître d'un dialogue — racontez-moi votre idée.",
+    "ctaButton": "Demander une création sur mesure"
   },
   "SculptureDetailPage": {
     "metadata": {

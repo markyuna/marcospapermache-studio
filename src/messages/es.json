@@ -365,7 +365,11 @@
     "title": "Esculturas",
     "bannerAlt": "Banner de la página esculturas",
     "collectionLabel": "Galería",
-    "collectionTitle": "Obras originales y piezas con carácter"
+    "collectionTitle": "Obras originales y piezas con carácter",
+    "subtitle": "Esculturas en papel maché elaboradas a mano, entre materiales reciclados, luz y presencia contemporánea.",
+    "ctaTitle": "Una pieza única, pensada para tu espacio.",
+    "ctaSubtitle": "Cada escultura nace de una conversación — cuéntame tu idea.",
+    "ctaButton": "Solicitar una creación a medida"
   },
   "SculptureDetailPage": {
     "metadata": {
