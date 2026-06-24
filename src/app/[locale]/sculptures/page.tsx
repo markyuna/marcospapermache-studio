@@ -120,7 +120,7 @@ export default async function SculpturesPage({ params }: Props) {
       <main className="bg-[#f8f5ef] text-neutral-900">
         {/* Hero Banner */}
         <section className="relative isolate overflow-hidden">
-          <div className="relative h-[360px] w-full sm:h-[420px] md:h-[480px] lg:h-[540px] xl:h-[580px]">
+          <div className="relative h-[220px] w-full sm:h-[260px] md:h-[300px] lg:h-[340px]">
             <Image
               src="/banniere.png"
               alt={t("bannerAlt")}
@@ -137,11 +137,11 @@ export default async function SculpturesPage({ params }: Props) {
             <div className="absolute inset-0 bg-gradient-to-b from-black/12 via-transparent to-transparent" />
 
             {/* Bottom blend into page */}
-            <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-b from-transparent to-[#f8f5ef] md:h-48" />
+            <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-b from-transparent to-[#f8f5ef] md:h-28" />
 
             {/* Content */}
             <div className="absolute inset-0 flex items-end">
-              <Container className="pb-14 md:pb-20 lg:pb-24">
+              <Container className="pb-8 md:pb-10 lg:pb-12">
                 <div className="max-w-2xl">
                   <p className="text-[11px] uppercase tracking-[0.38em] text-white/55 md:text-xs">
                     {t("eyebrow")}
@@ -170,7 +170,7 @@ export default async function SculpturesPage({ params }: Props) {
         </section>
 
         {/* Gallery Section */}
-        <section className="relative -mt-4 py-12 md:py-16 lg:py-20">
+        <section className="relative py-12 md:py-16 lg:py-20">
           <Container>
             {/* Section header */}
             <div className="mb-12 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between md:mb-16">

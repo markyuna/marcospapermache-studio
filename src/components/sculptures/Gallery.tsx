@@ -39,7 +39,7 @@ export default function Gallery({ artworks }: GalleryProps) {
   );
 
   return (
-    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7">
+    <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
       {localizedArtworks.map((artwork, index) => {
         const cover = getCoverImage(artwork);
 
