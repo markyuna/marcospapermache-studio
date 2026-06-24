@@ -9,6 +9,16 @@ export type ArtworkImage = {
   created_at: string;
 };
 
+export type ArtworkStoryImage = {
+  id: string;
+  artwork_id: string;
+  storage_path: string | null;
+  image_url: string;
+  alt_text: string | null;
+  position: number;
+  created_at: string;
+};
+
 export type Artwork = {
   id: string;
   slug: string;
@@ -46,5 +56,14 @@ export type Artwork = {
   created_at: string;
   updated_at: string;
 
+  story_title: string | null;
+  story_title_en: string | null;
+  story_title_es: string | null;
+  story_content: string | null;
+  story_content_en: string | null;
+  story_content_es: string | null;
+  story_video_url: string | null;
+
   images: ArtworkImage[];
+  story_images: ArtworkStoryImage[];
 };

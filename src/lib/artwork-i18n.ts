@@ -74,5 +74,21 @@ export function localizeArtwork(artwork: Artwork, locale: string) {
       },
       locale
     ),
+    story_title: getLocalizedValue(
+      {
+        fr: artwork.story_title,
+        en: artwork.story_title_en,
+        es: artwork.story_title_es,
+      },
+      locale
+    ),
+    story_content: getLocalizedValue(
+      {
+        fr: artwork.story_content,
+        en: artwork.story_content_en,
+        es: artwork.story_content_es,
+      },
+      locale
+    ),
   };
 }

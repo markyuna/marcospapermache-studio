@@ -41,6 +41,14 @@ type ArtworkRow = {
   created_at: string;
   updated_at: string;
 
+  story_title: string | null;
+  story_title_en: string | null;
+  story_title_es: string | null;
+  story_content: string | null;
+  story_content_en: string | null;
+  story_content_es: string | null;
+  story_video_url: string | null;
+
   images:
     | {
         id: string;
@@ -50,6 +58,18 @@ type ArtworkRow = {
         alt_text: string | null;
         position: number;
         is_cover: boolean;
+        created_at: string;
+      }[]
+    | null;
+
+  story_images:
+    | {
+        id: string;
+        artwork_id: string;
+        storage_path: string | null;
+        image_url: string;
+        alt_text: string | null;
+        position: number;
         created_at: string;
       }[]
     | null;
@@ -65,6 +85,7 @@ function normalizeArtwork(row: ArtworkRow): Artwork {
 
       return a.position - b.position;
     }),
+    story_images: (row.story_images ?? []).sort((a, b) => a.position - b.position),
   };
 }
 
@@ -96,6 +117,13 @@ const artworkSelect = `
   is_featured,
   created_at,
   updated_at,
+  story_title,
+  story_title_en,
+  story_title_es,
+  story_content,
+  story_content_en,
+  story_content_es,
+  story_video_url,
   images:artwork_images(
     id,
     artwork_id,
@@ -104,6 +132,15 @@ const artworkSelect = `
     alt_text,
     position,
     is_cover,
+    created_at
+  ),
+  story_images:artwork_story_images(
+    id,
+    artwork_id,
+    storage_path,
+    image_url,
+    alt_text,
+    position,
     created_at
   )
 `;

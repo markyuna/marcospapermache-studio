@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 
 import { Container } from "@/components/layout/container";
+import AtelierStorySection from "@/components/sculptures/AtelierStorySection";
 import SculptureImageGallery from "@/components/sculptures/SculptureImageGallery";
 import JsonLd from "@/components/seo/JsonLd";
 import { Button } from "@/components/ui/button";
@@ -402,6 +403,12 @@ export default async function SculptureDetailPage({
             </aside>
           </div>
         </Container>
+        <AtelierStorySection
+          storyTitle={localizedArtwork.story_title}
+          storyContent={localizedArtwork.story_content}
+          storyVideoUrl={localizedArtwork.story_video_url}
+          storyImages={localizedArtwork.story_images}
+        />
       </main>
     </>
   );

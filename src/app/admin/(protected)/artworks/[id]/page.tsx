@@ -13,6 +13,16 @@ type ArtworkImage = {
   created_at: string;
 };
 
+type ArtworkStoryImage = {
+  id: string;
+  artwork_id: string;
+  storage_path: string | null;
+  image_url: string;
+  alt_text: string | null;
+  position: number;
+  created_at: string;
+};
+
 type Artwork = {
   id: string;
   title: string;
@@ -40,7 +50,15 @@ type Artwork = {
   etsy_url: string | null;
   is_featured: boolean | null;
   created_at?: string;
+  story_title: string | null;
+  story_title_en: string | null;
+  story_title_es: string | null;
+  story_content: string | null;
+  story_content_en: string | null;
+  story_content_es: string | null;
+  story_video_url: string | null;
   artwork_images: ArtworkImage[];
+  artwork_story_images: ArtworkStoryImage[];
 };
 
 type PageProps = {
@@ -79,6 +97,13 @@ async function getArtworkById(id: string): Promise<Artwork | null> {
       etsy_url,
       is_featured,
       created_at,
+      story_title,
+      story_title_en,
+      story_title_es,
+      story_content,
+      story_content_en,
+      story_content_es,
+      story_video_url,
       artwork_images (
         id,
         artwork_id,
@@ -87,6 +112,15 @@ async function getArtworkById(id: string): Promise<Artwork | null> {
         alt_text,
         position,
         is_cover,
+        created_at
+      ),
+      artwork_story_images (
+        id,
+        artwork_id,
+        storage_path,
+        image_url,
+        alt_text,
+        position,
         created_at
       )
     `)
@@ -121,6 +155,9 @@ async function getArtworkById(id: string): Promise<Artwork | null> {
         new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
       );
     }) ?? [];
+
+  artwork.artwork_story_images =
+    artwork.artwork_story_images?.sort((a, b) => a.position - b.position) ?? [];
 
   return artwork;
 }

@@ -49,6 +49,14 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
 
     const etsy_url = normalizeOptionalString(body?.etsy_url);
 
+    const story_title = normalizeOptionalString(body?.story_title);
+    const story_title_en = normalizeOptionalString(body?.story_title_en);
+    const story_title_es = normalizeOptionalString(body?.story_title_es);
+    const story_content = normalizeOptionalString(body?.story_content);
+    const story_content_en = normalizeOptionalString(body?.story_content_en);
+    const story_content_es = normalizeOptionalString(body?.story_content_es);
+    const story_video_url = normalizeOptionalString(body?.story_video_url);
+
     const parsedYear =
       typeof body?.year === "number"
         ? body.year
@@ -127,6 +135,13 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
         availability_es,
         etsy_url,
         is_featured,
+        story_title,
+        story_title_en,
+        story_title_es,
+        story_content,
+        story_content_en,
+        story_content_es,
+        story_video_url,
       })
       .eq("id", id);
 
@@ -209,6 +224,22 @@ export async function DELETE(_request: NextRequest, context: RouteContext) {
         { status: 500 }
       );
     }
+
+    const { data: storyImages } = await supabaseAdmin
+      .from("artwork_story_images")
+      .select("storage_path")
+      .eq("artwork_id", id);
+
+    const storyPathsToDelete =
+      storyImages
+        ?.map((img) => img.storage_path)
+        .filter((path): path is string => Boolean(path)) ?? [];
+
+    if (storyPathsToDelete.length > 0) {
+      await supabaseAdmin.storage.from("artworks").remove(storyPathsToDelete);
+    }
+
+    await supabaseAdmin.from("artwork_story_images").delete().eq("artwork_id", id);
 
     const { error: deleteArtworkError } = await supabaseAdmin
       .from("artworks")
