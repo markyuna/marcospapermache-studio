@@ -27,7 +27,7 @@ const getCachedCommandes = unstable_cache(
               status, created_at, image_url, file_url
        FROM commandes
        ORDER BY created_at DESC
-       LIMIT 10`
+       LIMIT 100`
     );
     return result.rows.map((r) => ({
       ...r,
