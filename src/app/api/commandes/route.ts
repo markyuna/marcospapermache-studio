@@ -185,6 +185,8 @@ export async function POST(request: Request) {
 
     let adminSent = false;
     let clientSent = false;
+    let adminEmailError: string | null = null;
+    let clientEmailError: string | null = null;
 
     try {
       const adminEmail = await resend.emails.send({
@@ -206,9 +208,11 @@ export async function POST(request: Request) {
       adminSent = !adminEmail.error;
 
       if (adminEmail.error) {
-        console.error("Admin email error:", adminEmail.error);
+        adminEmailError = `${adminEmail.error.name}: ${adminEmail.error.message}`;
+        console.error("Admin email error:", JSON.stringify(adminEmail.error));
       }
     } catch (err) {
+      adminEmailError = err instanceof Error ? err.message : "Unknown error";
       console.error("Admin email exception:", err);
     }
 
@@ -231,9 +235,11 @@ export async function POST(request: Request) {
       clientSent = !clientEmail.error;
 
       if (clientEmail.error) {
-        console.error("Client email error:", clientEmail.error);
+        clientEmailError = `${clientEmail.error.name}: ${clientEmail.error.message}`;
+        console.error("Client email error:", JSON.stringify(clientEmail.error));
       }
     } catch (err) {
+      clientEmailError = err instanceof Error ? err.message : "Unknown error";
       console.error("Client email exception:", err);
     }
 
@@ -247,6 +253,8 @@ export async function POST(request: Request) {
       emails: {
         adminSent,
         clientSent,
+        ...(adminEmailError && { adminError: adminEmailError }),
+        ...(clientEmailError && { clientError: clientEmailError }),
       },
     });
   } catch (error) {
