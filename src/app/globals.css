@@ -5,9 +5,14 @@
   --background-soft: #fff6ef;
   --foreground: #181512;
 
-  --primary: #ff6a00;
-  --primary-soft: #ffb36b;
-  --primary-deep: #e85d04;
+  /* Brand gold — single source of truth */
+  --brand-gold: #b96a2f;
+  --brand-gold-light: #d07a2d;
+  --brand-gold-soft: #c8873f;
+
+  --primary: #b96a2f;
+  --primary-soft: #d07a2d;
+  --primary-deep: #a05523;
 
   --accent: #f3e8dc;
   --accent-strong: #e7d2bf;
@@ -18,8 +23,8 @@
   --stroke: rgba(24, 21, 18, 0.08);
   --stroke-strong: rgba(24, 21, 18, 0.14);
 
-  --shadow-soft: 0 10px 30px rgba(255, 106, 0, 0.08);
-  --shadow-medium: 0 16px 40px rgba(255, 106, 0, 0.12);
+  --shadow-soft: 0 10px 30px rgba(185, 106, 47, 0.08);
+  --shadow-medium: 0 16px 40px rgba(185, 106, 47, 0.12);
 }
 
 *,
@@ -87,14 +92,14 @@ svg {
 }
 
 ::selection {
-  background: rgba(255, 106, 0, 0.18);
+  background: rgba(185, 106, 47, 0.18);
   color: #181512;
 }
 
 /* Scrollbar */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 106, 0, 0.35) transparent;
+  scrollbar-color: rgba(185, 106, 47, 0.35) transparent;
 }
 
 *::-webkit-scrollbar {
@@ -103,7 +108,7 @@ svg {
 }
 
 *::-webkit-scrollbar-thumb {
-  background: rgba(255, 106, 0, 0.28);
+  background: rgba(185, 106, 47, 0.28);
   border-radius: 999px;
 }
 
@@ -131,6 +136,9 @@ body.lightbox-open {
 
 @theme {
   --animate-marquee: marquee 42s linear infinite;
+  --color-brand-gold: #b96a2f;
+  --color-brand-gold-light: #d07a2d;
+  --color-brand-gold-soft: #c8873f;
 }
 
 @keyframes lightbox-fade-in {

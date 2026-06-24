@@ -111,10 +111,10 @@ export function HeroSection() {
             </div>
 
             <h1 className="mt-7 max-w-4xl text-[3.05rem] font-medium leading-[0.9] tracking-[-0.075em] sm:text-6xl md:text-7xl xl:text-[6.6rem]">
-              <span className="block bg-linear-to-r from-[#17130f] via-[#8a633d] to-[#c6a06f] bg-clip-text text-transparent">
+              <span className="block text-[#181512]">
                 {t("title.line1")}
               </span>
-              <span className="block bg-linear-to-r from-[#c6a06f] via-[#6f4b2d] to-[#17130f] bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-brand-gold to-brand-gold-light bg-clip-text text-transparent">
                 {t("title.line2")}
               </span>
             </h1>
@@ -126,7 +126,7 @@ export function HeroSection() {
             <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
               <Link
                 href="/create"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-linear-to-r from-[#ff7a1a] via-[#ff9a3d] to-[#ffb15f] px-6 py-3.5 text-sm font-medium text-white no-underline shadow-[0_18px_40px_rgba(255,122,26,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_55px_rgba(255,122,26,0.38)]"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand-gold to-brand-gold-light px-6 py-3.5 text-sm font-medium text-white no-underline shadow-[0_18px_40px_rgba(185,106,47,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_55px_rgba(185,106,47,0.38)]"
               >
                 <span>{t("ctaPrimary")}</span>
                 <ArrowRight className="h-4 w-4 shrink-0" />
@@ -140,7 +140,7 @@ export function HeroSection() {
               </Link>
             </div>
 
-            <p className="mt-5 text-sm text-[#7a6a5c]">{t("trustLine")}</p>
+            <p className="mt-5 text-sm text-[#4a3f38]">{t("trustLine")}</p>
           </motion.div>
 
           <motion.div

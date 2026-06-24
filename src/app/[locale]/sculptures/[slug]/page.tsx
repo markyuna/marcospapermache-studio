@@ -61,10 +61,10 @@ function truncateText(value: string, maxLength = 155) {
 function getAvailabilityBadgeStyle(availability?: string | null): string {
   const n = availability?.toLowerCase().trim() ?? "";
   if (n.includes("vendue") || n.includes("sold") || n.includes("vendida")) {
-    return "border-rose-200 bg-rose-50 text-rose-700";
+    return "border-[#d4ccc4] bg-[#ede8e3] text-[#6a6460]";
   }
-  if (n.includes("disponible") || n.includes("available")) {
-    return "border-emerald-200 bg-emerald-50 text-emerald-800";
+  if (n.includes("disponible") || n.includes("available") || n.includes("disponibles")) {
+    return "border-[#b8d4b2] bg-[#edf6eb] text-[#3d6b39]";
   }
   return "border-[#eadcc8] bg-[#f3ece2] text-[#5c4632]";
 }

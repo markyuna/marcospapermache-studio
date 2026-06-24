@@ -11,7 +11,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-gradient-to-r from-[#ff6a00] to-[#ff9a3d] text-white shadow-[0_14px_34px_rgba(255,106,0,0.25)] hover:-translate-y-0.5 hover:from-[#ff7a1a] hover:to-[#ffb05c] hover:shadow-[0_20px_48px_rgba(255,106,0,0.32)] focus-visible:ring-[#ff6a00]/30",
+          "bg-gradient-to-r from-brand-gold to-brand-gold-light text-white shadow-[0_14px_34px_rgba(185,106,47,0.25)] hover:-translate-y-0.5 hover:from-brand-gold-light hover:to-brand-gold-soft hover:shadow-[0_20px_48px_rgba(185,106,47,0.32)] focus-visible:ring-brand-gold/30",
         outline:
           "border border-black/10 bg-white/80 text-[#181512] backdrop-blur-sm shadow-[0_8px_24px_rgba(0,0,0,0.04)] hover:-translate-y-0.5 hover:border-black/20 hover:bg-white hover:text-[#181512] focus-visible:ring-black/10",
         secondary:
