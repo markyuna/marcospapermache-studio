@@ -195,7 +195,15 @@
       "about": "À propos"
     },
     "contact": "Contact",
-    "rights": "Tous droits réservés"
+    "rights": "Tous droits réservés",
+    "support": {
+      "button": "Soutenir l'artiste",
+      "title": "Soutenir l'artiste",
+      "subtitle": "Scannez le QR code avec votre téléphone pour faire un don via PayPal — montant libre.",
+      "or": "ou",
+      "link": "Ouvrir PayPal directement",
+      "thanks": "Merci infiniment pour votre soutien ✨"
+    }
   },
   "LocaleSwitcher": {
     "label": "Sélecteur de langue",
