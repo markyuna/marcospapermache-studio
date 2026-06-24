@@ -7,7 +7,7 @@ type Props = {
   storyTitle: string;
   storyContent: string;
   storyVideoUrl: string | null;
-  storyImages: ArtworkStoryImage[];
+  storyImages?: ArtworkStoryImage[] | null;
 };
 
 function getEmbedUrl(url: string): string | null {
@@ -32,8 +32,9 @@ export default function AtelierStorySection({
   storyVideoUrl,
   storyImages,
 }: Props) {
+  const safeImages = storyImages ?? [];
   const hasContent =
-    storyTitle || storyContent || storyVideoUrl || storyImages.length > 0;
+    storyTitle || storyContent || storyVideoUrl || safeImages.length > 0;
 
   if (!hasContent) return null;
 
@@ -82,17 +83,17 @@ export default function AtelierStorySection({
         )}
 
         {/* Story images grid */}
-        {storyImages.length > 0 && (
+        {safeImages.length > 0 && (
           <div
             className={
-              storyImages.length === 1
+              safeImages.length === 1
                 ? "max-w-xl"
-                : storyImages.length === 2
+                : safeImages.length === 2
                   ? "grid grid-cols-2 gap-4"
                   : "grid grid-cols-2 gap-4 sm:grid-cols-3"
             }
           >
-            {storyImages.map((image) => (
+            {safeImages.map((image) => (
               <div
                 key={image.id}
                 className="relative aspect-[4/5] overflow-hidden rounded-[18px] border border-black/[0.04] bg-[#efe8dc] shadow-[0_8px_24px_rgba(0,0,0,0.06)]"
