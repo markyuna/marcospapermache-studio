@@ -349,7 +349,7 @@ export default function CreateArtworkForm() {
         type="submit"
         className="flex w-full items-center justify-center rounded-xl bg-neutral-950 py-3 text-sm font-medium text-white transition hover:bg-neutral-800"
       >
-        Ajouter l'œuvre
+        Ajouter l&apos;œuvre
       </button>
     </form>
   );

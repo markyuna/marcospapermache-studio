@@ -72,7 +72,7 @@ export default function LocaleSwitcher({
                 ? "text-white"
                 : "text-neutral-500 hover:text-neutral-900",
             )}
-            aria-pressed={isActive}
+            aria-pressed={isActive ? "true" : "false"}
             aria-label={t("switchTo", { locale: item.label })}
           >
             {item.label}

@@ -364,6 +364,33 @@
       "noCommitment": "No commitment"
     }
   },
+  "AccountPage": {
+    "login": {
+      "badge": "My account",
+      "title": "Log in",
+      "description": "Log in to find your generations, credits and orders.",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "submit": "Log in",
+      "loading": "Logging in...",
+      "error": "Incorrect email or password."
+    },
+    "dashboard": {
+      "badge": "My account",
+      "title": "Hello",
+      "creditsLabel": "Available generations",
+      "creditsCount": "{count, plural, =0 {No generations available} one {# generation} other {# generations}}",
+      "buyButton": "Buy a pack of 3 generations - 1 €",
+      "buyError": "Couldn't start the payment. Please try again.",
+      "imagesTitle": "My AI generations",
+      "imagesEmpty": "You haven't generated a concept yet.",
+      "orderThisSculpture": "Order this sculpture",
+      "ordersTitle": "My orders",
+      "ordersEmpty": "You haven't placed an order yet.",
+      "ordersFallbackTitle": "Custom creation",
+      "logout": "Log out"
+    }
+  },
   "SculpturesPage": {
     "metadata": {
       "title": "Sculptures",
@@ -491,6 +518,9 @@
       "red": "Red",
       "orange": "Orange",
       "brown": "Brown",
+      "gray": "Gray",
+      "turquoise": "Turquoise",
+      "pink": "Pink",
       "multicolor": "Multicolor",
       "gradient": "Gradient"
     },
@@ -536,6 +566,22 @@
       "origami": {
         "label": "Origami",
         "prompt": "contemporary papier-mâché sculpture inspired by origami, precise geometric folds, crisp sculptural facets, structured construction, graphic elegance, premium handcrafted texture"
+      },
+      "abstract": {
+        "label": "Abstract",
+        "prompt": "contemporary papier-mâché sculpture, abstract non-figurative forms, bold artistic gesture, expressive balanced volumes, refined handcrafted texture, contemporary gallery presence"
+      },
+      "geometric": {
+        "label": "Geometric",
+        "prompt": "contemporary papier-mâché sculpture, precise geometric volumes, structured repeating forms, disciplined graphic composition, refined handcrafted texture, premium contemporary aesthetic"
+      },
+      "botanical": {
+        "label": "Botanical",
+        "prompt": "contemporary papier-mâché sculpture, forms inspired by leaves and branches, delicate organic rhythm, fine handcrafted texture, elegant natural presence"
+      },
+      "figurative": {
+        "label": "Figurative",
+        "prompt": "contemporary papier-mâché sculpture, stylized figurative silhouette inspired by the human or animal form, refined relief, elegant handcrafted texture, sophisticated artistic presence"
       }
     },
     "buttons": {
@@ -556,15 +602,34 @@
     },
     "limit": {
       "title": "You've used your 2 free visualisations",
-      "description": "Transform your idea into a handmade sculpture — each piece is crafted by hand in the studio.",
-      "cta": "Order this creation",
-      "ctaNew": "Order a custom sculpture"
+      "description": "Buy a pack of 3 extra generations to keep exploring your ideas."
+    },
+    "payment": {
+      "payButton": "Buy a pack of 3 generations - 1 €",
+      "successMessage": "Payment confirmed — your extra generations are available."
+    },
+    "auth": {
+      "close": "Close",
+      "signupTitle": "Create your account to continue",
+      "signupDescription": "A free account keeps track of your generations and orders, and lets you buy extra generation packs.",
+      "loginTitle": "Log in to continue",
+      "loginDescription": "Log in to your account to buy an extra generations pack.",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "signupButton": "Create my account",
+      "loginButton": "Log in",
+      "switchToLogin": "Already have an account? Log in",
+      "switchToSignup": "No account yet? Create one",
+      "emailAlreadyRegistered": "This email is already linked to an account. Log in below.",
+      "genericError": "Something went wrong. Please try again.",
+      "loginError": "Incorrect email or password."
     },
     "errors": {
       "emptyPrompt": "First describe your idea to generate an image.",
       "generationFailed": "Error during generation.",
       "noImageReturned": "No image was returned.",
-      "unknown": "An unknown error occurred."
+      "unknown": "An unknown error occurred.",
+      "checkoutFailed": "Couldn't start the payment. Please try again."
     },
     "loading": {
       "title": "Creating your image",

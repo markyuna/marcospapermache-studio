@@ -41,3 +41,29 @@ model Order {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+// Note: legacy `AIImage` and `Order` models above are unused — the live
+// tables are `ai_images` (GeneratedImage, below), `commandes` (accessed
+// directly via the Supabase client, no Prisma model), and `user_credits`.
+
+model GeneratedImage {
+  id             String   @id @default(cuid())
+  supabaseUserId String?  @map("supabase_user_id")
+  prompt         String
+  imageUrl       String   @map("image_url")
+  style          String?
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  @@map("ai_images")
+  @@index([supabaseUserId])
+}
+
+model UserCredits {
+  id             String   @id @default(cuid())
+  supabaseUserId String   @unique @map("supabase_user_id")
+  paidCredits    Int      @default(0) @map("paid_credits")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  @@map("user_credits")
+}

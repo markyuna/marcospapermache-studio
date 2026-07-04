@@ -15,6 +15,9 @@ import {
 type CommandeFormProps = {
   defaultPrompt?: string;
   defaultImage?: string;
+  sourceAiImageId?: string;
+  defaultName?: string;
+  defaultEmail?: string;
   dark?: boolean;
 };
 
@@ -32,6 +35,9 @@ type ConfettiPiece = {
 export default function CommandeForm({
   defaultPrompt = "",
   defaultImage = "",
+  sourceAiImageId = "",
+  defaultName = "",
+  defaultEmail = "",
   dark = false,
 }: CommandeFormProps) {
   const t = useTranslations("CommandeForm");
@@ -44,23 +50,16 @@ export default function CommandeForm({
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [message, setMessage] = useState(defaultPrompt);
-  const [generatedImage, setGeneratedImage] = useState<string | null>(
-    defaultImage || null,
-  );
+  const [prevDefaultPrompt, setPrevDefaultPrompt] = useState(defaultPrompt);
+  const [generatedImage, setGeneratedImage] = useState<string | null>(() => {
+    if (typeof window === "undefined") return defaultImage || null;
+    return sessionStorage.getItem("generatedImage") || defaultImage || null;
+  });
 
-  useEffect(() => {
+  if (defaultPrompt !== prevDefaultPrompt) {
+    setPrevDefaultPrompt(defaultPrompt);
     setMessage(defaultPrompt);
-  }, [defaultPrompt]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const storedImage = sessionStorage.getItem("generatedImage");
-
-    if (storedImage) {
-      setGeneratedImage(storedImage);
-    }
-  }, []);
+  }
 
   useEffect(() => {
     return () => {
@@ -112,31 +111,6 @@ export default function CommandeForm({
       window.clearTimeout(timeout);
     };
   }, [success]);
-
-  useEffect(() => {
-    if (!success || typeof window === "undefined") return;
-
-    playSuccessSound();
-
-    if ("vibrate" in navigator) {
-      navigator.vibrate?.([80, 40, 120]);
-    }
-  }, [success]);
-
-  const confettiPieces = useMemo<ConfettiPiece[]>(
-    () =>
-      Array.from({ length: 18 }, (_, index) => ({
-        id: index,
-        left: `${6 + index * 5.2}%`,
-        width: index % 3 === 0 ? 8 : 6,
-        height: index % 2 === 0 ? 18 : 14,
-        rotate: (index % 2 === 0 ? 1 : -1) * (12 + index * 7),
-        duration: 1.8 + (index % 5) * 0.18,
-        delay: index * 0.035,
-        opacity: 0.55 + (index % 4) * 0.08,
-      })),
-    [],
-  );
 
   function playSuccessSound() {
     try {
@@ -190,6 +164,31 @@ export default function CommandeForm({
       // ignore audio failures silently
     }
   }
+
+  useEffect(() => {
+    if (!success || typeof window === "undefined") return;
+
+    playSuccessSound();
+
+    if ("vibrate" in navigator) {
+      navigator.vibrate?.([80, 40, 120]);
+    }
+  }, [success]);
+
+  const confettiPieces = useMemo<ConfettiPiece[]>(
+    () =>
+      Array.from({ length: 18 }, (_, index) => ({
+        id: index,
+        left: `${6 + index * 5.2}%`,
+        width: index % 3 === 0 ? 8 : 6,
+        height: index % 2 === 0 ? 18 : 14,
+        rotate: (index % 2 === 0 ? 1 : -1) * (12 + index * 7),
+        duration: 1.8 + (index % 5) * 0.18,
+        delay: index * 0.035,
+        opacity: 0.55 + (index % 4) * 0.08,
+      })),
+    [],
+  );
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -446,6 +445,10 @@ export default function CommandeForm({
         </div>
       ) : null}
 
+      {sourceAiImageId ? (
+        <input type="hidden" name="sourceAiImageId" value={sourceAiImageId} />
+      ) : null}
+
       <div className="grid gap-6 md:grid-cols-2">
         <div>
           <label htmlFor="commande-name" className={labelClassName}>
@@ -454,6 +457,7 @@ export default function CommandeForm({
           <input
             id="commande-name"
             name="name"
+            defaultValue={defaultName}
             placeholder={t("fields.name")}
             aria-label={t("fields.name")}
             required
@@ -469,6 +473,7 @@ export default function CommandeForm({
             id="commande-email"
             name="email"
             type="email"
+            defaultValue={defaultEmail}
             placeholder={t("fields.email")}
             aria-label={t("fields.email")}
             required

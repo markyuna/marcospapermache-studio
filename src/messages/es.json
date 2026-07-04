@@ -364,6 +364,33 @@
       "noCommitment": "Sin compromiso"
     }
   },
+  "AccountPage": {
+    "login": {
+      "badge": "Mi cuenta",
+      "title": "Iniciar sesión",
+      "description": "Inicia sesión para ver tus generaciones, créditos y pedidos.",
+      "emailLabel": "Email",
+      "passwordLabel": "Contraseña",
+      "submit": "Iniciar sesión",
+      "loading": "Iniciando sesión...",
+      "error": "Email o contraseña incorrectos."
+    },
+    "dashboard": {
+      "badge": "Mi cuenta",
+      "title": "Hola",
+      "creditsLabel": "Generaciones disponibles",
+      "creditsCount": "{count, plural, =0 {Ninguna generación disponible} one {# generación} other {# generaciones}}",
+      "buyButton": "Comprar un pack de 3 generaciones - 1 €",
+      "buyError": "No se pudo iniciar el pago. Inténtalo de nuevo.",
+      "imagesTitle": "Mis generaciones IA",
+      "imagesEmpty": "Todavía no has generado ningún concepto.",
+      "orderThisSculpture": "Pedir esta escultura",
+      "ordersTitle": "Mis pedidos",
+      "ordersEmpty": "Todavía no has hecho ningún pedido.",
+      "ordersFallbackTitle": "Creación a medida",
+      "logout": "Cerrar sesión"
+    }
+  },
   "SculpturesPage": {
     "metadata": {
       "title": "Esculturas",
@@ -491,6 +518,9 @@
       "red": "Rojo",
       "orange": "Naranja",
       "brown": "Marrón",
+      "gray": "Gris",
+      "turquoise": "Turquesa",
+      "pink": "Rosa",
       "multicolor": "Multicolor",
       "gradient": "Degradado"
     },
@@ -536,6 +566,22 @@
       "origami": {
         "label": "Origami",
         "prompt": "escultura contemporánea en papel maché inspirada en el origami, pliegues geométricos precisos, facetas nítidas y escultóricas, construcción estructurada, elegancia gráfica, textura artesanal de alta gama"
+      },
+      "abstract": {
+        "label": "Abstracto",
+        "prompt": "escultura contemporánea en papel maché, formas abstractas no figurativas, gesto artístico audaz, volúmenes expresivos y equilibrados, textura artesanal refinada, presencia de galería contemporánea"
+      },
+      "geometric": {
+        "label": "Geométrico",
+        "prompt": "escultura contemporánea en papel maché, volúmenes geométricos precisos, formas repetitivas estructuradas, composición gráfica disciplinada, textura artesanal refinada, estética contemporánea premium"
+      },
+      "botanical": {
+        "label": "Botánico",
+        "prompt": "escultura contemporánea en papel maché, formas inspiradas en hojas y ramas, ritmo orgánico delicado, textura artesanal fina, presencia elegante y natural"
+      },
+      "figurative": {
+        "label": "Figurativo",
+        "prompt": "escultura contemporánea en papel maché, silueta figurativa estilizada inspirada en la forma humana o animal, relieve refinado, textura artesanal elegante, presencia artística sofisticada"
       }
     },
     "buttons": {
@@ -556,15 +602,34 @@
     },
     "limit": {
       "title": "Has utilizado tus 2 visualizaciones gratuitas",
-      "description": "Transforma tu idea en una escultura artesanal a medida — cada pieza se crea a mano en el taller.",
-      "cta": "Pedir esta creación",
-      "ctaNew": "Pedir una escultura a medida"
+      "description": "Compra un pack de 3 generaciones adicionales para seguir explorando tus ideas."
+    },
+    "payment": {
+      "payButton": "Comprar un pack de 3 generaciones - 1 €",
+      "successMessage": "Pago confirmado — tus generaciones adicionales ya están disponibles."
+    },
+    "auth": {
+      "close": "Cerrar",
+      "signupTitle": "Crea tu cuenta para continuar",
+      "signupDescription": "Una cuenta gratuita guarda tus generaciones y pedidos, y te permite comprar packs de generaciones adicionales.",
+      "loginTitle": "Inicia sesión para continuar",
+      "loginDescription": "Inicia sesión en tu cuenta para comprar un pack de generaciones adicionales.",
+      "emailLabel": "Email",
+      "passwordLabel": "Contraseña",
+      "signupButton": "Crear mi cuenta",
+      "loginButton": "Iniciar sesión",
+      "switchToLogin": "¿Ya tienes cuenta? Inicia sesión",
+      "switchToSignup": "¿Aún no tienes cuenta? Créala",
+      "emailAlreadyRegistered": "Este email ya está asociado a una cuenta. Inicia sesión abajo.",
+      "genericError": "Ocurrió un error. Inténtalo de nuevo.",
+      "loginError": "Email o contraseña incorrectos."
     },
     "errors": {
       "emptyPrompt": "Describe primero tu idea para generar una imagen.",
       "generationFailed": "Error durante la generación.",
       "noImageReturned": "No se devolvió ninguna imagen.",
-      "unknown": "Ocurrió un error desconocido."
+      "unknown": "Ocurrió un error desconocido.",
+      "checkoutFailed": "No se pudo iniciar el pago. Inténtalo de nuevo."
     },
     "loading": {
       "title": "Creación de tu imagen en curso",

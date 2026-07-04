@@ -192,7 +192,7 @@ export function ProcessSection() {
           className="mx-auto mt-16 max-w-3xl text-center"
         >
           <p className="text-2xl font-medium leading-snug tracking-[-0.035em] text-white/65 md:text-4xl">
-            "{t("quote")}"
+            &ldquo;{t("quote")}&rdquo;
           </p>
 
           <Link

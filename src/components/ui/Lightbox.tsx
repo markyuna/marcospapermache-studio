@@ -1,8 +1,9 @@
-//src/components/Lightbox.tsx
+// src/components/ui/Lightbox.tsx
+
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import clsx from "clsx";
@@ -29,6 +30,7 @@ export default function Lightbox({
     if (!images.length) return 0;
     if (initialIndex < 0) return 0;
     if (initialIndex >= images.length) return images.length - 1;
+
     return initialIndex;
   }, [images.length, initialIndex]);
 
@@ -37,28 +39,30 @@ export default function Lightbox({
   const currentIndex = sessionIndex ?? safeInitialIndex;
   const image = images[currentIndex];
 
-  function handleClose() {
+  const handleClose = useCallback(() => {
     setSessionIndex(null);
     onClose();
-  }
+  }, [onClose]);
 
-  function goToPrevious() {
+  const goToPrevious = useCallback(() => {
     if (images.length <= 1) return;
 
     setSessionIndex((current) => {
       const baseIndex = current ?? safeInitialIndex;
+
       return baseIndex === 0 ? images.length - 1 : baseIndex - 1;
     });
-  }
+  }, [images.length, safeInitialIndex]);
 
-  function goToNext() {
+  const goToNext = useCallback(() => {
     if (images.length <= 1) return;
 
     setSessionIndex((current) => {
       const baseIndex = current ?? safeInitialIndex;
+
       return baseIndex === images.length - 1 ? 0 : baseIndex + 1;
     });
-  }
+  }, [images.length, safeInitialIndex]);
 
   function goToIndex(nextIndex: number) {
     setSessionIndex(nextIndex);
@@ -66,8 +70,11 @@ export default function Lightbox({
 
   useEffect(() => {
     if (!isOpen) {
-      delete document.body.dataset.lightboxOpen;
-      delete document.documentElement.dataset.lightboxOpen;
+      if (typeof document !== "undefined") {
+        delete document.body.dataset.lightboxOpen;
+        delete document.documentElement.dataset.lightboxOpen;
+      }
+
       return;
     }
 
@@ -104,7 +111,7 @@ export default function Lightbox({
       delete document.body.dataset.lightboxOpen;
       delete document.documentElement.dataset.lightboxOpen;
     };
-  }, [isOpen, images.length, safeInitialIndex]);
+  }, [isOpen, images.length, handleClose, goToPrevious, goToNext]);
 
   if (!isOpen || !images.length || !image || typeof document === "undefined") {
     return null;
@@ -132,7 +139,7 @@ export default function Lightbox({
         <X className="h-5 w-5" />
       </button>
 
-      {images.length > 1 && (
+      {images.length > 1 ? (
         <>
           <button
             type="button"
@@ -158,7 +165,7 @@ export default function Lightbox({
             <ChevronRight className="h-6 w-6" />
           </button>
         </>
-      )}
+      ) : null}
 
       <div
         className="relative z-[1000000] flex h-dvh w-full flex-col px-4 py-4 sm:px-6 sm:py-6 lg:px-10 lg:py-8"
@@ -173,9 +180,10 @@ export default function Lightbox({
                   src={image.src}
                   alt={image.alt || ""}
                   fill
+                  priority
+                  unoptimized
                   sizes="100vw"
                   className="object-contain"
-                  priority
                 />
               </div>
             </div>
@@ -186,6 +194,7 @@ export default function Lightbox({
               <p className="text-[11px] uppercase tracking-[0.28em] text-white/40">
                 Galerie
               </p>
+
               <h3 className="mt-1 truncate text-lg font-medium">
                 {image.alt || "Image"}
               </h3>
@@ -198,7 +207,7 @@ export default function Lightbox({
             ) : null}
           </div>
 
-          {images.length > 1 && (
+          {images.length > 1 ? (
             <div className="mt-4 flex gap-3 overflow-x-auto pb-1">
               {images.map((thumbnail, thumbnailIndex) => (
                 <button
@@ -214,19 +223,23 @@ export default function Lightbox({
                       ? "border-white/50 opacity-100 shadow-[0_12px_30px_rgba(0,0,0,0.4)]"
                       : "border-white/15 opacity-55 hover:opacity-100"
                   )}
-                  aria-label={`Afficher l’image ${thumbnailIndex + 1} dans la galerie`}
+                  aria-label={`Afficher l’image ${
+                    thumbnailIndex + 1
+                  } dans la galerie`}
+                  aria-pressed={thumbnailIndex === currentIndex ? "true" : "false"}
                 >
                   <Image
                     src={thumbnail.src}
                     alt={thumbnail.alt || `Image ${thumbnailIndex + 1}`}
                     fill
+                    unoptimized
                     sizes="64px"
                     className="object-cover"
                   />
                 </button>
               ))}
             </div>
-          )}
+          ) : null}
         </div>
       </div>
     </div>,

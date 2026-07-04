@@ -6,8 +6,10 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import CommandeForm from "@/components/forms/CommandeForm";
 import { Container } from "@/components/layout/container";
 import JsonLd from "@/components/seo/JsonLd";
+import { getAuthenticatedUser } from "@/lib/admin-auth";
 import { routing } from "@/i18n/routing";
 import { createMetadata, getAbsoluteUrl, siteConfig } from "@/lib/seo";
+import { supabaseAdmin } from "@/lib/supabase";
 
 type CommandePageProps = {
   params: Promise<{
@@ -15,6 +17,7 @@ type CommandePageProps = {
   }>;
   searchParams: Promise<{
     prompt?: string;
+    sourceAiImageId?: string;
   }>;
 };
 
@@ -46,7 +49,7 @@ export default async function CommandePage({
   searchParams,
 }: CommandePageProps) {
   const { locale } = await params;
-  const { prompt = "" } = await searchParams;
+  const { prompt = "", sourceAiImageId = "" } = await searchParams;
 
   setRequestLocale(locale);
 
@@ -54,6 +57,26 @@ export default async function CommandePage({
     locale,
     namespace: "CommandePage",
   });
+
+  const user = await getAuthenticatedUser();
+
+  let defaultName = "";
+  let defaultEmail = user?.email ?? "";
+
+  if (user) {
+    const { data: previousCommande } = await supabaseAdmin
+      .from("commandes")
+      .select("name, email")
+      .eq("supabase_user_id", user.id)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (previousCommande) {
+      defaultName = previousCommande.name ?? "";
+      defaultEmail = previousCommande.email ?? defaultEmail;
+    }
+  }
 
   const pageUrl = `${siteConfig.domain}/${locale}/commande`;
 
@@ -158,7 +181,12 @@ export default async function CommandePage({
           </div>
 
           <div className="mx-auto mt-16 max-w-5xl">
-            <CommandeForm defaultPrompt={prompt} />
+            <CommandeForm
+              defaultPrompt={prompt}
+              sourceAiImageId={sourceAiImageId}
+              defaultName={defaultName}
+              defaultEmail={defaultEmail}
+            />
           </div>
         </Container>
       </section>

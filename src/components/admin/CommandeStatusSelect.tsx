@@ -24,6 +24,7 @@ export default function CommandeStatusSelect({
   const [status, setStatus] = useState<CommandeStatus>(
     initialStatus ?? "nouvelle",
   );
+  const [prevInitialStatus, setPrevInitialStatus] = useState(initialStatus);
   const [isPending, setIsPending] = useState(false);
   const [feedback, setFeedback] = useState<{
     type: "success" | "error";
@@ -32,9 +33,10 @@ export default function CommandeStatusSelect({
 
   const feedbackTimeoutRef = useRef<number | null>(null);
 
-  useEffect(() => {
+  if (initialStatus !== prevInitialStatus) {
+    setPrevInitialStatus(initialStatus);
     setStatus(initialStatus ?? "nouvelle");
-  }, [initialStatus]);
+  }
 
   useEffect(() => {
     return () => {

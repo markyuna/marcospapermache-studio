@@ -263,12 +263,6 @@ export default function ArtworkDetailManager({ artwork }: Props) {
     });
   }, [artwork.artwork_images]);
 
-  const coverImage = useMemo(() => {
-    return (
-      sortedImages.find((image) => image.is_cover) ?? sortedImages[0] ?? null
-    );
-  }, [sortedImages]);
-
   const imageCount = artwork.artwork_images.length;
 
   const isBusy =
@@ -849,7 +843,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
             {/* Atelier / Story section */}
             <div className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
               <p className={`mb-1 ${labelCls}`}>Atelier — histoire de la pièce</p>
-              <p className="mb-4 text-xs text-neutral-400">Si ces champs sont vides, la section n'apparaît pas sur le site.</p>
+              <p className="mb-4 text-xs text-neutral-400">Si ces champs sont vides, la section n&apos;apparaît pas sur le site.</p>
 
               {/* Tab buttons for story */}
               <div className="mb-5 flex w-fit rounded-xl border border-neutral-200 bg-neutral-50 p-1 gap-1">
@@ -876,7 +870,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
                     <input value={storyTitle} onChange={(e) => setStoryTitle(e.target.value)} disabled={isBusy} className={inputCls} placeholder="Dans l'atelier" />
                   </div>
                   <div className="space-y-1.5">
-                    <label className={labelCls}>Texte de l'histoire (FR)</label>
+                    <label className={labelCls}>Texte de l&apos;histoire (FR)</label>
                     <textarea value={storyContent} onChange={(e) => setStoryContent(e.target.value)} rows={6} disabled={isBusy} className={inputCls} placeholder="Raconte comment cette pièce a été créée…" />
                   </div>
                 </div>
@@ -1036,7 +1030,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
             {/* Story images grid */}
             <div className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
               <div className="mb-4 flex items-center justify-between">
-                <p className={labelCls}>Images d'atelier</p>
+                <p className={labelCls}>Images d&apos;atelier</p>
                 <span className="rounded-full bg-[#f6efe5] px-2.5 py-1 text-xs font-medium text-neutral-600">
                   {artwork.artwork_story_images.length} image{artwork.artwork_story_images.length > 1 ? "s" : ""}
                 </span>
@@ -1044,7 +1038,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
 
               {artwork.artwork_story_images.length === 0 ? (
                 <div className="rounded-xl border border-dashed border-neutral-200 bg-neutral-50 py-8 text-center text-sm text-neutral-400">
-                  Aucune image d'atelier
+                  Aucune image d&apos;atelier
                 </div>
               ) : (
                 <div className="grid grid-cols-3 gap-2">
@@ -1089,7 +1083,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
 
             {/* Story image upload form */}
             <div className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
-              <p className={`mb-4 ${labelCls}`}>Ajouter des images d'atelier</p>
+              <p className={`mb-4 ${labelCls}`}>Ajouter des images d&apos;atelier</p>
               <form onSubmit={handleUploadStoryImages} className="space-y-3">
                 <input
                   ref={storyFileInputRef}
@@ -1112,7 +1106,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
                   className="flex w-full items-center justify-center gap-2 rounded-xl bg-neutral-950 py-2.5 text-sm font-medium text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {isUploadingStory ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
-                  Ajouter les images d'atelier
+                  Ajouter les images d&apos;atelier
                 </button>
               </form>
             </div>

@@ -12,4 +12,6 @@ export type Commande = {
   file_url: string | null;
   status: CommandeStatus | null;
   created_at: string;
+  supabase_user_id: string | null;
+  source_ai_image_id: string | null;
 };

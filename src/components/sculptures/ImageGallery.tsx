@@ -2,7 +2,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, X, Expand } from "lucide-react";
 import clsx from "clsx";
 import { motion, AnimatePresence } from "framer-motion";
@@ -23,22 +23,22 @@ export default function ImageGallery({
 
   const activeImage = safeImages[activeIndex] ?? safeImages[0];
 
-  const goToPrevious = () => {
+  const goToPrevious = useCallback(() => {
     setActiveIndex((prev) => (prev === 0 ? safeImages.length - 1 : prev - 1));
-  };
+  }, [safeImages.length]);
 
-  const goToNext = () => {
+  const goToNext = useCallback(() => {
     setActiveIndex((prev) => (prev === safeImages.length - 1 ? 0 : prev + 1));
-  };
+  }, [safeImages.length]);
 
   const openLightbox = (index: number) => {
     setActiveIndex(index);
     setIsOpen(true);
   };
 
-  const closeLightbox = () => {
+  const closeLightbox = useCallback(() => {
     setIsOpen(false);
-  };
+  }, []);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -56,7 +56,7 @@ export default function ImageGallery({
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
     };
-  }, [isOpen, safeImages.length]);
+  }, [isOpen, goToPrevious, goToNext, closeLightbox]);
 
   return (
     <>

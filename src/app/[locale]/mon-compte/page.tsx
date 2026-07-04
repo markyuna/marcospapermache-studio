@@ -1,0 +1,55 @@
+// src/app/[locale]/mon-compte/page.tsx
+
+import { setRequestLocale } from "next-intl/server";
+
+import AccountDashboard from "@/components/account/AccountDashboard";
+import { Container } from "@/components/layout/container";
+import { prisma } from "@/lib/prisma";
+import { supabaseAdmin } from "@/lib/supabase";
+import { requireUserPageAccess } from "@/lib/user-auth";
+import { getUserCredits } from "@/lib/user-credits";
+import type { Commande } from "@/types/commande";
+
+export const dynamic = "force-dynamic";
+
+type Props = {
+  params: Promise<{
+    locale: string;
+  }>;
+};
+
+export default async function MonComptePage({ params }: Props) {
+  const { locale } = await params;
+
+  setRequestLocale(locale);
+
+  const user = await requireUserPageAccess(locale);
+
+  const [paidCredits, generatedImages, commandesResult] = await Promise.all([
+    getUserCredits(user.id),
+    prisma.generatedImage.findMany({
+      where: { supabaseUserId: user.id },
+      orderBy: { createdAt: "desc" },
+    }),
+    supabaseAdmin
+      .from("commandes")
+      .select("*")
+      .eq("supabase_user_id", user.id)
+      .order("created_at", { ascending: false }),
+  ]);
+
+  const commandes = (commandesResult.data ?? []) as Commande[];
+
+  return (
+    <main className="min-h-screen bg-[linear-gradient(to_bottom,#fffaf5,#fff7f1,#ffffff)] py-24 md:py-32">
+      <Container className="max-w-4xl">
+        <AccountDashboard
+          email={user.email ?? ""}
+          paidCredits={paidCredits}
+          generatedImages={generatedImages}
+          commandes={commandes}
+        />
+      </Container>
+    </main>
+  );
+}

@@ -364,6 +364,33 @@
       "noCommitment": "Sans engagement"
     }
   },
+  "AccountPage": {
+    "login": {
+      "badge": "Mon compte",
+      "title": "Connexion",
+      "description": "Connectez-vous pour retrouver vos générations, vos crédits et vos commandes.",
+      "emailLabel": "Email",
+      "passwordLabel": "Mot de passe",
+      "submit": "Se connecter",
+      "loading": "Connexion...",
+      "error": "Email ou mot de passe incorrect."
+    },
+    "dashboard": {
+      "badge": "Mon compte",
+      "title": "Bonjour",
+      "creditsLabel": "Générations disponibles",
+      "creditsCount": "{count, plural, =0 {Aucune génération disponible} one {# génération} other {# générations}}",
+      "buyButton": "Acheter un pack de 3 générations - 1 €",
+      "buyError": "Impossible de démarrer le paiement. Réessayez.",
+      "imagesTitle": "Mes générations IA",
+      "imagesEmpty": "Vous n’avez pas encore généré de concept.",
+      "orderThisSculpture": "Commander cette sculpture",
+      "ordersTitle": "Mes commandes",
+      "ordersEmpty": "Vous n’avez pas encore passé de commande.",
+      "ordersFallbackTitle": "Création sur mesure",
+      "logout": "Se déconnecter"
+    }
+  },
   "SculpturesPage": {
     "metadata": {
       "title": "Sculptures",
@@ -491,6 +518,9 @@
       "red": "Rouge",
       "orange": "Orange",
       "brown": "Brun",
+      "gray": "Gris",
+      "turquoise": "Turquoise",
+      "pink": "Rose",
       "multicolor": "Multicolore",
       "gradient": "Dégradé"
     },
@@ -536,6 +566,22 @@
       "origami": {
         "label": "Origami",
         "prompt": "sculpture contemporaine en papier mâché inspirée de l’origami, plis géométriques précis, facettes nettes et sculpturales, construction structurée, élégance graphique, texture artisanale haut de gamme"
+      },
+      "abstract": {
+        "label": "Abstrait",
+        "prompt": "sculpture contemporaine en papier mâché, formes abstraites non figuratives, geste artistique audacieux, volumes expressifs et équilibrés, texture artisanale raffinée, présence de galerie contemporaine"
+      },
+      "geometric": {
+        "label": "Géométrique",
+        "prompt": "sculpture contemporaine en papier mâché, volumes géométriques précis, formes répétitives structurées, composition graphique disciplinée, texture artisanale raffinée, esthétique contemporaine premium"
+      },
+      "botanical": {
+        "label": "Botanique",
+        "prompt": "sculpture contemporaine en papier mâché, formes inspirées des feuilles et des branches, rythme organique délicat, texture artisanale fine, présence élégante et naturelle"
+      },
+      "figurative": {
+        "label": "Figuratif",
+        "prompt": "sculpture contemporaine en papier mâché, silhouette figurative stylisée inspirée de la forme humaine ou animale, relief raffiné, texture artisanale élégante, présence artistique sophistiquée"
       }
     },
     "buttons": {
@@ -556,15 +602,34 @@
     },
     "limit": {
       "title": "Vous avez utilisé vos 2 visualisations gratuites",
-      "description": "Transformez votre idée en sculpture artisanale sur mesure — chaque pièce est façonnée à la main en atelier.",
-      "cta": "Commander cette création",
-      "ctaNew": "Commander une sculpture sur mesure"
+      "description": "Achetez un pack de 3 générations supplémentaires pour continuer à explorer vos idées."
+    },
+    "payment": {
+      "payButton": "Acheter un pack de 3 générations - 1 €",
+      "successMessage": "Paiement confirmé — vos générations supplémentaires sont disponibles."
+    },
+    "auth": {
+      "close": "Fermer",
+      "signupTitle": "Créez votre compte pour continuer",
+      "signupDescription": "Un compte gratuit vous permet de garder vos générations et vos commandes, et d’acheter des packs de générations supplémentaires.",
+      "loginTitle": "Connectez-vous pour continuer",
+      "loginDescription": "Connectez-vous à votre compte pour acheter un pack de générations supplémentaires.",
+      "emailLabel": "Email",
+      "passwordLabel": "Mot de passe",
+      "signupButton": "Créer mon compte",
+      "loginButton": "Se connecter",
+      "switchToLogin": "Vous avez déjà un compte ? Se connecter",
+      "switchToSignup": "Pas encore de compte ? Créer un compte",
+      "emailAlreadyRegistered": "Cet email est déjà associé à un compte. Connectez-vous ci-dessous.",
+      "genericError": "Une erreur est survenue. Réessayez.",
+      "loginError": "Email ou mot de passe incorrect."
     },
     "errors": {
       "emptyPrompt": "Décrivez d’abord votre idée pour générer une image.",
       "generationFailed": "Erreur lors de la génération.",
       "noImageReturned": "Aucune image n’a été retournée.",
-      "unknown": "Une erreur inconnue s’est produite."
+      "unknown": "Une erreur inconnue s’est produite.",
+      "checkoutFailed": "Impossible de démarrer le paiement. Réessayez."
     },
     "loading": {
       "title": "Création de votre image en cours",

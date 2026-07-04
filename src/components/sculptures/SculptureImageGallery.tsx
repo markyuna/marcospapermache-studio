@@ -137,7 +137,7 @@ export default function SculptureImageGallery({ images, title }: Props) {
                     : "border-black/10 opacity-60 hover:opacity-90"
                 )}
                 aria-label={`Afficher l'image ${index + 1}`}
-                aria-pressed={index === safeActiveIndex}
+                aria-pressed={index === safeActiveIndex ? "true" : "false"}
               >
                 <Image
                   src={image.image_url}

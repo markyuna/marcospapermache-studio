@@ -1,11 +1,20 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
+import type { User } from "@supabase/supabase-js";
 import {
   AlertCircle,
   ArrowRight,
   Check,
+  CreditCard,
   Lamp,
   Loader2,
   Palette,
@@ -17,10 +26,25 @@ import {
 import { useTranslations } from "next-intl";
 
 import { useRouter } from "@/i18n/navigation";
+import { supabase } from "@/lib/supabase/client";
+import AuthPaywallModal from "@/components/create/AuthPaywallModal";
 
 type GenerateImageResponse = {
   image?: string;
+  imageId?: string;
   error?: string;
+  requiresPayment?: boolean;
+  requiresSignup?: boolean;
+  paidCreditsRemaining?: number;
+};
+
+type CheckoutSessionResponse = {
+  url?: string;
+  error?: string;
+};
+
+type UserCreditsResponse = {
+  paidCredits?: number;
 };
 
 type CreationType = "wall" | "object" | "light";
@@ -59,6 +83,9 @@ type ColorOption =
   | "red"
   | "orange"
   | "brown"
+  | "gray"
+  | "turquoise"
+  | "pink"
   | "multicolor"
   | "gradient";
 
@@ -67,7 +94,11 @@ type StylePresetId =
   | "minimal"
   | "oceanic"
   | "luminous"
-  | "origami";
+  | "origami"
+  | "abstract"
+  | "geometric"
+  | "botanical"
+  | "figurative";
 
 type StylePreset = {
   id: StylePresetId;
@@ -86,11 +117,43 @@ type SelectOption<T extends string> = {
 
 const GENERATION_LIMIT = 2;
 
+const COLOR_SWATCH_BACKGROUNDS: Record<ColorOption, string> = {
+  black: "#111111",
+  white: "#ffffff",
+  beige: "#e3d3b8",
+  gold: "linear-gradient(135deg, #d4af37, #f4e5b2)",
+  blue: "#2563eb",
+  green: "#16a34a",
+  yellow: "#f2c94c",
+  red: "#dc2626",
+  orange: "#e76f16",
+  brown: "#7c4a2d",
+  gray: "#808080",
+  turquoise: "#40e0d0",
+  pink: "#f4a6c6",
+  multicolor:
+    "conic-gradient(from 0deg, #ff5757, #ffb257, #fff157, #57ff8f, #57e3ff, #5779ff, #c957ff, #ff57b2, #ff5757)",
+  gradient: "linear-gradient(135deg, #ff9f43, #e76f16, #c85100)",
+};
+
+function ColorSwatch({ colorId }: { colorId: ColorOption }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={[
+        "inline-block h-3.5 w-3.5 shrink-0 rounded-full",
+        colorId === "white" ? "border border-gray-300" : "",
+      ].join(" ")}
+      style={{ background: COLOR_SWATCH_BACKGROUNDS[colorId] }}
+    />
+  );
+}
+
 export default function AIExperienceSection() {
   const t = useTranslations("AIExperience");
   const router = useRouter();
 
-  const stylePresets: readonly StylePreset[] = [
+  const stylePresets: readonly StylePreset[] = useMemo(() => [
     {
       id: "organic",
       label: t("styles.organic.label"),
@@ -146,9 +209,53 @@ export default function AIExperienceSection() {
       lightPrompt:
         "origami-inspired luminous sculpture with faceted folded surfaces, geometric light play, elegant angular construction, refined artistic glow",
     },
-  ] as const;
+    {
+      id: "abstract",
+      label: t("styles.abstract.label"),
+      prompt: t("styles.abstract.prompt"),
+      framedPrompt:
+        "abstract sculptural composition adapted to framed wall art, non-figurative relief, expressive balanced forms, bold artistic gesture, composition designed to preserve the full frame visibility",
+      objectPrompt:
+        "abstract sculptural object with expressive non-figurative forms, bold artistic volumes, elegant handcrafted texture, contemporary gallery presence",
+      lightPrompt:
+        "abstract luminous sculpture with expressive non-figurative forms, bold artistic silhouette, refined handcrafted texture, atmospheric glow",
+    },
+    {
+      id: "geometric",
+      label: t("styles.geometric.label"),
+      prompt: t("styles.geometric.prompt"),
+      framedPrompt:
+        "geometric sculptural composition adapted to framed wall art, precise angular relief, structured repeating volumes, disciplined graphic composition designed to preserve the full frame visibility",
+      objectPrompt:
+        "geometric sculptural object with precise angular volumes, structured repeating forms, elegant handcrafted texture, refined contemporary presence",
+      lightPrompt:
+        "geometric luminous sculpture with precise angular facets, structured light play, elegant handcrafted texture, refined contemporary glow",
+    },
+    {
+      id: "botanical",
+      label: t("styles.botanical.label"),
+      prompt: t("styles.botanical.prompt"),
+      framedPrompt:
+        "botanical sculptural composition adapted to framed wall art, leaf and branch inspired relief, delicate organic rhythm, composition designed to preserve the full frame visibility",
+      objectPrompt:
+        "botanical sculptural object with leaf and branch inspired forms, delicate organic texture, elegant handcrafted presence, refined artisan finish",
+      lightPrompt:
+        "botanical luminous sculpture with leaf and branch inspired silhouette, delicate organic texture, soft atmospheric glow, refined handcrafted presence",
+    },
+    {
+      id: "figurative",
+      label: t("styles.figurative.label"),
+      prompt: t("styles.figurative.prompt"),
+      framedPrompt:
+        "figurative sculptural composition adapted to framed wall art, stylized human or animal silhouette, refined relief, composition designed to preserve the full frame visibility",
+      objectPrompt:
+        "figurative sculptural object with stylized human or animal form, refined handcrafted texture, elegant artistic presence, sophisticated silhouette",
+      lightPrompt:
+        "figurative luminous sculpture with stylized human or animal silhouette, soft ambient glow, refined handcrafted texture, atmospheric presence",
+    },
+  ] as const, [t]);
 
-  const wallSizeOptions: readonly WallSizeOption[] = [
+  const wallSizeOptions: readonly WallSizeOption[] = useMemo(() => [
     {
       id: "30x40",
       label: t("sizes.wall.small"),
@@ -167,9 +274,9 @@ export default function AIExperienceSection() {
       prompt:
         "vertical format artwork, portrait orientation, aspect ratio 7:10, proportions of a 70 x 100 cm wall piece, realistic scale as a large wall artwork",
     },
-  ] as const;
+  ] as const, [t]);
 
-  const objectSizeOptions: readonly SelectOption<ObjectSizeOption["id"]>[] = [
+  const objectSizeOptions: readonly SelectOption<ObjectSizeOption["id"]>[] = useMemo(() => [
     {
       id: "small",
       label: t("sizes.object.small"),
@@ -188,20 +295,20 @@ export default function AIExperienceSection() {
       prompt:
         "large decorative sculpture, approximately 70 cm or more, strong sculptural presence, gallery-style object scale",
     },
-  ] as const;
+  ] as const, [t]);
 
-  const frameColors: readonly SelectOption<FrameColor>[] = [
+  const frameColors: readonly SelectOption<FrameColor>[] = useMemo(() => [
     { id: "black", label: t("frameColors.black"), prompt: "black" },
     { id: "white", label: t("frameColors.white"), prompt: "white" },
     { id: "gold", label: t("frameColors.gold"), prompt: "gold" },
-  ] as const;
+  ] as const, [t]);
 
-  const frameMaterials: readonly SelectOption<FrameMaterial>[] = [
+  const frameMaterials: readonly SelectOption<FrameMaterial>[] = useMemo(() => [
     { id: "metal", label: t("frameMaterials.metal"), prompt: "metal" },
     { id: "wood", label: t("frameMaterials.wood"), prompt: "wood" },
-  ] as const;
+  ] as const, [t]);
 
-  const objectUsages: readonly SelectOption<ObjectUsage>[] = [
+  const objectUsages: readonly SelectOption<ObjectUsage>[] = useMemo(() => [
     {
       id: "table",
       label: t("objectUsage.table"),
@@ -220,9 +327,9 @@ export default function AIExperienceSection() {
       prompt:
         "designed as a floor-standing sculptural object, strong vertical presence, gallery-inspired display",
     },
-  ] as const;
+  ] as const, [t]);
 
-  const objectFinishes: readonly SelectOption<ObjectFinish>[] = [
+  const objectFinishes: readonly SelectOption<ObjectFinish>[] = useMemo(() => [
     {
       id: "matte",
       label: t("objectFinish.matte"),
@@ -240,9 +347,9 @@ export default function AIExperienceSection() {
       prompt:
         "metallic finish accents, refined industrial sheen, sophisticated contemporary character",
     },
-  ] as const;
+  ] as const, [t]);
 
-  const lightTypes: readonly SelectOption<LightType>[] = [
+  const lightTypes: readonly SelectOption<LightType>[] = useMemo(() => [
     {
       id: "tableLamp",
       label: t("lightTypes.tableLamp"),
@@ -267,9 +374,9 @@ export default function AIExperienceSection() {
       prompt:
         "papier-mâché luminous sculpture, artistic object combining sculptural form and integrated light",
     },
-  ] as const;
+  ] as const, [t]);
 
-  const lightTemperatures: readonly SelectOption<LightingTemperature>[] = [
+  const lightTemperatures: readonly SelectOption<LightingTemperature>[] = useMemo(() => [
     {
       id: "warm",
       label: t("lightTemperature.warm"),
@@ -286,9 +393,9 @@ export default function AIExperienceSection() {
       label: t("lightTemperature.cool"),
       prompt: "cool light, contemporary crisp illumination, modern atmosphere",
     },
-  ] as const;
+  ] as const, [t]);
 
-  const lightIntensities: readonly SelectOption<LightingIntensity>[] = [
+  const lightIntensities: readonly SelectOption<LightingIntensity>[] = useMemo(() => [
     {
       id: "subtle",
       label: t("lightIntensity.subtle"),
@@ -307,9 +414,9 @@ export default function AIExperienceSection() {
       prompt:
         "strong light intensity, pronounced luminous presence, bold artistic lighting effect",
     },
-  ] as const;
+  ] as const, [t]);
 
-  const colorOptions: readonly SelectOption<ColorOption>[] = [
+  const colorOptions: readonly SelectOption<ColorOption>[] = useMemo(() => [
     { id: "black", label: t("colors.black"), prompt: "black color accents" },
     { id: "white", label: t("colors.white"), prompt: "white tones" },
     {
@@ -353,6 +460,21 @@ export default function AIExperienceSection() {
       prompt: "brown tones, earthy material feel",
     },
     {
+      id: "gray",
+      label: t("colors.gray"),
+      prompt: "gray tones, refined neutral finish",
+    },
+    {
+      id: "turquoise",
+      label: t("colors.turquoise"),
+      prompt: "turquoise tones, vivid refreshing accent",
+    },
+    {
+      id: "pink",
+      label: t("colors.pink"),
+      prompt: "soft pink tones, delicate refined accent",
+    },
+    {
       id: "multicolor",
       label: t("colors.multicolor"),
       prompt: "rich multicolor composition, expressive handcrafted palette",
@@ -363,7 +485,7 @@ export default function AIExperienceSection() {
       prompt:
         "smooth gradient transitions between the selected colors, elegant blended tones across the sculpture",
     },
-  ] as const;
+  ] as const, [t]);
 
   const [prompt, setPrompt] = useState("");
   const [creationType, setCreationType] = useState<CreationType>("wall");
@@ -393,6 +515,7 @@ export default function AIExperienceSection() {
   const [selectedColors, setSelectedColors] = useState<ColorOption[]>([]);
 
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+  const [generatedImageId, setGeneratedImageId] = useState<string | null>(null);
   const [lastPrompt, setLastPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -401,7 +524,65 @@ export default function AIExperienceSection() {
     return parseInt(sessionStorage.getItem("generationCount") ?? "0", 10);
   });
 
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [userCredits, setUserCredits] = useState(0);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [isRedirectingToCheckout, setIsRedirectingToCheckout] = useState(false);
+  const [paymentSuccessMessage, setPaymentSuccessMessage] = useState("");
+
   const resultRef = useRef<HTMLDivElement | null>(null);
+  const pendingAuthActionRef = useRef<(() => void) | null>(null);
+
+  const refreshAuthState = useCallback(async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    setCurrentUser(user);
+
+    if (!user) {
+      setUserCredits(0);
+      return;
+    }
+
+    const response = await fetch("/api/user/credits");
+    if (response.ok) {
+      const data: UserCreditsResponse = await response.json();
+      setUserCredits(data.paidCredits ?? 0);
+    }
+  }, []);
+
+  useEffect(() => {
+    async function syncAuthState() {
+      await refreshAuthState();
+    }
+
+    syncAuthState();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(() => {
+      syncAuthState();
+    });
+
+    return () => subscription.unsubscribe();
+  }, [refreshAuthState]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("checkout") !== "success") return;
+
+    window.history.replaceState(null, "", window.location.pathname);
+
+    const timeout = window.setTimeout(async () => {
+      await refreshAuthState();
+      setPaymentSuccessMessage(t("payment.successMessage"));
+    }, 1500);
+
+    return () => window.clearTimeout(timeout);
+  }, [t, refreshAuthState]);
 
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
@@ -416,6 +597,10 @@ export default function AIExperienceSection() {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [isLoading]);
+
+  const isBlocked = currentUser
+    ? userCredits <= 0
+    : generationCount >= GENERATION_LIMIT;
 
   const previewAspectClass = useMemo(() => {
     if (creationType === "wall") {
@@ -450,12 +635,6 @@ export default function AIExperienceSection() {
       (option) => option.id !== "gradient" || canShowGradientOption,
     );
   }, [colorOptions, canShowGradientOption]);
-
-  useEffect(() => {
-    if (!canShowGradientOption && selectedColors.includes("gradient")) {
-      setSelectedColors((current) => current.filter((item) => item !== "gradient"));
-    }
-  }, [canShowGradientOption, selectedColors]);
 
   const selectedColorLabels = useMemo(() => {
     return colorOptions
@@ -638,11 +817,15 @@ export default function AIExperienceSection() {
 
   function toggleColor(colorId: ColorOption) {
     setSelectedColors((current) => {
-      if (current.includes(colorId)) {
-        return current.filter((item) => item !== colorId);
-      }
+      const next = current.includes(colorId)
+        ? current.filter((item) => item !== colorId)
+        : [...current, colorId];
 
-      return [...current, colorId];
+      const nonGradientCount = next.filter((item) => item !== "gradient").length;
+
+      return nonGradientCount >= 2
+        ? next
+        : next.filter((item) => item !== "gradient");
     });
   }
 
@@ -687,6 +870,22 @@ export default function AIExperienceSection() {
 
       const data: GenerateImageResponse = await response.json();
 
+      if (data.requiresSignup || data.requiresPayment) {
+        if (data.requiresSignup) {
+          setGenerationCount((current) => {
+            const lockedCount = Math.max(current, GENERATION_LIMIT);
+            sessionStorage.setItem("generationCount", String(lockedCount));
+            return lockedCount;
+          });
+        } else {
+          setUserCredits(0);
+        }
+
+        pendingAuthActionRef.current = null;
+        setShowAuthModal(true);
+        throw new Error(data.error || t("errors.generationFailed"));
+      }
+
       if (!response.ok) {
         throw new Error(data.error || t("errors.generationFailed"));
       }
@@ -696,11 +895,16 @@ export default function AIExperienceSection() {
       }
 
       setGeneratedImage(data.image);
+      setGeneratedImageId(data.imageId ?? null);
       setLastPrompt(fullPrompt);
 
-      const newCount = generationCount + 1;
-      setGenerationCount(newCount);
-      sessionStorage.setItem("generationCount", String(newCount));
+      if (data.paidCreditsRemaining !== undefined) {
+        setUserCredits(data.paidCreditsRemaining);
+      } else if (!currentUser) {
+        const newCount = generationCount + 1;
+        setGenerationCount(newCount);
+        sessionStorage.setItem("generationCount", String(newCount));
+      }
 
       setTimeout(() => {
         scrollToResult(90);
@@ -711,6 +915,33 @@ export default function AIExperienceSection() {
       setError(message);
     } finally {
       setIsLoading(false);
+    }
+  }
+
+  async function handlePayForCredits() {
+    if (typeof window === "undefined") return;
+
+    try {
+      setIsRedirectingToCheckout(true);
+      setError("");
+
+      const response = await fetch("/api/stripe/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ returnPath: window.location.pathname }),
+      });
+
+      const data: CheckoutSessionResponse = await response.json();
+
+      if (!response.ok || !data.url) {
+        throw new Error(data.error || t("errors.checkoutFailed"));
+      }
+
+      window.location.href = data.url;
+    } catch (err) {
+      const message = err instanceof Error ? err.message : t("errors.unknown");
+      setError(message);
+      setIsRedirectingToCheckout(false);
     }
   }
 
@@ -730,6 +961,7 @@ export default function AIExperienceSection() {
     setSelectedLightIntensity("medium");
     setSelectedColors([]);
     setGeneratedImage(null);
+    setGeneratedImageId(null);
     setLastPrompt("");
     setError("");
 
@@ -738,17 +970,38 @@ export default function AIExperienceSection() {
     }
   }
 
-  function handleOrderClick() {
-    if (!generatedImage) return;
-
-    if (typeof window !== "undefined") {
+  function navigateToCommande() {
+    if (generatedImage && typeof window !== "undefined") {
       sessionStorage.setItem("generatedImage", generatedImage);
     }
 
     router.push({
       pathname: "/commande",
-      query: { prompt: lastPrompt },
+      query: {
+        ...(lastPrompt ? { prompt: lastPrompt } : {}),
+        ...(generatedImageId ? { sourceAiImageId: generatedImageId } : {}),
+      },
     });
+  }
+
+  function handleOrderIntent() {
+    if (!currentUser) {
+      pendingAuthActionRef.current = navigateToCommande;
+      setShowAuthModal(true);
+      return;
+    }
+
+    navigateToCommande();
+  }
+
+  function handleBuyCreditsIntent() {
+    if (!currentUser) {
+      pendingAuthActionRef.current = handlePayForCredits;
+      setShowAuthModal(true);
+      return;
+    }
+
+    handlePayForCredits();
   }
 
   function renderPillButton(
@@ -896,6 +1149,7 @@ export default function AIExperienceSection() {
                       selectedColors.includes(color.id),
                       () => toggleColor(color.id),
                       isLoading,
+                      <ColorSwatch colorId={color.id} />,
                     )}
                   </div>
                 ))}
@@ -1169,6 +1423,13 @@ export default function AIExperienceSection() {
               </div>
             ) : null}
 
+            {paymentSuccessMessage ? (
+              <div className="mt-6 flex items-start gap-3 rounded-[1.25rem] border border-emerald-500/20 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
+                <Check className="mt-0.5 h-4 w-4 shrink-0" />
+                <span>{paymentSuccessMessage}</span>
+              </div>
+            ) : null}
+
             {error ? (
               <div className="mt-6 flex items-start gap-3 rounded-[1.25rem] border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-200">
                 <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
@@ -1176,7 +1437,7 @@ export default function AIExperienceSection() {
               </div>
             ) : null}
 
-            {generationCount >= GENERATION_LIMIT ? (
+            {isBlocked ? (
               <div className="mt-5 rounded-[1.5rem] border border-[#d9b08c]/25 bg-gradient-to-br from-[#d9b08c]/12 to-[#d9b08c]/5 p-4 md:p-5">
                 <div className="flex items-start gap-3">
                   <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#d9b08c]/30 bg-[#d9b08c]/15">
@@ -1188,30 +1449,27 @@ export default function AIExperienceSection() {
                   </div>
                 </div>
 
-                <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+                <div className="mt-4 space-y-3">
                   <button
                     type="button"
-                    onClick={() => {
-                      if (generatedImage && typeof window !== "undefined") {
-                        sessionStorage.setItem("generatedImage", generatedImage);
-                      }
-                      router.push({
-                        pathname: "/commande",
-                        query: lastPrompt ? { prompt: lastPrompt } : {},
-                      });
-                    }}
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#d9b08c] px-5 py-2.5 text-sm font-medium text-black transition duration-300 hover:scale-[1.015] hover:bg-[#e5c4a6]"
+                    onClick={handleBuyCreditsIntent}
+                    disabled={isRedirectingToCheckout}
+                    className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#d9b08c] px-5 text-sm font-medium text-black transition duration-300 hover:bg-[#e5c4a6] disabled:cursor-not-allowed disabled:opacity-60"
                   >
-                    {generatedImage ? t("limit.cta") : t("limit.ctaNew")}
-                    <ArrowRight className="h-4 w-4" />
+                    {isRedirectingToCheckout ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <CreditCard className="h-4 w-4" />
+                    )}
+                    {t("payment.payButton")}
                   </button>
 
                   <button
                     type="button"
                     onClick={handleReset}
-                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-5 py-2.5 text-sm font-medium text-white transition duration-300 hover:bg-white/[0.09]"
+                    className="mx-auto flex items-center justify-center gap-1.5 text-xs font-medium text-neutral-400 transition duration-300 hover:text-white"
                   >
-                    <RefreshCcw className="h-4 w-4" />
+                    <RefreshCcw className="h-3.5 w-3.5" />
                     {t("buttons.reset")}
                   </button>
                 </div>
@@ -1336,7 +1594,7 @@ export default function AIExperienceSection() {
             <button
               type="button"
               onClick={handleGenerate}
-              disabled={isLoading || !lastPrompt || generationCount >= GENERATION_LIMIT}
+              disabled={isLoading || !lastPrompt || isBlocked}
               className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-5 py-3 text-sm font-medium text-white transition duration-300 hover:bg-white/[0.09] disabled:cursor-not-allowed disabled:opacity-50"
             >
               <RefreshCcw className="h-4 w-4" />
@@ -1345,7 +1603,7 @@ export default function AIExperienceSection() {
 
             <button
               type="button"
-              onClick={handleOrderClick}
+              onClick={handleOrderIntent}
               disabled={!generatedImage || isLoading}
               className={[
                 "inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-medium transition duration-300",
@@ -1366,6 +1624,16 @@ export default function AIExperienceSection() {
           </div>
         </div>
       </div>
+
+      <AuthPaywallModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        onAuthSuccess={async () => {
+          await refreshAuthState();
+          pendingAuthActionRef.current?.();
+          pendingAuthActionRef.current = null;
+        }}
+      />
     </section>
   );
 }

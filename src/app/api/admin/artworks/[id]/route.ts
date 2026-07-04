@@ -168,9 +168,9 @@ export async function DELETE(_request: NextRequest, context: RouteContext) {
   try {
     const { id } = await context.params;
 
-    const { data: artwork, error: artworkError } = await supabaseAdmin
+    const { error: artworkError } = await supabaseAdmin
       .from("artworks")
-      .select("slug")
+      .select("id")
       .eq("id", id)
       .maybeSingle();
 
@@ -181,8 +181,6 @@ export async function DELETE(_request: NextRequest, context: RouteContext) {
         { status: 500 }
       );
     }
-
-    const artworkSlug = artwork?.slug ?? null;
 
     const { data: images, error: imagesError } = await supabaseAdmin
       .from("artwork_images")
