@@ -10,6 +10,7 @@ import { useTranslations } from "next-intl";
 import { Space_Grotesk } from "next/font/google";
 
 import { Link, usePathname } from "@/i18n/navigation";
+import AccountMenu from "@/components/layout/AccountMenu";
 import LocaleSwitcher from "@/components/layout/LocaleSwitcher";
 
 const space = Space_Grotesk({
@@ -206,8 +207,9 @@ export default function Navbar() {
             })}
           </nav>
 
-          <div className="relative flex items-center">
+          <div className="relative flex items-center gap-3">
             <LocaleSwitcher />
+            <AccountMenu />
           </div>
         </div>
 
@@ -267,8 +269,9 @@ export default function Navbar() {
             })}
           </div>
 
-          <div className="relative z-10 mt-3 border-t border-black/10 pt-3">
+          <div className="relative z-10 mt-3 flex items-center justify-between gap-3 border-t border-black/10 pt-3">
             <LocaleSwitcher mobile onChange={closeMenu} />
+            <AccountMenu />
           </div>
         </nav>
       </div>

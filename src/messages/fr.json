@@ -10,6 +10,11 @@
     "openMenu": "Ouvrir le menu",
     "closeMenu": "Fermer le menu"
   },
+  "AccountMenu": {
+    "login": "Se connecter",
+    "accountLabel": "Mon compte",
+    "dashboard": "Mon tableau de bord"
+  },
   "Hero": {
     "badge": "Marcos Papermache · Art contemporain",
     "title": {
@@ -384,11 +389,40 @@
       "buyError": "Impossible de démarrer le paiement. Réessayez.",
       "imagesTitle": "Mes générations IA",
       "imagesEmpty": "Vous n’avez pas encore généré de concept.",
+      "imagesEmptyCta": "Créer un concept",
       "orderThisSculpture": "Commander cette sculpture",
       "ordersTitle": "Mes commandes",
       "ordersEmpty": "Vous n’avez pas encore passé de commande.",
+      "ordersEmptyCta": "Créer une sculpture sur mesure",
       "ordersFallbackTitle": "Création sur mesure",
-      "logout": "Se déconnecter"
+      "logout": "Se déconnecter",
+      "profileTitle": "Mon profil",
+      "passwordTitle": "Changer le mot de passe"
+    },
+    "profile": {
+      "fullNameLabel": "Nom complet",
+      "fullNamePlaceholder": "Votre nom complet",
+      "emailLabel": "Email",
+      "addressLabel": "Adresse",
+      "addressPlaceholder": "Numéro et nom de rue",
+      "cityLabel": "Ville",
+      "postalCodeLabel": "Code postal",
+      "countryLabel": "Pays",
+      "phoneLabel": "Téléphone",
+      "saveButton": "Enregistrer les modifications",
+      "saved": "Profil mis à jour avec succès.",
+      "savedWithEmailChange": "Profil mis à jour. Un email de confirmation a été envoyé à votre nouvelle adresse — le changement d’email prendra effet une fois confirmé.",
+      "saveError": "Impossible d’enregistrer les modifications. Réessayez.",
+      "emailChangeError": "Impossible de mettre à jour l’email."
+    },
+    "password": {
+      "newPasswordLabel": "Nouveau mot de passe",
+      "confirmPasswordLabel": "Confirmer le mot de passe",
+      "saveButton": "Changer le mot de passe",
+      "saved": "Mot de passe modifié avec succès.",
+      "saveError": "Impossible de modifier le mot de passe. Réessayez.",
+      "mismatch": "Les mots de passe ne correspondent pas.",
+      "tooShort": "Le mot de passe doit contenir au moins {count} caractères."
     }
   },
   "SculpturesPage": {

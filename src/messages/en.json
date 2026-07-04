@@ -10,6 +10,11 @@
     "openMenu": "Open menu",
     "closeMenu": "Close menu"
   },
+  "AccountMenu": {
+    "login": "Log in",
+    "accountLabel": "My account",
+    "dashboard": "My dashboard"
+  },
   "Hero": {
     "badge": "Marcos Papermache · Contemporary art",
     "title": {
@@ -384,11 +389,40 @@
       "buyError": "Couldn't start the payment. Please try again.",
       "imagesTitle": "My AI generations",
       "imagesEmpty": "You haven't generated a concept yet.",
+      "imagesEmptyCta": "Create a concept",
       "orderThisSculpture": "Order this sculpture",
       "ordersTitle": "My orders",
       "ordersEmpty": "You haven't placed an order yet.",
+      "ordersEmptyCta": "Create a custom sculpture",
       "ordersFallbackTitle": "Custom creation",
-      "logout": "Log out"
+      "logout": "Log out",
+      "profileTitle": "My profile",
+      "passwordTitle": "Change password"
+    },
+    "profile": {
+      "fullNameLabel": "Full name",
+      "fullNamePlaceholder": "Your full name",
+      "emailLabel": "Email",
+      "addressLabel": "Address",
+      "addressPlaceholder": "Street number and name",
+      "cityLabel": "City",
+      "postalCodeLabel": "Postal code",
+      "countryLabel": "Country",
+      "phoneLabel": "Phone",
+      "saveButton": "Save changes",
+      "saved": "Profile updated successfully.",
+      "savedWithEmailChange": "Profile updated. A confirmation email was sent to your new address — the email change will take effect once confirmed.",
+      "saveError": "Couldn't save the changes. Please try again.",
+      "emailChangeError": "Couldn't update the email."
+    },
+    "password": {
+      "newPasswordLabel": "New password",
+      "confirmPasswordLabel": "Confirm password",
+      "saveButton": "Change password",
+      "saved": "Password changed successfully.",
+      "saveError": "Couldn't change the password. Please try again.",
+      "mismatch": "Passwords don't match.",
+      "tooShort": "Password must be at least {count} characters."
     }
   },
   "SculpturesPage": {

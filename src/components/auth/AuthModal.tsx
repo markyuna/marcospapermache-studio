@@ -8,20 +8,22 @@ import { supabase } from "@/lib/supabase/client";
 
 type Mode = "signup" | "login";
 
-type AuthPaywallModalProps = {
+type AuthModalProps = {
   isOpen: boolean;
   onClose: () => void;
   onAuthSuccess: () => void | Promise<void>;
+  initialMode?: Mode;
 };
 
-export default function AuthPaywallModal({
+export default function AuthModal({
   isOpen,
   onClose,
   onAuthSuccess,
-}: AuthPaywallModalProps) {
+  initialMode = "signup",
+}: AuthModalProps) {
   const t = useTranslations("AIExperience.auth");
 
-  const [mode, setMode] = useState<Mode>("signup");
+  const [mode, setMode] = useState<Mode>(initialMode);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -32,7 +34,7 @@ export default function AuthPaywallModal({
     setPrevIsOpen(isOpen);
 
     if (isOpen) {
-      setMode("signup");
+      setMode(initialMode);
       setEmail("");
       setPassword("");
       setError("");

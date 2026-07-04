@@ -10,6 +10,11 @@
     "openMenu": "Abrir menú",
     "closeMenu": "Cerrar menú"
   },
+  "AccountMenu": {
+    "login": "Iniciar sesión",
+    "accountLabel": "Mi cuenta",
+    "dashboard": "Mi panel"
+  },
   "Hero": {
     "badge": "Marcos Papermache · Arte contemporáneo",
     "title": {
@@ -384,11 +389,40 @@
       "buyError": "No se pudo iniciar el pago. Inténtalo de nuevo.",
       "imagesTitle": "Mis generaciones IA",
       "imagesEmpty": "Todavía no has generado ningún concepto.",
+      "imagesEmptyCta": "Crear un concepto",
       "orderThisSculpture": "Pedir esta escultura",
       "ordersTitle": "Mis pedidos",
       "ordersEmpty": "Todavía no has hecho ningún pedido.",
+      "ordersEmptyCta": "Crear una escultura a medida",
       "ordersFallbackTitle": "Creación a medida",
-      "logout": "Cerrar sesión"
+      "logout": "Cerrar sesión",
+      "profileTitle": "Mi perfil",
+      "passwordTitle": "Cambiar contraseña"
+    },
+    "profile": {
+      "fullNameLabel": "Nombre completo",
+      "fullNamePlaceholder": "Tu nombre completo",
+      "emailLabel": "Email",
+      "addressLabel": "Dirección",
+      "addressPlaceholder": "Número y nombre de calle",
+      "cityLabel": "Ciudad",
+      "postalCodeLabel": "Código postal",
+      "countryLabel": "País",
+      "phoneLabel": "Teléfono",
+      "saveButton": "Guardar cambios",
+      "saved": "Perfil actualizado con éxito.",
+      "savedWithEmailChange": "Perfil actualizado. Se envió un email de confirmación a tu nueva dirección — el cambio de email se aplicará una vez confirmado.",
+      "saveError": "No se pudieron guardar los cambios. Inténtalo de nuevo.",
+      "emailChangeError": "No se pudo actualizar el email."
+    },
+    "password": {
+      "newPasswordLabel": "Nueva contraseña",
+      "confirmPasswordLabel": "Confirmar contraseña",
+      "saveButton": "Cambiar contraseña",
+      "saved": "Contraseña cambiada con éxito.",
+      "saveError": "No se pudo cambiar la contraseña. Inténtalo de nuevo.",
+      "mismatch": "Las contraseñas no coinciden.",
+      "tooShort": "La contraseña debe tener al menos {count} caracteres."
     }
   },
   "SculpturesPage": {

@@ -67,3 +67,18 @@ model UserCredits {
 
   @@map("user_credits")
 }
+
+model UserProfile {
+  id             String   @id @default(cuid())
+  supabaseUserId String   @unique @map("supabase_user_id")
+  fullName       String?  @map("full_name")
+  address        String?
+  city           String?
+  postalCode     String?  @map("postal_code")
+  country        String?
+  phone          String?
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  @@map("user_profiles")
+}

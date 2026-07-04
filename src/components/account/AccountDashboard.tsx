@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
-import { Sparkles, PackageSearch, ImageIcon } from "lucide-react";
+import { Sparkles, PackageSearch, ImageIcon, UserCog } from "lucide-react";
 
 import { Link } from "@/i18n/navigation";
 import {
@@ -8,15 +8,18 @@ import {
   getCommandeStatusLabel,
 } from "@/lib/commandes-status";
 import type { Commande } from "@/types/commande";
-import type { GeneratedImage } from "@/generated/prisma/client/client";
+import type { GeneratedImage, UserProfile } from "@/generated/prisma/client/client";
 import BuyCreditsButton from "@/components/account/BuyCreditsButton";
 import LogoutButton from "@/components/account/LogoutButton";
+import ProfileForm from "@/components/account/ProfileForm";
+import PasswordChangeForm from "@/components/account/PasswordChangeForm";
 
 type Props = {
   email: string;
   paidCredits: number;
   generatedImages: GeneratedImage[];
   commandes: Commande[];
+  profile: UserProfile | null;
 };
 
 function formatDate(date: Date | string) {
@@ -31,13 +34,19 @@ function formatDate(date: Date | string) {
   }
 }
 
+const cardClassName =
+  "rounded-[2rem] border border-white/10 bg-[#0b0b0d] p-6 text-white shadow-[0_30px_120px_rgba(0,0,0,0.28)] md:p-8";
+
 export default async function AccountDashboard({
   email,
   paidCredits,
   generatedImages,
   commandes,
+  profile,
 }: Props) {
   const t = await getTranslations("AccountPage.dashboard");
+
+  const imageById = new Map(generatedImages.map((image) => [image.id, image]));
 
   return (
     <div className="space-y-8">
@@ -56,17 +65,17 @@ export default async function AccountDashboard({
       </div>
 
       {/* Credits section */}
-      <section className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-sm md:p-8">
+      <section className={cardClassName}>
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#e1d2c4] bg-[#fcf8f3]">
-              <Sparkles className="h-5 w-5 text-[#b98f63]" />
+            <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#d9b08c]/30 bg-[#d9b08c]/15">
+              <Sparkles className="h-5 w-5 text-[#e3bf9d]" />
             </div>
             <div>
-              <p className="text-sm font-medium text-neutral-500">
+              <p className="text-sm font-medium text-neutral-400">
                 {t("creditsLabel")}
               </p>
-              <p className="text-2xl font-semibold text-[#181512]">
+              <p className="text-2xl font-semibold text-white">
                 {t("creditsCount", { count: paidCredits })}
               </p>
             </div>
@@ -77,22 +86,31 @@ export default async function AccountDashboard({
       </section>
 
       {/* Generated images section */}
-      <section className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-sm md:p-8">
+      <section className={cardClassName}>
         <div className="flex items-center gap-2">
-          <ImageIcon className="h-5 w-5 text-[#b98f63]" />
-          <h2 className="text-lg font-semibold text-[#181512]">
+          <ImageIcon className="h-5 w-5 text-[#e3bf9d]" />
+          <h2 className="text-lg font-semibold text-white">
             {t("imagesTitle")}
           </h2>
         </div>
 
         {generatedImages.length === 0 ? (
-          <p className="mt-4 text-sm text-neutral-500">{t("imagesEmpty")}</p>
+          <div className="mt-4 rounded-[1.25rem] border border-white/10 bg-white/[0.03] px-4 py-6 text-center">
+            <p className="text-sm text-neutral-400">{t("imagesEmpty")}</p>
+            <Link
+              href="/create"
+              className="mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-[#d9b08c] px-5 py-2.5 text-sm font-medium text-black transition duration-300 hover:bg-[#e5c4a6]"
+            >
+              <Sparkles className="h-4 w-4" />
+              {t("imagesEmptyCta")}
+            </Link>
+          </div>
         ) : (
           <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
             {generatedImages.map((image) => (
               <div
                 key={image.id}
-                className="group relative overflow-hidden rounded-[1.25rem] border border-neutral-200 bg-neutral-50"
+                className="group relative overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/[0.03]"
               >
                 <div className="relative aspect-square w-full">
                   <Image
@@ -104,7 +122,7 @@ export default async function AccountDashboard({
                   />
                 </div>
 
-                <div className="absolute inset-x-0 bottom-0 translate-y-full bg-black/70 p-3 backdrop-blur-sm transition duration-300 group-hover:translate-y-0">
+                <div className="absolute inset-x-0 bottom-0 translate-y-full bg-black/80 p-3 backdrop-blur-sm transition duration-300 group-hover:translate-y-0">
                   <Link
                     href={{
                       pathname: "/commande",
@@ -113,7 +131,7 @@ export default async function AccountDashboard({
                         sourceAiImageId: image.id,
                       },
                     }}
-                    className="block w-full rounded-full bg-white px-3 py-2 text-center text-xs font-medium text-[#181512] transition hover:bg-neutral-100"
+                    className="block w-full rounded-full bg-[#d9b08c] px-3 py-2 text-center text-xs font-medium text-black transition hover:bg-[#e5c4a6]"
                   >
                     {t("orderThisSculpture")}
                   </Link>
@@ -125,41 +143,100 @@ export default async function AccountDashboard({
       </section>
 
       {/* Orders section */}
-      <section className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-sm md:p-8">
+      <section className={cardClassName}>
         <div className="flex items-center gap-2">
-          <PackageSearch className="h-5 w-5 text-[#b98f63]" />
-          <h2 className="text-lg font-semibold text-[#181512]">
+          <PackageSearch className="h-5 w-5 text-[#e3bf9d]" />
+          <h2 className="text-lg font-semibold text-white">
             {t("ordersTitle")}
           </h2>
         </div>
 
         {commandes.length === 0 ? (
-          <p className="mt-4 text-sm text-neutral-500">{t("ordersEmpty")}</p>
+          <div className="mt-4 rounded-[1.25rem] border border-white/10 bg-white/[0.03] px-4 py-6 text-center">
+            <p className="text-sm text-neutral-400">{t("ordersEmpty")}</p>
+            <Link
+              href="/creations-sur-mesure"
+              className="mt-3 inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-5 py-2.5 text-sm font-medium text-white transition duration-300 hover:bg-white/[0.09]"
+            >
+              {t("ordersEmptyCta")}
+            </Link>
+          </div>
         ) : (
           <div className="mt-5 space-y-3">
-            {commandes.map((commande) => (
-              <div
-                key={commande.id}
-                className="flex flex-wrap items-center justify-between gap-3 rounded-[1.25rem] border border-neutral-200 bg-neutral-50 px-4 py-3"
-              >
-                <div className="min-w-0">
-                  <p className="truncate text-sm font-medium text-[#181512]">
-                    {commande.project_type || t("ordersFallbackTitle")}
-                  </p>
-                  <p className="mt-0.5 text-xs text-neutral-500">
-                    {formatDate(commande.created_at)}
-                  </p>
-                </div>
+            {commandes.map((commande) => {
+              const sourceImage = commande.source_ai_image_id
+                ? imageById.get(commande.source_ai_image_id)
+                : undefined;
 
-                <span
-                  className={`inline-flex shrink-0 items-center rounded-full border px-3 py-1 text-xs font-medium ${getCommandeStatusClasses(commande.status)}`}
+              return (
+                <div
+                  key={commande.id}
+                  className="flex flex-wrap items-center justify-between gap-3 rounded-[1.25rem] border border-white/10 bg-white/[0.03] px-4 py-3"
                 >
-                  {getCommandeStatusLabel(commande.status)}
-                </span>
-              </div>
-            ))}
+                  <div className="flex min-w-0 items-center gap-3">
+                    {sourceImage ? (
+                      <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-white/10">
+                        <Image
+                          src={sourceImage.imageUrl}
+                          alt={sourceImage.prompt}
+                          fill
+                          sizes="48px"
+                          className="object-cover"
+                        />
+                      </div>
+                    ) : null}
+
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-medium text-white">
+                        {commande.project_type || t("ordersFallbackTitle")}
+                      </p>
+                      <p className="mt-0.5 text-xs text-neutral-500">
+                        {formatDate(commande.created_at)}
+                      </p>
+                    </div>
+                  </div>
+
+                  <span
+                    className={`inline-flex shrink-0 items-center rounded-full border px-3 py-1 text-xs font-medium ${getCommandeStatusClasses(commande.status)}`}
+                  >
+                    {getCommandeStatusLabel(commande.status)}
+                  </span>
+                </div>
+              );
+            })}
           </div>
         )}
+      </section>
+
+      {/* Profile section */}
+      <section className={cardClassName}>
+        <div className="flex items-center gap-2">
+          <UserCog className="h-5 w-5 text-[#e3bf9d]" />
+          <h2 className="text-lg font-semibold text-white">
+            {t("profileTitle")}
+          </h2>
+        </div>
+
+        <div className="mt-5">
+          <ProfileForm
+            email={email}
+            initialFullName={profile?.fullName ?? ""}
+            initialAddress={profile?.address ?? ""}
+            initialCity={profile?.city ?? ""}
+            initialPostalCode={profile?.postalCode ?? ""}
+            initialCountry={profile?.country ?? ""}
+            initialPhone={profile?.phone ?? ""}
+          />
+        </div>
+
+        <div className="mt-8 border-t border-white/10 pt-6">
+          <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-neutral-400">
+            {t("passwordTitle")}
+          </h3>
+          <div className="mt-4">
+            <PasswordChangeForm />
+          </div>
+        </div>
       </section>
     </div>
   );

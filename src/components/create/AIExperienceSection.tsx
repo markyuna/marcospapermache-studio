@@ -27,7 +27,7 @@ import { useTranslations } from "next-intl";
 
 import { useRouter } from "@/i18n/navigation";
 import { supabase } from "@/lib/supabase/client";
-import AuthPaywallModal from "@/components/create/AuthPaywallModal";
+import AuthModal from "@/components/auth/AuthModal";
 
 type GenerateImageResponse = {
   image?: string;
@@ -1625,7 +1625,7 @@ export default function AIExperienceSection() {
         </div>
       </div>
 
-      <AuthPaywallModal
+      <AuthModal
         isOpen={showAuthModal}
         onClose={() => setShowAuthModal(false)}
         onAuthSuccess={async () => {

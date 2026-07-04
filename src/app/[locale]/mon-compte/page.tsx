@@ -8,6 +8,7 @@ import { prisma } from "@/lib/prisma";
 import { supabaseAdmin } from "@/lib/supabase";
 import { requireUserPageAccess } from "@/lib/user-auth";
 import { getUserCredits } from "@/lib/user-credits";
+import { getUserProfile } from "@/lib/user-profile";
 import type { Commande } from "@/types/commande";
 
 export const dynamic = "force-dynamic";
@@ -25,7 +26,7 @@ export default async function MonComptePage({ params }: Props) {
 
   const user = await requireUserPageAccess(locale);
 
-  const [paidCredits, generatedImages, commandesResult] = await Promise.all([
+  const [paidCredits, generatedImages, commandesResult, profile] = await Promise.all([
     getUserCredits(user.id),
     prisma.generatedImage.findMany({
       where: { supabaseUserId: user.id },
@@ -36,6 +37,7 @@ export default async function MonComptePage({ params }: Props) {
       .select("*")
       .eq("supabase_user_id", user.id)
       .order("created_at", { ascending: false }),
+    getUserProfile(user.id),
   ]);
 
   const commandes = (commandesResult.data ?? []) as Commande[];
@@ -48,6 +50,7 @@ export default async function MonComptePage({ params }: Props) {
           paidCredits={paidCredits}
           generatedImages={generatedImages}
           commandes={commandes}
+          profile={profile}
         />
       </Container>
     </main>
