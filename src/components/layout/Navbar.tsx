@@ -209,7 +209,7 @@ export default function Navbar() {
 
           <div className="relative flex items-center gap-3">
             <LocaleSwitcher />
-            <AccountMenu />
+            <AccountMenu onNavigate={closeMenu} />
           </div>
         </div>
 
@@ -271,7 +271,7 @@ export default function Navbar() {
 
           <div className="relative z-10 mt-3 flex items-center justify-between gap-3 border-t border-black/10 pt-3">
             <LocaleSwitcher mobile onChange={closeMenu} />
-            <AccountMenu />
+            <AccountMenu onNavigate={closeMenu} />
           </div>
         </nav>
       </div>

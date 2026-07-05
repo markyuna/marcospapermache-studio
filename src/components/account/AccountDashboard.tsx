@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
-import { Sparkles, PackageSearch, ImageIcon, UserCog } from "lucide-react";
+import { Sparkles, Wand2, PackageSearch, ImageIcon, UserCog } from "lucide-react";
 
 import { Link } from "@/i18n/navigation";
 import {
@@ -82,6 +82,16 @@ export default async function AccountDashboard({
           </div>
 
           <BuyCreditsButton />
+        </div>
+
+        <div className="mt-4 border-t border-neutral-100 pt-4">
+          <Link
+            href="/create"
+            className="inline-flex items-center gap-2 rounded-full border border-[#e1d2c4] bg-[#fcf8f3] px-4 py-2.5 text-sm font-medium text-[#8a6a3f] no-underline transition duration-300 hover:bg-[#f8f1e8] hover:text-[#6b5330]"
+          >
+            <Wand2 className="h-4 w-4" />
+            {t("goToAiExperience")}
+          </Link>
         </div>
       </section>
 

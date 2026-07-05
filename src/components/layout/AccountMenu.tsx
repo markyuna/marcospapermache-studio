@@ -17,7 +17,12 @@ function getInitial(email: string | null | undefined) {
 
 type DropdownPosition = { top: number; right: number };
 
-export default function AccountMenu() {
+type AccountMenuProps = {
+  /** Called when the user navigates away via the dropdown (e.g. to also close an enclosing mobile menu). */
+  onNavigate?: () => void;
+};
+
+export default function AccountMenu({ onNavigate }: AccountMenuProps = {}) {
   const t = useTranslations("AccountMenu");
 
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -151,14 +156,17 @@ export default function AccountMenu() {
 
               <Link
                 href="/mon-compte"
-                onClick={() => setShowDropdown(false)}
+                onClick={() => {
+                  setShowDropdown(false);
+                  onNavigate?.();
+                }}
                 className="block rounded-xl px-3 py-2.5 text-sm font-medium text-neutral-700 transition hover:bg-[#f8f1e8] hover:text-neutral-950"
               >
                 {t("dashboard")}
               </Link>
 
               <div className="mt-1 px-1">
-                <LogoutButton />
+                <LogoutButton onLoggedOut={onNavigate} />
               </div>
             </div>,
             document.body,
