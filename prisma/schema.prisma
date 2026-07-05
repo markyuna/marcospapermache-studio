@@ -82,3 +82,11 @@ model UserProfile {
 
   @@map("user_profiles")
 }
+
+model ProcessedStripeEvent {
+  id          String   @id @default(cuid())
+  eventId     String   @unique @map("event_id")
+  processedAt DateTime @default(now()) @map("processed_at")
+
+  @@map("processed_stripe_events")
+}
