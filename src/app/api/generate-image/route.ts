@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 
 import { getAuthenticatedUser } from "@/lib/admin-auth";
 import { prisma } from "@/lib/prisma";
-import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 import { uploadBase64ImageToStorage } from "@/lib/storage";
 import { tryConsumeUserCredit } from "@/lib/user-credits";
 
@@ -11,9 +10,6 @@ type RequestBody = {
   creationType?: "wall" | "object" | "light";
   withFrame?: boolean;
 };
-
-const FREE_GENERATION_LIMIT = 2;
-const FREE_GENERATION_WINDOW_MS = 24 * 60 * 60 * 1000;
 
 export async function POST(request: Request) {
   try {
@@ -39,42 +35,31 @@ export async function POST(request: Request) {
     }
 
     const user = await getAuthenticatedUser();
-    let paidCreditsRemaining: number | undefined;
 
-    if (user) {
-      const creditResult = await tryConsumeUserCredit(user.id);
-
-      if (!creditResult.allowed) {
-        return NextResponse.json(
-          {
-            error:
-              "Vous n’avez plus de générations disponibles. Achetez un pack pour continuer.",
-            requiresPayment: true,
-          },
-          { status: 402 },
-        );
-      }
-
-      paidCreditsRemaining = creditResult.remaining;
-    } else {
-      const ip = getClientIp(request);
-      const rateLimit = checkRateLimit(
-        `generate-image:${ip}`,
-        FREE_GENERATION_LIMIT,
-        FREE_GENERATION_WINDOW_MS,
+    if (!user) {
+      return NextResponse.json(
+        {
+          error: "Créez un compte pour générer une image.",
+          requiresSignup: true,
+        },
+        { status: 401 },
       );
-
-      if (!rateLimit.allowed) {
-        return NextResponse.json(
-          {
-            error:
-              "Vous avez atteint la limite de générations gratuites. Créez un compte pour continuer.",
-            requiresSignup: true,
-          },
-          { status: 401 },
-        );
-      }
     }
+
+    const creditResult = await tryConsumeUserCredit(user.id);
+
+    if (!creditResult.allowed) {
+      return NextResponse.json(
+        {
+          error:
+            "Vous n’avez plus de générations disponibles. Achetez un pack pour continuer.",
+          requiresPayment: true,
+        },
+        { status: 402 },
+      );
+    }
+
+    const paidCreditsRemaining = creditResult.remaining;
 
     const reinforcedPrompt = withFrame
       ? `${prompt}, zoomed out composition, the full outer frame must be completely visible with comfortable margin on every side, no cropped frame, no cut edges, no partial artwork, the artwork must fit naturally inside the image`
@@ -118,7 +103,7 @@ export async function POST(request: Request) {
       const imageUrl = await uploadBase64ImageToStorage(image);
       const savedImage = await prisma.generatedImage.create({
         data: {
-          supabaseUserId: user?.id ?? null,
+          supabaseUserId: user.id,
           prompt,
           imageUrl,
         },
@@ -130,8 +115,8 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       image,
+      paidCreditsRemaining,
       ...(imageId ? { imageId } : {}),
-      ...(paidCreditsRemaining !== undefined ? { paidCreditsRemaining } : {}),
     });
   } catch {
     return NextResponse.json(

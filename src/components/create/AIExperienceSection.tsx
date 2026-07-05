@@ -115,8 +115,6 @@ type SelectOption<T extends string> = {
   prompt: string;
 };
 
-const GENERATION_LIMIT = 2;
-
 const COLOR_SWATCH_BACKGROUNDS: Record<ColorOption, string> = {
   black: "#111111",
   white: "#ffffff",
@@ -519,10 +517,6 @@ export default function AIExperienceSection() {
   const [lastPrompt, setLastPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [generationCount, setGenerationCount] = useState<number>(() => {
-    if (typeof window === "undefined") return 0;
-    return parseInt(sessionStorage.getItem("generationCount") ?? "0", 10);
-  });
 
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [userCredits, setUserCredits] = useState(0);
@@ -598,9 +592,7 @@ export default function AIExperienceSection() {
     };
   }, [isLoading]);
 
-  const isBlocked = currentUser
-    ? userCredits <= 0
-    : generationCount >= GENERATION_LIMIT;
+  const isBlocked = currentUser ? userCredits <= 0 : true;
 
   const previewAspectClass = useMemo(() => {
     if (creationType === "wall") {
@@ -871,13 +863,7 @@ export default function AIExperienceSection() {
       const data: GenerateImageResponse = await response.json();
 
       if (data.requiresSignup || data.requiresPayment) {
-        if (data.requiresSignup) {
-          setGenerationCount((current) => {
-            const lockedCount = Math.max(current, GENERATION_LIMIT);
-            sessionStorage.setItem("generationCount", String(lockedCount));
-            return lockedCount;
-          });
-        } else {
+        if (data.requiresPayment) {
           setUserCredits(0);
         }
 
@@ -900,10 +886,6 @@ export default function AIExperienceSection() {
 
       if (data.paidCreditsRemaining !== undefined) {
         setUserCredits(data.paidCreditsRemaining);
-      } else if (!currentUser) {
-        const newCount = generationCount + 1;
-        setGenerationCount(newCount);
-        sessionStorage.setItem("generationCount", String(newCount));
       }
 
       setTimeout(() => {
