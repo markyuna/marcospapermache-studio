@@ -37,7 +37,14 @@ export async function PUT(request: Request) {
     phone: body.phone?.trim() || null,
   };
 
-  const profile = await upsertUserProfile(user.id, fields);
-
-  return NextResponse.json({ profile });
+  try {
+    const profile = await upsertUserProfile(user.id, fields);
+    return NextResponse.json({ profile });
+  } catch (err) {
+    console.error("/api/user/profile PUT failed:", err);
+    return NextResponse.json(
+      { error: "Impossible d'enregistrer les modifications." },
+      { status: 500 },
+    );
+  }
 }

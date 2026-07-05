@@ -5,7 +5,7 @@
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Download, Loader2, X } from "lucide-react";
 import clsx from "clsx";
 
 type LightboxImage = {
@@ -18,6 +18,8 @@ type Props = {
   initialIndex?: number;
   isOpen: boolean;
   onClose: () => void;
+  showDownload?: boolean;
+  downloadLabel?: string;
 };
 
 export default function Lightbox({
@@ -25,7 +27,10 @@ export default function Lightbox({
   initialIndex = 0,
   isOpen,
   onClose,
+  showDownload = false,
+  downloadLabel = "Télécharger",
 }: Props) {
+  const [isDownloading, setIsDownloading] = useState(false);
   const safeInitialIndex = useMemo(() => {
     if (!images.length) return 0;
     if (initialIndex < 0) return 0;
@@ -66,6 +71,35 @@ export default function Lightbox({
 
   function goToIndex(nextIndex: number) {
     setSessionIndex(nextIndex);
+  }
+
+  async function handleDownload(imageSrc: string, imageAlt?: string) {
+    setIsDownloading(true);
+
+    try {
+      const response = await fetch(imageSrc);
+      if (!response.ok) throw new Error("Download failed");
+
+      const blob = await response.blob();
+      const objectUrl = URL.createObjectURL(blob);
+
+      const extension = blob.type.split("/")[1]?.replace("jpeg", "jpg") || "png";
+      const fileName = `${(imageAlt || "image").replace(/[^a-z0-9-_]+/gi, "-").slice(0, 60)}.${extension}`;
+
+      const link = document.createElement("a");
+      link.href = objectUrl;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      URL.revokeObjectURL(objectUrl);
+    } catch {
+      // Cross-origin fetch failed (e.g. CORS) — fall back to opening the image directly
+      window.open(imageSrc, "_blank", "noopener,noreferrer");
+    } finally {
+      setIsDownloading(false);
+    }
   }
 
   useEffect(() => {
@@ -130,6 +164,25 @@ export default function Lightbox({
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.04),transparent_30%)]" />
       </div>
 
+      {showDownload ? (
+        <button
+          type="button"
+          onClick={(event) => {
+            event.stopPropagation();
+            handleDownload(image.src, image.alt);
+          }}
+          disabled={isDownloading}
+          className="absolute right-[4.25rem] top-4 z-[1000001] inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/10 text-white backdrop-blur-md transition duration-300 hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-60 md:right-[4.75rem] md:top-6"
+          aria-label={downloadLabel}
+        >
+          {isDownloading ? (
+            <Loader2 className="h-5 w-5 animate-spin" />
+          ) : (
+            <Download className="h-5 w-5" />
+          )}
+        </button>
+      ) : null}
+
       <button
         type="button"
         onClick={handleClose}
@@ -167,13 +220,13 @@ export default function Lightbox({
         </>
       ) : null}
 
-      <div
-        className="relative z-[1000000] flex h-dvh w-full flex-col px-4 py-4 sm:px-6 sm:py-6 lg:px-10 lg:py-8"
-        onClick={(event) => event.stopPropagation()}
-      >
+      <div className="relative z-[1000000] flex h-dvh w-full flex-col px-4 py-4 sm:px-6 sm:py-6 lg:px-10 lg:py-8">
         <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center">
           <div className="flex flex-1 items-center justify-center">
-            <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[32px] border border-white/8 bg-white/[0.03] px-2 py-2 shadow-[0_30px_120px_rgba(0,0,0,0.45)] sm:px-4 sm:py-4 lg:px-6 lg:py-6">
+            <div
+              className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[32px] border border-white/8 bg-white/[0.03] px-2 py-2 shadow-[0_30px_120px_rgba(0,0,0,0.45)] sm:px-4 sm:py-4 lg:px-6 lg:py-6"
+              onClick={(event) => event.stopPropagation()}
+            >
               <div className="relative h-full min-h-0 w-full animate-[lightbox-fade-in_0.35s_ease]">
                 <Image
                   key={image.src}
@@ -189,7 +242,10 @@ export default function Lightbox({
             </div>
           </div>
 
-          <div className="mt-4 flex w-full items-center justify-between gap-4 text-white/90">
+          <div
+            className="mt-4 flex w-full items-center justify-between gap-4 text-white/90"
+            onClick={(event) => event.stopPropagation()}
+          >
             <div className="min-w-0">
               <p className="text-[11px] uppercase tracking-[0.28em] text-white/40">
                 Galerie
@@ -208,7 +264,10 @@ export default function Lightbox({
           </div>
 
           {images.length > 1 ? (
-            <div className="mt-4 flex gap-3 overflow-x-auto pb-1">
+            <div
+              className="mt-4 flex gap-3 overflow-x-auto pb-1"
+              onClick={(event) => event.stopPropagation()}
+            >
               {images.map((thumbnail, thumbnailIndex) => (
                 <button
                   key={`${thumbnail.src}-${thumbnailIndex}`}

@@ -393,6 +393,8 @@
       "imagesEmpty": "You haven't generated a concept yet.",
       "imagesEmptyCta": "Discover the AI experience",
       "orderThisSculpture": "Order this sculpture",
+      "viewImage": "View full size",
+      "downloadImage": "Download",
       "ordersTitle": "My orders",
       "ordersEmpty": "You haven't placed an order yet.",
       "ordersEmptyCta": "Create a custom sculpture",

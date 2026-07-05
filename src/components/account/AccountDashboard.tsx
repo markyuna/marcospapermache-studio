@@ -10,6 +10,7 @@ import {
 import type { Commande } from "@/types/commande";
 import type { GeneratedImage, UserProfile } from "@/generated/prisma/client/client";
 import BuyCreditsButton from "@/components/account/BuyCreditsButton";
+import GeneratedImagesGallery from "@/components/account/GeneratedImagesGallery";
 import LogoutButton from "@/components/account/LogoutButton";
 import ProfileForm from "@/components/account/ProfileForm";
 import PasswordChangeForm from "@/components/account/PasswordChangeForm";
@@ -116,39 +117,7 @@ export default async function AccountDashboard({
             </Link>
           </div>
         ) : (
-          <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-            {generatedImages.map((image) => (
-              <div
-                key={image.id}
-                className="group relative overflow-hidden rounded-[1.25rem] border border-neutral-200 bg-neutral-50"
-              >
-                <div className="relative aspect-square w-full">
-                  <Image
-                    src={image.imageUrl}
-                    alt={image.prompt}
-                    fill
-                    sizes="(max-width: 768px) 50vw, 25vw"
-                    className="object-cover"
-                  />
-                </div>
-
-                <div className="absolute inset-x-0 bottom-0 translate-y-full bg-black/70 p-3 backdrop-blur-sm transition duration-300 group-hover:translate-y-0">
-                  <Link
-                    href={{
-                      pathname: "/commande",
-                      query: {
-                        prompt: image.prompt,
-                        sourceAiImageId: image.id,
-                      },
-                    }}
-                    className="block w-full rounded-full bg-white px-3 py-2 text-center text-xs font-medium text-[#181512] transition hover:bg-neutral-100"
-                  >
-                    {t("orderThisSculpture")}
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
+          <GeneratedImagesGallery images={generatedImages} />
         )}
       </section>
 
