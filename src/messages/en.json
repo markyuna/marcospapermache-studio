@@ -639,8 +639,8 @@
       "line1": "Each generated concept serves as a visual foundation. The final sculpture is then handmade in the studio, with a sensitive, artisanal, and fully bespoke approach."
     },
     "limit": {
-      "title": "You've used your 2 free visualisations",
-      "description": "Buy a pack of 3 extra generations to keep exploring your ideas."
+      "title": "Visualise your sculpture with AI",
+      "description": "Each visualisation is paid. Buy a pack of generations to preview your sculpture before ordering it."
     },
     "credits": {
       "remaining": "{count, plural, =0 {No generations left} one {# generation left} other {# generations left}}"
