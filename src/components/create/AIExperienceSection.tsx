@@ -1572,32 +1572,22 @@ export default function AIExperienceSection() {
             ) : null}
 
             {generatedImage ? (
-              <div className="flex h-full w-full items-center justify-center">
-                <div className="relative flex w-full max-w-[780px] items-center justify-center overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#111214] p-3 md:p-4 xl:p-5">
-                  <Image
-                    src={generatedImage}
-                    alt={t("result.imageAlt")}
-                    width={1024}
-                    height={1024}
-                    sizes="(max-width: 1280px) 100vw, 50vw"
-                    className="h-auto max-h-[760px] w-auto max-w-full object-contain"
-                    priority
-                  />
-                </div>
+              <div className="flex h-full w-full max-w-[780px] items-center justify-center select-none">
+                <Image
+                  src={generatedImage}
+                  alt={t("result.imageAlt")}
+                  width={1024}
+                  height={1024}
+                  sizes="(max-width: 1280px) 100vw, 50vw"
+                  className="h-auto max-h-[760px] w-auto max-w-full object-contain"
+                  draggable={false}
+                  onContextMenu={(e) => e.preventDefault()}
+                  style={{ WebkitTouchCallout: "none" }}
+                  priority
+                />
               </div>
             ) : null}
           </div>
-
-          {generatedImage ? (
-            <div className="mt-4 rounded-[1.25rem] border border-white/10 bg-black/20 p-3 md:p-4">
-              <p className="text-xs uppercase tracking-[0.22em] text-neutral-400">
-                {t("result.generatedTitle")}
-              </p>
-              <p className="mt-3 text-sm leading-8 text-neutral-200">
-                {lastPrompt}
-              </p>
-            </div>
-          ) : null}
 
           <div className="mt-4 flex flex-col gap-2.5 sm:flex-row">
             <button
