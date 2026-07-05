@@ -66,10 +66,10 @@ export default function AccountMenu() {
         <button
           type="button"
           onClick={() => setShowAuthModal(true)}
-          className="inline-flex h-10 items-center gap-2 rounded-full border border-black/10 bg-white/70 px-4 text-[13px] font-medium text-neutral-700 transition duration-300 hover:border-[#c88a45]/40 hover:text-neutral-950"
+          aria-label={t("login")}
+          className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-black/10 bg-white/70 text-neutral-700 transition duration-300 hover:border-[#c88a45]/40 hover:text-neutral-950"
         >
           <LogIn className="h-4 w-4" />
-          {t("login")}
         </button>
 
         <AuthModal
@@ -83,13 +83,13 @@ export default function AccountMenu() {
   }
 
   return (
-    <div ref={menuRef} className="relative">
+    <div ref={menuRef} className="relative shrink-0">
       <button
         type="button"
         onClick={() => setShowDropdown((prev) => !prev)}
         aria-label={t("accountLabel")}
         aria-expanded={showDropdown}
-        className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#d9a15e]/30 bg-[linear-gradient(135deg,#f4d7a1,#c88a45)] text-sm font-semibold text-white shadow-[0_10px_30px_rgba(200,138,69,0.25)] transition duration-300 hover:scale-105"
+        className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#d9a15e]/30 bg-[linear-gradient(135deg,#f4d7a1,#c88a45)] text-sm font-semibold text-white shadow-[0_10px_30px_rgba(200,138,69,0.25)] transition duration-300 hover:scale-105"
       >
         {getInitial(currentUser.email) !== "?" ? (
           getInitial(currentUser.email)

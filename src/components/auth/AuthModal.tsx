@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { useTranslations } from "next-intl";
 import { Loader2, X } from "lucide-react";
 
@@ -41,7 +42,7 @@ export default function AuthModal({
     }
   }
 
-  if (!isOpen) return null;
+  if (!isOpen || typeof document === "undefined") return null;
 
   async function handleSignup(e: React.FormEvent) {
     e.preventDefault();
@@ -92,15 +93,15 @@ export default function AuthModal({
     await onAuthSuccess();
   }
 
-  return (
+  return createPortal(
     <div
-      className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/70 backdrop-blur-md px-4"
+      className="fixed inset-0 z-[999999] flex items-center justify-center overflow-y-auto bg-black/70 px-4 py-8 backdrop-blur-md"
       role="dialog"
       aria-modal="true"
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-md rounded-[2rem] border border-white/10 bg-[#0b0b0d] p-6 text-white shadow-[0_30px_120px_rgba(0,0,0,0.5)] md:p-8"
+        className="relative my-auto w-full max-w-md max-h-[90vh] overflow-y-auto rounded-[2rem] border border-white/10 bg-[#0b0b0d] p-6 text-white shadow-[0_30px_120px_rgba(0,0,0,0.5)] md:p-8"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -182,6 +183,7 @@ export default function AuthModal({
           {mode === "signup" ? t("switchToLogin") : t("switchToSignup")}
         </button>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

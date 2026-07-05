@@ -45,7 +45,7 @@ export default function BuyCreditsButton() {
         type="button"
         onClick={handleClick}
         disabled={loading}
-        className="inline-flex items-center justify-center gap-2 rounded-full bg-[#d9b08c] px-5 py-3 text-sm font-medium text-black transition duration-300 hover:bg-[#e5c4a6] disabled:cursor-not-allowed disabled:opacity-60"
+        className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand-gold to-brand-gold-light px-5 py-3 text-sm font-medium text-white no-underline shadow-[0_18px_40px_rgba(185,106,47,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_55px_rgba(185,106,47,0.38)] disabled:cursor-not-allowed disabled:translate-y-0 disabled:opacity-60 disabled:shadow-none"
       >
         {loading ? (
           <Loader2 className="h-4 w-4 animate-spin" />
@@ -56,7 +56,7 @@ export default function BuyCreditsButton() {
       </button>
 
       {error ? (
-        <p className="mt-2 text-sm text-red-300">{error}</p>
+        <p className="mt-2 text-sm text-red-600">{error}</p>
       ) : null}
     </div>
   );

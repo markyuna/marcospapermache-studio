@@ -35,7 +35,7 @@ function formatDate(date: Date | string) {
 }
 
 const cardClassName =
-  "rounded-[2rem] border border-white/10 bg-[#0b0b0d] p-6 text-white shadow-[0_30px_120px_rgba(0,0,0,0.28)] md:p-8";
+  "rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-sm md:p-8";
 
 export default async function AccountDashboard({
   email,
@@ -68,14 +68,14 @@ export default async function AccountDashboard({
       <section className={cardClassName}>
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#d9b08c]/30 bg-[#d9b08c]/15">
-              <Sparkles className="h-5 w-5 text-[#e3bf9d]" />
+            <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#e1d2c4] bg-[#fcf8f3]">
+              <Sparkles className="h-5 w-5 text-[#b98f63]" />
             </div>
             <div>
-              <p className="text-sm font-medium text-neutral-400">
+              <p className="text-sm font-medium text-neutral-500">
                 {t("creditsLabel")}
               </p>
-              <p className="text-2xl font-semibold text-white">
+              <p className="text-2xl font-semibold text-[#181512]">
                 {t("creditsCount", { count: paidCredits })}
               </p>
             </div>
@@ -88,18 +88,18 @@ export default async function AccountDashboard({
       {/* Generated images section */}
       <section className={cardClassName}>
         <div className="flex items-center gap-2">
-          <ImageIcon className="h-5 w-5 text-[#e3bf9d]" />
-          <h2 className="text-lg font-semibold text-white">
+          <ImageIcon className="h-5 w-5 text-[#b98f63]" />
+          <h2 className="text-lg font-semibold text-[#181512]">
             {t("imagesTitle")}
           </h2>
         </div>
 
         {generatedImages.length === 0 ? (
-          <div className="mt-4 rounded-[1.25rem] border border-white/10 bg-white/[0.03] px-4 py-6 text-center">
-            <p className="text-sm text-neutral-400">{t("imagesEmpty")}</p>
+          <div className="mt-4 rounded-[1.25rem] border border-neutral-200 bg-neutral-50 px-4 py-6 text-center">
+            <p className="text-sm text-neutral-500">{t("imagesEmpty")}</p>
             <Link
               href="/create"
-              className="mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-[#d9b08c] px-5 py-2.5 text-sm font-medium text-black transition duration-300 hover:bg-[#e5c4a6]"
+              className="mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand-gold to-brand-gold-light px-5 py-2.5 text-sm font-medium text-white no-underline shadow-[0_18px_40px_rgba(185,106,47,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_55px_rgba(185,106,47,0.38)]"
             >
               <Sparkles className="h-4 w-4" />
               {t("imagesEmptyCta")}
@@ -110,7 +110,7 @@ export default async function AccountDashboard({
             {generatedImages.map((image) => (
               <div
                 key={image.id}
-                className="group relative overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/[0.03]"
+                className="group relative overflow-hidden rounded-[1.25rem] border border-neutral-200 bg-neutral-50"
               >
                 <div className="relative aspect-square w-full">
                   <Image
@@ -122,7 +122,7 @@ export default async function AccountDashboard({
                   />
                 </div>
 
-                <div className="absolute inset-x-0 bottom-0 translate-y-full bg-black/80 p-3 backdrop-blur-sm transition duration-300 group-hover:translate-y-0">
+                <div className="absolute inset-x-0 bottom-0 translate-y-full bg-black/70 p-3 backdrop-blur-sm transition duration-300 group-hover:translate-y-0">
                   <Link
                     href={{
                       pathname: "/commande",
@@ -131,7 +131,7 @@ export default async function AccountDashboard({
                         sourceAiImageId: image.id,
                       },
                     }}
-                    className="block w-full rounded-full bg-[#d9b08c] px-3 py-2 text-center text-xs font-medium text-black transition hover:bg-[#e5c4a6]"
+                    className="block w-full rounded-full bg-white px-3 py-2 text-center text-xs font-medium text-[#181512] transition hover:bg-neutral-100"
                   >
                     {t("orderThisSculpture")}
                   </Link>
@@ -145,18 +145,18 @@ export default async function AccountDashboard({
       {/* Orders section */}
       <section className={cardClassName}>
         <div className="flex items-center gap-2">
-          <PackageSearch className="h-5 w-5 text-[#e3bf9d]" />
-          <h2 className="text-lg font-semibold text-white">
+          <PackageSearch className="h-5 w-5 text-[#b98f63]" />
+          <h2 className="text-lg font-semibold text-[#181512]">
             {t("ordersTitle")}
           </h2>
         </div>
 
         {commandes.length === 0 ? (
-          <div className="mt-4 rounded-[1.25rem] border border-white/10 bg-white/[0.03] px-4 py-6 text-center">
-            <p className="text-sm text-neutral-400">{t("ordersEmpty")}</p>
+          <div className="mt-4 rounded-[1.25rem] border border-neutral-200 bg-neutral-50 px-4 py-6 text-center">
+            <p className="text-sm text-neutral-500">{t("ordersEmpty")}</p>
             <Link
               href="/creations-sur-mesure"
-              className="mt-3 inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-5 py-2.5 text-sm font-medium text-white transition duration-300 hover:bg-white/[0.09]"
+              className="mt-3 inline-flex items-center justify-center gap-2 rounded-full border border-neutral-300 bg-white px-5 py-2.5 text-sm font-medium text-[#181512] transition duration-300 hover:bg-neutral-50"
             >
               {t("ordersEmptyCta")}
             </Link>
@@ -171,11 +171,11 @@ export default async function AccountDashboard({
               return (
                 <div
                   key={commande.id}
-                  className="flex flex-wrap items-center justify-between gap-3 rounded-[1.25rem] border border-white/10 bg-white/[0.03] px-4 py-3"
+                  className="flex flex-wrap items-center justify-between gap-3 rounded-[1.25rem] border border-neutral-200 bg-neutral-50 px-4 py-3"
                 >
                   <div className="flex min-w-0 items-center gap-3">
                     {sourceImage ? (
-                      <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-white/10">
+                      <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-neutral-200">
                         <Image
                           src={sourceImage.imageUrl}
                           alt={sourceImage.prompt}
@@ -187,7 +187,7 @@ export default async function AccountDashboard({
                     ) : null}
 
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-medium text-white">
+                      <p className="truncate text-sm font-medium text-[#181512]">
                         {commande.project_type || t("ordersFallbackTitle")}
                       </p>
                       <p className="mt-0.5 text-xs text-neutral-500">
@@ -211,8 +211,8 @@ export default async function AccountDashboard({
       {/* Profile section */}
       <section className={cardClassName}>
         <div className="flex items-center gap-2">
-          <UserCog className="h-5 w-5 text-[#e3bf9d]" />
-          <h2 className="text-lg font-semibold text-white">
+          <UserCog className="h-5 w-5 text-[#b98f63]" />
+          <h2 className="text-lg font-semibold text-[#181512]">
             {t("profileTitle")}
           </h2>
         </div>
@@ -229,8 +229,8 @@ export default async function AccountDashboard({
           />
         </div>
 
-        <div className="mt-8 border-t border-white/10 pt-6">
-          <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-neutral-400">
+        <div className="mt-8 border-t border-neutral-200 pt-6">
+          <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-neutral-500">
             {t("passwordTitle")}
           </h3>
           <div className="mt-4">
