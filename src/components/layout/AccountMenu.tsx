@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import type { User } from "@supabase/supabase-js";
 import { LogIn, User as UserIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -14,14 +15,19 @@ function getInitial(email: string | null | undefined) {
   return email?.trim().charAt(0).toUpperCase() || "?";
 }
 
+type DropdownPosition = { top: number; right: number };
+
 export default function AccountMenu() {
   const t = useTranslations("AccountMenu");
 
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState<DropdownPosition | null>(null);
 
   const menuRef = useRef<HTMLDivElement | null>(null);
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const refreshAuthState = useCallback(async () => {
     const {
@@ -47,11 +53,40 @@ export default function AccountMenu() {
     return () => subscription.unsubscribe();
   }, [refreshAuthState]);
 
+  const updateDropdownPosition = useCallback(() => {
+    const trigger = triggerRef.current;
+    if (!trigger) return;
+
+    const rect = trigger.getBoundingClientRect();
+    setDropdownPosition({
+      top: rect.bottom + 12,
+      right: window.innerWidth - rect.right,
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!showDropdown) return;
+
+    updateDropdownPosition();
+
+    window.addEventListener("resize", updateDropdownPosition);
+    window.addEventListener("scroll", updateDropdownPosition, true);
+
+    return () => {
+      window.removeEventListener("resize", updateDropdownPosition);
+      window.removeEventListener("scroll", updateDropdownPosition, true);
+    };
+  }, [showDropdown, updateDropdownPosition]);
+
   useEffect(() => {
     if (!showDropdown) return;
 
     function handleClickOutside(event: MouseEvent) {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      const target = event.target as Node;
+      const clickedInsideTrigger = menuRef.current?.contains(target);
+      const clickedInsideDropdown = dropdownRef.current?.contains(target);
+
+      if (!clickedInsideTrigger && !clickedInsideDropdown) {
         setShowDropdown(false);
       }
     }
@@ -85,6 +120,7 @@ export default function AccountMenu() {
   return (
     <div ref={menuRef} className="relative shrink-0">
       <button
+        ref={triggerRef}
         type="button"
         onClick={() => setShowDropdown((prev) => !prev)}
         aria-label={t("accountLabel")}
@@ -98,29 +134,36 @@ export default function AccountMenu() {
         )}
       </button>
 
-      {showDropdown ? (
-        <div className="absolute right-0 top-[calc(100%+0.75rem)] z-50 w-64 rounded-[1.5rem] border border-black/10 bg-white/95 p-2 shadow-[0_24px_70px_rgba(20,20,20,0.16)] backdrop-blur-2xl">
-          <div className="px-3 py-2.5">
-            <p className="truncate text-sm font-medium text-neutral-900">
-              {currentUser.email}
-            </p>
-          </div>
+      {showDropdown && dropdownPosition && typeof document !== "undefined"
+        ? createPortal(
+            <div
+              ref={dropdownRef}
+              style={{ top: dropdownPosition.top, right: dropdownPosition.right }}
+              className="fixed z-[999999] w-64 rounded-[1.5rem] border border-black/10 bg-white/95 p-2 shadow-[0_24px_70px_rgba(20,20,20,0.16)] backdrop-blur-2xl"
+            >
+              <div className="px-3 py-2.5">
+                <p className="truncate text-sm font-medium text-neutral-900">
+                  {currentUser.email}
+                </p>
+              </div>
 
-          <div className="my-1 h-px bg-black/[0.06]" />
+              <div className="my-1 h-px bg-black/[0.06]" />
 
-          <Link
-            href="/mon-compte"
-            onClick={() => setShowDropdown(false)}
-            className="block rounded-xl px-3 py-2.5 text-sm font-medium text-neutral-700 transition hover:bg-[#f8f1e8] hover:text-neutral-950"
-          >
-            {t("dashboard")}
-          </Link>
+              <Link
+                href="/mon-compte"
+                onClick={() => setShowDropdown(false)}
+                className="block rounded-xl px-3 py-2.5 text-sm font-medium text-neutral-700 transition hover:bg-[#f8f1e8] hover:text-neutral-950"
+              >
+                {t("dashboard")}
+              </Link>
 
-          <div className="mt-1 px-1">
-            <LogoutButton />
-          </div>
-        </div>
-      ) : null}
+              <div className="mt-1 px-1">
+                <LogoutButton />
+              </div>
+            </div>,
+            document.body,
+          )
+        : null}
     </div>
   );
 }
