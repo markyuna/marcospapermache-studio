@@ -336,7 +336,8 @@
       "badge": "AI-generated concept",
       "description": "This generated image serves as a visual foundation for your request. You can keep it as a reference for your custom-made creation.",
       "remove": "Remove",
-      "imageAlt": "AI-generated sculpture concept"
+      "imageAlt": "AI-generated sculpture concept",
+      "promptTitle": "AI prompt (reference)"
     },
     "fields": {
       "name": "Name",
@@ -637,6 +638,9 @@
     "limit": {
       "title": "You've used your 2 free visualisations",
       "description": "Buy a pack of 3 extra generations to keep exploring your ideas."
+    },
+    "credits": {
+      "remaining": "{count, plural, =0 {No generations left} one {# generation left} other {# generations left}}"
     },
     "payment": {
       "payButton": "Buy a pack of 3 generations - 1 €",

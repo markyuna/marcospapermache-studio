@@ -336,7 +336,8 @@
       "badge": "Concepto generado por IA",
       "description": "Esta imagen generada sirve como base visual para tu solicitud. Puedes conservarla como referencia para tu creación a medida.",
       "remove": "Eliminar",
-      "imageAlt": "Concepto de escultura generado por IA"
+      "imageAlt": "Concepto de escultura generado por IA",
+      "promptTitle": "Prompt IA (referencia)"
     },
     "fields": {
       "name": "Nombre",
@@ -637,6 +638,9 @@
     "limit": {
       "title": "Has utilizado tus 2 visualizaciones gratuitas",
       "description": "Compra un pack de 3 generaciones adicionales para seguir explorando tus ideas."
+    },
+    "credits": {
+      "remaining": "{count, plural, =0 {Ninguna generación restante} one {# generación restante} other {# generaciones restantes}}"
     },
     "payment": {
       "payButton": "Comprar un pack de 3 generaciones - 1 €",

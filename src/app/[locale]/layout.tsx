@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 
 import ClarityInit from "@/components/analytics/ClarityInit";
 import Footer from "@/components/layout/Footer";
+import HtmlLangSync from "@/components/layout/HtmlLangSync";
 import Navbar from "@/components/layout/Navbar";
 import JsonLd from "@/components/seo/JsonLd";
 import { routing } from "@/i18n/routing";
@@ -143,6 +144,7 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
+      <HtmlLangSync locale={locale} />
       <ClarityInit />
 
       <JsonLd data={websiteJsonLd} />

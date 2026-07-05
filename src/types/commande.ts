@@ -14,4 +14,5 @@ export type Commande = {
   created_at: string;
   supabase_user_id: string | null;
   source_ai_image_id: string | null;
+  prompt: string | null;
 };

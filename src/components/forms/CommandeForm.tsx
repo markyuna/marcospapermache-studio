@@ -49,17 +49,11 @@ export default function CommandeForm({
   const [errorMessage, setErrorMessage] = useState("");
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [message, setMessage] = useState(defaultPrompt);
-  const [prevDefaultPrompt, setPrevDefaultPrompt] = useState(defaultPrompt);
+  const [message, setMessage] = useState("");
   const [generatedImage, setGeneratedImage] = useState<string | null>(() => {
     if (typeof window === "undefined") return defaultImage || null;
     return sessionStorage.getItem("generatedImage") || defaultImage || null;
   });
-
-  if (defaultPrompt !== prevDefaultPrompt) {
-    setPrevDefaultPrompt(defaultPrompt);
-    setMessage(defaultPrompt);
-  }
 
   useEffect(() => {
     return () => {
@@ -88,18 +82,7 @@ export default function CommandeForm({
       const element = successCardRef.current;
       if (!element) return;
 
-      const mobileOffset = 24;
-      const desktopOffset = 40;
-      const offset = window.innerWidth < 768 ? mobileOffset : desktopOffset;
-
-      const top =
-        element.getBoundingClientRect().top + window.scrollY - offset;
-
-      window.scrollTo({
-        top,
-        behavior: "smooth",
-      });
-
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
       element.focus({ preventScroll: true });
     };
 
@@ -297,13 +280,14 @@ export default function CommandeForm({
 
   if (success) {
     return (
+      <div className="flex min-h-[80vh] items-center justify-center py-12">
       <motion.div
         ref={successCardRef}
         tabIndex={-1}
         initial={{ opacity: 0, y: 30, scale: 0.965 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-        className="relative overflow-hidden rounded-[2rem] border border-[#e8d9ca] bg-[linear-gradient(180deg,#fffdfa_0%,#f8f1e8_100%)] p-10 text-center shadow-[0_20px_60px_rgba(24,21,18,0.06)] outline-none"
+        className="relative w-full overflow-hidden rounded-[2rem] border border-[#e8d9ca] bg-[linear-gradient(180deg,#fffdfa_0%,#f8f1e8_100%)] p-10 text-center shadow-[0_20px_60px_rgba(24,21,18,0.06)] outline-none"
       >
         <motion.div
           initial={{ opacity: 0 }}
@@ -380,6 +364,7 @@ export default function CommandeForm({
           {t("success.description")}
         </motion.p>
       </motion.div>
+      </div>
     );
   }
 
@@ -388,12 +373,12 @@ export default function CommandeForm({
       onSubmit={handleSubmit}
       className={
         dark
-          ? "rounded-[2rem] border border-[#2d2420] bg-[#161210]/90 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl md:p-8"
-          : "rounded-[2rem] border border-[#e7dbcf] bg-white/80 p-6 shadow-[0_18px_50px_rgba(24,21,18,0.04)] backdrop-blur-sm md:p-8"
+          ? "rounded-[2rem] border border-[#2d2420] bg-[#161210]/90 p-5 shadow-[0_24px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl md:p-6"
+          : "rounded-[2rem] border border-[#e7dbcf] bg-white/80 p-5 shadow-[0_18px_50px_rgba(24,21,18,0.04)] backdrop-blur-sm md:p-6"
       }
     >
       {showSuccessToast ? (
-        <div className={`mb-6 flex items-start gap-3 rounded-[1.2rem] border px-4 py-3 text-sm ${dark ? "border-emerald-800/40 bg-emerald-950/60 text-emerald-300" : "border-emerald-200 bg-emerald-50 text-emerald-800"} shadow-[0_10px_30px_rgba(16,185,129,0.08)]`}>
+        <div className={`mb-5 flex items-start gap-3 rounded-[1.2rem] border px-4 py-3 text-sm ${dark ? "border-emerald-800/40 bg-emerald-950/60 text-emerald-300" : "border-emerald-200 bg-emerald-50 text-emerald-800"} shadow-[0_10px_30px_rgba(16,185,129,0.08)]`}>
           <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0" />
           <div>
             <p className="font-medium">{t("success.title")}</p>
@@ -404,192 +389,209 @@ export default function CommandeForm({
         </div>
       ) : null}
 
-      {generatedImage ? (
-        <div className={`mb-8 border-b pb-8 ${dark ? "border-[#2d2420]" : "border-[#eee3d8]"}`}>
-          <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-            <div className="max-w-2xl">
+      {sourceAiImageId ? (
+        <input type="hidden" name="sourceAiImageId" value={sourceAiImageId} />
+      ) : null}
+
+      {defaultPrompt ? (
+        <input type="hidden" name="prompt" value={defaultPrompt} />
+      ) : null}
+
+      <div className={generatedImage ? "grid gap-6 lg:grid-cols-[2fr_3fr] lg:items-start" : ""}>
+        {generatedImage ? (
+          <div>
+            <div className="flex items-start justify-between gap-3">
               <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.24em] ${dark ? "border-[#3a2e26] bg-[#231d18] text-[#a07860]" : "border-[#e6d8ca] bg-[#fcf8f3] text-[#8a7667]"}`}>
                 <Sparkles className="h-3.5 w-3.5" />
                 {t("generatedConcept.badge")}
               </div>
 
-              <p className={`mt-4 text-sm leading-7 ${dark ? "text-white/45" : "text-[#5f5348]"}`}>
-                {t("generatedConcept.description")}
-              </p>
+              <button
+                type="button"
+                onClick={handleRemoveGeneratedImage}
+                className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition ${dark ? "border-[#3a2e26] bg-[#231d18] text-white/60 hover:bg-[#2d2420] hover:text-white/80" : "border-[#e1d2c4] bg-white text-[#181512] hover:bg-[#f8f4ef]"}`}
+              >
+                <Trash2 className="h-3.5 w-3.5" />
+                {t("generatedConcept.remove")}
+              </button>
             </div>
 
-            <button
-              type="button"
-              onClick={handleRemoveGeneratedImage}
-              className={`inline-flex items-center gap-2 self-start rounded-full border px-4 py-2 text-xs font-medium transition ${dark ? "border-[#3a2e26] bg-[#231d18] text-white/60 hover:bg-[#2d2420] hover:text-white/80" : "border-[#e1d2c4] bg-white text-[#181512] hover:bg-[#f8f4ef]"}`}
-            >
-              <Trash2 className="h-3.5 w-3.5" />
-              {t("generatedConcept.remove")}
-            </button>
-          </div>
+            <p className={`mt-3 text-xs leading-6 ${dark ? "text-white/45" : "text-[#5f5348]"}`}>
+              {t("generatedConcept.description")}
+            </p>
 
-          <div className={`mt-5 overflow-hidden rounded-[1.4rem] border ${dark ? "border-[#2d2420] bg-[#1c1713]" : "border-[#e5d8cb] bg-white"}`}>
-            <div className="relative aspect-[4/5] w-full max-w-md">
-              <Image
-                src={generatedImage}
-                alt={t("generatedConcept.imageAlt")}
-                fill
-                unoptimized
-                sizes="(max-width: 768px) 100vw, 420px"
-                className="object-cover"
-              />
-            </div>
-          </div>
-
-          <input type="hidden" name="generatedImage" value={generatedImage} />
-        </div>
-      ) : null}
-
-      {sourceAiImageId ? (
-        <input type="hidden" name="sourceAiImageId" value={sourceAiImageId} />
-      ) : null}
-
-      <div className="grid gap-6 md:grid-cols-2">
-        <div>
-          <label htmlFor="commande-name" className={labelClassName}>
-            {t("fields.name")}
-          </label>
-          <input
-            id="commande-name"
-            name="name"
-            defaultValue={defaultName}
-            placeholder={t("fields.name")}
-            aria-label={t("fields.name")}
-            required
-            className={inputClassName}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="commande-email" className={labelClassName}>
-            {t("fields.email")}
-          </label>
-          <input
-            id="commande-email"
-            name="email"
-            type="email"
-            defaultValue={defaultEmail}
-            placeholder={t("fields.email")}
-            aria-label={t("fields.email")}
-            required
-            className={inputClassName}
-          />
-        </div>
-      </div>
-
-      <div className="mt-6 grid gap-6 md:grid-cols-2">
-        <div>
-          <label htmlFor="commande-project-type" className={labelClassName}>
-            {t("fields.projectType")}
-          </label>
-          <input
-            id="commande-project-type"
-            name="projectType"
-            placeholder={t("fields.projectType")}
-            aria-label={t("fields.projectType")}
-            className={inputClassName}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="commande-dimensions" className={labelClassName}>
-            {t("fields.dimensions")}
-          </label>
-          <input
-            id="commande-dimensions"
-            name="dimensions"
-            placeholder={t("fields.dimensions")}
-            aria-label={t("fields.dimensions")}
-            className={inputClassName}
-          />
-        </div>
-      </div>
-
-      <div className="mt-6">
-        <label htmlFor="commande-budget" className={labelClassName}>
-          {t("fields.budget")}
-        </label>
-        <input
-          id="commande-budget"
-          name="budget"
-          placeholder={t("fields.budget")}
-          aria-label={t("fields.budget")}
-          className={inputClassName}
-        />
-      </div>
-
-      <div className="mt-6">
-        <label htmlFor="commande-message" className={labelClassName}>
-          {t("fields.message")}
-        </label>
-        <textarea
-          id="commande-message"
-          name="message"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder={t("fields.message")}
-          aria-label={t("fields.message")}
-          rows={6}
-          required
-          className={`${inputClassName} min-h-[170px] resize-y leading-7`}
-        />
-      </div>
-
-      <div className="mt-6">
-        <label htmlFor="commande-image" className={labelClassName}>
-          {t("fields.referenceImage")}
-        </label>
-
-        <input
-          id="commande-image"
-          ref={fileInputRef}
-          name="image"
-          type="file"
-          accept="image/png,image/jpeg,image/webp"
-          onChange={handleImageChange}
-          className={`block w-full rounded-[1rem] border px-4 py-3 text-sm transition ${dark ? "border-[#2d2420] bg-[#1c1713] text-white/50 file:mr-4 file:rounded-full file:border-0 file:bg-[linear-gradient(135deg,#e07030,#c85100)] file:px-4 file:py-2 file:text-sm file:font-medium file:text-white" : "border-[#e4d6c8] bg-white text-[#5f5348] file:mr-4 file:rounded-full file:border-0 file:bg-[#181512] file:px-4 file:py-2 file:text-sm file:font-medium file:text-white"}`}
-        />
-
-        <p className={`mt-2 text-xs ${dark ? "text-white/30" : "text-[#8a7667]"}`}>{t("fields.imageHint")}</p>
-
-        {imagePreview ? (
-          <div className="relative mt-4 overflow-hidden rounded-[1.25rem] border border-[#e5d8cb] bg-white">
-            <div className="relative h-64 w-full">
-              <Image
-                src={imagePreview}
-                alt={t("fields.imagePreviewAlt")}
-                fill
-                unoptimized
-                sizes="100vw"
-                className="object-cover"
-              />
+            <div className={`mt-4 overflow-hidden rounded-[1.2rem] border ${dark ? "border-[#2d2420] bg-[#1c1713]" : "border-[#e5d8cb] bg-white"}`}>
+              <div className="relative mx-auto aspect-[4/5] w-full max-w-sm lg:mx-0">
+                <Image
+                  src={generatedImage}
+                  alt={t("generatedConcept.imageAlt")}
+                  fill
+                  unoptimized
+                  sizes="(max-width: 1024px) 100vw, 320px"
+                  className="object-cover"
+                />
+              </div>
             </div>
 
-            <button
-              type="button"
-              onClick={handleRemoveImage}
-              className="absolute right-3 top-3 inline-flex items-center gap-2 rounded-full bg-black/70 px-3 py-1.5 text-xs text-white backdrop-blur-md transition hover:bg-black/80"
-            >
-              <Trash2 className="h-3.5 w-3.5" />
-              {t("actions.remove")}
-            </button>
+            <input type="hidden" name="generatedImage" value={generatedImage} />
           </div>
         ) : null}
+
+        <div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label htmlFor="commande-name" className={labelClassName}>
+                {t("fields.name")}
+              </label>
+              <input
+                id="commande-name"
+                name="name"
+                defaultValue={defaultName}
+                placeholder={t("fields.name")}
+                aria-label={t("fields.name")}
+                required
+                className={inputClassName}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="commande-email" className={labelClassName}>
+                {t("fields.email")}
+              </label>
+              <input
+                id="commande-email"
+                name="email"
+                type="email"
+                defaultValue={defaultEmail}
+                placeholder={t("fields.email")}
+                aria-label={t("fields.email")}
+                required
+                className={inputClassName}
+              />
+            </div>
+          </div>
+
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            <div>
+              <label htmlFor="commande-project-type" className={labelClassName}>
+                {t("fields.projectType")}
+              </label>
+              <input
+                id="commande-project-type"
+                name="projectType"
+                placeholder={t("fields.projectType")}
+                aria-label={t("fields.projectType")}
+                className={inputClassName}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="commande-dimensions" className={labelClassName}>
+                {t("fields.dimensions")}
+              </label>
+              <input
+                id="commande-dimensions"
+                name="dimensions"
+                placeholder={t("fields.dimensions")}
+                aria-label={t("fields.dimensions")}
+                className={inputClassName}
+              />
+            </div>
+          </div>
+
+          <div className="mt-4">
+            <label htmlFor="commande-budget" className={labelClassName}>
+              {t("fields.budget")}
+            </label>
+            <input
+              id="commande-budget"
+              name="budget"
+              placeholder={t("fields.budget")}
+              aria-label={t("fields.budget")}
+              className={inputClassName}
+            />
+          </div>
+
+          {defaultPrompt ? (
+            <div className={`mt-4 rounded-[1rem] border p-3 ${dark ? "border-[#3a2e26] bg-[#1c1713]" : "border-[#e6d8ca] bg-[#fcf8f3]"}`}>
+              <p className={`text-[10px] font-medium uppercase tracking-[0.22em] ${dark ? "text-[#c07040]" : "text-[#b98f63]"}`}>
+                {t("generatedConcept.promptTitle")}
+              </p>
+              <p className={`mt-1.5 max-h-20 overflow-y-auto text-xs leading-5 ${dark ? "text-white/50" : "text-[#7c6d5f]"}`}>
+                {defaultPrompt}
+              </p>
+            </div>
+          ) : null}
+
+          <div className="mt-4">
+            <label htmlFor="commande-message" className={labelClassName}>
+              {t("fields.message")}
+            </label>
+            <textarea
+              id="commande-message"
+              name="message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder={t("fields.message")}
+              aria-label={t("fields.message")}
+              rows={4}
+              required
+              className={`${inputClassName} min-h-[110px] resize-y leading-6`}
+            />
+          </div>
+
+          <div className="mt-4">
+            <label htmlFor="commande-image" className={labelClassName}>
+              {t("fields.referenceImage")}
+            </label>
+
+            <input
+              id="commande-image"
+              ref={fileInputRef}
+              name="image"
+              type="file"
+              accept="image/png,image/jpeg,image/webp"
+              onChange={handleImageChange}
+              className={`block w-full rounded-[1rem] border px-4 py-2.5 text-sm transition ${dark ? "border-[#2d2420] bg-[#1c1713] text-white/50 file:mr-4 file:rounded-full file:border-0 file:bg-[linear-gradient(135deg,#e07030,#c85100)] file:px-4 file:py-2 file:text-sm file:font-medium file:text-white" : "border-[#e4d6c8] bg-white text-[#5f5348] file:mr-4 file:rounded-full file:border-0 file:bg-[#181512] file:px-4 file:py-2 file:text-sm file:font-medium file:text-white"}`}
+            />
+
+            <p className={`mt-2 text-xs ${dark ? "text-white/30" : "text-[#8a7667]"}`}>{t("fields.imageHint")}</p>
+
+            {imagePreview ? (
+              <div className="relative mt-3 overflow-hidden rounded-[1.25rem] border border-[#e5d8cb] bg-white">
+                <div className="relative h-56 w-full">
+                  <Image
+                    src={imagePreview}
+                    alt={t("fields.imagePreviewAlt")}
+                    fill
+                    unoptimized
+                    sizes="100vw"
+                    className="object-cover"
+                  />
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleRemoveImage}
+                  className="absolute right-3 top-3 inline-flex items-center gap-2 rounded-full bg-black/70 px-3 py-1.5 text-xs text-white backdrop-blur-md transition hover:bg-black/80"
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                  {t("actions.remove")}
+                </button>
+              </div>
+            ) : null}
+          </div>
+        </div>
       </div>
 
       {errorMessage ? (
-        <div className={`mt-6 flex items-start gap-3 rounded-[1rem] border px-4 py-3 text-sm ${dark ? "border-red-900/40 bg-red-950/50 text-red-400" : "border-red-200 bg-red-50 text-red-700"}`}>
+        <div className={`mt-5 flex items-start gap-3 rounded-[1rem] border px-4 py-3 text-sm ${dark ? "border-red-900/40 bg-red-950/50 text-red-400" : "border-red-200 bg-red-50 text-red-700"}`}>
           <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
           <span>{errorMessage}</span>
         </div>
       ) : null}
 
-      <div className="mt-8">
+      <div className="mt-6">
         <button
           type="submit"
           disabled={loading}

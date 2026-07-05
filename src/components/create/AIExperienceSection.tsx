@@ -1475,36 +1475,45 @@ export default function AIExperienceSection() {
                 </div>
               </div>
             ) : (
-              <div className="mt-5 flex flex-col gap-2.5 sm:flex-row">
-                <button
-                  type="button"
-                  onClick={handleGenerate}
-                  disabled={isLoading}
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition duration-300 hover:scale-[1.015] hover:bg-neutral-200 disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                      {t("buttons.generating")}
-                    </>
-                  ) : (
-                    <>
-                      <Wand2 className="h-4 w-4" />
-                      {t("buttons.generate")}
-                    </>
-                  )}
-                </button>
+              <>
+                {currentUser ? (
+                  <p className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#d9b08c]/20 bg-[#d9b08c]/10 px-4 py-2 text-xs font-medium text-[#e3bf9d]">
+                    <Sparkles className="h-3.5 w-3.5" />
+                    {t("credits.remaining", { count: userCredits })}
+                  </p>
+                ) : null}
 
-                <button
-                  type="button"
-                  onClick={handleReset}
-                  disabled={isLoading}
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-6 py-3 text-sm font-medium text-white transition duration-300 hover:bg-white/[0.09] disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  <RefreshCcw className="h-4 w-4" />
-                  {t("buttons.reset")}
-                </button>
-              </div>
+                <div className="mt-4 flex flex-col gap-2.5 sm:flex-row">
+                  <button
+                    type="button"
+                    onClick={handleGenerate}
+                    disabled={isLoading}
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition duration-300 hover:scale-[1.015] hover:bg-neutral-200 disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        {t("buttons.generating")}
+                      </>
+                    ) : (
+                      <>
+                        <Wand2 className="h-4 w-4" />
+                        {t("buttons.generate")}
+                      </>
+                    )}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleReset}
+                    disabled={isLoading}
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-6 py-3 text-sm font-medium text-white transition duration-300 hover:bg-white/[0.09] disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    <RefreshCcw className="h-4 w-4" />
+                    {t("buttons.reset")}
+                  </button>
+                </div>
+              </>
             )}
           </div>
         </div>

@@ -150,7 +150,7 @@ export default async function CommandePage({
       <JsonLd data={serviceJsonLd} />
       <JsonLd data={breadcrumbJsonLd} />
 
-      <section className="relative overflow-hidden bg-[linear-gradient(180deg,#f4eadf_0%,#f7efe7_24%,#fbf7f2_58%,#f8f1e8_100%)] py-24 md:py-32">
+      <section className="relative overflow-hidden bg-[linear-gradient(180deg,#f4eadf_0%,#f7efe7_24%,#fbf7f2_58%,#f8f1e8_100%)] py-14 md:py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(205,164,124,0.16),transparent_28%),radial-gradient(circle_at_top_right,rgba(255,255,255,0.65),transparent_24%),radial-gradient(circle_at_bottom_left,rgba(205,164,124,0.08),transparent_30%)]" />
 
         <Container className="relative max-w-6xl">
@@ -159,15 +159,15 @@ export default async function CommandePage({
               {t("badge")}
             </div>
 
-            <h1 className="mt-6 max-w-3xl text-4xl font-semibold tracking-[-0.05em] text-[#181512] md:text-6xl">
+            <h1 className="mt-4 max-w-3xl text-4xl font-semibold tracking-[-0.05em] text-[#181512] md:text-6xl">
               {t("title")}
             </h1>
 
-            <p className="mt-6 max-w-3xl text-lg leading-8 text-[#6f6257] md:text-xl">
+            <p className="mt-3 max-w-3xl text-lg leading-8 text-[#6f6257] md:text-xl">
               {t("description")}
             </p>
 
-            <div className="mt-10 flex flex-wrap gap-3 text-sm">
+            <div className="mt-5 flex flex-wrap gap-3 text-sm">
               <span className="rounded-full border border-[#dfcfbf] bg-white/65 px-4 py-2 text-[#6b5f55] shadow-[0_10px_30px_rgba(24,21,18,0.04)] backdrop-blur-sm">
                 {t("highlights.fast")}
               </span>
@@ -180,7 +180,7 @@ export default async function CommandePage({
             </div>
           </div>
 
-          <div className="mx-auto mt-16 max-w-5xl">
+          <div className="mx-auto mt-8 max-w-5xl">
             <CommandeForm
               defaultPrompt={prompt}
               sourceAiImageId={sourceAiImageId}
