@@ -164,6 +164,7 @@ export function HeroSection() {
                   src={BACKGROUND_IMAGE}
                   alt=""
                   fill
+                  unoptimized
                   priority
                   sizes="(max-width: 1024px) 100vw, 42vw"
                   className="object-cover object-center"
@@ -199,6 +200,7 @@ export function HeroSection() {
                       t("signature.alt")
                     }
                     fill
+                    unoptimized
                     priority
                     sizes="(max-width: 1024px) 100vw, 42vw"
                     className="object-contain object-center drop-shadow-[0_28px_42px_rgba(82,54,24,0.24)]"
