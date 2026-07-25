@@ -167,7 +167,7 @@ export default async function AboutPage({ params }: Props) {
               <div className="relative overflow-hidden rounded-[38%_62%_58%_42%/34%_36%_64%_66%] border border-white/60 bg-white/60 shadow-[0_30px_100px_rgba(86,57,29,0.14)] backdrop-blur-sm">
                 <div className="relative aspect-[4/5]">
                   <Image
-                    src="/support_vin.png"
+                    src="/images/support_vin.webp"
                     alt={t("approach.imageAlt")}
                     fill
                     sizes="(min-width: 1024px) 45vw, 90vw"
@@ -262,7 +262,7 @@ export default async function AboutPage({ params }: Props) {
                   <article className="group relative col-span-6 overflow-hidden rounded-[1.8rem] border border-white/60 bg-white/50 shadow-[0_16px_40px_rgba(0,0,0,0.06)] backdrop-blur-sm">
                     <div className="relative aspect-[4/5]">
                       <Image
-                        src="/home3.jpg"
+                        src="/images/home3.webp"
                         alt={t("interiors.images.livingRoomAlt")}
                         fill
                         sizes="(min-width: 1024px) 24vw, 46vw"
@@ -278,7 +278,7 @@ export default async function AboutPage({ params }: Props) {
                   <article className="group relative col-span-6 overflow-hidden rounded-[1.8rem] border border-white/60 bg-white/50 shadow-[0_16px_40px_rgba(0,0,0,0.06)] backdrop-blur-sm md:mt-10">
                     <div className="relative aspect-[4/5]">
                       <Image
-                        src="/home2.jpg"
+                        src="/images/home2.webp"
                         alt={t("interiors.images.wallAlt")}
                         fill
                         sizes="(min-width: 1024px) 24vw, 46vw"
@@ -294,7 +294,7 @@ export default async function AboutPage({ params }: Props) {
                   <article className="group relative col-span-12 overflow-hidden rounded-[2rem] border border-white/60 bg-white/50 shadow-[0_18px_45px_rgba(0,0,0,0.06)] backdrop-blur-sm">
                     <div className="relative aspect-[16/7]">
                       <Image
-                        src="/home1.jpg"
+                        src="/images/home1.webp"
                         alt={t("interiors.images.contemporaryAlt")}
                         fill
                         sizes="(min-width: 1024px) 50vw, 92vw"
