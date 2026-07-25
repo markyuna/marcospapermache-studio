@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import sharp from "sharp";
 
 import { getAuthenticatedUser } from "@/lib/admin-auth";
 import { prisma } from "@/lib/prisma";
@@ -96,7 +97,9 @@ export async function POST(request: Request) {
       );
     }
 
-    const image = `data:image/png;base64,${imageBase64}`;
+    const pngBuffer = Buffer.from(imageBase64, "base64");
+    const webpBuffer = await sharp(pngBuffer).webp({ quality: 80 }).toBuffer();
+    const image = `data:image/webp;base64,${webpBuffer.toString("base64")}`;
     let imageId: string | undefined;
 
     try {
