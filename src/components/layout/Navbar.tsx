@@ -6,12 +6,15 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 import clsx from "clsx";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Space_Grotesk } from "next/font/google";
 
 import { Link, usePathname } from "@/i18n/navigation";
 import AccountMenu from "@/components/layout/AccountMenu";
 import LocaleSwitcher from "@/components/layout/LocaleSwitcher";
+import frMessages from "@/messages/fr.json";
+import enMessages from "@/messages/en.json";
+import esMessages from "@/messages/es.json";
 
 const space = Space_Grotesk({
   subsets: ["latin"],
@@ -25,6 +28,18 @@ const navLinks = [
   { href: "/creations-sur-mesure", key: "custom" },
   { href: "/create", key: "ai" },
 ] as const;
+
+// Every locale's label for each nav link, stacked (not just the active one)
+// so each link's box always reserves the width of its longest translation —
+// otherwise the pill's total width (and everything anchored to it) shifts
+// when switching between FR/EN/ES.
+const NAV_LABELS_BY_LOCALE = {
+  fr: frMessages.Navbar,
+  en: enMessages.Navbar,
+  es: esMessages.Navbar,
+} as const;
+
+const LOCALES = Object.keys(NAV_LABELS_BY_LOCALE) as (keyof typeof NAV_LABELS_BY_LOCALE)[];
 
 function getLightboxOpenState() {
   if (typeof document === "undefined") return false;
@@ -45,6 +60,7 @@ export default function Navbar() {
 
   const pathname = usePathname();
   const t = useTranslations("Navbar");
+  const locale = useLocale() as keyof typeof NAV_LABELS_BY_LOCALE;
 
   const lastScrollY = useRef(0);
 
@@ -165,11 +181,11 @@ export default function Navbar() {
         <Link
           href="/"
           onClick={handleNavigation}
-          className="group relative z-10 flex shrink-0 items-center gap-2.5 sm:gap-3"
+          className="group relative z-10 -ml-1 flex shrink-0 items-center gap-2.5 sm:-ml-2 sm:gap-3"
           aria-label="Marcos Papermache — Paper mâché studio"
         >
           <span
-            className="relative h-10 w-auto shrink-0 transition duration-700 ease-out group-hover:scale-[1.03] sm:h-12 lg:h-14"
+            className="relative h-12 w-auto shrink-0 transition duration-700 ease-out group-hover:scale-[1.03] sm:h-14 lg:h-16"
             style={{ aspectRatio: "1 / 1" }}
           >
             <Image
@@ -177,7 +193,8 @@ export default function Navbar() {
               alt=""
               fill
               priority
-              sizes="56px"
+              unoptimized
+              sizes="64px"
               className="object-contain drop-shadow-[0_3px_6px_rgba(24,21,18,0.22)]"
             />
           </span>
@@ -187,23 +204,23 @@ export default function Navbar() {
             className="hidden h-8 w-px shrink-0 bg-brand-gold/45 lg:block"
           />
 
-          <span className="flex flex-col justify-center">
+          <span className="flex flex-col items-center justify-center">
             <span
               ref={marcosRef}
-              className="font-serif text-[1.05rem] font-medium leading-none tracking-[0.14em] text-[#181512] sm:text-[1.15rem] lg:text-xl"
+              className="font-serif text-[1.15rem] font-medium leading-none tracking-[0.16em] text-[#181512] sm:text-[1.35rem] lg:text-2xl"
             >
               MARCOS
             </span>
 
             <span
-              className="mt-2 hidden items-center gap-1.5 lg:flex"
+              className="mt-2.5 hidden items-center justify-center gap-1.5 lg:flex"
               style={taglineWidth ? { width: taglineWidth } : undefined}
             >
               <span aria-hidden="true" className="h-px min-w-1.5 flex-1 bg-brand-gold/60" />
               <span
                 className={clsx(
                   space.className,
-                  "shrink-0 whitespace-nowrap text-[7.5px] font-medium uppercase tracking-[0.22em] text-neutral-500"
+                  "shrink-0 whitespace-nowrap text-[8px] font-medium uppercase tracking-[0.22em] text-neutral-500"
                 )}
               >
                 PAPER MÂCHÉ STUDIO
@@ -239,8 +256,19 @@ export default function Navbar() {
                       : "text-neutral-600 hover:-translate-y-px hover:text-neutral-950"
                   )}
                 >
-                  <span className="relative whitespace-nowrap">
-                    {t(link.key)}
+                  <span className="relative grid">
+                    {LOCALES.map((loc) => (
+                      <span
+                        key={loc}
+                        style={{ gridRowStart: 1, gridColumnStart: 1 }}
+                        className={clsx(
+                          "whitespace-nowrap",
+                          loc === locale ? "visible" : "invisible"
+                        )}
+                      >
+                        {NAV_LABELS_BY_LOCALE[loc][link.key]}
+                      </span>
+                    ))}
                   </span>
 
                   <span
