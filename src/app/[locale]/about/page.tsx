@@ -113,6 +113,7 @@ export default async function AboutPage({ params }: Props) {
               alt={t("hero.imageAlt")}
               fill
               priority
+              unoptimized
               sizes="100vw"
               className="object-cover object-right"
             />
@@ -170,6 +171,7 @@ export default async function AboutPage({ params }: Props) {
                     src="/images/support_vin.webp"
                     alt={t("approach.imageAlt")}
                     fill
+                    unoptimized
                     sizes="(min-width: 1024px) 45vw, 90vw"
                     className="object-cover"
                   />
@@ -265,6 +267,7 @@ export default async function AboutPage({ params }: Props) {
                         src="/images/home3.webp"
                         alt={t("interiors.images.livingRoomAlt")}
                         fill
+                        unoptimized
                         sizes="(min-width: 1024px) 24vw, 46vw"
                         className="object-cover transition duration-700 ease-out group-hover:scale-[1.05]"
                       />
@@ -281,6 +284,7 @@ export default async function AboutPage({ params }: Props) {
                         src="/images/home2.webp"
                         alt={t("interiors.images.wallAlt")}
                         fill
+                        unoptimized
                         sizes="(min-width: 1024px) 24vw, 46vw"
                         className="object-cover transition duration-700 ease-out group-hover:scale-[1.05]"
                       />
@@ -297,6 +301,7 @@ export default async function AboutPage({ params }: Props) {
                         src="/images/home1.webp"
                         alt={t("interiors.images.contemporaryAlt")}
                         fill
+                        unoptimized
                         sizes="(min-width: 1024px) 50vw, 92vw"
                         className="object-cover transition duration-700 ease-out group-hover:scale-[1.04]"
                       />
