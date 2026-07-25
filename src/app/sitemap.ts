@@ -18,6 +18,8 @@ const staticRoutes: RouteConfig[] = [
   { path: "/about",                changeFrequency: "monthly", priority: 0.7  },
   { path: "/contact",              changeFrequency: "yearly",  priority: 0.6  },
   { path: "/create",               changeFrequency: "yearly",  priority: 0.5  },
+  { path: "/mentions-legales",              changeFrequency: "yearly",  priority: 0.2  },
+  { path: "/politique-de-confidentialite",  changeFrequency: "yearly",  priority: 0.2  },
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

@@ -104,6 +104,7 @@ function SupportModal({ onClose }: { onClose: () => void }) {
 
 export default function Footer() {
   const t = useTranslations("Footer");
+  const tLegal = useTranslations("Legal");
   const [showSupport, setShowSupport] = useState(false);
 
   return (
@@ -222,8 +223,28 @@ export default function Footer() {
           </div>
 
           <div className="mt-14 flex flex-col gap-4 border-t border-[#e1d3bf]/80 pt-6 text-xs text-neutral-500 sm:flex-row sm:items-center sm:justify-between">
-            <p>
-              © {new Date().getFullYear()} Marcos Papermache — {t("rights")}
+            <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-center sm:justify-start sm:text-left">
+              <span>
+                © {new Date().getFullYear()} Marcos Papermache — {t("rights")}
+              </span>
+              <span aria-hidden="true" className="text-neutral-400">
+                ·
+              </span>
+              <Link
+                href="/mentions-legales"
+                className="underline-offset-2 transition hover:text-neutral-700 hover:underline"
+              >
+                {tLegal("footerLinks.mentionsLegales")}
+              </Link>
+              <span aria-hidden="true" className="text-neutral-400">
+                ·
+              </span>
+              <Link
+                href="/politique-de-confidentialite"
+                className="underline-offset-2 transition hover:text-neutral-700 hover:underline"
+              >
+                {tLegal("footerLinks.confidentialite")}
+              </Link>
             </p>
 
             <p className="text-neutral-400">Papier-mâché sculptures · Paris</p>

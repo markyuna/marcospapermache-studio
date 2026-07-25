@@ -774,5 +774,139 @@
       "universeLabel": "Universo",
       "universeValue": "Papel maché · textura · presencia"
     }
+  },
+  "Legal": {
+    "footerLinks": {
+      "mentionsLegales": "Aviso legal",
+      "confidentialite": "Política de privacidad"
+    },
+    "lastUpdated": "Última actualización: {date}",
+    "mentionsLegales": {
+      "metadata": {
+        "title": "Aviso legal — Marcos Papermache",
+        "description": "Aviso legal del sitio marcospapermache.com: editor, alojamiento, propiedad intelectual y legislación aplicable."
+      },
+      "title": "Aviso legal",
+      "editeur": {
+        "heading": "Editor del sitio",
+        "intro": "El sitio marcospapermache.com es editado por Marcos SUAREZ ROMERO, empresario individual (artesano) que opera bajo el nombre comercial «MARKPAPER», con domicilio en 2 rue Pierre Curie, 94270 Le Kremlin-Bicêtre, Francia.",
+        "list": [
+          "SIREN: 897 513 065 — SIRET: 897 513 065 00010",
+          "Código APE/NAF: 1729Z (Fabricación de otros artículos de papel o cartón)",
+          "Empresa inscrita en el Registro Nacional de Empresas de Francia (RNE) como artesano (Chambre de Métiers et de l’Artisanat du Val-de-Marne)",
+          "IVA no aplicable, artículo 293 B del Código Fiscal francés",
+          "Contacto: contact@marcospapermache.com"
+        ]
+      },
+      "directeur": {
+        "heading": "Director de la publicación",
+        "text": "Marcos Suarez Romero."
+      },
+      "hebergement": {
+        "heading": "Alojamiento",
+        "text": "El sitio está alojado por Vercel Inc., 440 N Barranca Avenue #4133, Covina, CA 91723, Estados Unidos (vercel.com). La autenticación y la base de datos se gestionan a través de Supabase, con almacenamiento localizado en la Unión Europea."
+      },
+      "propriete": {
+        "heading": "Propiedad intelectual",
+        "text": "Todos los contenidos del sitio (textos, fotografías de las esculturas, ilustraciones, logotipo, elementos gráficos y código fuente) están protegidos por el derecho de autor y son propiedad exclusiva de Marcos Suarez Romero (MARKPAPER) o de sus titulares de derechos, salvo indicación en contrario. Las imágenes generadas por los usuarios mediante la herramienta de generación asistida por inteligencia artificial quedan sujetas a las condiciones de uso aplicables. Queda prohibida cualquier reproducción, representación, adaptación o explotación, total o parcial, sin autorización previa por escrito."
+      },
+      "liens": {
+        "heading": "Enlaces de hipertexto",
+        "text": "El sitio puede contener enlaces a sitios de terceros. El editor no ejerce control alguno sobre dichos sitios y declina toda responsabilidad sobre su contenido o su uso."
+      },
+      "donneesPersonnelles": {
+        "heading": "Datos personales",
+        "beforeLink": "El tratamiento de sus datos personales se describe en nuestra ",
+        "linkLabel": "Política de privacidad",
+        "afterLink": "."
+      },
+      "cookies": {
+        "heading": "Cookies",
+        "beforeLink": "El sitio utiliza cookies. Puede gestionar su uso: consulte la ",
+        "linkLabel": "Política de privacidad",
+        "afterLink": "."
+      },
+      "droitApplicable": {
+        "heading": "Legislación aplicable",
+        "text": "El presente aviso legal se rige por el derecho francés. Cualquier litigio relativo a su interpretación o al uso del sitio será competencia de los tribunales franceses."
+      }
+    },
+    "confidentialite": {
+      "metadata": {
+        "title": "Política de privacidad — Marcos Papermache",
+        "description": "Política de privacidad del sitio marcospapermache.com: datos recopilados, finalidades, encargados del tratamiento y sus derechos RGPD."
+      },
+      "title": "Política de privacidad",
+      "responsable": {
+        "heading": "Responsable del tratamiento",
+        "beforeEmail": "Marcos Suarez Romero (MARKPAPER), 2 rue Pierre Curie, 94270 Le Kremlin-Bicêtre, Francia, es responsable del tratamiento de los datos personales recogidos en marcospapermache.com. Para cualquier consulta: ",
+        "emailLabel": "contact@marcospapermache.com",
+        "afterEmail": "."
+      },
+      "donneesCollectees": {
+        "heading": "Datos que recopilamos",
+        "intro": "Según el uso que haga del sitio:",
+        "list": [
+          "Cuenta de cliente: dirección de correo electrónico, contraseña (almacenada cifrada) y, en su caso, nombre y apellidos.",
+          "Pedidos: direcciones de facturación y envío, historial de pedidos.",
+          "Generación de imágenes por IA: las descripciones (prompts) que introduce, las imágenes generadas y su saldo de créditos.",
+          "Pago: los pagos son procesados por Stripe y PayPal. No recogemos ni conservamos los datos de su tarjeta bancaria.",
+          "Datos técnicos: dirección IP, datos de conexión y navegación, cookies."
+        ]
+      },
+      "finalites": {
+        "heading": "Finalidades y bases legales",
+        "list": [
+          "Gestión de la cuenta y ejecución de los pedidos — ejecución del contrato.",
+          "Funcionalidad de generación de imágenes por IA — ejecución del contrato.",
+          "Respuesta a sus solicitudes de contacto — interés legítimo / medidas precontractuales.",
+          "Comunicaciones comerciales, en su caso — su consentimiento.",
+          "Seguridad, prevención del fraude y obligaciones contables — interés legítimo / obligación legal."
+        ]
+      },
+      "destinataires": {
+        "heading": "Destinatarios y encargados del tratamiento",
+        "intro": "Para prestar el servicio recurrimos a encargados que tratan ciertos datos por cuenta nuestra:",
+        "list": [
+          "Supabase — autenticación y base de datos (alojamiento en la UE).",
+          "Stripe y PayPal — procesamiento de pagos.",
+          "OpenAI — generación de imágenes: las descripciones que introduce se transmiten a OpenAI para producir las imágenes. No incluya en ellas ningún dato personal sensible.",
+          "Resend — envío de correos transaccionales.",
+          "Vercel — alojamiento del sitio."
+        ]
+      },
+      "transferts": {
+        "heading": "Transferencias fuera de la Unión Europea",
+        "text": "Algunos encargados (OpenAI, Resend, Vercel y la sociedad matriz de Stripe) están ubicados en Estados Unidos. Estas transferencias están cubiertas por garantías adecuadas, en particular las cláusulas contractuales tipo de la Comisión Europea y, en su caso, el marco EU-U.S. Data Privacy Framework."
+      },
+      "conservation": {
+        "heading": "Plazo de conservación",
+        "text": "Sus datos se conservan durante el tiempo necesario para las finalidades descritas y, después, se suprimen o archivan conforme a los plazos legales aplicables (en particular las obligaciones contables relativas a los pedidos)."
+      },
+      "droits": {
+        "heading": "Sus derechos",
+        "beforeEmail": "De conformidad con el RGPD, dispone de los derechos de acceso, rectificación, supresión, limitación, oposición y portabilidad, así como del derecho a retirar su consentimiento en cualquier momento y a establecer directrices sobre sus datos tras su fallecimiento. Para ejercerlos, escriba a ",
+        "emailLabel": "contact@marcospapermache.com",
+        "betweenEmailAndCnil": ". También puede presentar una reclamación ante la ",
+        "cnilLabel": "CNIL",
+        "afterCnil": "."
+      },
+      "cookies": {
+        "heading": "Cookies",
+        "text": "Utilizamos cookies necesarias para el funcionamiento del sitio y, previo consentimiento, cookies de medición de audiencia. Puede gestionar sus preferencias a través del banner de cookies o de la configuración de su navegador."
+      },
+      "mineurs": {
+        "heading": "Menores",
+        "text": "El sitio no está dirigido a menores de 15 años sin la autorización del titular de la patria potestad."
+      },
+      "securite": {
+        "heading": "Seguridad",
+        "text": "Aplicamos medidas técnicas y organizativas adecuadas (cifrado, control de accesos) para proteger sus datos personales."
+      },
+      "modifications": {
+        "heading": "Modificaciones",
+        "text": "La presente política puede actualizarse. La fecha de la última actualización figura al pie de la página."
+      }
+    }
   }
 }
