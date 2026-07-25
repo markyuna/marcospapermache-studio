@@ -230,73 +230,73 @@ export default function Navbar() {
           </span>
         </Link>
 
-        <div className="hidden items-center gap-4 lg:flex">
-          <nav
-            className={clsx(
-              space.className,
-              "group/nav relative flex h-16 items-center gap-8 overflow-hidden rounded-full border border-black/10 bg-white/55 px-9 shadow-[0_24px_80px_rgba(20,20,20,0.075)] backdrop-blur-2xl supports-[backdrop-filter]:bg-white/42 xl:gap-10"
-            )}
-          >
-            <div className="pointer-events-none absolute inset-0 rounded-full bg-linear-to-b from-white/85 via-white/35 to-[#f5eadc]/35" />
-            <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-linear-to-r from-transparent via-white/90 to-transparent" />
-            <div className="pointer-events-none absolute -left-24 top-1/2 h-24 w-24 -translate-y-1/2 rounded-full bg-[#d9a15e]/10 blur-2xl transition-transform duration-700 group-hover/nav:translate-x-20" />
+        <nav
+          className={clsx(
+            space.className,
+            "group/nav relative hidden h-16 shrink-0 items-center gap-6 overflow-hidden rounded-full border border-black/10 bg-white/55 px-9 shadow-[0_24px_80px_rgba(20,20,20,0.075)] backdrop-blur-2xl supports-[backdrop-filter]:bg-white/42 lg:ml-8 lg:flex xl:ml-8 xl:gap-8"
+          )}
+        >
+          <div className="pointer-events-none absolute inset-0 rounded-full bg-linear-to-b from-white/85 via-white/35 to-[#f5eadc]/35" />
+          <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-linear-to-r from-transparent via-white/90 to-transparent" />
+          <div className="pointer-events-none absolute -left-24 top-1/2 h-24 w-24 -translate-y-1/2 rounded-full bg-[#d9a15e]/10 blur-2xl transition-transform duration-700 group-hover/nav:translate-x-20" />
 
-            {navLinks.map((link) => {
-              const isActive = isActiveLink(link.href);
+          {navLinks.map((link) => {
+            const isActive = isActiveLink(link.href);
 
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={handleNavigation}
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={handleNavigation}
+                className={clsx(
+                  "group relative z-10 flex h-full items-center text-[13px] font-medium uppercase tracking-[0.18em] transition-all duration-300",
+                  isActive
+                    ? "text-neutral-950"
+                    : "text-neutral-600 hover:-translate-y-px hover:text-neutral-950"
+                )}
+              >
+                <span className="relative grid">
+                  {LOCALES.map((loc) => (
+                    <span
+                      key={loc}
+                      style={{ gridRowStart: 1, gridColumnStart: 1 }}
+                      className={clsx(
+                        "whitespace-nowrap",
+                        loc === locale ? "visible" : "invisible"
+                      )}
+                    >
+                      {NAV_LABELS_BY_LOCALE[loc][link.key]}
+                    </span>
+                  ))}
+                </span>
+
+                <span
                   className={clsx(
-                    "group relative z-10 flex h-full items-center text-[13px] font-medium uppercase tracking-[0.18em] transition-all duration-300",
+                    "absolute bottom-[15px] left-1/2 h-px w-full -translate-x-1/2 origin-center rounded-full bg-linear-to-r from-transparent via-[#c88a45] to-transparent transition-all duration-500",
                     isActive
-                      ? "text-neutral-950"
-                      : "text-neutral-600 hover:-translate-y-px hover:text-neutral-950"
+                      ? "scale-x-100 opacity-100"
+                      : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100"
                   )}
-                >
-                  <span className="relative grid">
-                    {LOCALES.map((loc) => (
-                      <span
-                        key={loc}
-                        style={{ gridRowStart: 1, gridColumnStart: 1 }}
-                        className={clsx(
-                          "whitespace-nowrap",
-                          loc === locale ? "visible" : "invisible"
-                        )}
-                      >
-                        {NAV_LABELS_BY_LOCALE[loc][link.key]}
-                      </span>
-                    ))}
-                  </span>
+                />
 
-                  <span
-                    className={clsx(
-                      "absolute bottom-[15px] left-1/2 h-px w-full -translate-x-1/2 origin-center rounded-full bg-linear-to-r from-transparent via-[#c88a45] to-transparent transition-all duration-500",
-                      isActive
-                        ? "scale-x-100 opacity-100"
-                        : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100"
-                    )}
-                  />
+                <span
+                  className={clsx(
+                    "absolute bottom-[13px] left-1/2 h-3 w-12 -translate-x-1/2 rounded-full bg-[#d99a50]/20 blur-md transition-all duration-500",
+                    isActive
+                      ? "scale-100 opacity-100"
+                      : "scale-50 opacity-0 group-hover:scale-100 group-hover:opacity-70"
+                  )}
+                />
+              </Link>
+            );
+          })}
+        </nav>
 
-                  <span
-                    className={clsx(
-                      "absolute bottom-[13px] left-1/2 h-3 w-12 -translate-x-1/2 rounded-full bg-[#d99a50]/20 blur-md transition-all duration-500",
-                      isActive
-                        ? "scale-100 opacity-100"
-                        : "scale-50 opacity-0 group-hover:scale-100 group-hover:opacity-70"
-                    )}
-                  />
-                </Link>
-              );
-            })}
-          </nav>
+        <div aria-hidden="true" className="hidden lg:block lg:flex-1" />
 
-          <div className="relative flex items-center gap-3">
-            <LocaleSwitcher />
-            <AccountMenu onNavigate={closeMenu} />
-          </div>
+        <div className="relative hidden shrink-0 items-center gap-3 lg:flex">
+          <LocaleSwitcher />
+          <AccountMenu onNavigate={closeMenu} />
         </div>
 
         <button
