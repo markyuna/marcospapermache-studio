@@ -24,7 +24,6 @@ const navLinks = [
   { href: "/sculptures", key: "sculptures" },
   { href: "/creations-sur-mesure", key: "custom" },
   { href: "/create", key: "ai" },
-  { href: "/contact", key: "contact" },
 ] as const;
 
 function getLightboxOpenState() {
@@ -40,6 +39,9 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [isLightboxOpen, setIsLightboxOpen] = useState(getLightboxOpenState);
   const [isHidden, setIsHidden] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [taglineWidth, setTaglineWidth] = useState<number | null>(null);
+  const marcosRef = useRef<HTMLSpanElement | null>(null);
 
   const pathname = usePathname();
   const t = useTranslations("Navbar");
@@ -67,6 +69,25 @@ export default function Navbar() {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const measureTaglineWidth = () => {
+      if (marcosRef.current) {
+        setTaglineWidth(marcosRef.current.offsetWidth);
+      }
+    };
+
+    measureTaglineWidth();
+    window.addEventListener("resize", measureTaglineWidth);
+
+    // Re-measure once the serif fallback stack has actually settled, since
+    // system fonts can swap after first paint and shift the word's width.
+    if (typeof document !== "undefined" && "fonts" in document) {
+      document.fonts.ready.then(measureTaglineWidth).catch(() => {});
+    }
+
+    return () => window.removeEventListener("resize", measureTaglineWidth);
   }, []);
 
   useEffect(() => {
@@ -101,6 +122,8 @@ export default function Navbar() {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
+      setScrolled(currentScrollY > 30);
+
       if (open || isLightboxOpen) {
         lastScrollY.current = currentScrollY;
         return;
@@ -122,6 +145,7 @@ export default function Navbar() {
     };
 
     lastScrollY.current = window.scrollY;
+    setScrolled(window.scrollY > 30);
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => window.removeEventListener("scroll", handleScroll);
@@ -130,7 +154,8 @@ export default function Navbar() {
   return (
     <header
       className={clsx(
-        "navbar sticky top-0 z-50 w-full transition-all duration-500",
+        "navbar navbar-surface sticky top-0 z-50 w-full transition-all duration-500",
+        scrolled && "navbar-surface--scrolled",
         isLightboxOpen || isHidden
           ? "pointer-events-none -translate-y-full opacity-0"
           : "translate-y-0 opacity-100"
@@ -140,19 +165,52 @@ export default function Navbar() {
         <Link
           href="/"
           onClick={handleNavigation}
-          className="group relative z-10 flex shrink-0 items-center"
-          aria-label="Marcos Papermache"
+          className="group relative z-10 flex shrink-0 items-center gap-2.5 sm:gap-3"
+          aria-label="Marcos Papermache — Paper mâché studio"
         >
-          <div className="relative h-16 w-36 sm:h-[72px] sm:w-44 lg:h-20 lg:w-48">
+          <span
+            className="relative h-10 w-auto shrink-0 transition duration-700 ease-out group-hover:scale-[1.03] sm:h-12 lg:h-14"
+            style={{ aspectRatio: "1 / 1" }}
+          >
             <Image
-              src="/logo2.png"
-              alt="Marcos Papermache"
+              src="/logo-mark.png"
+              alt=""
               fill
               priority
-              sizes="(max-width: 768px) 150px, 190px"
-              className="object-contain object-left transition duration-700 ease-out group-hover:scale-[1.025]"
+              sizes="56px"
+              className="object-contain drop-shadow-[0_3px_6px_rgba(24,21,18,0.22)]"
             />
-          </div>
+          </span>
+
+          <span
+            aria-hidden="true"
+            className="hidden h-8 w-px shrink-0 bg-brand-gold/45 lg:block"
+          />
+
+          <span className="flex flex-col justify-center">
+            <span
+              ref={marcosRef}
+              className="font-serif text-[1.05rem] font-medium leading-none tracking-[0.14em] text-[#181512] sm:text-[1.15rem] lg:text-xl"
+            >
+              MARCOS
+            </span>
+
+            <span
+              className="mt-2 hidden items-center gap-1.5 lg:flex"
+              style={taglineWidth ? { width: taglineWidth } : undefined}
+            >
+              <span aria-hidden="true" className="h-px min-w-1.5 flex-1 bg-brand-gold/60" />
+              <span
+                className={clsx(
+                  space.className,
+                  "shrink-0 whitespace-nowrap text-[7.5px] font-medium uppercase tracking-[0.22em] text-neutral-500"
+                )}
+              >
+                PAPER MÂCHÉ STUDIO
+              </span>
+              <span aria-hidden="true" className="h-px min-w-1.5 flex-1 bg-brand-gold/60" />
+            </span>
+          </span>
         </Link>
 
         <div className="hidden items-center gap-4 lg:flex">

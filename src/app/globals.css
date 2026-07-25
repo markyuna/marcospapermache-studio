@@ -123,6 +123,22 @@ svg {
   pointer-events: none;
 }
 
+/* Navbar background: subtle cream tint at the top, cream blur once scrolled */
+.navbar-surface {
+  background: rgba(250, 246, 240, 0.5);
+  -webkit-backdrop-filter: blur(0px);
+  backdrop-filter: blur(0px);
+  box-shadow: 0 1px 0 rgba(24, 21, 18, 0);
+  transition: background-color 0.5s ease, backdrop-filter 0.5s ease, box-shadow 0.5s ease;
+}
+
+.navbar-surface--scrolled {
+  background: rgba(245, 239, 228, 0.9);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 30px rgba(24, 21, 18, 0.07);
+}
+
 /* Optional: smoother overall fullscreen feeling */
 body.lightbox-open {
   overflow: hidden;
