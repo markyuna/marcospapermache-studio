@@ -200,3 +200,22 @@ body.lightbox-open {
     transform: scale(1);
   }
 }
+
+/* Footer brand seal — slow, premium rocking motion */
+@keyframes seal-rock {
+  0%   { transform: rotate(-4deg); }
+  50%  { transform: rotate(4deg); }
+  100% { transform: rotate(-4deg); }
+}
+
+.footer-seal {
+  animation: seal-rock 7s ease-in-out infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-seal {
+    animation: none;
+  }
+}

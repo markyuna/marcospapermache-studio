@@ -4,6 +4,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, Heart, Mail, Sparkles, X } from "lucide-react";
+import Image from "next/image";
 import { QRCodeSVG } from "qrcode.react";
 import { RiInstagramLine } from "react-icons/ri";
 import { useTranslations } from "next-intl";
@@ -218,6 +219,25 @@ export default function Footer() {
                     className="transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                   />
                 </a>
+              </div>
+
+              <div className="mt-8 flex justify-center lg:justify-start">
+                <Link
+                  href="/"
+                  aria-label="Marcos Papermache Studio"
+                  className="group inline-block"
+                >
+                  <span className="relative block h-[96px] w-[110px] transition duration-500 ease-out group-hover:scale-[1.03] sm:h-[122px] sm:w-[140px]">
+                    <Image
+                      src="/footer_tampon.webp"
+                      alt="Marcos Papermache Studio"
+                      fill
+                      unoptimized
+                      sizes="140px"
+                      className="footer-seal object-contain opacity-95 drop-shadow-[0_4px_14px_rgba(43,38,32,0.18)]"
+                    />
+                  </span>
+                </Link>
               </div>
             </div>
           </div>
