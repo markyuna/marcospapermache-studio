@@ -48,6 +48,7 @@ function SculptureCard({
             src={image}
             alt={title}
             fill
+            unoptimized
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
             className="object-cover transition duration-700 ease-out group-hover:scale-[1.045]"
             priority={index === 0}

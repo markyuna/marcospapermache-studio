@@ -76,6 +76,7 @@ export default function SculptureImageGallery({ images, title }: Props) {
                 alt={activeImage.alt_text || title}
                 fill
                 priority
+                unoptimized
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover transition duration-700 ease-out group-hover:scale-[1.02]"
               />
@@ -143,6 +144,7 @@ export default function SculptureImageGallery({ images, title }: Props) {
                   src={image.image_url}
                   alt={image.alt_text || `${title} ${index + 1}`}
                   fill
+                  unoptimized
                   sizes="56px"
                   className="object-cover"
                 />

@@ -74,6 +74,7 @@ export default function SculptureCard({
                 src={src}
                 alt={imageAlt || title}
                 fill
+                unoptimized
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
                 className="object-cover transition duration-700 ease-out group-hover:scale-[1.04]"
               />
