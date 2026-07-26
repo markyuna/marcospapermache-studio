@@ -137,6 +137,7 @@ export default async function AdminArtworksPage() {
                             src={cover.image_url}
                             alt={artwork.title}
                             fill
+                            unoptimized
                             className="object-cover transition duration-500 group-hover:scale-[1.02]"
                             sizes="(min-width: 1024px) 30vw, (min-width: 640px) 50vw, 100vw"
                           />

@@ -948,6 +948,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
                           src={image.image_url}
                           alt={image.alt_text || title || artwork.title}
                           fill
+                          unoptimized
                           className="object-cover"
                           sizes="(max-width: 1024px) 33vw, 20vw"
                         />
@@ -1053,6 +1054,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
                           src={image.image_url}
                           alt={image.alt_text || title || artwork.title}
                           fill
+                          unoptimized
                           className="object-cover"
                           sizes="(max-width: 1024px) 33vw, 20vw"
                         />
