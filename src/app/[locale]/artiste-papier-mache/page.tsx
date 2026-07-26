@@ -313,7 +313,7 @@ export default async function ArtistePapierMachePage({ params }: Props) {
       <JsonLd data={serviceJsonLd} />
       <JsonLd data={breadcrumbJsonLd} />
 
-      <main className="relative overflow-hidden bg-[linear-gradient(180deg,#fffaf4_0%,#f7efe7_42%,#fbf8f3_100%)] text-[#181512]">
+      <main className="relative overflow-hidden bg-[linear-gradient(180deg,var(--paper-base)_0%,var(--paper-warm)_42%,var(--paper-glow)_100%)] text-espresso">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute left-[-12%] top-[-10%] h-[34rem] w-[34rem] rounded-full bg-[#ff9f43]/18 blur-[120px]" />
           <div className="absolute right-[-10%] top-[18%] h-[30rem] w-[30rem] rounded-full bg-[#f4c38d]/22 blur-[130px]" />

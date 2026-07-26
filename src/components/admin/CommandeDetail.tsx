@@ -149,7 +149,7 @@ export default function CommandeDetail({
 
   return (
     <div className="mx-auto max-w-5xl space-y-6">
-      <div className="rounded-4xl border border-white/70 bg-white/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)] md:p-8">
+      <div className="rounded-4xl border border-white/70 bg-paper-surface/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)] md:p-8">
         <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
           <div>
             <p className="text-xs uppercase tracking-[0.28em] text-orange-500">
@@ -174,8 +174,8 @@ export default function CommandeDetail({
       </div>
 
       {previewImage ? (
-        <div className="overflow-hidden rounded-4xl border border-white/70 bg-white/90 p-4 shadow-[0_10px_30px_rgba(15,23,42,0.06)] md:p-6">
-          <div className="relative overflow-hidden rounded-3xl bg-neutral-100">
+        <div className="overflow-hidden rounded-4xl border border-white/70 bg-paper-surface/90 p-4 shadow-[0_10px_30px_rgba(15,23,42,0.06)] md:p-6">
+          <div className="relative overflow-hidden rounded-3xl bg-paper-base">
             <div className="relative h-80 w-full md:h-180">
               <Image
                 src={previewImage}
@@ -194,7 +194,7 @@ export default function CommandeDetail({
                 href={commande.image_url}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-2xl border border-neutral-200 bg-white px-4 py-2 text-sm font-medium text-neutral-700 transition hover:border-orange-200 hover:bg-orange-50"
+                className="inline-flex items-center gap-2 rounded-2xl border border-neutral-200 bg-paper-surface px-4 py-2 text-sm font-medium text-neutral-700 transition hover:border-orange-200 hover:bg-orange-50"
               >
                 <ExternalLink className="h-4 w-4" />
                 Ouvrir l’image
@@ -206,7 +206,7 @@ export default function CommandeDetail({
                 href={commande.file_url}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-2xl border border-neutral-200 bg-white px-4 py-2 text-sm font-medium text-neutral-700 transition hover:border-orange-200 hover:bg-orange-50"
+                className="inline-flex items-center gap-2 rounded-2xl border border-neutral-200 bg-paper-surface px-4 py-2 text-sm font-medium text-neutral-700 transition hover:border-orange-200 hover:bg-orange-50"
               >
                 <Download className="h-4 w-4" />
                 Ouvrir le fichier
@@ -218,13 +218,13 @@ export default function CommandeDetail({
 
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
         <div className="space-y-6">
-          <div className="rounded-4xl border border-white/70 bg-white/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
+          <div className="rounded-4xl border border-white/70 bg-paper-surface/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
             <h2 className="text-lg font-semibold text-neutral-900">
               Informations de la commande
             </h2>
 
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
-              <div className="rounded-2xl bg-neutral-50 p-4">
+              <div className="rounded-2xl bg-paper-base p-4">
                 <p className="text-xs uppercase tracking-wide text-neutral-400">
                   Client
                 </p>
@@ -233,7 +233,7 @@ export default function CommandeDetail({
                 </p>
               </div>
 
-              <div className="rounded-2xl bg-neutral-50 p-4">
+              <div className="rounded-2xl bg-paper-base p-4">
                 <p className="text-xs uppercase tracking-wide text-neutral-400">
                   Email
                 </p>
@@ -242,7 +242,7 @@ export default function CommandeDetail({
                 </p>
               </div>
 
-              <div className="rounded-2xl bg-neutral-50 p-4">
+              <div className="rounded-2xl bg-paper-base p-4">
                 <p className="text-xs uppercase tracking-wide text-neutral-400">
                   Projet
                 </p>
@@ -251,7 +251,7 @@ export default function CommandeDetail({
                 </p>
               </div>
 
-              <div className="rounded-2xl bg-neutral-50 p-4">
+              <div className="rounded-2xl bg-paper-base p-4">
                 <p className="text-xs uppercase tracking-wide text-neutral-400">
                   Dimensions
                 </p>
@@ -260,7 +260,7 @@ export default function CommandeDetail({
                 </p>
               </div>
 
-              <div className="rounded-2xl bg-neutral-50 p-4">
+              <div className="rounded-2xl bg-paper-base p-4">
                 <p className="text-xs uppercase tracking-wide text-neutral-400">
                   Budget
                 </p>
@@ -269,7 +269,7 @@ export default function CommandeDetail({
                 </p>
               </div>
 
-              <div className="rounded-2xl bg-neutral-50 p-4">
+              <div className="rounded-2xl bg-paper-base p-4">
                 <p className="text-xs uppercase tracking-wide text-neutral-400">
                   Date
                 </p>
@@ -280,7 +280,7 @@ export default function CommandeDetail({
             </div>
           </div>
 
-          <div className="rounded-4xl border border-white/70 bg-white/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
+          <div className="rounded-4xl border border-white/70 bg-paper-surface/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
             <h2 className="text-lg font-semibold text-neutral-900">
               Message du client
             </h2>
@@ -294,7 +294,7 @@ export default function CommandeDetail({
         </div>
 
         <aside className="space-y-6">
-          <div className="rounded-4xl border border-white/70 bg-white/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
+          <div className="rounded-4xl border border-white/70 bg-paper-surface/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
             <h2 className="text-lg font-semibold text-neutral-900">
               Gestion du statut
             </h2>
@@ -336,7 +336,7 @@ export default function CommandeDetail({
             </div>
           </div>
 
-          <div className="rounded-4xl border border-white/70 bg-white/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
+          <div className="rounded-4xl border border-white/70 bg-paper-surface/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
             <h2 className="text-lg font-semibold text-neutral-900">
               Actions rapides
             </h2>
@@ -344,7 +344,7 @@ export default function CommandeDetail({
             <div className="mt-4 space-y-3">
               <a
                 href={`mailto:${commande.email}?subject=Suivi de votre commande #${commande.id}`}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm font-medium text-neutral-700 transition hover:border-neutral-300 hover:bg-neutral-50"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-neutral-200 bg-paper-surface px-4 py-3 text-sm font-medium text-neutral-700 transition hover:border-neutral-300 hover:bg-paper-base"
               >
                 <Mail className="h-4 w-4" />
                 Envoyer un email
@@ -354,7 +354,7 @@ export default function CommandeDetail({
                 type="button"
                 onClick={deleteCommande}
                 disabled={isDeleting || isPending}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-rose-200 bg-white px-4 py-3 text-sm font-medium text-rose-700 transition hover:bg-rose-50 disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-rose-200 bg-paper-surface px-4 py-3 text-sm font-medium text-rose-700 transition hover:bg-rose-50 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isDeleting ? (
                   <>

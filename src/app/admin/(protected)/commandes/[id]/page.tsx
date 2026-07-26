@@ -48,7 +48,7 @@ function InfoCard({
   value: string | null | undefined;
 }) {
   return (
-    <div className="rounded-2xl border border-neutral-200 bg-white p-4">
+    <div className="rounded-2xl border border-neutral-200 bg-paper-surface p-4">
       <div className="flex items-start gap-3">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[linear-gradient(to_bottom_right,#fff1e6,#ffe2c7)] text-orange-700">
           {icon}
@@ -124,7 +124,7 @@ export default async function AdminCommandeDetailPage({ params }: PageProps) {
   const commande = data as Commande;
 
   return (
-    <main className="min-h-screen bg-[linear-gradient(to_bottom,#fffaf5,#fff7f1,#ffffff)] px-4 py-8 md:px-6 md:py-10">
+    <main className="min-h-screen bg-[linear-gradient(to_bottom,var(--paper-base),var(--paper-surface),var(--paper-base))] px-4 py-8 md:px-6 md:py-10">
       <div className="mx-auto max-w-7xl space-y-8">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
@@ -181,7 +181,7 @@ export default async function AdminCommandeDetailPage({ params }: PageProps) {
 
         <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_340px]">
           <section className="min-w-0 space-y-6">
-            <div className="rounded-3xl border border-white/70 bg-white/90 p-5 shadow-[0_10px_30px_rgba(15,23,42,0.06)] md:p-6">
+            <div className="rounded-3xl border border-white/70 bg-paper-surface/90 p-5 shadow-[0_10px_30px_rgba(15,23,42,0.06)] md:p-6">
               <div className="flex items-center gap-3">
                 <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[linear-gradient(to_bottom_right,#fff1e6,#ffe2c7)] text-orange-700">
                   <FolderKanban className="h-5 w-5" />
@@ -209,7 +209,7 @@ export default async function AdminCommandeDetailPage({ params }: PageProps) {
               </dl>
             </div>
 
-            <div className="rounded-3xl border border-white/70 bg-white/90 p-5 shadow-[0_10px_30px_rgba(15,23,42,0.06)] md:p-6">
+            <div className="rounded-3xl border border-white/70 bg-paper-surface/90 p-5 shadow-[0_10px_30px_rgba(15,23,42,0.06)] md:p-6">
               <h2 className="text-lg font-semibold text-neutral-900">
                 Message du client
               </h2>
@@ -232,7 +232,7 @@ export default async function AdminCommandeDetailPage({ params }: PageProps) {
           </section>
 
           <aside className="space-y-6 xl:sticky xl:top-24">
-            <div className="rounded-3xl border border-white/70 bg-white/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
+            <div className="rounded-3xl border border-white/70 bg-paper-surface/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
               <h2 className="text-lg font-semibold text-neutral-900">
                 Changer le statut
               </h2>
@@ -249,7 +249,7 @@ export default async function AdminCommandeDetailPage({ params }: PageProps) {
               </div>
             </div>
 
-            <div className="rounded-3xl border border-white/70 bg-white/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
+            <div className="rounded-3xl border border-white/70 bg-paper-surface/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
               <h2 className="text-lg font-semibold text-neutral-900">
                 Actions rapides
               </h2>
@@ -257,7 +257,7 @@ export default async function AdminCommandeDetailPage({ params }: PageProps) {
               <div className="mt-4 space-y-3">
                 <a
                   href={`mailto:${commande.email}?subject=Suivi de votre commande #${commande.id}`}
-                  className="flex w-full items-center justify-center rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-center text-sm font-medium text-neutral-700 transition hover:border-neutral-300 hover:bg-neutral-50"
+                  className="flex w-full items-center justify-center rounded-2xl border border-neutral-200 bg-paper-surface px-4 py-3 text-center text-sm font-medium text-neutral-700 transition hover:border-neutral-300 hover:bg-paper-base"
                 >
                   Envoyer un email
                 </a>
@@ -267,7 +267,7 @@ export default async function AdminCommandeDetailPage({ params }: PageProps) {
                     href={commande.file_url}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex w-full items-center justify-center gap-2 rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-center text-sm font-medium text-neutral-700 transition hover:border-orange-200 hover:bg-orange-50"
+                    className="flex w-full items-center justify-center gap-2 rounded-2xl border border-neutral-200 bg-paper-surface px-4 py-3 text-center text-sm font-medium text-neutral-700 transition hover:border-orange-200 hover:bg-orange-50"
                   >
                     <Download className="h-4 w-4" />
                     Ouvrir le fichier

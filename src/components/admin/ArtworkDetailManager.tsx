@@ -627,11 +627,11 @@ export default function ArtworkDetailManager({ artwork }: Props) {
     }
   }
 
-  const inputCls = "w-full rounded-xl border border-neutral-200 bg-white px-4 py-2.5 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60";
+  const inputCls = "w-full rounded-xl border border-neutral-200 bg-paper-surface px-4 py-2.5 text-sm outline-none transition focus:border-neutral-400 disabled:cursor-not-allowed disabled:opacity-60";
   const labelCls = "text-xs font-medium uppercase tracking-[0.1em] text-neutral-500";
 
   return (
-    <main className="min-h-screen bg-[#f8f5ef] px-4 py-8 md:px-8 md:py-10">
+    <main className="min-h-screen bg-paper-base px-4 py-8 md:px-8 md:py-10">
       <div className="mx-auto max-w-7xl">
 
         {/* Header */}
@@ -648,7 +648,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
               {title.trim() || artwork.title}
             </h1>
             <div className="mt-2 flex flex-wrap gap-1.5">
-              <span className="rounded-full bg-white px-2.5 py-1 text-xs text-neutral-500 ring-1 ring-black/5">
+              <span className="rounded-full bg-paper-base px-2.5 py-1 text-xs text-neutral-500 ring-1 ring-black/5">
                 {slug || artwork.slug}
               </span>
               {isFeatured ? (
@@ -689,7 +689,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
           <form onSubmit={handleSaveArtwork} className="space-y-4">
 
             {/* General info */}
-            <div className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
+            <div className="rounded-2xl border border-black/5 bg-paper-surface p-5 shadow-sm">
               <p className={`mb-4 ${labelCls}`}>Informations générales</p>
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="space-y-1.5">
@@ -717,7 +717,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
                   <input type="url" value={etsyUrl} onChange={(e) => setEtsyUrl(e.target.value)} disabled={isBusy} className={inputCls} placeholder="https://etsy.com/…" />
                 </div>
                 <div className="sm:col-span-2">
-                  <label className="flex items-center gap-3 rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3">
+                  <label className="flex items-center gap-3 rounded-xl border border-neutral-200 bg-paper-base px-4 py-3">
                     <input type="checkbox" checked={isFeatured} onChange={(e) => setIsFeatured(e.target.checked)} disabled={isBusy} className="h-4 w-4 rounded border-neutral-300" />
                     <span className="text-sm text-neutral-700">Marquer comme œuvre mise en avant</span>
                   </label>
@@ -726,11 +726,11 @@ export default function ArtworkDetailManager({ artwork }: Props) {
             </div>
 
             {/* Multilingual content with tabs */}
-            <div className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
+            <div className="rounded-2xl border border-black/5 bg-paper-surface p-5 shadow-sm">
               <p className={`mb-4 ${labelCls}`}>Contenu multilingue</p>
 
               {/* Tab buttons */}
-              <div className="mb-5 flex w-fit rounded-xl border border-neutral-200 bg-neutral-50 p-1 gap-1">
+              <div className="mb-5 flex w-fit rounded-xl border border-neutral-200 bg-paper-base p-1 gap-1">
                 {(["fr", "en", "es"] as const).map((lang) => (
                   <button
                     key={lang}
@@ -738,7 +738,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
                     onClick={() => setActiveLang(lang)}
                     className={`rounded-lg px-5 py-1.5 text-sm font-medium transition ${
                       activeLang === lang
-                        ? "bg-white text-neutral-900 shadow-sm"
+                        ? "bg-paper-surface text-neutral-900 shadow-sm"
                         : "text-neutral-400 hover:text-neutral-700"
                     }`}
                   >
@@ -841,12 +841,12 @@ export default function ArtworkDetailManager({ artwork }: Props) {
             </div>
 
             {/* Atelier / Story section */}
-            <div className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
+            <div className="rounded-2xl border border-black/5 bg-paper-surface p-5 shadow-sm">
               <p className={`mb-1 ${labelCls}`}>Atelier — histoire de la pièce</p>
               <p className="mb-4 text-xs text-neutral-400">Si ces champs sont vides, la section n&apos;apparaît pas sur le site.</p>
 
               {/* Tab buttons for story */}
-              <div className="mb-5 flex w-fit rounded-xl border border-neutral-200 bg-neutral-50 p-1 gap-1">
+              <div className="mb-5 flex w-fit rounded-xl border border-neutral-200 bg-paper-base p-1 gap-1">
                 {(["fr", "en", "es"] as const).map((lang) => (
                   <button
                     key={`story-${lang}`}
@@ -854,7 +854,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
                     onClick={() => setActiveLang(lang)}
                     className={`rounded-lg px-5 py-1.5 text-sm font-medium transition ${
                       activeLang === lang
-                        ? "bg-white text-neutral-900 shadow-sm"
+                        ? "bg-paper-surface text-neutral-900 shadow-sm"
                         : "text-neutral-400 hover:text-neutral-700"
                     }`}
                   >
@@ -923,7 +923,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
           <div className="space-y-4 lg:sticky lg:top-6 lg:h-fit">
 
             {/* Thumbnail grid */}
-            <div className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
+            <div className="rounded-2xl border border-black/5 bg-paper-surface p-5 shadow-sm">
               <div className="mb-4 flex items-center justify-between">
                 <p className={labelCls}>Images</p>
                 <span className="rounded-full bg-[#f6efe5] px-2.5 py-1 text-xs font-medium text-neutral-600">
@@ -932,7 +932,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
               </div>
 
               {imageCount === 0 ? (
-                <div className="rounded-xl border border-dashed border-neutral-200 bg-neutral-50 py-10 text-center text-sm text-neutral-400">
+                <div className="rounded-xl border border-dashed border-neutral-200 bg-paper-base py-10 text-center text-sm text-neutral-400">
                   Aucune image pour cette œuvre
                 </div>
               ) : (
@@ -942,7 +942,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
                     return (
                       <div
                         key={image.id}
-                        className="group relative aspect-square overflow-hidden rounded-xl bg-neutral-100"
+                        className="group relative aspect-square overflow-hidden rounded-xl bg-paper-base"
                       >
                         <Image
                           src={image.image_url}
@@ -998,7 +998,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
             </div>
 
             {/* Upload form */}
-            <div className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
+            <div className="rounded-2xl border border-black/5 bg-paper-surface p-5 shadow-sm">
               <p className={`mb-4 ${labelCls}`}>Ajouter des images</p>
               <form onSubmit={handleUploadImages} className="space-y-3">
                 <input
@@ -1009,7 +1009,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
                   multiple
                   disabled={isBusy}
                   onChange={(e) => setSelectedFiles(Array.from(e.target.files ?? []))}
-                  className="block w-full rounded-xl border border-dashed border-neutral-300 bg-neutral-50 px-3 py-3 text-sm text-neutral-700 file:mr-3 file:rounded-lg file:border-0 file:bg-neutral-900 file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-white hover:file:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="block w-full rounded-xl border border-dashed border-neutral-300 bg-paper-base px-3 py-3 text-sm text-neutral-700 file:mr-3 file:rounded-lg file:border-0 file:bg-neutral-900 file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-white hover:file:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
                 />
                 {selectedFiles.length > 0 ? (
                   <p className="text-xs text-neutral-500">
@@ -1028,7 +1028,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
             </div>
 
             {/* Story images grid */}
-            <div className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
+            <div className="rounded-2xl border border-black/5 bg-paper-surface p-5 shadow-sm">
               <div className="mb-4 flex items-center justify-between">
                 <p className={labelCls}>Images d&apos;atelier</p>
                 <span className="rounded-full bg-[#f6efe5] px-2.5 py-1 text-xs font-medium text-neutral-600">
@@ -1037,7 +1037,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
               </div>
 
               {artwork.artwork_story_images.length === 0 ? (
-                <div className="rounded-xl border border-dashed border-neutral-200 bg-neutral-50 py-8 text-center text-sm text-neutral-400">
+                <div className="rounded-xl border border-dashed border-neutral-200 bg-paper-base py-8 text-center text-sm text-neutral-400">
                   Aucune image d&apos;atelier
                 </div>
               ) : (
@@ -1047,7 +1047,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
                     return (
                       <div
                         key={image.id}
-                        className="group relative aspect-square overflow-hidden rounded-xl bg-neutral-100"
+                        className="group relative aspect-square overflow-hidden rounded-xl bg-paper-base"
                       >
                         <Image
                           src={image.image_url}
@@ -1082,7 +1082,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
             </div>
 
             {/* Story image upload form */}
-            <div className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
+            <div className="rounded-2xl border border-black/5 bg-paper-surface p-5 shadow-sm">
               <p className={`mb-4 ${labelCls}`}>Ajouter des images d&apos;atelier</p>
               <form onSubmit={handleUploadStoryImages} className="space-y-3">
                 <input
@@ -1093,7 +1093,7 @@ export default function ArtworkDetailManager({ artwork }: Props) {
                   multiple
                   disabled={isBusy}
                   onChange={(e) => setSelectedStoryFiles(Array.from(e.target.files ?? []))}
-                  className="block w-full rounded-xl border border-dashed border-neutral-300 bg-neutral-50 px-3 py-3 text-sm text-neutral-700 file:mr-3 file:rounded-lg file:border-0 file:bg-neutral-900 file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-white hover:file:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="block w-full rounded-xl border border-dashed border-neutral-300 bg-paper-base px-3 py-3 text-sm text-neutral-700 file:mr-3 file:rounded-lg file:border-0 file:bg-neutral-900 file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-white hover:file:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
                 />
                 {selectedStoryFiles.length > 0 ? (
                   <p className="text-xs text-neutral-500">

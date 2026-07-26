@@ -36,7 +36,7 @@ function formatDate(date: Date | string) {
 }
 
 const cardClassName =
-  "rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-sm md:p-8";
+  "rounded-[2rem] border border-neutral-200 bg-paper-surface p-6 shadow-sm md:p-8";
 
 export default async function AccountDashboard({
   email,
@@ -106,7 +106,7 @@ export default async function AccountDashboard({
         </div>
 
         {generatedImages.length === 0 ? (
-          <div className="mt-4 rounded-[1.25rem] border border-neutral-200 bg-neutral-50 px-4 py-6 text-center">
+          <div className="mt-4 rounded-[1.25rem] border border-neutral-200 bg-paper-base px-4 py-6 text-center">
             <p className="text-sm text-neutral-500">{t("imagesEmpty")}</p>
             <Link
               href="/create"
@@ -131,11 +131,11 @@ export default async function AccountDashboard({
         </div>
 
         {commandes.length === 0 ? (
-          <div className="mt-4 rounded-[1.25rem] border border-neutral-200 bg-neutral-50 px-4 py-6 text-center">
+          <div className="mt-4 rounded-[1.25rem] border border-neutral-200 bg-paper-base px-4 py-6 text-center">
             <p className="text-sm text-neutral-500">{t("ordersEmpty")}</p>
             <Link
               href="/creations-sur-mesure"
-              className="mt-3 inline-flex items-center justify-center gap-2 rounded-full border border-neutral-300 bg-white px-5 py-2.5 text-sm font-medium text-[#181512] transition duration-300 hover:bg-neutral-50"
+              className="mt-3 inline-flex items-center justify-center gap-2 rounded-full border border-neutral-300 bg-paper-surface px-5 py-2.5 text-sm font-medium text-[#181512] transition duration-300 hover:bg-paper-base"
             >
               {t("ordersEmptyCta")}
             </Link>
@@ -150,7 +150,7 @@ export default async function AccountDashboard({
               return (
                 <div
                   key={commande.id}
-                  className="flex flex-wrap items-center justify-between gap-3 rounded-[1.25rem] border border-neutral-200 bg-neutral-50 px-4 py-3"
+                  className="flex flex-wrap items-center justify-between gap-3 rounded-[1.25rem] border border-neutral-200 bg-paper-base px-4 py-3"
                 >
                   <div className="flex min-w-0 items-center gap-3">
                     {sourceImage ? (

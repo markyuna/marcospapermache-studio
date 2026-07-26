@@ -43,7 +43,7 @@ export default async function MonComptePage({ params }: Props) {
   const commandes = (commandesResult.data ?? []) as Commande[];
 
   return (
-    <main className="min-h-screen bg-[linear-gradient(to_bottom,#fffaf5,#fff7f1,#ffffff)] py-24 md:py-32">
+    <main className="min-h-screen bg-[linear-gradient(to_bottom,var(--paper-base),var(--paper-surface),var(--paper-base))] py-24 md:py-32">
       <Container className="max-w-4xl">
         <AccountDashboard
           email={user.email ?? ""}

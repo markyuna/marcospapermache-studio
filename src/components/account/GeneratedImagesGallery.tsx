@@ -22,7 +22,7 @@ export default function GeneratedImagesGallery({ images }: Props) {
         {images.map((image, index) => (
           <div
             key={image.id}
-            className="group relative overflow-hidden rounded-[1.25rem] border border-neutral-200 bg-neutral-50"
+            className="group relative overflow-hidden rounded-[1.25rem] border border-neutral-200 bg-paper-base"
           >
             <button
               type="button"
@@ -49,7 +49,7 @@ export default function GeneratedImagesGallery({ images }: Props) {
                   },
                 }}
                 onClick={(event) => event.stopPropagation()}
-                className="block w-full rounded-full bg-white px-3 py-2 text-center text-xs font-medium text-[#181512] transition hover:bg-neutral-100"
+                className="block w-full rounded-full bg-paper-surface px-3 py-2 text-center text-xs font-medium text-[#181512] transition hover:bg-paper-base"
               >
                 {t("orderThisSculpture")}
               </Link>

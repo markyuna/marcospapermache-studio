@@ -103,7 +103,7 @@ export default async function AboutPage({ params }: Props) {
       <JsonLd data={aboutPageJsonLd} />
       <JsonLd data={artistJsonLd} />
 
-      <main className="relative overflow-hidden bg-[linear-gradient(to_bottom,#f7f2ec_0%,#f4eee7_35%,#faf7f3_100%)] text-[#1b1713]">
+      <main className="relative overflow-hidden bg-[linear-gradient(to_bottom,var(--paper-surface)_0%,var(--paper-warm)_35%,var(--paper-base)_100%)] text-espresso">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,106,0,0.08),transparent_24%),radial-gradient(circle_at_85%_10%,rgba(255,190,120,0.10),transparent_22%)]" />
 
         <section className="relative overflow-hidden">
@@ -227,7 +227,7 @@ export default async function AboutPage({ params }: Props) {
 
         <section className="relative pb-24 md:pb-32">
           <Container>
-            <div className="relative overflow-hidden rounded-[2.5rem] border border-[#eadbcc] bg-[linear-gradient(135deg,#fffaf5_0%,#f7eee4_55%,#fefaf6_100%)] px-8 py-12 shadow-[0_25px_80px_rgba(80,50,22,0.08)] md:px-12 md:py-14">
+            <div className="relative overflow-hidden rounded-[2.5rem] border border-[#eadbcc] bg-[linear-gradient(135deg,var(--paper-base)_0%,var(--paper-surface)_55%,var(--paper-glow)_100%)] px-8 py-12 shadow-[0_25px_80px_rgba(80,50,22,0.08)] md:px-12 md:py-14">
               <div className="absolute right-0 top-0 h-48 w-48 rounded-full bg-[#ffb36b]/15 blur-3xl" />
               <div className="absolute bottom-0 left-0 h-48 w-48 rounded-full bg-[#ffd8ae]/20 blur-3xl" />
 

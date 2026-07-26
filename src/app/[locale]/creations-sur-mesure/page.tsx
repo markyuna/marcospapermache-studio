@@ -168,7 +168,7 @@ export default async function CustomCreationPage({ params }: Props) {
       <JsonLd data={serviceJsonLd} />
       <JsonLd data={breadcrumbJsonLd} />
 
-      <main className="relative overflow-hidden bg-[#fffaf4] text-[#1b1713]">
+      <main className="relative overflow-hidden bg-paper-base text-espresso">
 
         {/* ── HERO — video background ─────────────────────────────── */}
         <section className="relative flex min-h-[88vh] items-center overflow-hidden bg-[#0d0b09]">

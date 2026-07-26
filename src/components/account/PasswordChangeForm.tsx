@@ -7,7 +7,7 @@ import { Check, Loader2 } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 
 const inputClassName =
-  "w-full rounded-[1rem] border border-[#e4d6c8] bg-white px-4 py-3 text-sm text-[#181512] outline-none transition duration-300 focus:border-[#cfa57f] focus:ring-4 focus:ring-[#cfa57f]/10";
+  "w-full rounded-[1rem] border border-[#e4d6c8] bg-paper-surface px-4 py-3 text-sm text-[#181512] outline-none transition duration-300 focus:border-[#cfa57f] focus:ring-4 focus:ring-[#cfa57f]/10";
 
 const labelClassName =
   "mb-1.5 block text-xs font-medium uppercase tracking-[0.18em] text-neutral-500";

@@ -21,7 +21,7 @@ export async function FeaturedSection() {
 
   return (
     <section className="relative overflow-hidden py-24 md:py-32 xl:py-36">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,106,0,0.08),transparent_25%),radial-gradient(circle_at_85%_12%,rgba(255,190,120,0.13),transparent_24%),radial-gradient(circle_at_50%_100%,rgba(180,130,80,0.10),transparent_28%),linear-gradient(to_bottom,#fffaf6,#fff5ec,#fffaf6)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,106,0,0.08),transparent_25%),radial-gradient(circle_at_85%_12%,rgba(255,190,120,0.13),transparent_24%),radial-gradient(circle_at_50%_100%,rgba(180,130,80,0.10),transparent_28%),linear-gradient(to_bottom,var(--paper-base),var(--paper-surface),var(--paper-base))]" />
 
       <div className="pointer-events-none absolute -left-28 top-24 h-80 w-80 rounded-full bg-[#f1d5b7]/35 blur-3xl" />
       <div className="pointer-events-none absolute -right-28 bottom-20 h-96 w-96 rounded-full bg-[#ffb15f]/10 blur-3xl" />

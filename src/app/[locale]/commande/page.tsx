@@ -150,7 +150,7 @@ export default async function CommandePage({
       <JsonLd data={serviceJsonLd} />
       <JsonLd data={breadcrumbJsonLd} />
 
-      <section className="relative overflow-hidden bg-[linear-gradient(180deg,#f4eadf_0%,#f7efe7_24%,#fbf7f2_58%,#f8f1e8_100%)] py-14 md:py-20">
+      <section className="relative overflow-hidden bg-[linear-gradient(180deg,var(--paper-warm)_0%,var(--paper-surface)_24%,var(--paper-base)_58%,var(--paper-warm)_100%)] py-14 md:py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(205,164,124,0.16),transparent_28%),radial-gradient(circle_at_top_right,rgba(255,255,255,0.65),transparent_24%),radial-gradient(circle_at_bottom_left,rgba(205,164,124,0.08),transparent_30%)]" />
 
         <Container className="relative max-w-6xl">

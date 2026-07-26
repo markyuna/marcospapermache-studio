@@ -25,6 +25,14 @@
 
   --shadow-soft: 0 10px 30px rgba(185, 106, 47, 0.08);
   --shadow-medium: 0 16px 40px rgba(185, 106, 47, 0.12);
+
+  /* Paper & Gold palette */
+  --paper-base: #faf6ef;
+  --paper-surface: #f1e9da;
+  --paper-warm: #ead9be;
+  --paper-glow: #fcf9f2;
+  --gold: #c9a24b;
+  --espresso: #2b2620;
 }
 
 *,
@@ -41,12 +49,7 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background:
-    radial-gradient(circle at 14% 18%, rgba(255, 106, 0, 0.10), transparent 30%),
-    radial-gradient(circle at 86% 4%, rgba(255, 190, 120, 0.10), transparent 24%),
-    radial-gradient(circle at 50% 100%, rgba(231, 210, 191, 0.14), transparent 28%),
-    linear-gradient(to bottom, var(--background), var(--background-soft), var(--background));
-  color: var(--foreground);
+  color: var(--espresso);
   font-family: Arial, Helvetica, sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -54,14 +57,27 @@ body {
   position: relative;
 }
 
+/* Global "Paper & Gold" background — fixed behind all content, defined once */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  background: linear-gradient(160deg, var(--paper-base) 0%, #f5eee1 50%, var(--paper-warm) 100%);
+  pointer-events: none;
+}
+
+/* Subtle paper grain over the background gradient */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
-  background-repeat: repeat;
-  opacity: 0.015;
+  z-index: -9;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
   pointer-events: none;
-  z-index: 0;
+  background-repeat: repeat;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 #__next,
@@ -155,6 +171,14 @@ body.lightbox-open {
   --color-brand-gold: #b96a2f;
   --color-brand-gold-light: #d07a2d;
   --color-brand-gold-soft: #c8873f;
+
+  /* Paper & Gold palette — exposed as bg-paper-base, text-espresso, etc. */
+  --color-paper-base: #faf6ef;
+  --color-paper-surface: #f1e9da;
+  --color-paper-warm: #ead9be;
+  --color-paper-glow: #fcf9f2;
+  --color-gold: #c9a24b;
+  --color-espresso: #2b2620;
 }
 
 @keyframes lightbox-fade-in {

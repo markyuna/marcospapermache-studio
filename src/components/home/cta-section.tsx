@@ -71,7 +71,7 @@ export function CtaSection() {
     <>
       <section className="pb-24 pt-10 md:pb-32 md:pt-12">
         <Container>
-          <div className="relative overflow-hidden rounded-[2.5rem] border border-black/5 bg-[linear-gradient(135deg,#f8f1ea_0%,#f2e8dc_45%,#eadccf_100%)] shadow-[0_35px_120px_rgba(35,25,15,0.10)]">
+          <div className="relative overflow-hidden rounded-[2.5rem] border border-black/5 bg-[linear-gradient(135deg,var(--paper-base)_0%,var(--paper-surface)_45%,var(--paper-warm)_100%)] shadow-[0_35px_120px_rgba(35,25,15,0.10)]">
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.65),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(255,140,60,0.08),transparent_30%)]" />
           <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#ff8a2a]/35 to-transparent" />
 
@@ -169,7 +169,7 @@ export function CtaSection() {
         >
           <div className="flex min-h-full items-start justify-center md:pt-20">
             <div
-              className="relative w-full max-w-3xl overflow-hidden rounded-[2rem] border border-white/20 bg-[linear-gradient(180deg,#f7efe7_0%,#efe2d5_100%)] shadow-[0_30px_100px_rgba(0,0,0,0.22)]"
+              className="relative w-full max-w-3xl overflow-hidden rounded-[2rem] border border-white/20 bg-[linear-gradient(180deg,var(--paper-surface)_0%,var(--paper-warm)_100%)] shadow-[0_30px_100px_rgba(0,0,0,0.22)]"
               onClick={(event) => event.stopPropagation()}
               role="dialog"
               aria-modal="true"

@@ -19,16 +19,16 @@ function formatDate(date: string) {
 export default function CommandesTable({ commandes }: CommandesTableProps) {
   if (!commandes.length) {
     return (
-      <div className="rounded-2xl border border-neutral-200 bg-white p-8 text-sm text-neutral-500">
+      <div className="rounded-2xl border border-neutral-200 bg-paper-surface p-8 text-sm text-neutral-500">
         Aucune commande trouvée.
       </div>
     );
   }
 
   return (
-    <div className="overflow-x-auto rounded-2xl border border-neutral-200 bg-white shadow-sm">
+    <div className="overflow-x-auto rounded-2xl border border-neutral-200 bg-paper-surface shadow-sm">
       <table className="min-w-full text-left text-sm">
-        <thead className="bg-neutral-50 text-neutral-600">
+        <thead className="bg-paper-base text-neutral-600">
           <tr>
             <th className="px-4 py-4 font-medium">ID</th>
             <th className="px-4 py-4 font-medium">Client</th>
@@ -42,7 +42,7 @@ export default function CommandesTable({ commandes }: CommandesTableProps) {
 
         <tbody className="divide-y divide-neutral-200">
           {commandes.map((commande) => (
-            <tr key={commande.id} className="hover:bg-neutral-50/70">
+            <tr key={commande.id} className="hover:bg-paper-base/70">
               <td className="px-4 py-4 font-medium text-neutral-900">
                 #{commande.id}
               </td>
@@ -81,7 +81,7 @@ export default function CommandesTable({ commandes }: CommandesTableProps) {
               <td className="px-4 py-4">
                 <Link
                   href={`/admin/commandes/${commande.id}`}
-                  className="inline-flex rounded-xl border border-neutral-200 px-4 py-2 font-medium text-neutral-700 transition hover:border-neutral-300 hover:bg-neutral-50"
+                  className="inline-flex rounded-xl border border-neutral-200 px-4 py-2 font-medium text-neutral-700 transition hover:border-neutral-300 hover:bg-paper-base"
                 >
                   Voir
                 </Link>

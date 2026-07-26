@@ -65,7 +65,7 @@ export default async function MentionsLegalesPage({ params }: Props) {
     <>
       <JsonLd data={legalPageJsonLd} />
 
-      <main className="relative overflow-hidden bg-[linear-gradient(to_bottom,#f7f2ec_0%,#f4eee7_35%,#faf7f3_100%)] text-[#1b1713]">
+      <main className="relative overflow-hidden bg-[linear-gradient(to_bottom,var(--paper-surface)_0%,var(--paper-warm)_35%,var(--paper-base)_100%)] text-espresso">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,106,0,0.06),transparent_24%)]" />
 
         <section className="relative pb-24 pt-32 md:pb-32 md:pt-40">

@@ -6,7 +6,7 @@ export default function CreateArtworkForm() {
   const [activeLang, setActiveLang] = useState<"fr" | "en" | "es">("fr");
 
   const inputCls =
-    "w-full rounded-xl border border-neutral-200 bg-white px-4 py-2.5 text-sm outline-none transition focus:border-neutral-400";
+    "w-full rounded-xl border border-neutral-200 bg-paper-surface px-4 py-2.5 text-sm outline-none transition focus:border-neutral-400";
   const labelCls =
     "text-xs font-medium uppercase tracking-[0.1em] text-neutral-500";
 
@@ -18,7 +18,7 @@ export default function CreateArtworkForm() {
       className="space-y-4"
     >
       {/* General info */}
-      <div className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
+      <div className="rounded-2xl border border-black/5 bg-paper-surface p-5 shadow-sm">
         <p className={`mb-4 ${labelCls}`}>Informations générales</p>
         <div className="grid gap-3 sm:grid-cols-2">
           <div className="space-y-1.5 sm:col-span-2">
@@ -81,7 +81,7 @@ export default function CreateArtworkForm() {
             />
           </div>
           <div className="sm:col-span-2">
-            <label className="flex items-center gap-3 rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3">
+            <label className="flex items-center gap-3 rounded-xl border border-neutral-200 bg-paper-base px-4 py-3">
               <input
                 type="checkbox"
                 name="is_featured"
@@ -97,10 +97,10 @@ export default function CreateArtworkForm() {
       </div>
 
       {/* Multilingual tabs */}
-      <div className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
+      <div className="rounded-2xl border border-black/5 bg-paper-surface p-5 shadow-sm">
         <p className={`mb-4 ${labelCls}`}>Contenu multilingue</p>
 
-        <div className="mb-5 flex w-fit gap-1 rounded-xl border border-neutral-200 bg-neutral-50 p-1">
+        <div className="mb-5 flex w-fit gap-1 rounded-xl border border-neutral-200 bg-paper-base p-1">
           {(["fr", "en", "es"] as const).map((lang) => (
             <button
               key={lang}
@@ -108,7 +108,7 @@ export default function CreateArtworkForm() {
               onClick={() => setActiveLang(lang)}
               className={`rounded-lg px-5 py-1.5 text-sm font-medium transition ${
                 activeLang === lang
-                  ? "bg-white text-neutral-900 shadow-sm"
+                  ? "bg-paper-surface text-neutral-900 shadow-sm"
                   : "text-neutral-400 hover:text-neutral-700"
               }`}
             >
@@ -327,7 +327,7 @@ export default function CreateArtworkForm() {
       </div>
 
       {/* Image upload */}
-      <div className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
+      <div className="rounded-2xl border border-black/5 bg-paper-surface p-5 shadow-sm">
         <label htmlFor="images" className={`mb-3 block ${labelCls}`}>
           Images *
         </label>
@@ -338,7 +338,7 @@ export default function CreateArtworkForm() {
           multiple
           required
           accept="image/*"
-          className="block w-full rounded-xl border border-dashed border-neutral-300 bg-neutral-50 px-3 py-3 text-sm text-neutral-600 file:mr-3 file:rounded-lg file:border-0 file:bg-neutral-900 file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-white hover:file:bg-neutral-800"
+          className="block w-full rounded-xl border border-dashed border-neutral-300 bg-paper-base px-3 py-3 text-sm text-neutral-600 file:mr-3 file:rounded-lg file:border-0 file:bg-neutral-900 file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-white hover:file:bg-neutral-800"
         />
         <p className="mt-2 text-xs text-neutral-400">
           Plusieurs fichiers acceptés.

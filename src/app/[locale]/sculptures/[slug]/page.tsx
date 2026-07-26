@@ -268,7 +268,7 @@ export default async function SculptureDetailPage({
       <JsonLd data={productJsonLd} />
       <JsonLd data={breadcrumbJsonLd} />
 
-      <main className="relative w-full overflow-x-clip bg-[linear-gradient(to_bottom,#fcfaf6,#f7f2ea,#fbf8f3)] py-20 md:py-32">
+      <main className="relative w-full overflow-x-clip bg-[linear-gradient(to_bottom,var(--paper-glow),var(--paper-surface),var(--paper-base))] py-20 md:py-32">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(214,191,163,0.14),transparent_28%),radial-gradient(circle_at_85%_10%,rgba(255,106,0,0.08),transparent_20%)]" />
 
         <Container className="relative z-10 w-full max-w-[1200px] px-4 md:px-6">
@@ -315,7 +315,7 @@ export default async function SculptureDetailPage({
               {(localizedArtwork.price || localizedArtwork.availability) ? (
                 <div className="mt-6 flex flex-wrap items-center gap-4">
                   {localizedArtwork.price ? (
-                    <span className="text-3xl font-semibold tracking-[-0.03em] text-[#d07a2d] md:text-4xl">
+                    <span className="text-3xl font-semibold tracking-[-0.03em] text-gold md:text-4xl">
                       €{localizedArtwork.price}
                     </span>
                   ) : null}

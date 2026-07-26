@@ -80,7 +80,7 @@ export default async function AdminArtworksPage() {
   const artworks = await getArtworks();
 
   return (
-    <main className="min-h-screen bg-[#f8f5ef] px-4 py-8 md:px-8 md:py-10">
+    <main className="min-h-screen bg-paper-base px-4 py-8 md:px-8 md:py-10">
       <div className="mx-auto max-w-7xl">
 
         <div className="mb-8">
@@ -104,13 +104,13 @@ export default async function AdminArtworksPage() {
               <p className="text-xs font-medium uppercase tracking-[0.1em] text-neutral-500">
                 Toutes les œuvres
               </p>
-              <span className="rounded-full bg-white px-3 py-1 text-xs font-medium text-neutral-600 ring-1 ring-black/5">
+              <span className="rounded-full bg-paper-surface px-3 py-1 text-xs font-medium text-neutral-600 ring-1 ring-black/5">
                 {artworks.length} œuvre{artworks.length > 1 ? "s" : ""}
               </span>
             </div>
 
             {artworks.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-neutral-200 bg-white px-6 py-16 text-center text-sm text-neutral-400 shadow-sm">
+              <div className="rounded-2xl border border-dashed border-neutral-200 bg-paper-surface px-6 py-16 text-center text-sm text-neutral-400 shadow-sm">
                 Aucune œuvre enregistrée pour le moment.
               </div>
             ) : (
@@ -128,10 +128,10 @@ export default async function AdminArtworksPage() {
                   return (
                     <article
                       key={artwork.id}
-                      className="group overflow-hidden rounded-2xl border border-black/5 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                      className="group overflow-hidden rounded-2xl border border-black/5 bg-paper-surface shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
                     >
                       {/* Cover image */}
-                      <div className="relative aspect-square bg-neutral-100">
+                      <div className="relative aspect-square bg-paper-base">
                         {cover ? (
                           <Image
                             src={cover.image_url}
@@ -179,7 +179,7 @@ export default async function AdminArtworksPage() {
                         <div className="mt-3 flex gap-1.5">
                           <Link
                             href={`/admin/artworks/${artwork.id}`}
-                            className="inline-flex items-center justify-center rounded-lg border border-neutral-300 bg-white px-3 py-1.5 text-[11px] font-medium text-neutral-900 transition hover:border-neutral-500"
+                            className="inline-flex items-center justify-center rounded-lg border border-neutral-300 bg-paper-surface px-3 py-1.5 text-[11px] font-medium text-neutral-900 transition hover:border-neutral-500"
                           >
                             Gérer
                           </Link>

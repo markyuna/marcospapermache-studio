@@ -109,7 +109,7 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="relative mt-28 overflow-hidden border-t border-[#eadfce]/70 bg-[#f8f3ea] text-neutral-950">
+      <footer className="relative mt-28 overflow-hidden border-t border-[#eadfce]/70 bg-paper-surface text-neutral-950">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(181,134,80,0.18),transparent_34%),radial-gradient(circle_at_80%_90%,rgba(255,119,53,0.13),transparent_36%)]" />
         <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-[#b89668]/70 to-transparent" />
 

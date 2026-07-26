@@ -87,7 +87,7 @@ export default async function AdminAnalyticsPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-[#f8f5ef] px-4 py-8 text-neutral-950 md:px-8 md:py-10">
+    <main className="min-h-screen bg-paper-base px-4 py-8 text-neutral-950 md:px-8 md:py-10">
       <div className="mx-auto max-w-7xl">
 
         {/* Header */}
@@ -100,7 +100,7 @@ export default async function AdminAnalyticsPage() {
             href="https://clarity.microsoft.com"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 self-start rounded-xl border border-neutral-200 bg-white px-4 py-2.5 text-sm font-medium text-neutral-700 transition hover:border-neutral-400 hover:text-neutral-900"
+            className="inline-flex items-center gap-2 self-start rounded-xl border border-neutral-200 bg-paper-surface px-4 py-2.5 text-sm font-medium text-neutral-700 transition hover:border-neutral-400 hover:text-neutral-900"
           >
             <Activity className="h-4 w-4" />
             Ouvrir Clarity
@@ -115,7 +115,7 @@ export default async function AdminAnalyticsPage() {
             return (
               <div
                 key={stat.label}
-                className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm"
+                className="rounded-2xl border border-black/5 bg-paper-surface p-5 shadow-sm"
               >
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl bg-[#f1e8dc] text-neutral-800">
                   <Icon size={18} />
@@ -133,7 +133,7 @@ export default async function AdminAnalyticsPage() {
         </div>
 
         {/* Top pages */}
-        <div className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm md:p-6">
+        <div className="rounded-2xl border border-black/5 bg-paper-surface p-5 shadow-sm md:p-6">
           <div className="mb-6 flex items-center justify-between">
             <div>
               <p className="text-xs font-medium uppercase tracking-[0.1em] text-neutral-400">

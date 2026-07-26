@@ -61,7 +61,7 @@ export default function ImageGallery({
   return (
     <>
       <div className="space-y-4">
-        <div className="group relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-black/5 bg-white shadow-sm">
+        <div className="group relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-black/5 bg-paper-surface shadow-sm">
           <button
             type="button"
             onClick={() => openLightbox(activeIndex)}
@@ -104,7 +104,7 @@ export default function ImageGallery({
                 type="button"
                 onClick={() => setActiveIndex(index)}
                 className={clsx(
-                  "relative h-20 w-20 shrink-0 overflow-hidden rounded-2xl border bg-white transition",
+                  "relative h-20 w-20 shrink-0 overflow-hidden rounded-2xl border bg-paper-surface transition",
                   activeIndex === index
                     ? "border-neutral-900 shadow-sm ring-1 ring-neutral-900/10"
                     : "border-black/10 opacity-70 hover:opacity-100"

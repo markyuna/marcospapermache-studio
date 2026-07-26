@@ -117,7 +117,7 @@ export default async function SculpturesPage({ params }: Props) {
       <JsonLd data={collectionJsonLd} />
       <JsonLd data={itemListJsonLd} />
 
-      <main className="bg-[#f8f5ef] text-neutral-900">
+      <main className="bg-paper-base text-neutral-900">
         {/* Hero Banner */}
         <section className="relative isolate overflow-hidden">
           <div className="relative h-[220px] w-full sm:h-[260px] md:h-[300px] lg:h-[340px]">

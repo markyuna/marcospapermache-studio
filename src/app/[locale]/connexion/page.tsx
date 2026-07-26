@@ -23,9 +23,9 @@ export default async function ConnexionPage({ params }: Props) {
   const t = await getTranslations({ locale, namespace: "AccountPage.login" });
 
   return (
-    <main className="min-h-screen bg-[linear-gradient(to_bottom,#fffaf5,#fff7f1,#ffffff)] px-4 py-24 md:px-6">
+    <main className="min-h-screen bg-[linear-gradient(to_bottom,var(--paper-base),var(--paper-surface),var(--paper-base))] px-4 py-24 md:px-6">
       <div className="mx-auto flex min-h-[calc(100vh-8rem)] max-w-5xl items-center justify-center">
-        <section className="w-full max-w-xl rounded-[32px] border border-neutral-200 bg-white/90 p-8 shadow-sm backdrop-blur md:p-10">
+        <section className="w-full max-w-xl rounded-[32px] border border-neutral-200 bg-paper-surface/90 p-8 shadow-sm backdrop-blur md:p-10">
           <div className="mx-auto mb-8 max-w-md text-center">
             <p className="text-xs uppercase tracking-[0.28em] text-neutral-400">
               {t("badge")}

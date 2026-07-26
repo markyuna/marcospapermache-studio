@@ -94,7 +94,7 @@ export function HeroSection() {
 
   return (
     <section className="relative overflow-hidden pb-20 pt-10 md:pb-28 md:pt-14 xl:pb-36 xl:pt-16">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(180,150,110,0.10),transparent_30%),radial-gradient(circle_at_82%_12%,rgba(218,198,172,0.18),transparent_24%),linear-gradient(to_bottom,#fffaf6,#f8f1e7,#fffaf6)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_25%,var(--paper-glow)_0%,var(--paper-surface)_70%,var(--paper-warm)_100%)]" />
 
       <Container className="relative z-10">
         <div className="grid items-center gap-12 lg:grid-cols-[1.02fr_0.98fr] lg:gap-18">

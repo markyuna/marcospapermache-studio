@@ -272,7 +272,7 @@ export default function CommandeForm({
 
   const inputClassName = dark
     ? "w-full rounded-[1rem] border border-[#2d2420] bg-[#1c1713] px-4 py-3.5 text-sm text-white outline-none transition duration-200 placeholder:text-white/25 focus:border-[#c07040]/60 focus:ring-4 focus:ring-[#c07040]/10"
-    : "w-full rounded-[1rem] border border-[#e4d6c8] bg-white px-4 py-3.5 text-sm text-[#181512] outline-none transition duration-200 placeholder:text-[#9a8a7d] focus:border-[#cfa57f] focus:ring-4 focus:ring-[#cfa57f]/10";
+    : "w-full rounded-[1rem] border border-[#e4d6c8] bg-paper-surface px-4 py-3.5 text-sm text-[#181512] outline-none transition duration-200 placeholder:text-[#9a8a7d] focus:border-[#cfa57f] focus:ring-4 focus:ring-[#cfa57f]/10";
 
   const labelClassName = dark
     ? "mb-2 block text-[10px] font-semibold uppercase tracking-[0.22em] text-white/40"
@@ -420,7 +420,7 @@ export default function CommandeForm({
               {t("generatedConcept.description")}
             </p>
 
-            <div className={`mt-4 overflow-hidden rounded-[1.2rem] border ${dark ? "border-[#2d2420] bg-[#1c1713]" : "border-[#e5d8cb] bg-white"}`}>
+            <div className={`mt-4 overflow-hidden rounded-[1.2rem] border ${dark ? "border-[#2d2420] bg-[#1c1713]" : "border-[#e5d8cb] bg-paper-surface"}`}>
               <div className="relative mx-auto aspect-[4/5] w-full max-w-sm lg:mx-0">
                 <Image
                   src={generatedImage}
@@ -552,13 +552,13 @@ export default function CommandeForm({
               type="file"
               accept="image/png,image/jpeg,image/webp"
               onChange={handleImageChange}
-              className={`block w-full rounded-[1rem] border px-4 py-2.5 text-sm transition ${dark ? "border-[#2d2420] bg-[#1c1713] text-white/50 file:mr-4 file:rounded-full file:border-0 file:bg-[linear-gradient(135deg,#e07030,#c85100)] file:px-4 file:py-2 file:text-sm file:font-medium file:text-white" : "border-[#e4d6c8] bg-white text-[#5f5348] file:mr-4 file:rounded-full file:border-0 file:bg-[#181512] file:px-4 file:py-2 file:text-sm file:font-medium file:text-white"}`}
+              className={`block w-full rounded-[1rem] border px-4 py-2.5 text-sm transition ${dark ? "border-[#2d2420] bg-[#1c1713] text-white/50 file:mr-4 file:rounded-full file:border-0 file:bg-[linear-gradient(135deg,#e07030,#c85100)] file:px-4 file:py-2 file:text-sm file:font-medium file:text-white" : "border-[#e4d6c8] bg-paper-surface text-[#5f5348] file:mr-4 file:rounded-full file:border-0 file:bg-[#181512] file:px-4 file:py-2 file:text-sm file:font-medium file:text-white"}`}
             />
 
             <p className={`mt-2 text-xs ${dark ? "text-white/30" : "text-[#8a7667]"}`}>{t("fields.imageHint")}</p>
 
             {imagePreview ? (
-              <div className="relative mt-3 overflow-hidden rounded-[1.25rem] border border-[#e5d8cb] bg-white">
+              <div className="relative mt-3 overflow-hidden rounded-[1.25rem] border border-[#e5d8cb] bg-paper-surface">
                 <div className="relative h-56 w-full">
                   <Image
                     src={imagePreview}

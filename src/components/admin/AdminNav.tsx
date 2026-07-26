@@ -23,7 +23,7 @@ export default function AdminNav() {
   }, [router]);
 
   return (
-    <div className="sticky top-0 z-40 border-b border-neutral-200 bg-[#f8f5ef]/95 backdrop-blur">
+    <div className="sticky top-0 z-40 border-b border-neutral-200 bg-paper-base/95 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-8">
 
         {/* Brand */}

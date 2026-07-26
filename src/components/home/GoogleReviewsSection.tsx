@@ -87,7 +87,7 @@ export default function GoogleReviewsSection() {
   const reviews = t.raw("reviews") as GoogleReview[];
 
   return (
-    <section className="relative isolate overflow-hidden bg-[#f7f0e6] py-24 text-neutral-950 md:py-32">
+    <section className="relative isolate overflow-hidden bg-paper-surface py-24 text-neutral-950 md:py-32">
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_15%_10%,rgba(200,135,63,0.15),transparent_32%),radial-gradient(circle_at_85%_35%,rgba(255,168,94,0.10),transparent_34%)]" />
       <div className="pointer-events-none absolute left-1/2 top-10 -z-10 h-[340px] w-[340px] -translate-x-1/2 rounded-full bg-white/30 blur-3xl" />
 

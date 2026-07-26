@@ -35,7 +35,7 @@ export default function AdminCommandeImagePreview({
 
   return (
     <>
-      <div className="rounded-3xl border border-white/70 bg-white/90 p-5 shadow-[0_10px_30px_rgba(15,23,42,0.06)] md:p-6">
+      <div className="rounded-3xl border border-white/70 bg-paper-surface/90 p-5 shadow-[0_10px_30px_rgba(15,23,42,0.06)] md:p-6">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <div>
             <h2 className="text-lg font-semibold text-neutral-900">
@@ -50,7 +50,7 @@ export default function AdminCommandeImagePreview({
             <button
               type="button"
               onClick={() => setIsOpen(true)}
-              className="inline-flex items-center gap-2 rounded-2xl border border-neutral-200 bg-white px-4 py-2 text-sm font-medium text-neutral-700 transition hover:border-orange-200 hover:bg-orange-50"
+              className="inline-flex items-center gap-2 rounded-2xl border border-neutral-200 bg-paper-surface px-4 py-2 text-sm font-medium text-neutral-700 transition hover:border-orange-200 hover:bg-orange-50"
             >
               <ZoomIn className="h-4 w-4" />
               Voir en grand
@@ -60,7 +60,7 @@ export default function AdminCommandeImagePreview({
               href={imageUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-2xl border border-neutral-200 bg-white px-4 py-2 text-sm font-medium text-neutral-700 transition hover:border-orange-200 hover:bg-orange-50"
+              className="inline-flex items-center gap-2 rounded-2xl border border-neutral-200 bg-paper-surface px-4 py-2 text-sm font-medium text-neutral-700 transition hover:border-orange-200 hover:bg-orange-50"
             >
               <ExternalLink className="h-4 w-4" />
               Ouvrir l’image
@@ -71,7 +71,7 @@ export default function AdminCommandeImagePreview({
         <button
           type="button"
           onClick={() => setIsOpen(true)}
-          className="group relative block w-full overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-50 text-left transition hover:border-orange-200"
+          className="group relative block w-full overflow-hidden rounded-2xl border border-neutral-200 bg-paper-base text-left transition hover:border-orange-200"
         >
           <div className="relative h-[260px] w-full md:h-[360px] xl:h-[460px]">
             <Image

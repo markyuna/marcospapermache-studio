@@ -56,7 +56,7 @@ async function CommandesData() {
 
 function CommandesSkeleton() {
   return (
-    <div className="rounded-3xl border border-white/70 bg-white/90 p-8 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
+    <div className="rounded-3xl border border-white/70 bg-paper-surface/90 p-8 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
       <div className="animate-pulse space-y-4">
         {Array.from({ length: 4 }).map((_, index) => (
           <div
@@ -85,7 +85,7 @@ function CommandesSkeleton() {
 
 export default function AdminCommandesPage() {
   return (
-    <main className="min-h-screen bg-[linear-gradient(to_bottom,#fffaf5,#fff7f1,#ffffff)] px-4 py-8 md:px-6 lg:px-10">
+    <main className="min-h-screen bg-[linear-gradient(to_bottom,var(--paper-base),var(--paper-surface),var(--paper-base))] px-4 py-8 md:px-6 lg:px-10">
       <div className="mx-auto max-w-7xl">
         <Suspense fallback={<CommandesSkeleton />}>
           <CommandesData />
