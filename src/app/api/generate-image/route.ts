@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import sharp from "sharp";
 
-import { getAuthenticatedUser } from "@/lib/admin-auth";
+import { getAuthenticatedUser, isAdminEmail } from "@/lib/admin-auth";
 import { prisma } from "@/lib/prisma";
 import { uploadBase64ImageToStorage } from "@/lib/storage";
 import { tryConsumeUserCredit } from "@/lib/user-credits";
@@ -47,20 +47,26 @@ export async function POST(request: Request) {
       );
     }
 
-    const creditResult = await tryConsumeUserCredit(user.id);
+    const isAdmin = isAdminEmail(user.email);
 
-    if (!creditResult.allowed) {
-      return NextResponse.json(
-        {
-          error:
-            "Vous n’avez plus de générations disponibles. Achetez un pack pour continuer.",
-          requiresPayment: true,
-        },
-        { status: 402 },
-      );
+    let paidCreditsRemaining: number | undefined;
+
+    if (!isAdmin) {
+      const creditResult = await tryConsumeUserCredit(user.id);
+
+      if (!creditResult.allowed) {
+        return NextResponse.json(
+          {
+            error:
+              "Vous n’avez plus de générations disponibles. Achetez un pack pour continuer.",
+            requiresPayment: true,
+          },
+          { status: 402 },
+        );
+      }
+
+      paidCreditsRemaining = creditResult.remaining;
     }
-
-    const paidCreditsRemaining = creditResult.remaining;
 
     const reinforcedPrompt = withFrame
       ? `${prompt}, zoomed out composition, the full outer frame must be completely visible with comfortable margin on every side, no cropped frame, no cut edges, no partial artwork, the artwork must fit naturally inside the image`
@@ -118,7 +124,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       image,
-      paidCreditsRemaining,
+      ...(isAdmin ? { unlimited: true } : { paidCreditsRemaining }),
       ...(imageId ? { imageId } : {}),
     });
   } catch {

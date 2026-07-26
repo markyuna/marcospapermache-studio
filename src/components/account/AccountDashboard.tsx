@@ -21,6 +21,7 @@ type Props = {
   generatedImages: GeneratedImage[];
   commandes: Commande[];
   profile: UserProfile | null;
+  isAdmin: boolean;
 };
 
 function formatDate(date: Date | string) {
@@ -44,6 +45,7 @@ export default async function AccountDashboard({
   generatedImages,
   commandes,
   profile,
+  isAdmin,
 }: Props) {
   const t = await getTranslations("AccountPage.dashboard");
 
@@ -77,12 +79,12 @@ export default async function AccountDashboard({
                 {t("creditsLabel")}
               </p>
               <p className="text-2xl font-semibold text-[#181512]">
-                {t("creditsCount", { count: paidCredits })}
+                {isAdmin ? `∞ ${t("creditsUnlimited")}` : t("creditsCount", { count: paidCredits })}
               </p>
             </div>
           </div>
 
-          <BuyCreditsButton />
+          {isAdmin ? null : <BuyCreditsButton />}
         </div>
 
         <div className="mt-4 border-t border-neutral-100 pt-4">

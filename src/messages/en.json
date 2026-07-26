@@ -386,6 +386,7 @@
       "title": "Hello",
       "creditsLabel": "Available generations",
       "creditsCount": "{count, plural, =0 {No generations available} one {# generation} other {# generations}}",
+      "creditsUnlimited": "Unlimited",
       "buyButton": "Buy a pack of 3 generations - 1 €",
       "goToAiExperience": "Use my generations",
       "buyError": "Couldn't start the payment. Please try again.",
@@ -643,7 +644,8 @@
       "description": "Each visualisation is paid. Buy a pack of generations to preview your sculpture before ordering it."
     },
     "credits": {
-      "remaining": "{count, plural, =0 {No generations left} one {# generation left} other {# generations left}}"
+      "remaining": "{count, plural, =0 {No generations left} one {# generation left} other {# generations left}}",
+      "unlimited": "Unlimited generations"
     },
     "payment": {
       "payButton": "Buy a pack of 3 generations - 1 €",

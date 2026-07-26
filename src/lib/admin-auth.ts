@@ -11,6 +11,13 @@ function getAllowedAdminEmails() {
     .filter(Boolean);
 }
 
+// Single source of truth for admin status — reused by requireAdmin() and by
+// any route/page that needs to branch behavior for admins without redirecting.
+export function isAdminEmail(email: string | null | undefined) {
+  if (!email) return false;
+  return getAllowedAdminEmails().includes(email.toLowerCase());
+}
+
 // Deduplicates auth.getUser() within a single request render pass
 export const getAuthenticatedUser = cache(async () => {
   const supabase = await createSupabaseServerClient();
@@ -38,10 +45,7 @@ export async function requireAdmin() {
     };
   }
 
-  const email = user.email?.toLowerCase();
-  const allowedEmails = getAllowedAdminEmails();
-
-  if (!email || !allowedEmails.includes(email)) {
+  if (!isAdminEmail(user.email)) {
     return {
       ok: false as const,
       status: 403,

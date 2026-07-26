@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { getAuthenticatedUser } from "@/lib/admin-auth";
+import { getAuthenticatedUser, isAdminEmail } from "@/lib/admin-auth";
 import { getUserCredits } from "@/lib/user-credits";
 
 export async function GET() {
@@ -8,6 +8,10 @@ export async function GET() {
 
   if (!user) {
     return NextResponse.json({ error: "Non authentifié." }, { status: 401 });
+  }
+
+  if (isAdminEmail(user.email)) {
+    return NextResponse.json({ unlimited: true });
   }
 
   const paidCredits = await getUserCredits(user.id);

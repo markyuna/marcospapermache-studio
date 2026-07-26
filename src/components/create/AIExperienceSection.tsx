@@ -36,6 +36,7 @@ type GenerateImageResponse = {
   requiresPayment?: boolean;
   requiresSignup?: boolean;
   paidCreditsRemaining?: number;
+  unlimited?: boolean;
 };
 
 type CheckoutSessionResponse = {
@@ -45,6 +46,7 @@ type CheckoutSessionResponse = {
 
 type UserCreditsResponse = {
   paidCredits?: number;
+  unlimited?: boolean;
 };
 
 type CreationType = "wall" | "object" | "light";
@@ -520,6 +522,7 @@ export default function AIExperienceSection() {
 
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [userCredits, setUserCredits] = useState(0);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [isRedirectingToCheckout, setIsRedirectingToCheckout] = useState(false);
   const [paymentSuccessMessage, setPaymentSuccessMessage] = useState("");
@@ -536,12 +539,14 @@ export default function AIExperienceSection() {
 
     if (!user) {
       setUserCredits(0);
+      setIsAdmin(false);
       return;
     }
 
     const response = await fetch("/api/user/credits");
     if (response.ok) {
       const data: UserCreditsResponse = await response.json();
+      setIsAdmin(Boolean(data.unlimited));
       setUserCredits(data.paidCredits ?? 0);
     }
   }, []);
@@ -592,7 +597,7 @@ export default function AIExperienceSection() {
     };
   }, [isLoading]);
 
-  const isBlocked = currentUser ? userCredits <= 0 : true;
+  const isBlocked = currentUser ? !isAdmin && userCredits <= 0 : true;
 
   const previewAspectClass = useMemo(() => {
     if (creationType === "wall") {
@@ -884,7 +889,9 @@ export default function AIExperienceSection() {
       setGeneratedImageId(data.imageId ?? null);
       setLastPrompt(fullPrompt);
 
-      if (data.paidCreditsRemaining !== undefined) {
+      if (data.unlimited) {
+        setIsAdmin(true);
+      } else if (data.paidCreditsRemaining !== undefined) {
         setUserCredits(data.paidCreditsRemaining);
       }
 
@@ -1461,7 +1468,7 @@ export default function AIExperienceSection() {
                 {currentUser ? (
                   <p className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#d9b08c]/20 bg-[#d9b08c]/10 px-4 py-2 text-xs font-medium text-[#e3bf9d]">
                     <Sparkles className="h-3.5 w-3.5" />
-                    {t("credits.remaining", { count: userCredits })}
+                    {isAdmin ? `∞ ${t("credits.unlimited")}` : t("credits.remaining", { count: userCredits })}
                   </p>
                 ) : null}
 
