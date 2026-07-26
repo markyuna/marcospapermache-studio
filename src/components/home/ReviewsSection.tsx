@@ -1,20 +1,45 @@
-// src/components/home/GoogleReviewsSection.tsx
+// src/components/home/ReviewsSection.tsx
 
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight, Quote, Star } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { Quote, Star } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 
-const googleReviewsUrl = "https://share.google/dhHfwS0J5xfDQAcoz";
+import { etsyReviews } from "@/data/etsy-reviews";
 
-type GoogleReview = {
+const DATE_LOCALES: Record<string, string> = {
+  fr: "fr-FR",
+  en: "en-US",
+  es: "es-ES",
+};
+
+function formatEtsyDate(dateIso: string, locale: string) {
+  const bcp47 = DATE_LOCALES[locale] ?? "fr-FR";
+  return new Intl.DateTimeFormat(bcp47, { dateStyle: "long" }).format(
+    new Date(dateIso)
+  );
+}
+
+type GoogleReviewData = {
   name: string;
   initials: string;
   meta: string;
   text: string;
   date: string;
   rating: number;
+};
+
+type DisplayReview = {
+  id: string;
+  name: string;
+  initials: string;
+  meta: string;
+  text: string;
+  dateLabel: string;
+  rating: number;
+  source: "google" | "etsy";
+  lang?: "en" | "fr";
 };
 
 function Stars({ rating, label }: { rating: number; label: string }) {
@@ -32,7 +57,7 @@ function ReviewCard({
   source,
   starsLabel,
 }: {
-  review: GoogleReview;
+  review: DisplayReview;
   source: string;
   starsLabel: string;
 }) {
@@ -52,7 +77,9 @@ function ReviewCard({
             <p className="text-sm font-semibold leading-none text-[#181512]">
               {review.name}
             </p>
-            <p className="mt-1 text-[11px] text-neutral-400">{review.meta}</p>
+            <p className="mt-1 text-[11px] text-neutral-400">
+              {review.meta}
+            </p>
           </div>
         </div>
 
@@ -66,8 +93,11 @@ function ReviewCard({
         <Stars rating={review.rating} label={starsLabel} />
       </div>
 
-      {/* Text */}
-      <p className="mt-3 flex-1 text-[13px] leading-7 text-neutral-600">
+      {/* Text — Etsy reviews are verbatim in their original language, line breaks preserved */}
+      <p
+        lang={review.lang}
+        className="mt-3 flex-1 whitespace-pre-line text-[13px] leading-7 text-neutral-600"
+      >
         &ldquo;{review.text}&rdquo;
       </p>
 
@@ -76,15 +106,53 @@ function ReviewCard({
         <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-neutral-400">
           {source}
         </p>
-        <p className="text-[11px] text-neutral-400">{review.date}</p>
+        <p className="text-[11px] text-neutral-400">{review.dateLabel}</p>
       </div>
     </article>
   );
 }
 
-export default function GoogleReviewsSection() {
-  const t = useTranslations("GoogleReviews");
-  const reviews = t.raw("reviews") as GoogleReview[];
+export default function ReviewsSection() {
+  const t = useTranslations("EtsyReviews");
+  const locale = useLocale();
+
+  const sortedEtsyReviews = [...etsyReviews].sort((a, b) =>
+    b.date.localeCompare(a.date)
+  );
+
+  const etsyDisplay: DisplayReview[] = sortedEtsyReviews.map((review) => ({
+    id: `etsy-${review.author}-${review.date}`,
+    name: review.author,
+    initials: review.author.slice(0, 2).toUpperCase(),
+    meta: review.product,
+    text: review.text,
+    dateLabel: formatEtsyDate(review.date, locale),
+    rating: review.rating,
+    source: "etsy",
+    lang: review.lang,
+  }));
+
+  const googleReviews = t.raw("googleReviews") as GoogleReviewData[];
+  const googleDisplay: DisplayReview[] = googleReviews.map((review, i) => ({
+    id: `google-${review.name}-${i}`,
+    name: review.name,
+    initials: review.initials,
+    meta: review.meta,
+    text: review.text,
+    dateLabel: review.date,
+    rating: review.rating,
+    source: "google",
+  }));
+
+  const reviews = [...etsyDisplay, ...googleDisplay];
+  const averageRating = (
+    reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
+  ).toFixed(1);
+
+  const sourceLabels: Record<DisplayReview["source"], string> = {
+    google: t("sourceGoogle"),
+    etsy: t("sourceEtsy"),
+  };
 
   return (
     <section className="relative isolate overflow-hidden bg-paper-surface py-24 text-neutral-950 md:py-32">
@@ -123,25 +191,18 @@ export default function GoogleReviewsSection() {
           >
             <div className="flex items-center gap-3">
               <span className="text-4xl font-semibold tracking-[-0.05em] text-[#181512]">
-                5.0
+                {averageRating}
               </span>
               <div>
-                <Stars rating={5} label={t("starsAria", { rating: 5 })} />
+                <Stars
+                  rating={Math.round(Number(averageRating))}
+                  label={t("starsAria", { rating: Number(averageRating) })}
+                />
                 <p className="mt-1 text-xs text-neutral-500">
-                  {t("ratingLabel")}
+                  {t("ratingLabel", { count: reviews.length })}
                 </p>
               </div>
             </div>
-
-            <a
-              href={googleReviewsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-[#c8873f]/30 bg-white px-4 py-2.5 text-sm font-semibold text-[#181512] shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-[#c8873f]/60 hover:bg-[#fffaf4] hover:shadow-[0_14px_35px_rgba(24,21,18,0.07)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c8873f]/50"
-            >
-              {t("button")}
-              <ArrowUpRight className="h-3.5 w-3.5" />
-            </a>
           </motion.div>
         </div>
       </div>
@@ -160,9 +221,9 @@ export default function GoogleReviewsSection() {
         >
           {[...reviews, ...reviews].map((review, index) => (
             <ReviewCard
-              key={`${review.name}-${index}`}
+              key={`${review.id}-${index}`}
               review={review}
-              source={t("source")}
+              source={sourceLabels[review.source]}
               starsLabel={t("starsAria", { rating: review.rating })}
             />
           ))}

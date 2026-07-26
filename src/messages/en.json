@@ -129,15 +129,15 @@
     "quote": "Each sculpture carries the marks of gesture, time and material.",
     "cta": "Start a custom creation"
   },
-  "GoogleReviews": {
-    "badge": "Google Reviews",
+  "EtsyReviews": {
+    "badge": "Customer Reviews",
     "title": "They talk about my studio",
-    "description": "Authentic feedback about handmade creations, imagined as unique and meaningful sculptural pieces.",
-    "ratingLabel": "Customer reviews published on Google",
-    "button": "See all reviews",
-    "source": "Google Review",
+    "description": "Authentic feedback left by my customers on Google and Etsy, about handmade creations, imagined as unique and meaningful sculptural pieces.",
+    "ratingLabel": "Average from {count} reviews (Google & Etsy)",
+    "sourceGoogle": "Google Review",
+    "sourceEtsy": "Etsy Review",
     "starsAria": "{rating} stars",
-    "reviews": [
+    "googleReviews": [
       {
         "name": "Mario Ventura",
         "initials": "MV",
@@ -152,38 +152,6 @@
         "meta": "Local Guide · 19 reviews",
         "text": "Marcos created it custom-made for me and the result was simply magnificent. Talented and attentive, everything is made from recycled materials. Highly recommended!",
         "date": "June 2025",
-        "rating": 5
-      },
-      {
-        "name": "Aurélie D.",
-        "initials": "AD",
-        "meta": "6 reviews",
-        "text": "A sculptural lamp ordered for my living room — truly exceptional result. The piece has become the centrepiece of the entire room. Highly recommended.",
-        "date": "May 2025",
-        "rating": 5
-      },
-      {
-        "name": "Thomas R.",
-        "initials": "TR",
-        "meta": "Interior architect",
-        "text": "I regularly work with Marcos on high-end decorative projects. His craftsmanship is remarkably refined, with recycled materials elevated through a rare artistic sensibility.",
-        "date": "April 2025",
-        "rating": 5
-      },
-      {
-        "name": "Isabelle M.",
-        "initials": "IM",
-        "meta": "2 reviews",
-        "text": "Custom wall sculpture for my office. The result is stunning — understated, contemporary, with a sculptural presence that transforms the atmosphere. Thank you Marcos!",
-        "date": "March 2025",
-        "rating": 5
-      },
-      {
-        "name": "Pierre-Yves C.",
-        "initials": "PC",
-        "meta": "1 review",
-        "text": "A personalised gift for a birthday. Marcos captured the exact essence of the project in just a few exchanges. The person who received it was truly moved.",
-        "date": "February 2025",
         "rating": 5
       }
     ]

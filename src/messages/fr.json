@@ -129,15 +129,15 @@
     "quote": "Chaque sculpture porte les traces du geste, du temps et de la matière.",
     "cta": "Commencer une création sur mesure"
   },
-  "GoogleReviews": {
-    "badge": "Avis Google",
+  "EtsyReviews": {
+    "badge": "Avis clients",
     "title": "Ils parlent de mon atelier",
-    "description": "Des retours authentiques autour de créations façonnées à la main, pensées comme des pièces uniques et sensibles.",
-    "ratingLabel": "Avis clients publiés sur Google",
-    "button": "Voir tous les avis",
-    "source": "Avis Google",
+    "description": "Des avis authentiques laissés par mes clients sur Google et sur Etsy, à propos de créations façonnées à la main, pensées comme des pièces uniques et sensibles.",
+    "ratingLabel": "Moyenne sur {count} avis (Google & Etsy)",
+    "sourceGoogle": "Avis Google",
+    "sourceEtsy": "Avis Etsy",
     "starsAria": "{rating} étoiles",
-    "reviews": [
+    "googleReviews": [
       {
         "name": "Mario Ventura",
         "initials": "MV",
@@ -152,38 +152,6 @@
         "meta": "Local Guide · 19 avis",
         "text": "Marcos me l’a réalisée sur mesure et le résultat était tout simplement magnifique. Talentueux et à l’écoute, tout est fabriqué à partir de matériaux recyclés. Je recommande vivement !",
         "date": "Juin 2025",
-        "rating": 5
-      },
-      {
-        "name": "Aurélie D.",
-        "initials": "AD",
-        "meta": "6 avis",
-        "text": "Une lampe sculpturale commandée pour mon salon — rendu absolument exceptionnel. La pièce est devenue le centre d’attention de toute la pièce. Je recommande sans hésiter.",
-        "date": "Mai 2025",
-        "rating": 5
-      },
-      {
-        "name": "Thomas R.",
-        "initials": "TR",
-        "meta": "Architecte d’intérieur",
-        "text": "Je travaille régulièrement avec Marcos pour des projets haut de gamme. Son travail est d’une finesse remarquable, les matières recyclées sont sublimées avec un soin artistique rare.",
-        "date": "Avril 2025",
-        "rating": 5
-      },
-      {
-        "name": "Isabelle M.",
-        "initials": "IM",
-        "meta": "2 avis",
-        "text": "Sculpture murale sur mesure pour mon bureau. Le résultat est bluffant — sobre, contemporain et avec une présence sculpturale qui change l’atmosphère de l’espace. Merci Marcos !",
-        "date": "Mars 2025",
-        "rating": 5
-      },
-      {
-        "name": "Pierre-Yves C.",
-        "initials": "PC",
-        "meta": "1 avis",
-        "text": "Cadeau personnalisé pour un anniversaire. Marcos a su capter exactement l’essence du projet en quelques échanges. La personne qui a reçu la pièce était émue.",
-        "date": "Février 2025",
         "rating": 5
       }
     ]
