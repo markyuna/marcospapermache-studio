@@ -10,6 +10,30 @@ type Props = {
   storyImages?: ArtworkStoryImage[] | null;
 };
 
+const COLLAGE_SPAN_CLASSES = [
+  "col-span-2 md:col-span-2 md:row-span-3",
+  "md:col-span-2 md:row-span-2",
+  "md:row-span-2",
+  "md:row-span-2",
+  "md:col-span-2",
+  "",
+];
+
+const COLLAGE_ROTATION_CLASSES = [
+  "md:-rotate-2",
+  "md:rotate-[1.5deg]",
+  "md:-rotate-[1.5deg]",
+  "md:rotate-2",
+];
+
+function getCollageSpanClasses(index: number): string {
+  return COLLAGE_SPAN_CLASSES[index % COLLAGE_SPAN_CLASSES.length];
+}
+
+function getCollageRotationClasses(index: number): string {
+  return COLLAGE_ROTATION_CLASSES[index % COLLAGE_ROTATION_CLASSES.length];
+}
+
 function getEmbedUrl(url: string): string | null {
   const youtubeMatch = url.match(
     /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s?]+)/
@@ -82,28 +106,21 @@ export default function AtelierStorySection({
           </div>
         )}
 
-        {/* Story images grid */}
+        {/* Story images collage */}
         {safeImages.length > 0 && (
-          <div
-            className={
-              safeImages.length === 1
-                ? "max-w-xl"
-                : safeImages.length === 2
-                  ? "grid grid-cols-2 gap-4"
-                  : "grid grid-cols-2 gap-4 sm:grid-cols-3"
-            }
-          >
-            {safeImages.map((image) => (
+          <div className="grid grid-cols-2 gap-4 [grid-auto-flow:dense] [grid-auto-rows:110px] md:grid-cols-4 md:gap-5 md:[grid-auto-rows:130px]">
+            {safeImages.map((image, index) => (
               <div
                 key={image.id}
-                className="relative aspect-[4/5] overflow-hidden rounded-[18px] border border-black/[0.04] bg-[#efe8dc] shadow-[0_8px_24px_rgba(0,0,0,0.06)]"
+                className={`group relative overflow-hidden rounded-xl bg-[#efe8dc] shadow-md transition-transform duration-300 hover:z-10 hover:rotate-0 hover:scale-[1.02] hover:shadow-xl cursor-pointer ${getCollageSpanClasses(index)} ${getCollageRotationClasses(index)}`}
               >
                 <Image
                   src={image.image_url}
                   alt={image.alt_text || "Atelier"}
                   fill
+                  unoptimized
                   sizes="(max-width: 640px) 50vw, (max-width: 1200px) 33vw, 400px"
-                  className="object-cover"
+                  className="h-full w-full object-cover"
                 />
               </div>
             ))}
