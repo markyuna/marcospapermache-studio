@@ -207,7 +207,7 @@ export default function Navbar() {
           <span className="flex flex-col items-center justify-center">
             <span
               ref={marcosRef}
-              className="font-serif text-[1.15rem] font-medium leading-none tracking-[0.16em] text-[#181512] sm:text-[1.35rem] lg:text-2xl"
+              className="hidden font-serif text-[1.15rem] font-medium leading-none tracking-[0.16em] text-[#181512] sm:text-[1.35rem] md:block lg:text-2xl"
             >
               MARCOS
             </span>
