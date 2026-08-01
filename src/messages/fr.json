@@ -165,7 +165,8 @@
       "custom": "Créations sur mesure",
       "ai": "Expérience IA",
       "contact": "Contact",
-      "about": "À propos"
+      "about": "À propos",
+      "exhibitions": "Expositions"
     },
     "contact": "Contact",
     "rights": "Tous droits réservés",
@@ -877,6 +878,28 @@
         "heading": "Modifications",
         "text": "La présente politique peut être mise à jour. La date de dernière mise à jour est indiquée en bas de page."
       }
+    }
+  },
+  "Exhibitions": {
+    "metadata": {
+      "title": "Expositions — Marcos Papermache",
+      "description": "Expositions et reconnaissances de l'atelier Marcos Papermache : galeries, salons d'art et œuvres présentées en France et à l'international."
+    },
+    "hero": {
+      "eyebrow": "Marcos Papermache Studio",
+      "title": "Expositions",
+      "subtitle": "Un parcours d'expositions et de reconnaissances, de galeries parisiennes en salons d'art internationaux, où les sculptures en papier mâché trouvent leur public."
+    },
+    "events": {
+      "parisVideoExhibition": {
+        "title": "Exposition vidéo"
+      }
+    },
+    "countries": {
+      "switzerland": "Suisse"
+    },
+    "carousel": {
+      "goToImage": "Aller à l’image {index}"
     }
   }
 }

@@ -165,7 +165,8 @@
       "custom": "Creaciones a medida",
       "ai": "Experiencia IA",
       "contact": "Contacto",
-      "about": "Sobre mí"
+      "about": "Sobre mí",
+      "exhibitions": "Exposiciones"
     },
     "contact": "Contacto",
     "rights": "Todos los derechos reservados",
@@ -877,6 +878,28 @@
         "heading": "Modificaciones",
         "text": "La presente política puede actualizarse. La fecha de la última actualización figura al pie de la página."
       }
+    }
+  },
+  "Exhibitions": {
+    "metadata": {
+      "title": "Exposiciones — Marcos Papermache",
+      "description": "Exposiciones y reconocimientos del estudio Marcos Papermache: galerías, ferias de arte y obras presentadas en Francia y en el extranjero."
+    },
+    "hero": {
+      "eyebrow": "Marcos Papermache Studio",
+      "title": "Exposiciones",
+      "subtitle": "Un recorrido de exposiciones y reconocimientos, de galerías parisinas a ferias de arte internacionales, donde las esculturas de papel maché encuentran su público."
+    },
+    "events": {
+      "parisVideoExhibition": {
+        "title": "Exposición vídeo"
+      }
+    },
+    "countries": {
+      "switzerland": "Suiza"
+    },
+    "carousel": {
+      "goToImage": "Ir a la imagen {index}"
     }
   }
 }
