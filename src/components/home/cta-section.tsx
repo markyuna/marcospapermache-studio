@@ -134,6 +134,7 @@ export function CtaSection() {
                       src="/Harmonie-naturelle.png"
                       alt={t("imageAlt")}
                       fill
+                      unoptimized
                       sizes="
                         (max-width: 640px) 100vw,
                         (max-width: 1024px) 50vw,

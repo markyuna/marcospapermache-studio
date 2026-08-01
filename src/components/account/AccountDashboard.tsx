@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { Sparkles, Wand2, PackageSearch, ImageIcon, UserCog } from "lucide-react";
 
@@ -157,12 +156,13 @@ export default async function AccountDashboard({
                   <div className="flex min-w-0 items-center gap-3">
                     {sourceImage ? (
                       <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-neutral-200">
-                        <Image
+                        {/* Already-WebP Supabase Storage thumbnail at a fixed 48px size — native <img> skips Vercel Image Optimization entirely */}
+                        <img
                           src={sourceImage.imageUrl}
                           alt={sourceImage.prompt}
-                          fill
-                          sizes="48px"
-                          className="object-cover"
+                          loading="lazy"
+                          decoding="async"
+                          className="absolute inset-0 h-full w-full object-cover"
                         />
                       </div>
                     ) : null}

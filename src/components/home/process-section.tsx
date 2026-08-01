@@ -14,6 +14,7 @@ import {
 import { useTranslations } from "next-intl";
 
 import { Container } from "@/components/layout/container";
+import { SectionDivider } from "@/components/layout/SectionDivider";
 import { Link } from "@/i18n/navigation";
 
 const processSteps = [
@@ -47,10 +48,9 @@ export function ProcessSection() {
   const t = useTranslations("ProcessSection");
 
   return (
-    <section className="relative overflow-hidden bg-[#0d0b09] py-24 text-white md:py-32">
+    <section className="relative overflow-hidden bg-espresso-deep py-24 text-white md:py-32">
 
-      {/* Fade in from cream above */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[#fff5ec] to-transparent" />
+      <SectionDivider position="top" />
 
       {/* Ambient glows */}
       <div className="pointer-events-none absolute inset-0">
@@ -58,8 +58,7 @@ export function ProcessSection() {
         <div className="absolute right-[-6%] bottom-[15%] h-[340px] w-[340px] rounded-full bg-[#e88040]/6 blur-[120px]" />
       </div>
 
-      {/* Fade out to cream below */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#f7f0e6] to-transparent" />
+      <SectionDivider position="bottom" />
 
       <Container className="relative z-10">
 
@@ -103,6 +102,7 @@ export function ProcessSection() {
                   src={step.image}
                   alt={t(`steps.${step.key}.title`)}
                   fill
+                  unoptimized
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover transition duration-700 group-hover:scale-[1.05]"
                 />

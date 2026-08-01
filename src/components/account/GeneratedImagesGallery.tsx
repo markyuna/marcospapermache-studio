@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 
 import { Link } from "@/i18n/navigation";
@@ -30,12 +29,13 @@ export default function GeneratedImagesGallery({ images }: Props) {
               className="relative block aspect-square w-full"
               aria-label={t("viewImage")}
             >
-              <Image
+              {/* Already-WebP Supabase Storage thumbnail shown at a fixed grid size — native <img> skips Vercel Image Optimization entirely */}
+              <img
                 src={image.imageUrl}
                 alt={image.prompt}
-                fill
-                sizes="(max-width: 768px) 50vw, 25vw"
-                className="object-cover"
+                loading="lazy"
+                decoding="async"
+                className="absolute inset-0 h-full w-full object-cover"
               />
             </button>
 

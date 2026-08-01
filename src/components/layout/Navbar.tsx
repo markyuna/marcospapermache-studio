@@ -3,7 +3,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Menu, X } from "lucide-react";
 import clsx from "clsx";
 import { useLocale, useTranslations } from "next-intl";
@@ -50,11 +50,28 @@ function getLightboxOpenState() {
   );
 }
 
+function subscribeToScroll(callback: () => void) {
+  window.addEventListener("scroll", callback, { passive: true });
+  return () => window.removeEventListener("scroll", callback);
+}
+
+function getScrolledSnapshot() {
+  return window.scrollY > 30;
+}
+
+function getScrolledServerSnapshot() {
+  return false;
+}
+
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [isLightboxOpen, setIsLightboxOpen] = useState(getLightboxOpenState);
   const [isHidden, setIsHidden] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const scrolled = useSyncExternalStore(
+    subscribeToScroll,
+    getScrolledSnapshot,
+    getScrolledServerSnapshot
+  );
   const [taglineWidth, setTaglineWidth] = useState<number | null>(null);
   const marcosRef = useRef<HTMLSpanElement | null>(null);
 
@@ -138,8 +155,6 @@ export default function Navbar() {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      setScrolled(currentScrollY > 30);
-
       if (open || isLightboxOpen) {
         lastScrollY.current = currentScrollY;
         return;
@@ -161,7 +176,6 @@ export default function Navbar() {
     };
 
     lastScrollY.current = window.scrollY;
-    setScrolled(window.scrollY > 30);
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => window.removeEventListener("scroll", handleScroll);

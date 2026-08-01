@@ -16,6 +16,12 @@ const nextConfig: NextConfig = {
         pathname: "/storage/v1/object/public/**",
       },
     ],
+    // Fewer breakpoints/formats = fewer distinct Vercel Image Optimization
+    // transformations per source image (Hobby plan is capped at 5K/month).
+    deviceSizes: [640, 1080, 1920],
+    imageSizes: [16, 64, 128, 256],
+    formats: ["image/webp"],
+    minimumCacheTTL: 2678400, // 31 days
   },
 };
 

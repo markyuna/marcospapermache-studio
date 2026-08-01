@@ -5,7 +5,23 @@
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
+
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+
+function subscribeToReducedMotion(callback: () => void) {
+  const mediaQuery = window.matchMedia(REDUCED_MOTION_QUERY);
+  mediaQuery.addEventListener("change", callback);
+  return () => mediaQuery.removeEventListener("change", callback);
+}
+
+function getReducedMotionSnapshot() {
+  return window.matchMedia(REDUCED_MOTION_QUERY).matches;
+}
+
+function getReducedMotionServerSnapshot() {
+  return false;
+}
 
 export type ExhibitionCarouselImage = {
   src: string;
@@ -28,18 +44,13 @@ export default function ExhibitionCarousel({
 }: ExhibitionCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
+  const reducedMotion = useSyncExternalStore(
+    subscribeToReducedMotion,
+    getReducedMotionSnapshot,
+    getReducedMotionServerSnapshot
+  );
 
   const hasMultiple = images.length > 1;
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReducedMotion(mediaQuery.matches);
-
-    const handleChange = (event: MediaQueryListEvent) => setReducedMotion(event.matches);
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
-  }, []);
 
   useEffect(() => {
     if (!hasMultiple || isPaused || reducedMotion) return;

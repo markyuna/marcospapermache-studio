@@ -16,6 +16,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import AnimatedSteps from "@/components/sur-mesure/AnimatedSteps";
 import CommandeForm from "@/components/forms/CommandeForm";
 import { Container } from "@/components/layout/container";
+import { SectionDivider } from "@/components/layout/SectionDivider";
 import JsonLd from "@/components/seo/JsonLd";
 import { routing } from "@/i18n/routing";
 import { createMetadata, getAbsoluteUrl, siteConfig } from "@/lib/seo";
@@ -171,7 +172,7 @@ export default async function CustomCreationPage({ params }: Props) {
       <main className="relative overflow-hidden bg-paper-base text-espresso">
 
         {/* ── HERO — video background ─────────────────────────────── */}
-        <section className="relative flex min-h-[88vh] items-center overflow-hidden bg-[#0d0b09]">
+        <section className="relative flex min-h-[88vh] items-center overflow-hidden bg-espresso-deep">
 
           {/* YouTube video background */}
           <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -184,11 +185,10 @@ export default async function CustomCreationPage({ params }: Props) {
           </div>
 
           {/* Overlays */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/55 to-[#0d0b09]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/55 to-espresso-deep" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/20 to-transparent" />
 
-          {/* Bottom fade to cream */}
-          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#fffaf4] to-transparent" />
+          <SectionDivider position="bottom" />
 
           <Container className="relative z-10 py-32 md:py-40">
             <div className="max-w-3xl">
@@ -283,9 +283,8 @@ export default async function CustomCreationPage({ params }: Props) {
         </section>
 
         {/* ── CONTACT + FORM — dark section ───────────────────────── */}
-        <section className="relative bg-[#0d0b09] pb-24 pt-20 md:pb-32 md:pt-24">
-          {/* Top fade from cream */}
-          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[#fffaf4] to-transparent" />
+        <section className="relative bg-espresso-deep pb-24 pt-20 md:pb-32 md:pt-24">
+          <SectionDivider position="top" />
 
           {/* Warm glow */}
           <div className="pointer-events-none absolute inset-0">

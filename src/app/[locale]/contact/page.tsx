@@ -110,7 +110,7 @@ export default async function ContactPage({ params }: Props) {
       <JsonLd data={contactPointJsonLd} />
       <JsonLd data={artistContactJsonLd} />
 
-      <main className="relative overflow-hidden bg-[#0d0b09] text-white">
+      <main className="relative overflow-hidden bg-espresso-deep text-white">
 
         {/* Ambient glows */}
         <div className="pointer-events-none absolute inset-0">

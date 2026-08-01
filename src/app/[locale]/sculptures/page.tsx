@@ -6,6 +6,7 @@ import { ArrowUpRight } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { Container } from "@/components/layout/container";
+import { SectionDivider } from "@/components/layout/SectionDivider";
 import Gallery from "@/components/sculptures/Gallery";
 import JsonLd from "@/components/seo/JsonLd";
 import { Link } from "@/i18n/navigation";
@@ -126,6 +127,7 @@ export default async function SculpturesPage({ params }: Props) {
               alt={t("bannerAlt")}
               fill
               priority
+              unoptimized
               sizes="100vw"
               className="object-cover object-[center_30%] md:object-[center_34%]"
             />
@@ -136,8 +138,7 @@ export default async function SculpturesPage({ params }: Props) {
             {/* Atmospheric depth */}
             <div className="absolute inset-0 bg-gradient-to-b from-black/12 via-transparent to-transparent" />
 
-            {/* Bottom blend into page */}
-            <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-b from-transparent to-[#f8f5ef] md:h-28" />
+            <SectionDivider position="bottom" />
 
             {/* Content */}
             <div className="absolute inset-0 flex items-end">
@@ -203,13 +204,12 @@ export default async function SculpturesPage({ params }: Props) {
         </section>
 
         {/* Dark CTA section */}
-        <section className="relative overflow-hidden bg-[#0d0b09] py-20 md:py-28">
+        <section className="relative overflow-hidden bg-espresso-deep py-20 md:py-28">
+          <SectionDivider position="top" />
+
           {/* Ambient glow */}
           <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#c85100]/6 blur-[130px]" />
           <div className="pointer-events-none absolute right-0 top-0 h-[300px] w-[300px] rounded-full bg-[#ff9f43]/4 blur-[100px]" />
-
-          {/* Top shimmer line */}
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c85100]/22 to-transparent" />
 
           <Container>
             <div className="mx-auto max-w-2xl text-center">

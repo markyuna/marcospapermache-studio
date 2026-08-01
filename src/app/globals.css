@@ -33,6 +33,9 @@
   --paper-glow: #fcf9f2;
   --gold: #c9a24b;
   --espresso: #2b2620;
+
+  /* Deepest dark section background — flat, no gradient, paired with a solid --brand-gold divider line */
+  --espresso-deep: #0d0b09;
 }
 
 *,
@@ -179,6 +182,7 @@ body.lightbox-open {
   --color-paper-glow: #fcf9f2;
   --color-gold: #c9a24b;
   --color-espresso: #2b2620;
+  --color-espresso-deep: #0d0b09;
 }
 
 @keyframes lightbox-fade-in {
