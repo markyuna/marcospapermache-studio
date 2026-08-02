@@ -34,17 +34,36 @@ function getCollageRotationClasses(index: number): string {
   return COLLAGE_ROTATION_CLASSES[index % COLLAGE_ROTATION_CLASSES.length];
 }
 
-function getEmbedUrl(url: string): string | null {
+function getEmbedUrl(url: string): { url: string; isYoutube: boolean } | null {
   const youtubeMatch = url.match(
     /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s?]+)/
   );
   if (youtubeMatch) {
-    return `https://www.youtube.com/embed/${youtubeMatch[1]}`;
+    const videoId = youtubeMatch[1];
+    const params = new URLSearchParams({
+      autoplay: "1",
+      loop: "1",
+      playlist: videoId,
+      controls: "0",
+      mute: "1",
+      modestbranding: "1",
+      rel: "0",
+      showinfo: "0",
+      iv_load_policy: "3",
+      disablekb: "1",
+    });
+    return {
+      url: `https://www.youtube.com/embed/${videoId}?${params.toString()}`,
+      isYoutube: true,
+    };
   }
 
   const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
   if (vimeoMatch) {
-    return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
+    return {
+      url: `https://player.vimeo.com/video/${vimeoMatch[1]}`,
+      isYoutube: false,
+    };
   }
 
   return null;
@@ -96,12 +115,15 @@ export default function AtelierStorySection({
           <div className="mb-10 overflow-hidden rounded-[20px] shadow-[0_12px_32px_rgba(0,0,0,0.08)]">
             <div className="relative aspect-video w-full">
               <iframe
-                src={embedUrl}
+                src={embedUrl.url}
                 title={storyTitle || "Vidéo atelier"}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 className="absolute inset-0 h-full w-full border-0"
               />
+              {embedUrl.isYoutube && (
+                <div className="absolute inset-0" aria-hidden="true" />
+              )}
             </div>
           </div>
         )}
