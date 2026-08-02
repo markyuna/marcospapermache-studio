@@ -340,7 +340,7 @@ export default async function ArtistePapierMachePage({ params }: Props) {
               <div className="mt-10 flex flex-wrap justify-center gap-4">
                 <Link
                   href="/sculptures"
-                  className="group inline-flex items-center justify-center gap-2 rounded-full border border-[#f3a34d]/40 bg-[linear-gradient(135deg,#ff9f43,#e76f16,#c85100)] px-6 py-3 text-sm font-semibold text-white shadow-[0_18px_55px_rgba(231,111,22,0.28)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_70px_rgba(231,111,22,0.36)]"
+                  className="btn-gold-shimmer group inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition duration-300 hover:-translate-y-0.5"
                 >
                   <span>{content.primaryCta}</span>
                   <ArrowRight className="h-4 w-4 transition duration-300 group-hover:translate-x-1" />

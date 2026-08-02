@@ -611,7 +611,7 @@ export default function CommandeForm({
         <button
           type="submit"
           disabled={loading}
-          className={`inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold transition duration-300 disabled:cursor-not-allowed disabled:opacity-50 ${dark ? "bg-[linear-gradient(135deg,#ff9f43,#e76f16,#c85100)] text-white shadow-[0_14px_45px_rgba(231,111,22,0.3)] hover:-translate-y-0.5 hover:shadow-[0_18px_55px_rgba(231,111,22,0.4)]" : "bg-[#181512] text-white hover:bg-[#2a241f]"}`}
+          className={`inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold transition duration-300 disabled:cursor-not-allowed disabled:opacity-50 ${dark ? "btn-gold-shimmer hover:-translate-y-0.5" : "bg-[#181512] text-white hover:bg-[#2a241f]"}`}
         >
           {loading ? (
             <>

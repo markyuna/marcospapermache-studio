@@ -54,7 +54,7 @@ function CtaLink({
 
   const variantClassName =
     variant === "primary"
-      ? "border border-[#f3a34d]/40 bg-[linear-gradient(135deg,#ff9f43,#e76f16,#c85100)] text-white shadow-[0_18px_55px_rgba(231,111,22,0.35)] hover:-translate-y-0.5 hover:shadow-[0_24px_70px_rgba(231,111,22,0.45)]"
+      ? "btn-gold-shimmer hover:-translate-y-0.5"
       : "border border-[#f3a34d]/40 bg-white/10 text-white backdrop-blur-xl hover:-translate-y-0.5 hover:border-[#f3a34d]/70 hover:bg-[#f3a34d]/10";
 
   return (

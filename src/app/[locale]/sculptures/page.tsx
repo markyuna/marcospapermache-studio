@@ -227,7 +227,7 @@ export default async function SculpturesPage({ params }: Props) {
 
               <Link
                 href="/contact"
-                className="mt-8 inline-flex items-center gap-2.5 rounded-full bg-[linear-gradient(135deg,#ff9f43,#e76f16,#c85100)] px-7 py-3.5 text-sm font-semibold text-white shadow-[0_14px_45px_rgba(231,111,22,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_55px_rgba(231,111,22,0.40)]"
+                className="btn-gold-shimmer mt-8 inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5"
               >
                 {t("ctaButton")}
                 <ArrowUpRight className="h-4 w-4" />

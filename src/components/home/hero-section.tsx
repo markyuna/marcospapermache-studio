@@ -126,7 +126,7 @@ export function HeroSection() {
             <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
               <Link
                 href="/create"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand-gold to-brand-gold-light px-6 py-3.5 text-sm font-medium text-white no-underline shadow-[0_18px_40px_rgba(185,106,47,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_55px_rgba(185,106,47,0.38)]"
+                className="btn-gold-shimmer inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-medium no-underline transition-all duration-300 hover:-translate-y-0.5"
               >
                 <span>{t("ctaPrimary")}</span>
                 <ArrowRight className="h-4 w-4 shrink-0" />

@@ -197,7 +197,7 @@ export function ProcessSection() {
 
           <Link
             href="/creations-sur-mesure"
-            className="mt-10 inline-flex items-center gap-2 rounded-full bg-[linear-gradient(135deg,#ff9f43,#e76f16,#c85100)] px-6 py-3.5 text-sm font-semibold text-white shadow-[0_14px_45px_rgba(231,111,22,0.28)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_55px_rgba(231,111,22,0.38)]"
+            className="btn-gold-shimmer mt-10 inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold transition duration-300 hover:-translate-y-0.5"
           >
             {t("cta")}
             <ArrowRight className="h-4 w-4" />

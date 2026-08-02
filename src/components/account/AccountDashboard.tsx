@@ -111,7 +111,7 @@ export default async function AccountDashboard({
             <p className="text-sm text-neutral-500">{t("imagesEmpty")}</p>
             <Link
               href="/create"
-              className="mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand-gold to-brand-gold-light px-5 py-2.5 text-sm font-medium text-white no-underline shadow-[0_18px_40px_rgba(185,106,47,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_55px_rgba(185,106,47,0.38)]"
+              className="btn-gold-shimmer mt-3 inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium no-underline transition-all duration-300 hover:-translate-y-0.5"
             >
               <Sparkles className="h-4 w-4" />
               {t("imagesEmptyCta")}
