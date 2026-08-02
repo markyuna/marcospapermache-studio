@@ -46,8 +46,7 @@
     "title": "Sculptures en lumière",
     "description": "Trois lampes sculpturales en papier mâché où matière, lumière et geste artisanal se rencontrent dans une esthétique contemporaine, sensible et singulière.",
     "viewAll": "Voir la galerie complète",
-    "discover": "Découvrir la pièce",
-    "sold": "Vendu"
+    "discover": "Découvrir la pièce"
   },
   "CTA": {
     "badge": "EXPÉRIENCE PREMIUM",
@@ -294,7 +293,8 @@
     "emptyDescription": "Ajoute tes premières sculptures depuis Supabase pour les afficher ici.",
     "imageUnavailable": "Image indisponible",
     "defaultCategory": "Sculpture",
-    "discover": "Découvrir l’œuvre"
+    "discover": "Découvrir l’œuvre",
+    "sold": "Vendu"
   },
   "CommandeForm": {
     "success": {

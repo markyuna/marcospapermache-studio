@@ -5,6 +5,8 @@ import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 import { Link } from "@/i18n/navigation";
+import { isSoldAvailability } from "@/lib/availability";
+import { SoldBadge } from "@/components/sculptures/SoldBadge";
 
 export type FeaturedCardData = {
   slug: string;
@@ -27,12 +29,7 @@ function SculptureCard({
   discoverLabel,
   soldLabel,
 }: FeaturedCardData) {
-  const normalizedAvailability = availability?.toLowerCase() ?? "";
-
-  const isSold =
-    normalizedAvailability.includes("vendue") ||
-    normalizedAvailability.includes("vendido") ||
-    normalizedAvailability.includes("sold");
+  const isSold = isSoldAvailability(availability);
 
   return (
     <Link
@@ -62,8 +59,8 @@ function SculptureCard({
           </div>
 
           {isSold ? (
-            <div className="absolute right-4 top-4 rounded-full border border-white/30 bg-[#181512]/76 px-3 py-1 text-[10px] uppercase tracking-[0.24em] text-white shadow-sm backdrop-blur-md md:right-5 md:top-5">
-              {soldLabel}
+            <div className="absolute right-4 top-4 md:right-5 md:top-5">
+              <SoldBadge label={soldLabel} />
             </div>
           ) : null}
 

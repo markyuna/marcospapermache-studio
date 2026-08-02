@@ -10,6 +10,7 @@ import { getArtworksBySlugs } from "@/lib/artworks";
 
 export async function FeaturedSection() {
   const t = await getTranslations("Featured");
+  const tGallery = await getTranslations("Gallery");
 
   const featuredLampSlugs = [
     "eveil-lumineux",
@@ -76,7 +77,7 @@ export async function FeaturedSection() {
                 availability: artwork.availability,
                 index,
                 discoverLabel: t("discover"),
-                soldLabel: t("sold"),
+                soldLabel: tGallery("sold"),
               };
             })
             .filter((card) => card !== null)}

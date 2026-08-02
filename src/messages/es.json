@@ -46,8 +46,7 @@
     "title": "Esculturas en luz",
     "description": "Tres lámparas escultóricas de papel maché donde la materia, la luz y el gesto artesanal se encuentran en una estética contemporánea, sensible y singular.",
     "viewAll": "Ver la galería completa",
-    "discover": "Descubrir la pieza",
-    "sold": "Vendido"
+    "discover": "Descubrir la pieza"
   },
   "CTA": {
     "badge": "EXPERIENCIA PREMIUM",
@@ -294,7 +293,8 @@
     "emptyDescription": "Añade tus primeras esculturas desde Supabase para mostrarlas aquí.",
     "imageUnavailable": "Imagen no disponible",
     "defaultCategory": "Escultura",
-    "discover": "Descubrir la obra"
+    "discover": "Descubrir la obra",
+    "sold": "Vendido"
   },
   "CommandeForm": {
     "success": {

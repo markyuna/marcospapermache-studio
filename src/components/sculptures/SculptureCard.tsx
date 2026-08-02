@@ -6,6 +6,11 @@ import clsx from "clsx";
 import { useTranslations } from "next-intl";
 
 import { Link } from "@/i18n/navigation";
+import { isSoldAvailability } from "@/lib/availability";
+import {
+  SoldBadge,
+  availabilityBadgeBaseClass,
+} from "@/components/sculptures/SoldBadge";
 
 type SculptureCardProps = {
   slug: string;
@@ -23,14 +28,6 @@ type SculptureCardProps = {
 
 function getAvailabilityStyle(availability?: string | null) {
   const normalized = availability?.toLowerCase().trim() ?? "";
-
-  if (
-    normalized.includes("vendue") ||
-    normalized.includes("sold") ||
-    normalized.includes("vendida")
-  ) {
-    return "border-neutral-900/80 bg-neutral-900 text-white";
-  }
 
   if (
     normalized.includes("disponible") ||
@@ -88,14 +85,18 @@ export default function SculptureCard({
 
           {availability ? (
             <div className="absolute left-3 top-3">
-              <span
-                className={clsx(
-                  "rounded-full border px-2.5 py-1 text-[10px] font-medium tracking-[0.06em] backdrop-blur-md",
-                  getAvailabilityStyle(availability)
-                )}
-              >
-                {availability}
-              </span>
+              {isSoldAvailability(availability) ? (
+                <SoldBadge label={t("sold")} />
+              ) : (
+                <span
+                  className={clsx(
+                    availabilityBadgeBaseClass,
+                    getAvailabilityStyle(availability)
+                  )}
+                >
+                  {availability}
+                </span>
+              )}
             </div>
           ) : null}
         </div>

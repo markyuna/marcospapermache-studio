@@ -55,7 +55,7 @@ function CtaLink({
   const variantClassName =
     variant === "primary"
       ? "btn-gold-shimmer hover:-translate-y-0.5"
-      : "border border-[#f3a34d]/40 bg-white/10 text-white backdrop-blur-xl hover:-translate-y-0.5 hover:border-[#f3a34d]/70 hover:bg-[#f3a34d]/10";
+      : "border-2 border-[#f3a34d]/60 bg-black/40 text-white backdrop-blur-xl hover:-translate-y-0.5 hover:border-[#f3a34d]/90 hover:bg-black/55";
 
   return (
     <Link href={href} className={`${baseClassName} ${variantClassName}`}>

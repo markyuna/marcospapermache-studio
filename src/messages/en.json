@@ -46,8 +46,7 @@
     "title": "Sculptures in light",
     "description": "Three sculptural papier-mâché lamps where material, light and craftsmanship meet in a contemporary, sensitive and singular aesthetic.",
     "viewAll": "View the full gallery",
-    "discover": "Discover the piece",
-    "sold": "Sold"
+    "discover": "Discover the piece"
   },
   "CTA": {
     "badge": "PREMIUM EXPERIENCE",
@@ -294,7 +293,8 @@
     "emptyDescription": "Add your first sculptures from Supabase to display them here.",
     "imageUnavailable": "Image unavailable",
     "defaultCategory": "Sculpture",
-    "discover": "Discover the work"
+    "discover": "Discover the work",
+    "sold": "Sold"
   },
   "CommandeForm": {
     "success": {
