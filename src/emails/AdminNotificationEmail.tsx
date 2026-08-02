@@ -21,6 +21,7 @@ type AdminNotificationEmailProps = {
   dimensions?: string | null;
   budget?: string | null;
   fileUrl?: string | null;
+  referencePiece?: string | null;
 };
 
 export function AdminNotificationEmail({
@@ -32,6 +33,7 @@ export function AdminNotificationEmail({
   dimensions,
   budget,
   fileUrl,
+  referencePiece,
 }: AdminNotificationEmailProps) {
   const previewImage = fileUrl || imageUrl;
 
@@ -66,6 +68,14 @@ export function AdminNotificationEmail({
                 alt="Aperçu du projet"
                 style={styles.image}
               />
+            </Section>
+          )}
+
+          {referencePiece && (
+            <Section style={styles.referenceBox}>
+              <Text style={styles.referenceText}>
+                <strong>Pièce de référence :</strong> {referencePiece}
+              </Text>
             </Section>
           )}
 
@@ -177,6 +187,18 @@ const styles = {
     width: "100%",
     borderRadius: "14px",
     display: "block",
+  },
+  referenceBox: {
+    backgroundColor: "#fbf0e2",
+    borderRadius: "14px",
+    padding: "14px 18px",
+    marginBottom: "18px",
+  },
+  referenceText: {
+    margin: 0,
+    fontSize: "14px",
+    lineHeight: "22px",
+    color: "#8a4a1f",
   },
   card: {
     backgroundColor: "#fbf8f4",

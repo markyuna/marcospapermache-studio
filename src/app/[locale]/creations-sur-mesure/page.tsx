@@ -30,6 +30,10 @@ type Props = {
   params: Promise<{
     locale: string;
   }>;
+  searchParams: Promise<{
+    piece?: string;
+    pieceTitle?: string;
+  }>;
 };
 
 type CtaLinkProps = {
@@ -84,8 +88,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
-export default async function CustomCreationPage({ params }: Props) {
+export default async function CustomCreationPage({ params, searchParams }: Props) {
   const { locale } = await params;
+  const { piece, pieceTitle } = await searchParams;
 
   if (!routing.locales.includes(locale as "fr" | "en" | "es")) {
     notFound();
@@ -322,7 +327,11 @@ export default async function CustomCreationPage({ params }: Props) {
               </div>
 
               {/* Form */}
-              <CommandeForm dark />
+              <CommandeForm
+                dark
+                referencePieceSlug={piece}
+                referencePieceTitle={pieceTitle}
+              />
             </div>
           </Container>
         </section>

@@ -165,6 +165,7 @@ export default async function SculptureDetailPage({
 
   const pageUrl = `${siteConfig.domain}/${locale}/sculptures/${slug}`;
   const customCreationHref = `/${locale}/creations-sur-mesure`;
+  const requestSimilarHref = `${customCreationHref}?piece=${encodeURIComponent(slug)}&pieceTitle=${encodeURIComponent(localizedArtwork.title)}`;
 
   const isAvailableOnEtsy = isArtworkAvailableOnEtsy({
     etsyUrl: localizedArtwork.etsy_url,
@@ -328,21 +329,20 @@ export default async function SculptureDetailPage({
               ) : null}
 
               {/* Primary CTA — right after price */}
-              <div className="mt-5">
-                {etsyUrl ? (
-                  <Button asChild variant="default" size="lg" className="w-full sm:w-auto">
+              {etsyUrl ? (
+                <div className="mt-5">
+                  <Button
+                    asChild
+                    variant="default"
+                    size="lg"
+                    className="btn-gold-shimmer w-full sm:w-auto"
+                  >
                     <Link href={etsyUrl} target="_blank" rel="noreferrer">
                       {t("cta.etsy")}
                     </Link>
                   </Button>
-                ) : (
-                  <Button asChild variant="default" size="lg" className="w-full sm:w-auto">
-                    <Link href={customCreationHref}>
-                      {t("cta.requestThis")}
-                    </Link>
-                  </Button>
-                )}
-              </div>
+                </div>
+              ) : null}
 
               {/* Specs table — Année + Dimensions side-by-side, Matériaux full width */}
               {(localizedArtwork.year || localizedArtwork.dimensions || localizedArtwork.materials) ? (
@@ -391,14 +391,21 @@ export default async function SculptureDetailPage({
                 </div>
               ) : null}
 
-              {/* Secondary CTA */}
-              <div className="mt-10 border-t border-black/[0.06] pt-7">
-                <Button asChild variant="outline" size="default" className="w-full sm:w-auto">
-                  <Link href={customCreationHref}>
-                    {t("cta.requestSimilar")}
-                  </Link>
-                </Button>
-              </div>
+              {/* Secondary CTA — only when the piece isn't available on Etsy */}
+              {!etsyUrl ? (
+                <div className="mt-10 border-t border-black/[0.06] pt-7">
+                  <Button
+                    asChild
+                    variant="default"
+                    size="lg"
+                    className="btn-gold-shimmer w-full sm:w-auto"
+                  >
+                    <Link href={requestSimilarHref}>
+                      {t("cta.requestSimilar")}
+                    </Link>
+                  </Button>
+                </div>
+              ) : null}
 
             </aside>
           </div>

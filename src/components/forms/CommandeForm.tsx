@@ -19,6 +19,8 @@ type CommandeFormProps = {
   defaultName?: string;
   defaultEmail?: string;
   dark?: boolean;
+  referencePieceSlug?: string;
+  referencePieceTitle?: string;
 };
 
 type ConfettiPiece = {
@@ -39,6 +41,8 @@ export default function CommandeForm({
   defaultName = "",
   defaultEmail = "",
   dark = false,
+  referencePieceSlug = "",
+  referencePieceTitle = "",
 }: CommandeFormProps) {
   const t = useTranslations("CommandeForm");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -395,6 +399,18 @@ export default function CommandeForm({
 
       {defaultPrompt ? (
         <input type="hidden" name="prompt" value={defaultPrompt} />
+      ) : null}
+
+      {referencePieceSlug ? (
+        <input
+          type="hidden"
+          name="reference_piece"
+          value={
+            referencePieceTitle
+              ? `${referencePieceTitle} (${referencePieceSlug})`
+              : referencePieceSlug
+          }
+        />
       ) : null}
 
       <div className={generatedImage ? "grid gap-6 lg:grid-cols-[2fr_3fr] lg:items-start" : ""}>

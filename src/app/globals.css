@@ -223,3 +223,42 @@ body.lightbox-open {
     animation: none;
   }
 }
+
+/* Gold shimmer — subtle animated gradient for the "request a similar piece" CTA */
+@keyframes gold-shimmer {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.btn-gold-shimmer {
+  background-image: linear-gradient(
+    110deg,
+    var(--brand-gold) 0%,
+    var(--gold) 25%,
+    var(--brand-gold-light) 50%,
+    var(--gold) 75%,
+    var(--brand-gold) 100%
+  );
+  background-size: 300% 300%;
+  animation: gold-shimmer 6s ease-in-out infinite;
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 14px 34px rgba(185, 106, 47, 0.25);
+  transition: box-shadow 0.3s ease;
+}
+
+.btn-gold-shimmer:hover {
+  animation-duration: 2.8s;
+  box-shadow: 0 20px 48px rgba(185, 106, 47, 0.38);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-gold-shimmer {
+    animation: none;
+  }
+}
