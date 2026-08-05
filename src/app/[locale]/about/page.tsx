@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
+import InteriorsGallery from "@/components/about/InteriorsGallery";
 import { Container } from "@/components/layout/container";
 import JsonLd from "@/components/seo/JsonLd";
 import { GradientTitle } from "@/components/ui/GradientTitle";
@@ -261,67 +262,24 @@ export default async function AboutPage({ params }: Props) {
                   </Link>
                 </div>
 
-                <div className="grid grid-cols-12 gap-4 md:gap-5">
-                  <article className="group relative col-span-6 overflow-hidden rounded-[1.8rem] border border-white/60 bg-white/50 shadow-[0_16px_40px_rgba(0,0,0,0.06)] backdrop-blur-sm">
-                    <div className="relative aspect-[4/5]">
-                      <Image
-                        src="/images/home3.webp"
-                        alt={t("interiors.images.livingRoomAlt")}
-                        fill
-                        unoptimized
-                        sizes="(min-width: 1024px) 24vw, 46vw"
-                        className="object-cover transition duration-700 ease-out group-hover:scale-[1.05]"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#181512]/30 via-transparent to-transparent" />
-                      <div className="absolute left-4 top-4 rounded-full border border-white/40 bg-white/80 px-3 py-1 text-[10px] uppercase tracking-[0.24em] text-[#8f6846] backdrop-blur-md">
-                        {t("interiors.images.livingRoomLabel")}
-                      </div>
-                    </div>
-                  </article>
-
-                  <article className="group relative col-span-6 overflow-hidden rounded-[1.8rem] border border-white/60 bg-white/50 shadow-[0_16px_40px_rgba(0,0,0,0.06)] backdrop-blur-sm md:mt-10">
-                    <div className="relative aspect-[4/5]">
-                      <Image
-                        src="/images/home2.webp"
-                        alt={t("interiors.images.wallAlt")}
-                        fill
-                        unoptimized
-                        sizes="(min-width: 1024px) 24vw, 46vw"
-                        className="object-cover transition duration-700 ease-out group-hover:scale-[1.05]"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#181512]/30 via-transparent to-transparent" />
-                      <div className="absolute left-4 top-4 rounded-full border border-white/40 bg-white/80 px-3 py-1 text-[10px] uppercase tracking-[0.24em] text-[#8f6846] backdrop-blur-md">
-                        {t("interiors.images.wallLabel")}
-                      </div>
-                    </div>
-                  </article>
-
-                  <article className="group relative col-span-12 overflow-hidden rounded-[2rem] border border-white/60 bg-white/50 shadow-[0_18px_45px_rgba(0,0,0,0.06)] backdrop-blur-sm">
-                    <div className="relative aspect-[16/7]">
-                      <Image
-                        src="/images/home1.webp"
-                        alt={t("interiors.images.contemporaryAlt")}
-                        fill
-                        unoptimized
-                        sizes="(min-width: 1024px) 50vw, 92vw"
-                        className="object-cover transition duration-700 ease-out group-hover:scale-[1.04]"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#181512]/35 via-transparent to-transparent" />
-
-                      <div className="absolute left-4 top-4 rounded-full border border-white/40 bg-white/80 px-3 py-1 text-[10px] uppercase tracking-[0.24em] text-[#8f6846] backdrop-blur-md">
-                        {t("interiors.images.contemporaryLabel")}
-                      </div>
-
-                      <div className="absolute inset-x-5 bottom-5 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-                        <div className="max-w-lg">
-                          <p className="text-sm font-medium text-white/95 md:text-base">
-                            {t("interiors.images.quote")}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </article>
-                </div>
+                <InteriorsGallery
+                  livingRoom={{
+                    src: "/images/home3.webp",
+                    alt: t("interiors.images.livingRoomAlt"),
+                    label: t("interiors.images.livingRoomLabel"),
+                  }}
+                  wall={{
+                    src: "/images/home2.webp",
+                    alt: t("interiors.images.wallAlt"),
+                    label: t("interiors.images.wallLabel"),
+                  }}
+                  contemporary={{
+                    src: "/images/home1.webp",
+                    alt: t("interiors.images.contemporaryAlt"),
+                    label: t("interiors.images.contemporaryLabel"),
+                  }}
+                  quote={t("interiors.images.quote")}
+                />
               </div>
             </div>
           </Container>
