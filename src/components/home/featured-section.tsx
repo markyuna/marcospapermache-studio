@@ -5,6 +5,7 @@ import { getTranslations } from "next-intl/server";
 
 import { FeaturedCardsGrid } from "@/components/home/FeaturedCardsGrid";
 import { Container } from "@/components/layout/container";
+import { GradientTitle } from "@/components/ui/GradientTitle";
 import { Link } from "@/i18n/navigation";
 import { getArtworksBySlugs } from "@/lib/artworks";
 
@@ -40,10 +41,8 @@ export async function FeaturedSection() {
               </p>
             </div>
 
-            <h2 className="mt-6 max-w-3xl text-4xl font-semibold tracking-[-0.06em] md:text-5xl xl:text-6xl">
-              <span className="block bg-linear-to-r from-[#181512] via-[#8a633d] to-[#ff8a2a] bg-clip-text text-transparent">
-                {t("title")}
-              </span>
+            <h2 className="mt-6 max-w-3xl text-4xl font-semibold tracking-[-0.06em] text-[#1c1c1a] md:text-5xl xl:text-6xl">
+              <GradientTitle text={t("title")} />
             </h2>
 
             <p className="mt-6 max-w-2xl text-base leading-8 text-[#6c5d50] md:text-lg">

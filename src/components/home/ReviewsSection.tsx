@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Quote, Star } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
+import { GradientTitle } from "@/components/ui/GradientTitle";
 import { etsyReviews } from "@/data/etsy-reviews";
 
 const DATE_LOCALES: Record<string, string> = {
@@ -173,8 +174,8 @@ export default function ReviewsSection() {
               {t("badge")}
             </div>
 
-            <h2 className="max-w-2xl bg-gradient-to-br from-[#181512] via-[#9b5f2f] to-[#e7a85f] bg-clip-text text-4xl font-semibold leading-[1.04] tracking-[-0.045em] text-transparent md:text-5xl">
-              {t("title")}
+            <h2 className="max-w-2xl text-4xl font-semibold leading-[1.04] tracking-[-0.045em] text-[#1c1c1a] md:text-5xl">
+              <GradientTitle text={t("title")} />
             </h2>
 
             <p className="mt-4 max-w-lg text-base leading-8 text-neutral-600">

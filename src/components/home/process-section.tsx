@@ -15,6 +15,7 @@ import { useTranslations } from "next-intl";
 
 import { Container } from "@/components/layout/container";
 import { SectionDivider } from "@/components/layout/SectionDivider";
+import { GradientTitle } from "@/components/ui/GradientTitle";
 import { Link } from "@/i18n/navigation";
 
 const processSteps = [
@@ -73,8 +74,8 @@ export function ProcessSection() {
           <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#b07050]">
             {t("badge")}
           </p>
-          <h2 className="mt-4 bg-gradient-to-br from-white via-[#ffe7d1] to-[#d9956a] bg-clip-text text-4xl font-semibold tracking-[-0.045em] text-transparent md:text-6xl">
-            {t("title")}
+          <h2 className="mt-4 text-4xl font-semibold tracking-[-0.045em] text-[#f5ece0] md:text-6xl">
+            <GradientTitle text={t("title")} variant="dark" />
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-white/45 md:text-lg">
             {t("description")}

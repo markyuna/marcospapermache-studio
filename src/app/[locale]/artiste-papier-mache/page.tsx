@@ -14,6 +14,7 @@ import { setRequestLocale } from "next-intl/server";
 
 import { Container } from "@/components/layout/container";
 import JsonLd from "@/components/seo/JsonLd";
+import { GradientTitle } from "@/components/ui/GradientTitle";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { createMetadata, getAbsoluteUrl, siteConfig } from "@/lib/seo";
@@ -329,8 +330,8 @@ export default async function ArtistePapierMachePage({ params }: Props) {
                 </span>
               </div>
 
-              <h1 className="mt-7 bg-gradient-to-r from-[#17120f] via-[#805733] to-[#d86208] bg-clip-text text-5xl font-semibold tracking-[-0.055em] text-transparent md:text-7xl">
-                {content.title}
+              <h1 className="mt-7 text-5xl font-semibold tracking-[-0.055em] text-[#1c1c1a] md:text-7xl">
+                <GradientTitle text={content.title} />
               </h1>
 
               <p className="mx-auto mt-7 max-w-3xl text-lg leading-8 text-[#66584d] md:text-xl md:leading-9">

@@ -7,6 +7,7 @@ import { Link } from "@/i18n/navigation";
 import { Copy, Check, Sparkles, X } from "lucide-react";
 
 import { Container } from "@/components/layout/container";
+import { GradientTitle } from "@/components/ui/GradientTitle";
 
 export function CtaSection() {
   const t = useTranslations("CTA");
@@ -81,8 +82,8 @@ export function CtaSection() {
                   {t("badge")}
                 </p>
 
-                <h2 className="mt-5 max-w-3xl text-4xl font-semibold leading-[0.95] tracking-[-0.05em] text-[#171311] md:text-5xl lg:text-6xl">
-                  {t("title")}
+                <h2 className="mt-5 max-w-3xl text-4xl font-semibold leading-[0.95] tracking-[-0.05em] text-[#1c1c1a] md:text-5xl lg:text-6xl">
+                  <GradientTitle text={t("title")} />
                 </h2>
 
                 <p className="mt-7 max-w-xl text-[15px] leading-8 text-[#5f5348] md:text-base">

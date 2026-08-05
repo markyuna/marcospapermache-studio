@@ -7,6 +7,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { Container } from "@/components/layout/container";
 import JsonLd from "@/components/seo/JsonLd";
+import { GradientTitle } from "@/components/ui/GradientTitle";
 import { Link } from "@/i18n/navigation";
 import { createMetadata, getAbsoluteUrl, siteConfig } from "@/lib/seo";
 
@@ -128,8 +129,8 @@ export default async function AboutPage({ params }: Props) {
                   </span>
                 </div>
 
-                <h1 className="mt-6 text-4xl font-semibold leading-[0.95] tracking-[-0.05em] text-[#8b6947] md:text-6xl xl:text-7xl">
-                  {t("hero.title")}
+                <h1 className="mt-6 text-4xl font-semibold leading-[0.95] tracking-[-0.05em] text-[#1c1c1a] md:text-6xl xl:text-7xl">
+                  <GradientTitle text={t("hero.title")} />
                 </h1>
 
                 <p className="mt-6 max-w-[480px] text-base leading-8 text-[#6d5b4d] md:text-lg">

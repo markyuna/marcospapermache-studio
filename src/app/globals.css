@@ -36,12 +36,58 @@
 
   /* Deepest dark section background — flat, no gradient, paired with a solid --brand-gold divider line */
   --espresso-deep: #0d0b09;
+
+  /* Canonical heading gradient — near-black → muted orange. Single source of
+     truth for every section title; tweak the stops here to restyle the site. */
+  --heading-grad-start: #1c1c1a; /* near-black */
+  --heading-grad-mid: #8a5530; /* warm brown */
+  --heading-grad-end: #c9834d; /* muted orange */
+  /* Dark-section variant — same chromatic axis, inverted luminosity (cream → orange) */
+  --heading-grad-dark-start: #f2e4d4; /* cream */
+  --heading-grad-dark-mid: #e0a877;
+  --heading-grad-dark-end: #c9834d;
 }
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+/* ── Canonical heading gradient ───────────────────────────────────────────────
+   Warm black→terracotta gradient applied to the final word of section titles.
+   The base rule keeps a solid colour + the gradient image; text is only made
+   transparent (revealing the gradient) where background-clip: text is supported,
+   so the title is never invisible on unsupported browsers. */
+.heading-gradient,
+.heading-gradient-dark {
+  color: var(--heading-grad-start);
+  background-image: linear-gradient(
+    90deg,
+    var(--heading-grad-start) 0%,
+    var(--heading-grad-mid) 55%,
+    var(--heading-grad-end) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.heading-gradient-dark {
+  color: var(--heading-grad-dark-start);
+  background-image: linear-gradient(
+    90deg,
+    var(--heading-grad-dark-start) 0%,
+    var(--heading-grad-dark-mid) 55%,
+    var(--heading-grad-dark-end) 100%
+  );
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .heading-gradient,
+  .heading-gradient-dark {
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
 }
 
 html {
@@ -183,6 +229,54 @@ body.lightbox-open {
   --color-gold: #c9a24b;
   --color-espresso: #2b2620;
   --color-espresso-deep: #0d0b09;
+}
+
+/* ── Animated gold border (hero comparison slider) ───────────────────────────
+   A conic gradient of warm golds slowly rotates around the square frame, like
+   light travelling along the border. Registered custom property lets the angle
+   animate smoothly on the compositor without layout/repaint of the content. */
+@property --border-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes border-rotate {
+  to {
+    --border-angle: 360deg;
+  }
+}
+
+.gold-border-anim {
+  /* Fallback: a static gold ring if conic-gradient/@property aren't available,
+     so the border is never missing. */
+  background: linear-gradient(#d4af37, #a8842a);
+}
+
+@supports (background: conic-gradient(from var(--border-angle, 0deg), red, blue)) {
+  .gold-border-anim {
+    /* Two facing champagne highlights (0% and 50%) with dull gold between,
+       so the reflection reads as it sweeps the frame. */
+    background: conic-gradient(
+      from var(--border-angle, 0deg),
+      #e8d5a3 0%,
+      #d4af37 12.5%,
+      #c9b896 25%,
+      #a8842a 37.5%,
+      #e8d5a3 50%,
+      #d4af37 62.5%,
+      #c9b896 75%,
+      #a8842a 87.5%,
+      #e8d5a3 100%
+    );
+    animation: border-rotate 7s linear infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gold-border-anim {
+    animation: none;
+  }
 }
 
 @keyframes lightbox-fade-in {
