@@ -17,6 +17,8 @@ import PasswordChangeForm from "@/components/account/PasswordChangeForm";
 type Props = {
   email: string;
   paidCredits: number;
+  freeRemaining: number;
+  imagesGenerated: number;
   generatedImages: GeneratedImage[];
   commandes: Commande[];
   profile: UserProfile | null;
@@ -41,6 +43,8 @@ const cardClassName =
 export default async function AccountDashboard({
   email,
   paidCredits,
+  freeRemaining,
+  imagesGenerated,
   generatedImages,
   commandes,
   profile,
@@ -78,8 +82,19 @@ export default async function AccountDashboard({
                 {t("creditsLabel")}
               </p>
               <p className="text-2xl font-semibold text-[#181512]">
-                {isAdmin ? `∞ ${t("creditsUnlimited")}` : t("creditsCount", { count: paidCredits })}
+                {isAdmin
+                  ? `∞ ${t("creditsUnlimited")}`
+                  : t("creditsCount", { count: freeRemaining + paidCredits })}
               </p>
+              {isAdmin ? null : (
+                <p className="mt-1 text-xs text-neutral-500">
+                  {freeRemaining > 0
+                    ? t("creditsFreeRemaining", { count: freeRemaining })
+                    : t("creditsFreeExhausted")}
+                  {" · "}
+                  {t("creditsImagesGenerated", { count: imagesGenerated })}
+                </p>
+              )}
             </div>
           </div>
 

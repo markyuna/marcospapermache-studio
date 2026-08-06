@@ -27,6 +27,7 @@ import { useTranslations } from "next-intl";
 
 import { useRouter } from "@/i18n/navigation";
 import { supabase } from "@/lib/supabase/client";
+import { FREE_GENERATION_LIMIT } from "@/lib/generation-limits";
 import AuthModal from "@/components/auth/AuthModal";
 
 type GenerateImageResponse = {
@@ -36,6 +37,8 @@ type GenerateImageResponse = {
   requiresPayment?: boolean;
   requiresSignup?: boolean;
   paidCreditsRemaining?: number;
+  freeGenerationsRemaining?: number;
+  imagesGenerated?: number;
   unlimited?: boolean;
 };
 
@@ -46,6 +49,10 @@ type CheckoutSessionResponse = {
 
 type UserCreditsResponse = {
   paidCredits?: number;
+  freeRemaining?: number;
+  freeLimit?: number;
+  imagesGenerated?: number;
+  paymentStatus?: string;
   unlimited?: boolean;
 };
 
@@ -522,6 +529,7 @@ export default function AIExperienceSection() {
 
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [userCredits, setUserCredits] = useState(0);
+  const [freeRemaining, setFreeRemaining] = useState(FREE_GENERATION_LIMIT);
   const [isAdmin, setIsAdmin] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [isRedirectingToCheckout, setIsRedirectingToCheckout] = useState(false);
@@ -539,6 +547,7 @@ export default function AIExperienceSection() {
 
     if (!user) {
       setUserCredits(0);
+      setFreeRemaining(FREE_GENERATION_LIMIT);
       setIsAdmin(false);
       return;
     }
@@ -548,6 +557,7 @@ export default function AIExperienceSection() {
       const data: UserCreditsResponse = await response.json();
       setIsAdmin(Boolean(data.unlimited));
       setUserCredits(data.paidCredits ?? 0);
+      setFreeRemaining(data.unlimited ? FREE_GENERATION_LIMIT : data.freeRemaining ?? 0);
     }
   }, []);
 
@@ -597,7 +607,22 @@ export default function AIExperienceSection() {
     };
   }, [isLoading]);
 
-  const isBlocked = currentUser ? !isAdmin && userCredits <= 0 : true;
+  // Visible generation counter: signup pitch → free allowance → paid credits.
+  const creditsLabel = !currentUser
+    ? t("credits.signupPitch")
+    : isAdmin
+      ? `∞ ${t("credits.unlimited")}`
+      : freeRemaining > 0
+        ? t("credits.freeRemaining", { count: freeRemaining })
+        : userCredits > 0
+          ? t("credits.remaining", { count: userCredits })
+          : t("credits.freeExhausted");
+
+  // Signed-out visitors are not blocked — they get the signup modal on their
+  // first generation, then the 2 free ones. The paywall only shows once an
+  // account has burned its free allowance and holds no paid credits.
+  const isBlocked =
+    Boolean(currentUser) && !isAdmin && freeRemaining <= 0 && userCredits <= 0;
 
   const previewAspectClass = useMemo(() => {
     if (creationType === "wall") {
@@ -844,6 +869,31 @@ export default function AIExperienceSection() {
       return;
     }
 
+    // No session yet: ask for an account first, then resume this generation.
+    // runGeneration (not handleGenerate) is queued so the retry isn't blocked
+    // by this render's stale `currentUser`.
+    if (!currentUser) {
+      pendingAuthActionRef.current = runGeneration;
+      setShowAuthModal(true);
+      return;
+    }
+
+    // Free allowance spent and no paid credits: the payment panel is already
+    // on screen, so don't fire a request the server would reject with 402.
+    if (isBlocked) {
+      setError("");
+      return;
+    }
+
+    await runGeneration();
+  }
+
+  async function runGeneration() {
+    if (!fullPrompt) {
+      setError(t("errors.emptyPrompt"));
+      return;
+    }
+
     try {
       setIsLoading(true);
       setError("");
@@ -867,13 +917,17 @@ export default function AIExperienceSection() {
 
       const data: GenerateImageResponse = await response.json();
 
-      if (data.requiresSignup || data.requiresPayment) {
-        if (data.requiresPayment) {
-          setUserCredits(0);
-        }
-
-        pendingAuthActionRef.current = null;
+      if (data.requiresSignup) {
+        pendingAuthActionRef.current = runGeneration;
         setShowAuthModal(true);
+        throw new Error(data.error || t("errors.generationFailed"));
+      }
+
+      if (data.requiresPayment) {
+        // Server-side quota is the source of truth — sync so the payment
+        // panel replaces the generate button.
+        setFreeRemaining(0);
+        setUserCredits(data.paidCreditsRemaining ?? 0);
         throw new Error(data.error || t("errors.generationFailed"));
       }
 
@@ -891,8 +945,13 @@ export default function AIExperienceSection() {
 
       if (data.unlimited) {
         setIsAdmin(true);
-      } else if (data.paidCreditsRemaining !== undefined) {
-        setUserCredits(data.paidCreditsRemaining);
+      } else {
+        if (data.paidCreditsRemaining !== undefined) {
+          setUserCredits(data.paidCreditsRemaining);
+        }
+        if (data.freeGenerationsRemaining !== undefined) {
+          setFreeRemaining(data.freeGenerationsRemaining);
+        }
       }
 
       setTimeout(() => {
@@ -1465,12 +1524,10 @@ export default function AIExperienceSection() {
               </div>
             ) : (
               <>
-                {currentUser ? (
-                  <p className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#d9b08c]/20 bg-[#d9b08c]/10 px-4 py-2 text-xs font-medium text-[#e3bf9d]">
-                    <Sparkles className="h-3.5 w-3.5" />
-                    {isAdmin ? `∞ ${t("credits.unlimited")}` : t("credits.remaining", { count: userCredits })}
-                  </p>
-                ) : null}
+                <p className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#d9b08c]/20 bg-[#d9b08c]/10 px-4 py-2 text-xs font-medium text-[#e3bf9d]">
+                  <Sparkles className="h-3.5 w-3.5" />
+                  {creditsLabel}
+                </p>
 
                 <div className="mt-4 flex flex-col gap-2.5 sm:flex-row">
                   <button

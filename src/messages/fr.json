@@ -364,6 +364,9 @@
       "creditsLabel": "Générations disponibles",
       "creditsCount": "{count, plural, =0 {Aucune génération disponible} one {# génération} other {# générations}}",
       "creditsUnlimited": "Illimité",
+      "creditsFreeRemaining": "{count, plural, one {# génération gratuite restante} other {# générations gratuites restantes}}",
+      "creditsFreeExhausted": "Compte gratuit épuisé",
+      "creditsImagesGenerated": "{count, plural, =0 {Aucune image générée} one {# image générée} other {# images générées}}",
       "buyButton": "Acheter un pack de 3 générations - 1 €",
       "goToAiExperience": "Utiliser mes générations",
       "buyError": "Impossible de démarrer le paiement. Réessayez.",
@@ -617,11 +620,14 @@
       "line1": "Chaque concept généré sert de base visuelle. La sculpture finale est ensuite réalisée à la main en atelier, avec une approche artisanale, sensible et entièrement sur mesure."
     },
     "limit": {
-      "title": "Visualisez votre sculpture avec l'IA",
-      "description": "Chaque visualisation est payante. Achetez un pack de générations pour visualiser votre sculpture avant de la commander."
+      "title": "Compte gratuit épuisé",
+      "description": "Vous avez utilisé vos 2 générations gratuites. Achetez un pack de générations pour continuer à visualiser votre sculpture avant de la commander."
     },
     "credits": {
       "remaining": "{count, plural, =0 {Aucune génération restante} one {# génération restante} other {# générations restantes}}",
+      "freeRemaining": "{count, plural, one {# génération gratuite restante} other {# générations gratuites restantes}}",
+      "freeExhausted": "Compte gratuit épuisé",
+      "signupPitch": "2 générations gratuites à la création de votre compte",
       "unlimited": "Générations illimitées"
     },
     "payment": {

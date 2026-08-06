@@ -8,7 +8,7 @@ import { isAdminEmail } from "@/lib/admin-auth";
 import { prisma } from "@/lib/prisma";
 import { supabaseAdmin } from "@/lib/supabase";
 import { requireUserPageAccess } from "@/lib/user-auth";
-import { getUserCredits } from "@/lib/user-credits";
+import { getUserGenerationQuota } from "@/lib/user-credits";
 import { getUserProfile } from "@/lib/user-profile";
 import type { Commande } from "@/types/commande";
 
@@ -27,8 +27,8 @@ export default async function MonComptePage({ params }: Props) {
 
   const user = await requireUserPageAccess(locale);
 
-  const [paidCredits, generatedImages, commandesResult, profile] = await Promise.all([
-    getUserCredits(user.id),
+  const [quota, generatedImages, commandesResult, profile] = await Promise.all([
+    getUserGenerationQuota(user.id),
     prisma.generatedImage.findMany({
       where: { supabaseUserId: user.id },
       orderBy: { createdAt: "desc" },
@@ -49,7 +49,9 @@ export default async function MonComptePage({ params }: Props) {
       <Container className="max-w-4xl">
         <AccountDashboard
           email={user.email ?? ""}
-          paidCredits={paidCredits}
+          paidCredits={quota.paidCredits}
+          freeRemaining={quota.freeRemaining}
+          imagesGenerated={quota.imagesGenerated}
           generatedImages={generatedImages}
           commandes={commandes}
           profile={profile}

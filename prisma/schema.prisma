@@ -58,10 +58,17 @@ model GeneratedImage {
   @@index([supabaseUserId])
 }
 
+// Identity (email / password) lives in Supabase Auth (`auth.users`) — this
+// table only holds the generation quota keyed by that user id.
 model UserCredits {
   id             String   @id @default(cuid())
   supabaseUserId String   @unique @map("supabase_user_id")
   paidCredits    Int      @default(0) @map("paid_credits")
+  // Total generations charged to the account. The first
+  // FREE_GENERATION_LIMIT of them are free; the rest consume paidCredits.
+  imagesGenerated Int     @default(0) @map("images_generated")
+  // "free" until a Stripe checkout completes, then "paid".
+  paymentStatus  String   @default("free") @map("payment_status")
   createdAt      DateTime @default(now()) @map("created_at")
   updatedAt      DateTime @updatedAt @map("updated_at")
 
