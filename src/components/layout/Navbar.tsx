@@ -7,7 +7,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Menu, X } from "lucide-react";
 import clsx from "clsx";
 import { useLocale, useTranslations } from "next-intl";
-import { Space_Grotesk } from "next/font/google";
+import { Space_Grotesk, Montserrat } from "next/font/google";
 
 import { Link, usePathname } from "@/i18n/navigation";
 import AccountMenu from "@/components/layout/AccountMenu";
@@ -19,6 +19,11 @@ import esMessages from "@/messages/es.json";
 const space = Space_Grotesk({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["700"],
 });
 
 const navLinks = [
@@ -221,7 +226,10 @@ export default function Navbar() {
           <span className="flex flex-col items-center justify-center">
             <span
               ref={marcosRef}
-              className="hidden font-serif text-[1.15rem] font-medium leading-none tracking-[0.16em] text-[#181512] sm:text-[1.35rem] md:block lg:text-2xl"
+              className={clsx(
+                montserrat.className,
+                "hidden text-[1.15rem] font-bold leading-none tracking-[0.12em] text-[#C9A961] sm:text-[1.35rem] md:block lg:text-2xl"
+              )}
             >
               MARCOS
             </span>
