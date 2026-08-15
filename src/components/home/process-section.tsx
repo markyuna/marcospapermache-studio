@@ -7,6 +7,7 @@ import {
   ArrowRight,
   BadgeCheck,
   Hand,
+  Layers,
   Leaf,
   Recycle,
   Sparkles,
@@ -21,21 +22,33 @@ import { Link } from "@/i18n/navigation";
 const processSteps = [
   {
     key: "inspiration",
-    image: "/process/inspiration.png",
+    image: "/process/inspiration.webp",
     icon: Sparkles,
     number: "01",
   },
   {
-    key: "sculpting",
-    image: "/process/sculpting.png",
-    icon: Hand,
+    key: "materials",
+    image: "/process/materials.webp",
+    icon: Recycle,
     number: "02",
   },
   {
-    key: "finishing",
-    image: "/process/finishing.png",
-    icon: BadgeCheck,
+    key: "sculpting",
+    image: "/process/sculpting.webp",
+    icon: Hand,
     number: "03",
+  },
+  {
+    key: "textures",
+    image: "/process/textures.webp",
+    icon: Layers,
+    number: "04",
+  },
+  {
+    key: "finishing",
+    image: "/process/finishing.webp",
+    icon: BadgeCheck,
+    number: "05",
   },
 ] as const;
 
@@ -82,8 +95,9 @@ export function ProcessSection() {
           </p>
         </motion.div>
 
-        {/* 3 process cards with image backgrounds */}
-        <div className="grid gap-5 md:grid-cols-3">
+        {/* 5 process cards with image backgrounds — horizontal snap-scroll on
+            mobile, 3-col wrap on tablet/small desktop, single-row 5-col from xl */}
+        <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 -mx-6 px-6 md:mx-0 md:grid md:snap-none md:grid-cols-3 md:gap-5 md:overflow-visible md:px-0 md:pb-0 xl:grid-cols-5">
           {processSteps.map((step, index) => {
             const Icon = step.icon;
             return (
@@ -93,18 +107,18 @@ export function ProcessSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{
-                  duration: 0.7,
-                  delay: index * 0.13,
+                  duration: 0.6,
+                  delay: index * 0.08,
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                className="group relative h-[440px] overflow-hidden rounded-[2.25rem] md:h-[500px]"
+                className="group relative h-[380px] w-[78vw] shrink-0 snap-center overflow-hidden rounded-[2rem] sm:w-[340px] md:h-[440px] md:w-auto md:shrink xl:h-[380px]"
               >
                 <Image
                   src={step.image}
                   alt={t(`steps.${step.key}.title`)}
                   fill
                   unoptimized
-                  sizes="(max-width: 768px) 100vw, 33vw"
+                  sizes="(max-width: 768px) 80vw, (max-width: 1280px) 33vw, 20vw"
                   className="object-cover transition duration-700 group-hover:scale-[1.05]"
                 />
 
@@ -113,24 +127,24 @@ export function ProcessSection() {
                 <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent" />
 
                 {/* Top bar */}
-                <div className="absolute left-5 right-5 top-5 flex items-center justify-between">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/15 bg-white/[0.08] backdrop-blur-xl">
+                <div className="absolute left-4 right-4 top-4 flex items-center justify-between md:left-5 md:right-5 md:top-5">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-2xl border border-white/15 bg-white/[0.08] backdrop-blur-xl md:h-10 md:w-10">
                     <Icon className="h-4 w-4 text-[#e8a865]" />
                   </div>
-                  <span className="rounded-full border border-white/12 bg-white/[0.07] px-3 py-1.5 text-[10px] font-semibold tracking-[0.24em] text-white/55 backdrop-blur-xl">
+                  <span className="rounded-full border border-white/12 bg-white/[0.07] px-2.5 py-1 text-[9px] font-semibold tracking-[0.2em] text-white/55 backdrop-blur-xl md:px-3 md:py-1.5 md:text-[10px] md:tracking-[0.24em]">
                     {step.number}
                   </span>
                 </div>
 
                 {/* Content bottom */}
-                <div className="absolute inset-x-0 bottom-0 p-6 md:p-7">
-                  <h3 className="text-2xl font-semibold tracking-[-0.04em] text-white">
+                <div className="absolute inset-x-0 bottom-0 p-5 md:p-6 xl:p-5">
+                  <h3 className="text-xl font-semibold tracking-[-0.04em] text-white md:text-2xl xl:text-xl">
                     {t(`steps.${step.key}.title`)}
                   </h3>
-                  <p className="mt-3 text-sm leading-7 text-white/55">
+                  <p className="mt-2.5 line-clamp-3 text-sm leading-6 text-white/55 md:mt-3 md:leading-7">
                     {t(`steps.${step.key}.description`)}
                   </p>
-                  <span className="mt-4 inline-flex rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.2em] text-white/40 backdrop-blur-sm">
+                  <span className="mt-3 inline-flex rounded-full border border-white/10 bg-white/[0.06] px-2.5 py-1 text-[9px] font-medium uppercase leading-relaxed tracking-[0.16em] text-white/40 backdrop-blur-sm md:mt-4 md:px-3 md:py-1.5 md:text-[10px] md:tracking-[0.2em]">
                     {t(`steps.${step.key}.detail`)}
                   </span>
                 </div>
