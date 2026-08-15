@@ -61,7 +61,8 @@
     "@hono/node-server": "^2.0.5",
     "sharp": "^0.35.3",
     "valibot": "^1.4.2",
-    "find-my-way": "^9.7.0"
+    "find-my-way": "^9.7.0",
+    "js-yaml": "^4.3.1"
   },
   "allowScripts": {
     "sharp@0.34.5": true,
