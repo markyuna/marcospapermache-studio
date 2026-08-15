@@ -108,14 +108,14 @@ export function CtaSection() {
                 <div className="mt-9 flex flex-wrap gap-4">
                   <Link
                     href="/create"
-                    className="inline-flex items-center justify-center rounded-full bg-[#ff6a00] px-6 py-3.5 text-sm font-medium text-white shadow-[0_14px_34px_rgba(255,106,0,0.22)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#eb6100]"
+                    className="btn-gold-shimmer inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-medium no-underline transition-all duration-300 hover:-translate-y-0.5"
                   >
                     {t("ctaPrimary")}
                   </Link>
 
                   <Link
                     href="/commande"
-                    className="inline-flex items-center justify-center rounded-full border border-black/10 bg-white/70 px-6 py-3.5 text-sm font-medium text-[#181512] backdrop-blur-sm transition duration-300 hover:-translate-y-0.5 hover:bg-white"
+                    className="inline-flex items-center justify-center rounded-[24px] border border-[#D4AF37] px-6 py-3.5 text-sm font-medium text-[#D4AF37] no-underline transition-all duration-300 hover:-translate-y-0.5 hover:border-[#e8c860] hover:bg-[#D4AF37]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]/40 focus-visible:ring-offset-2"
                   >
                     {t("ctaSecondary")}
                   </Link>
@@ -132,7 +132,7 @@ export function CtaSection() {
 
                   <div className="relative aspect-[4/5] w-full">
                     <Image
-                      src="/Harmonie-naturelle.png"
+                      src="/vase-sculptural-generated-ia.webp"
                       alt={t("imageAlt")}
                       fill
                       unoptimized

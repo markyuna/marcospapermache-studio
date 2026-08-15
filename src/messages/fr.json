@@ -65,16 +65,16 @@
     "promptCta": "Voir le prompt",
     "promptHelper": "Exemple de visualisation générée avec l’IA",
     "imageBadge": "VISUALISATION IA",
-    "imageAlt": "Visualisation IA d’une sculpture dans un intérieur contemporain",
+    "imageAlt": "Vase sculptural en papier-mâché dans un jardin méditerranéen, généré par IA",
     "floatingCard": {
       "badge": "INSPIRATION",
-      "description": "Découvrez un exemple de prompt pour imaginer une sculpture murale dans votre propre univers."
+      "description": "Découvrez un exemple de prompt pour imaginer ce vase sculptural dans votre propre jardin."
     },
     "promptModal": {
       "badge": "PROMPT D’INSPIRATION",
       "title": "Un exemple de prompt pour générer une sculpture dans cet esprit",
       "description": "Utilisez ce prompt comme point de départ, puis adaptez les formes, les couleurs, les matériaux ou l’ambiance pour créer une œuvre plus personnelle.",
-      "examplePrompt": "Créer une sculpture murale contemporaine en papier mâché inspirée de formes organiques et florales en relief, intégrée dans un cadre fin en métal noir. La composition doit évoquer un mouvement naturel, avec des fleurs sculpturales, des feuilles ondulantes, des racines fluides et des volumes élégants qui semblent sortir du cadre. Palette raffinée de blanc cassé, vert végétal, or patiné et brun chaud. Texture artisanale haut de gamme, rendu réaliste, pièce unique, esthétique galerie d’art contemporaine, lumière douce, grande présence murale, style sophistiqué et poétique.",
+      "examplePrompt": "Photorealistic Mediterranean garden mockup of a large handmade organic sculptural vase, covered in irregular biomorphic cavities — from tiny pinhole clusters to large eroded openings — carved into a raw matte ivory ceramic-like surface. Filled with olive branches, set against a warm stucco wall and natural stone terrace. Coral-like, tactile, sculptural texture with warm natural sunlight and soft shadows.",
       "copy": "Copier le prompt",
       "copySuccess": "Prompt copié",
       "createCta": "Créer avec l’IA",
