@@ -123,7 +123,7 @@ export default async function SculpturesPage({ params }: Props) {
         <section className="relative isolate overflow-hidden">
           <div className="relative h-[220px] w-full sm:h-[260px] md:h-[300px] lg:h-[340px]">
             <Image
-              src="/banniere.png"
+              src="/banniere2.webp"
               alt={t("bannerAlt")}
               fill
               priority

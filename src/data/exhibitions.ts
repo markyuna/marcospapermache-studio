@@ -43,6 +43,6 @@ export const exhibitions: Exhibition[] = [
     address: "13 Rue de Thorigny, Paris",
     startDate: "2024-04-26",
     endDate: "2024-05-09",
-    images: ["/expo/expo_paris.png"],
+    images: ["/expo/expo_paris.webp"],
   },
 ];

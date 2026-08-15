@@ -16,7 +16,7 @@ export default function ImageGallery({
   images,
   title,
 }: ImageGalleryProps) {
-  const safeImages = images.length > 0 ? images : ["/placeholder.png"];
+  const safeImages = images.length > 0 ? images : ["/placeholder.webp"];
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);

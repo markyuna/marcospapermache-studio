@@ -10,7 +10,7 @@ export const siteConfig = {
   locales: ["fr", "en", "es"] as const,
   creator: "Marcos Suarez",
   instagram: "https://www.instagram.com/marcospapermache",
-  defaultOgImage: "/images/og/marcospapermache-og.png",
+  defaultOgImage: "/images/og/marcospapermache-og.webp",
   logo: "/images/logo.png",
   description:
     "Atelier d’art contemporain en papier mâché. Sculptures uniques, œuvres murales et créations sur mesure façonnées à la main.",

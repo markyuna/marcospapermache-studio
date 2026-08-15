@@ -111,7 +111,7 @@ export default async function AboutPage({ params }: Props) {
         <section className="relative overflow-hidden">
           <div className="relative h-[72vh] min-h-[620px] w-full">
             <Image
-              src="/marcos.png"
+              src="/marcos.webp"
               alt={t("hero.imageAlt")}
               fill
               priority
