@@ -9,8 +9,8 @@
 // The AI is scaled to match the real's sculpture height, then cropped to
 // 1200x1200 so the base and the gold slab line up with the real's.
 //
-// Input:  wine-holder-ai-generated.webp (freshly regenerated, any square size)
-// Output: wine-holder-ai.webp            (1200x1200, registered to the photo)
+// Input:  wine-holder-ai-generated-slide.webp (freshly regenerated, any size)
+// Output: wine-holder-ai.webp                 (1200x1200, registered to the photo)
 
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -55,7 +55,7 @@ async function anchors(buf) {
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 
 async function run() {
-  const aiSquare = await sharp(path.join(IMAGES_DIR, "wine-holder-ai-generated.webp"))
+  const aiSquare = await sharp(path.join(IMAGES_DIR, "wine-holder-ai-generated-slide.webp"))
     .resize(SIZE, SIZE)
     .toBuffer();
   const realSquare = await sharp(path.join(IMAGES_DIR, "wine-holder-real.webp"))

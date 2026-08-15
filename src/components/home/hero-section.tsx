@@ -23,7 +23,7 @@ import { Link } from "@/i18n/navigation";
 // (scripts/reframe-ai-image.mjs) to match the real photo's composition — the
 // sculpture sits in the same spot/scale in both — so the reveal lines up as the
 // divider moves. Same 1:1 ratio as the container, so object-cover crops nothing.
-const AI_IMAGE = "/images/Élégance moderne et sculptures lumineuses.png";
+const AI_IMAGE = "/images/wine-holder-ai.webp";
 const REAL_IMAGE = "/images/wine-holder-real.webp";
 
 export function HeroSection() {
@@ -163,7 +163,7 @@ export function HeroSection() {
                 alt={t("realLabel")}
                 fill
                 priority
-                sizes="(max-width: 1024px) 92vw, 520px"
+                sizes="520px"
                 className="pointer-events-none object-cover object-center"
               />
 
@@ -176,8 +176,8 @@ export function HeroSection() {
                   src={AI_IMAGE}
                   alt={t("aiLabel")}
                   fill
-                  priority
-                  sizes="(max-width: 1024px) 92vw, 520px"
+                  loading="lazy"
+                  sizes="520px"
                   className="object-cover"
                 />
               </motion.div>
