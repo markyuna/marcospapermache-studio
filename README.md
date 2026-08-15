@@ -2,6 +2,8 @@
 
 Premium handcrafted sculptures with an AI-powered creative experience.
 
+![Marcos Papermache preview](./public/screenshots/mockup.webp)
+
 ## 🌐 Live Website
 
 https://www.marcospapermache.com
@@ -33,26 +35,3 @@ An immersive digital experience where users can:
 ## ⚠️ Note
 
 Some environment variables and backend logic are hidden for security reasons.
-
-## 📸 Preview
-
-<p align="center">
-  <img src="./public/screenshots/mockup.png" width="500"/>
-</p>
-
-## 📸 Experience
-
-### Homepage
-<p align="center">
-  <img src="./public/screenshots/home.png" width="500"/>
-</p>
-
-### AI Generator
-<p align="center">
-  <img src="./public/screenshots/ai-generator.png" width="500"/>
-</p>
-
-### Contact
-<p align="center">
-  <img src="./public/screenshots/contact.png" width="500"/>
-</p>
