@@ -24,6 +24,8 @@ type SeoParams = {
   image?: string;
   type?: "website" | "article";
   noIndex?: boolean;
+  /** Bypass the root layout's `%s | Marcos Paper Mâché` title template so `title` renders as-is. */
+  absoluteTitle?: boolean;
 };
 
 function cleanPath(path: string) {
@@ -51,6 +53,7 @@ export function createMetadata({
   image = siteConfig.defaultOgImage,
   type = "website",
   noIndex = false,
+  absoluteTitle = false,
 }: SeoParams): Metadata {
   const safePath = cleanPath(path);
   const localizedPath = getLocalizedPath(safePath);
@@ -60,7 +63,7 @@ export function createMetadata({
   return {
     metadataBase: new URL(siteConfig.domain),
 
-    title,
+    title: absoluteTitle ? { absolute: title } : title,
 
     description,
 

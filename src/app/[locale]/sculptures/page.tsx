@@ -46,6 +46,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     path: `/${locale}/sculptures`,
     locale,
     image: siteConfig.defaultOgImage,
+    absoluteTitle: true,
   });
 }
 

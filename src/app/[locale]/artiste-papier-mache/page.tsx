@@ -27,10 +27,9 @@ type Props = {
 
 const pageContent = {
   fr: {
-    seoTitle:
-      "Artiste papier mâché en France | Sculptures sur mesure et œuvres murales",
+    seoTitle: "Marcos Suarez, Sculpteur Papier Mâché | Paris",
     seoDescription:
-      "Vous recherchez un artiste papier mâché en France ? Marcos Suarez crée des sculptures contemporaines, œuvres murales, luminaires et pièces sur mesure façonnées à la main.",
+      "Marcos Suarez est un artiste sculpteur spécialisé en papier mâché, basé à Paris. Découvrez son parcours, sa technique artisanale et ses créations.",
     badge: "Artiste papier mâché en France",
     title:
       "Sculptures en papier mâché sur mesure, œuvres murales et créations artisanales.",
@@ -85,10 +84,9 @@ const pageContent = {
     finalCta: "Parler de mon projet",
   },
   en: {
-    seoTitle:
-      "Paper mâché artist in France | Custom sculptures and wall artworks",
+    seoTitle: "Marcos Suarez, Paper Mâché Sculptor | Paris Studio",
     seoDescription:
-      "Looking for a paper mâché artist in France? Marcos Suarez creates contemporary sculptures, wall artworks, sculptural lighting and bespoke handmade pieces.",
+      "Marcos Suarez is a paper mâché sculptor based in Paris. Discover his background, handmade technique, and custom sculptural works.",
     badge: "Paper mâché artist in France",
     title:
       "Custom paper mâché sculptures, wall artworks and handmade creations.",
@@ -143,10 +141,9 @@ const pageContent = {
     finalCta: "Discuss my project",
   },
   es: {
-    seoTitle:
-      "Artista de papel maché en Francia | Esculturas personalizadas y obras murales",
+    seoTitle: "Marcos Suarez, Escultor de Papel Maché | Taller en París",
     seoDescription:
-      "¿Buscas un artista de papel maché en Francia? Marcos Suarez crea esculturas contemporáneas, obras murales, luminarias escultóricas y piezas personalizadas hechas a mano.",
+      "Marcos Suarez es un escultor especializado en papel maché, con taller en París. Conoce su trayectoria, su técnica artesanal y sus creaciones.",
     badge: "Artista de papel maché en Francia",
     title:
       "Esculturas de papel maché personalizadas, obras murales y creaciones artesanales.",
@@ -221,6 +218,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     path: `/${locale}/artiste-papier-mache`,
     locale,
     image: siteConfig.defaultOgImage,
+    absoluteTitle: true,
   });
 }
 
