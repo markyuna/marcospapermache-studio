@@ -44,6 +44,37 @@ function isArtworkAvailableOnEtsy({
   return Boolean(etsyUrl) && isExplicitlyAvailable && !isExplicitlyUnavailable;
 }
 
+function getSchemaAvailability({
+  availability,
+  etsyUrl,
+}: {
+  availability?: string | null;
+  etsyUrl?: string | null;
+}): string {
+  const normalized = availability?.toLowerCase().trim() ?? "";
+
+  const isSold =
+    normalized.includes("vendue") ||
+    normalized.includes("vendu") ||
+    normalized.includes("vendida") ||
+    normalized.includes("sold");
+
+  if (isSold) {
+    return "https://schema.org/SoldOut";
+  }
+
+  const isAvailable =
+    normalized.includes("disponible") || normalized.includes("available");
+
+  if (isAvailable) {
+    return "https://schema.org/InStock";
+  }
+
+  return etsyUrl
+    ? "https://schema.org/InStock"
+    : "https://schema.org/LimitedAvailability";
+}
+
 function stripHtml(value?: string | null) {
   if (!value) return "";
 
@@ -231,10 +262,14 @@ export default async function SculptureDetailPage({
     offers: {
       "@type": "Offer",
       url: etsyUrl || pageUrl,
-      availability: etsyUrl
-        ? "https://schema.org/InStock"
-        : "https://schema.org/LimitedAvailability",
+      availability: getSchemaAvailability({
+        availability: localizedArtwork.availability,
+        etsyUrl,
+      }),
       itemCondition: "https://schema.org/NewCondition",
+      ...(localizedArtwork.price
+        ? { price: localizedArtwork.price, priceCurrency: "EUR" }
+        : {}),
     },
   };
 
