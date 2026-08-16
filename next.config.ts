@@ -8,6 +8,35 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.join(__dirname),
   },
+  async redirects() {
+    return [
+      {
+        source: "/contactez-nous",
+        destination: "/fr/contact",
+        permanent: true,
+      },
+      {
+        source: "/sculptures",
+        destination: "/fr/sculptures",
+        permanent: true,
+      },
+      {
+        source: "/a-propos-de-nous",
+        destination: "/fr/about",
+        permanent: true,
+      },
+      {
+        source: "/contactez-nous/avis-juridique",
+        destination: "/fr/mentions-legales",
+        permanent: true,
+      },
+      {
+        source: "/contactez-nous/politique-de-confidentialite",
+        destination: "/fr/politique-de-confidentialite",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
