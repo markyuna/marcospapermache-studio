@@ -129,15 +129,22 @@ export function HeroSection() {
             <p className="mt-5 text-sm text-[#4a3f38]">{t("trustLine")}</p>
           </motion.div>
 
-          {/* Right column — interactive AI / real comparison slider */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.1, ease: "easeOut" }}
-            className="relative"
-          >
-            <div className="pointer-events-none absolute -left-8 top-10 hidden h-40 w-40 rounded-full bg-[#d8c4aa]/25 blur-3xl lg:block" />
-            <div className="pointer-events-none absolute -bottom-10 right-0 hidden h-52 w-52 rounded-full bg-[#ece1d3]/60 blur-3xl lg:block" />
+          {/* Right column — interactive AI / real comparison slider.
+              Not wrapped in a fade-in motion.div: this holds the LCP image,
+              which must paint immediately instead of animating from opacity:0. */}
+          <div className="relative">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.1, ease: "easeOut" }}
+              className="pointer-events-none absolute -left-8 top-10 hidden h-40 w-40 rounded-full bg-[#d8c4aa]/25 blur-3xl lg:block"
+            />
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.1, ease: "easeOut" }}
+              className="pointer-events-none absolute -bottom-10 right-0 hidden h-52 w-52 rounded-full bg-[#ece1d3]/60 blur-3xl lg:block"
+            />
 
             {/* Animated gold gradient border wraps the slider; the inner card
                 keeps overflow-hidden so the image stays clipped and to-the-edge */}
@@ -214,7 +221,7 @@ export function HeroSection() {
               </div>
             </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </Container>
     </section>

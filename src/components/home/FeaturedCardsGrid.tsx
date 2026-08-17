@@ -48,7 +48,6 @@ function SculptureCard({
             unoptimized
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
             className="object-cover transition duration-700 ease-out group-hover:scale-[1.045]"
-            priority={index === 0}
           />
 
           <div className="absolute inset-0 bg-gradient-to-t from-[#181512]/48 via-[#181512]/5 to-white/5 transition duration-500 group-hover:from-[#181512]/38" />
