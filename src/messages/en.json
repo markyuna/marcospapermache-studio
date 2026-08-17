@@ -68,13 +68,13 @@
     "imageAlt": "Sculptural papier-mâché vase in a Mediterranean garden, AI-generated",
     "floatingCard": {
       "badge": "INSPIRATION",
-      "description": "Discover an example prompt to imagine this sculptural vase in your own garden."
+      "description": "Discover an example prompt to imagine this sculptural vase in your own interior."
     },
     "promptModal": {
       "badge": "INSPIRATION PROMPT",
       "title": "An example prompt to generate a sculpture in this spirit",
       "description": "Use this prompt as a starting point, then adapt the shapes, colors, materials, or atmosphere to create a more personal artwork.",
-      "examplePrompt": "Photorealistic Mediterranean garden mockup of a large handmade organic sculptural vase, covered in irregular biomorphic cavities — from tiny pinhole clusters to large eroded openings — carved into a raw matte ivory ceramic-like surface. Filled with olive branches, set against a warm stucco wall and natural stone terrace. Coral-like, tactile, sculptural texture with warm natural sunlight and soft shadows.",
+      "examplePrompt": "Photorealistic interior mockup of a large handmade organic sculptural vase, covered in irregular biomorphic cavities — from tiny pinhole clusters to large eroded openings — carved into a raw matte ivory ceramic-like surface. Placed in a warm minimalist living room beside a modern fireplace, with soft natural light from a nearby window. Coral-like, tactile, sculptural texture with warm ambient lighting and soft shadows.",
       "copy": "Copy prompt",
       "copySuccess": "Prompt copied",
       "createCta": "Create with AI",

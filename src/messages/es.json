@@ -68,13 +68,13 @@
     "imageAlt": "Jarrón escultórico de papel maché en jardín mediterráneo, generado por IA",
     "floatingCard": {
       "badge": "INSPIRACIÓN",
-      "description": "Descubre un ejemplo de prompt para imaginar este jarrón escultórico en tu propio jardín."
+      "description": "Descubre un ejemplo de prompt para imaginar este jarrón escultórico en tu propio interior."
     },
     "promptModal": {
       "badge": "PROMPT DE INSPIRACIÓN",
       "title": "Un ejemplo de prompt para generar una escultura en este estilo",
       "description": "Utiliza este prompt como punto de partida y luego adapta las formas, los colores, los materiales o la atmósfera para crear una obra más personal.",
-      "examplePrompt": "Photorealistic Mediterranean garden mockup of a large handmade organic sculptural vase, covered in irregular biomorphic cavities — from tiny pinhole clusters to large eroded openings — carved into a raw matte ivory ceramic-like surface. Filled with olive branches, set against a warm stucco wall and natural stone terrace. Coral-like, tactile, sculptural texture with warm natural sunlight and soft shadows.",
+      "examplePrompt": "Photorealistic interior mockup of a large handmade organic sculptural vase, covered in irregular biomorphic cavities — from tiny pinhole clusters to large eroded openings — carved into a raw matte ivory ceramic-like surface. Placed in a warm minimalist living room beside a modern fireplace, with soft natural light from a nearby window. Coral-like, tactile, sculptural texture with warm ambient lighting and soft shadows.",
       "copy": "Copiar el prompt",
       "copySuccess": "Prompt copiado",
       "createCta": "Crear con IA",
