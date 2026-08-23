@@ -23,6 +23,8 @@ const staticRoutes: RouteConfig[] = [
   { path: "/politique-de-confidentialite",  changeFrequency: "yearly",  priority: 0.2  },
 ];
 
+export const revalidate = 300;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
@@ -35,26 +37,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
   );
 
-  let artworkUrls: MetadataRoute.Sitemap = [];
+  let artworks;
 
   try {
-    const artworks = await getArtworks();
-
-    artworkUrls = siteConfig.locales.flatMap((locale) =>
-      artworks.map((artwork) => ({
-        url: `${siteConfig.domain}/${locale}/sculptures/${artwork.slug}`,
-        lastModified: artwork.updated_at
-          ? new Date(artwork.updated_at)
-          : artwork.created_at
-            ? new Date(artwork.created_at)
-            : now,
-        changeFrequency: "monthly" as const,
-        priority: artwork.is_featured ? 0.85 : 0.75,
-      }))
-    );
+    artworks = await getArtworks();
   } catch (error) {
-    console.error("Erreur lors de la génération du sitemap:", error);
+    console.error(
+      "[sitemap] Échec du chargement des œuvres depuis Supabase — sitemap non régénéré, l'ancienne version reste servie:",
+      error
+    );
+    throw error;
   }
+
+  const artworkUrls: MetadataRoute.Sitemap = siteConfig.locales.flatMap((locale) =>
+    artworks.map((artwork) => ({
+      url: `${siteConfig.domain}/${locale}/sculptures/${artwork.slug}`,
+      lastModified: artwork.updated_at
+        ? new Date(artwork.updated_at)
+        : artwork.created_at
+          ? new Date(artwork.created_at)
+          : now,
+      changeFrequency: "monthly" as const,
+      priority: artwork.is_featured ? 0.85 : 0.75,
+    }))
+  );
 
   return [...staticUrls, ...artworkUrls];
 }
