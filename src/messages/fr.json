@@ -66,6 +66,7 @@
     "promptHelper": "Exemple de visualisation générée avec l’IA",
     "imageBadge": "VISUALISATION IA",
     "imageAlt": "Vase sculptural en papier-mâché dans un intérieur chaleureux avec cheminée, généré par IA",
+    "imageExpandAriaLabel": "Agrandir l’image du vase sculptural",
     "floatingCard": {
       "badge": "INSPIRATION",
       "description": "Découvrez un exemple de prompt pour imaginer ce vase sculptural dans votre propre intérieur."

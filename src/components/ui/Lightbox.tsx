@@ -3,7 +3,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { ChevronLeft, ChevronRight, Download, Loader2, X } from "lucide-react";
 import clsx from "clsx";
@@ -30,6 +30,10 @@ export default function Lightbox({
   showDownload = false,
   downloadLabel = "Télécharger",
 }: Props) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previouslyFocusedElementRef = useRef<HTMLElement | null>(null);
+
   const [isDownloading, setIsDownloading] = useState(false);
   const safeInitialIndex = useMemo(() => {
     if (!images.length) return 0;
@@ -120,9 +124,43 @@ export default function Lightbox({
     document.body.style.overflow = "hidden";
     document.body.style.touchAction = "none";
 
+    previouslyFocusedElementRef.current =
+      document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    closeButtonRef.current?.focus();
+
+    function getFocusableElements() {
+      if (!dialogRef.current) return [];
+
+      return Array.from(
+        dialogRef.current.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        )
+      );
+    }
+
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
         handleClose();
+        return;
+      }
+
+      if (event.key === "Tab") {
+        const focusable = getFocusableElements();
+        if (focusable.length === 0) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (event.shiftKey) {
+          if (document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+          }
+        } else if (document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+
         return;
       }
 
@@ -144,6 +182,13 @@ export default function Lightbox({
       document.body.style.touchAction = previousTouchAction;
       delete document.body.dataset.lightboxOpen;
       delete document.documentElement.dataset.lightboxOpen;
+
+      if (
+        previouslyFocusedElementRef.current &&
+        document.contains(previouslyFocusedElementRef.current)
+      ) {
+        previouslyFocusedElementRef.current.focus();
+      }
     };
   }, [isOpen, images.length, handleClose, goToPrevious, goToNext]);
 
@@ -153,6 +198,7 @@ export default function Lightbox({
 
   return createPortal(
     <div
+      ref={dialogRef}
       className="fixed inset-0 z-[999999] bg-black/92 backdrop-blur-md"
       role="dialog"
       aria-modal="true"
@@ -184,6 +230,7 @@ export default function Lightbox({
       ) : null}
 
       <button
+        ref={closeButtonRef}
         type="button"
         onClick={handleClose}
         className="absolute right-4 top-4 z-[1000001] inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/10 text-white backdrop-blur-md transition duration-300 hover:bg-white/15 md:right-6 md:top-6"

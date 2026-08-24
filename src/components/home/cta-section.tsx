@@ -4,15 +4,17 @@ import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { Copy, Check, Sparkles, X } from "lucide-react";
+import { Copy, Check, Expand, Sparkles, X } from "lucide-react";
 
 import { Container } from "@/components/layout/container";
 import { GradientTitle } from "@/components/ui/GradientTitle";
+import Lightbox from "@/components/ui/Lightbox";
 
 export function CtaSection() {
   const t = useTranslations("CTA");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
   const examplePrompt = useMemo(() => t("promptModal.examplePrompt"), [t]);
 
@@ -130,7 +132,12 @@ export function CtaSection() {
                     {t("imageBadge")}
                   </div>
 
-                  <div className="relative aspect-[4/5] w-full">
+                  <button
+                    type="button"
+                    onClick={() => setIsLightboxOpen(true)}
+                    aria-label={t("imageExpandAriaLabel")}
+                    className="group relative block aspect-[4/5] w-full cursor-pointer"
+                  >
                     <Image
                       src="/vase-sculptural-generated-ia.webp"
                       alt={t("imageAlt")}
@@ -143,11 +150,15 @@ export function CtaSection() {
                         25vw
                       "
                       priority
-                      className="object-cover object-center transition duration-700 hover:scale-[1.03]"
+                      className="object-cover object-center transition duration-700 group-hover:scale-[1.03]"
                     />
-                  </div>
 
-                  <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#efe4d8]/88 via-[#efe4d8]/42 to-transparent" />
+                    <span className="absolute bottom-3 right-3 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-white/50 bg-white/75 text-[#4d4035] opacity-0 backdrop-blur-md transition duration-300 group-hover:opacity-100">
+                      <Expand className="h-4 w-4" />
+                    </span>
+                  </button>
+
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#efe4d8]/88 via-[#efe4d8]/42 to-transparent" />
                 </div>
 
                 <div className="absolute -left-4 bottom-6 hidden max-w-[240px] rounded-[1.4rem] border border-white/60 bg-white/72 p-4 shadow-[0_20px_50px_rgba(0,0,0,0.10)] backdrop-blur-md md:block">
@@ -163,6 +174,12 @@ export function CtaSection() {
           </div>
         </Container>
       </section>
+
+      <Lightbox
+        images={[{ src: "/vase-sculptural-generated-ia.webp", alt: t("imageAlt") }]}
+        isOpen={isLightboxOpen}
+        onClose={() => setIsLightboxOpen(false)}
+      />
 
       {isModalOpen ? (
         <div

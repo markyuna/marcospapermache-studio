@@ -66,6 +66,7 @@
     "promptHelper": "Example of an AI-generated visualization",
     "imageBadge": "AI VISUALIZATION",
     "imageAlt": "Sculptural papier-mâché vase in a warm interior with a fireplace, AI-generated",
+    "imageExpandAriaLabel": "Enlarge the sculptural vase image",
     "floatingCard": {
       "badge": "INSPIRATION",
       "description": "Discover an example prompt to imagine this sculptural vase in your own interior."
