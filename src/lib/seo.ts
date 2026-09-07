@@ -77,6 +77,7 @@ export function createMetadata({
         fr: `${siteConfig.domain}/fr${localizedPath}`,
         en: `${siteConfig.domain}/en${localizedPath}`,
         es: `${siteConfig.domain}/es${localizedPath}`,
+        "x-default": `${siteConfig.domain}/fr${localizedPath}`,
       },
     },
 

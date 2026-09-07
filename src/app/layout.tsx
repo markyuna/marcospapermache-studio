@@ -14,6 +14,11 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest",
   icons: {
     icon: [
+      // Served from /public so the emitted <link> stays a stable "/favicon.ico"
+      // with no cache-busting query string. The app/favicon.ico file convention
+      // appends "?favicon.<hash>.ico", which changes every build and leaves a
+      // trail of stale URLs in Google's index.
+      { url: "/favicon.ico", sizes: "any" },
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
       { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
       { url: "/favicon-48x48.png", sizes: "48x48", type: "image/png" },
