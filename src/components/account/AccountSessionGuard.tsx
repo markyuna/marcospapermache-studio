@@ -2,7 +2,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef } from "react";
-import { usePathname, useRouter } from "@/i18n/navigation";
+import { usePathname } from "@/i18n/navigation";
 import { supabase } from "@/lib/supabase/client";
 import { useInactivityLogout } from "@/hooks/useInactivityLogout";
 
@@ -10,7 +10,6 @@ const TIMEOUT_MINUTES = 15;
 const LOGIN_PATH = "/connexion";
 
 export default function AccountSessionGuard() {
-  const router = useRouter();
   const pathname = usePathname();
   const selfInitiatedSignOutRef = useRef(false);
 
@@ -20,8 +19,8 @@ export default function AccountSessionGuard() {
     selfInitiatedSignOutRef.current = true;
     await supabase.auth.signOut();
 
-    router.replace(`${LOGIN_PATH}?reason=inactivity`);
-  }, [pathname, router]);
+    window.location.href = `${LOGIN_PATH}?reason=inactivity`;
+  }, [pathname]);
 
   useInactivityLogout({
     timeoutMinutes: TIMEOUT_MINUTES,
@@ -39,11 +38,11 @@ export default function AccountSessionGuard() {
         return;
       }
 
-      router.replace(LOGIN_PATH);
+      window.location.href = LOGIN_PATH;
     });
 
     return () => data.subscription.unsubscribe();
-  }, [pathname, router]);
+  }, [pathname]);
 
   return null;
 }

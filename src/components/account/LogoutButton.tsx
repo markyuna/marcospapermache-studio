@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { LogOut } from "lucide-react";
 
-import { useRouter } from "@/i18n/navigation";
 import { supabase } from "@/lib/supabase/client";
 
 type LogoutButtonProps = {
@@ -13,15 +12,18 @@ type LogoutButtonProps = {
 
 export default function LogoutButton({ onLoggedOut }: LogoutButtonProps = {}) {
   const t = useTranslations("AccountPage.dashboard");
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   async function handleLogout() {
     setLoading(true);
-    await supabase.auth.signOut();
-    onLoggedOut?.();
-    router.replace("/");
-    router.refresh();
+    try {
+      await supabase.auth.signOut();
+    } catch (err) {
+      console.error("Error al cerrar sesión:", err);
+    } finally {
+      onLoggedOut?.();
+      window.location.href = "/";
+    }
   }
 
   return (
