@@ -655,7 +655,10 @@
       "switchToSignup": "No account yet? Create one",
       "emailAlreadyRegistered": "This email is already linked to an account. Log in below.",
       "genericError": "Something went wrong. Please try again.",
-      "loginError": "Incorrect email or password."
+      "loginError": "Incorrect email or password.",
+      "gateTitle": "Create an account to get started",
+      "gateDescription": "Designing your sculpture starts with a free account — you'll keep your generations, orders and credits.",
+      "gateButton": "Create my account"
     },
     "errors": {
       "emptyPrompt": "First describe your idea to generate an image.",

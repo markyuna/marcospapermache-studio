@@ -1103,7 +1103,7 @@ export default function AIExperienceSection() {
   }
 
   return (
-    <section className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-[#0b0b0d] p-5 text-white shadow-[0_30px_120px_rgba(0,0,0,0.38)] md:p-8">
+    <section className="relative rounded-[2.5rem] border border-white/10 bg-[#0b0b0d] p-5 text-white shadow-[0_30px_120px_rgba(0,0,0,0.38)] md:p-8">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(205,164,124,0.18),transparent_24%),radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.04),transparent_24%)]" />
 
       <div className="relative grid gap-6 lg:grid-cols-[1fr_1fr] lg:gap-8">
@@ -1669,6 +1669,31 @@ export default function AIExperienceSection() {
           </div>
         </div>
       </div>
+
+      {!currentUser ? (
+        <div className="absolute inset-0 z-30 rounded-[2.5rem]">
+          <div className="sticky top-0 flex h-screen max-h-full items-center justify-center rounded-[2.5rem] bg-black/60 backdrop-blur-md">
+            <div className="mx-auto flex max-w-md flex-col items-center px-6 text-center">
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-white/[0.05]">
+                <Sparkles className="h-7 w-7 text-[#e3bf9d]" />
+              </div>
+              <h2 className="mt-6 text-2xl font-semibold text-white">
+                {t("auth.gateTitle")}
+              </h2>
+              <p className="mt-3 text-sm leading-7 text-neutral-300">
+                {t("auth.gateDescription")}
+              </p>
+              <button
+                type="button"
+                onClick={() => setShowAuthModal(true)}
+                className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition duration-300 hover:scale-[1.015] hover:bg-neutral-200"
+              >
+                {t("auth.gateButton")}
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
 
       <AuthModal
         isOpen={showAuthModal}

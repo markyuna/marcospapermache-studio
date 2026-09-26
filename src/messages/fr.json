@@ -655,7 +655,10 @@
       "switchToSignup": "Pas encore de compte ? Créer un compte",
       "emailAlreadyRegistered": "Cet email est déjà associé à un compte. Connectez-vous ci-dessous.",
       "genericError": "Une erreur est survenue. Réessayez.",
-      "loginError": "Email ou mot de passe incorrect."
+      "loginError": "Email ou mot de passe incorrect.",
+      "gateTitle": "Créez un compte pour commencer",
+      "gateDescription": "La création de votre sculpture commence par un compte gratuit — vous gardez vos générations, vos commandes et vos crédits.",
+      "gateButton": "Créer mon compte"
     },
     "errors": {
       "emptyPrompt": "Décrivez d’abord votre idée pour générer une image.",
