@@ -357,7 +357,10 @@
       "passwordLabel": "Mot de passe",
       "submit": "Se connecter",
       "loading": "Connexion...",
-      "error": "Email ou mot de passe incorrect."
+      "orDivider": "ou",
+      "googleSubmit": "Continuer avec Google",
+      "error": "Email ou mot de passe incorrect.",
+      "inactivityMessage": "Votre session a été fermée pour inactivité. Veuillez vous reconnecter."
     },
     "dashboard": {
       "badge": "Mon compte",
@@ -645,6 +648,9 @@
       "passwordLabel": "Mot de passe",
       "signupButton": "Créer mon compte",
       "loginButton": "Se connecter",
+      "orDivider": "ou",
+      "googleButton": "Continuer avec Google",
+      "googleHint": "Vous reviendrez sur cette page après la connexion — relancez votre action si besoin.",
       "switchToLogin": "Vous avez déjà un compte ? Se connecter",
       "switchToSignup": "Pas encore de compte ? Créer un compte",
       "emailAlreadyRegistered": "Cet email est déjà associé à un compte. Connectez-vous ci-dessous.",

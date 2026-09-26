@@ -357,7 +357,10 @@
       "passwordLabel": "Password",
       "submit": "Log in",
       "loading": "Logging in...",
-      "error": "Incorrect email or password."
+      "orDivider": "or",
+      "googleSubmit": "Continue with Google",
+      "error": "Incorrect email or password.",
+      "inactivityMessage": "Your session was closed due to inactivity. Please log in again."
     },
     "dashboard": {
       "badge": "My account",
@@ -645,6 +648,9 @@
       "passwordLabel": "Password",
       "signupButton": "Create my account",
       "loginButton": "Log in",
+      "orDivider": "or",
+      "googleButton": "Continue with Google",
+      "googleHint": "You'll come back to this page after connecting — repeat your action if needed.",
       "switchToLogin": "Already have an account? Log in",
       "switchToSignup": "No account yet? Create one",
       "emailAlreadyRegistered": "This email is already linked to an account. Log in below.",

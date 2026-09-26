@@ -10,6 +10,7 @@ export default function AdminLoginForm() {
   const searchParams = useSearchParams();
 
   const nextPath = searchParams.get("next") || "/admin/artworks";
+  const isInactivityLogout = searchParams.get("reason") === "inactivity";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -40,6 +41,12 @@ export default function AdminLoginForm() {
 
   return (
     <form onSubmit={handleLogin} className="mx-auto w-full max-w-md space-y-5">
+      {isInactivityLogout && (
+        <p className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+          Ta session a été fermée pour inactivité. Reconnecte-toi.
+        </p>
+      )}
+
       <div>
         <label className="mb-2 block text-sm font-medium text-neutral-700">Email</label>
         <input

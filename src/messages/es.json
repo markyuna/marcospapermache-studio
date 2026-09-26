@@ -357,7 +357,10 @@
       "passwordLabel": "Contraseña",
       "submit": "Iniciar sesión",
       "loading": "Iniciando sesión...",
-      "error": "Email o contraseña incorrectos."
+      "orDivider": "o",
+      "googleSubmit": "Continuar con Google",
+      "error": "Email o contraseña incorrectos.",
+      "inactivityMessage": "Tu sesión se cerró por inactividad. Vuelve a iniciar sesión."
     },
     "dashboard": {
       "badge": "Mi cuenta",
@@ -645,6 +648,9 @@
       "passwordLabel": "Contraseña",
       "signupButton": "Crear mi cuenta",
       "loginButton": "Iniciar sesión",
+      "orDivider": "o",
+      "googleButton": "Continuar con Google",
+      "googleHint": "Volverás a esta página después de conectarte — repite tu acción si hace falta.",
       "switchToLogin": "¿Ya tienes cuenta? Inicia sesión",
       "switchToSignup": "¿Aún no tienes cuenta? Créala",
       "emailAlreadyRegistered": "Este email ya está asociado a una cuenta. Inicia sesión abajo.",

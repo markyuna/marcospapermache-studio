@@ -26,7 +26,18 @@ export async function createSupabaseServerClient() {
       getAll() {
         return cookieStore.getAll();
       },
-      setAll() {},
+      setAll(cookiesToSet) {
+        try {
+          cookiesToSet.forEach(({ name, value, options }) => {
+            cookieStore.set(name, value, options);
+          });
+        } catch {
+          // Called during a Server Component render, where cookies are
+          // read-only. Safe to ignore here because the actual session
+          // write happens in the Route Handler (/auth/callback) and in
+          // supabase.auth.signOut()/signInWithPassword() on the client.
+        }
+      },
     },
   });
 }

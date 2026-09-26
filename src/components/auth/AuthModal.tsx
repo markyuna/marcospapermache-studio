@@ -93,6 +93,23 @@ export default function AuthModal({
     await onAuthSuccess();
   }
 
+  async function handleGoogleLogin() {
+    setIsSubmitting(true);
+    setError("");
+
+    const { error: oauthError } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback?next=${window.location.pathname}`,
+      },
+    });
+
+    if (oauthError) {
+      setIsSubmitting(false);
+      setError(oauthError.message);
+    }
+  }
+
   return createPortal(
     <div
       className="fixed inset-0 z-[999999] flex items-center justify-center overflow-y-auto bg-black/70 px-4 py-8 backdrop-blur-md"
@@ -171,6 +188,43 @@ export default function AuthModal({
             )}
           </button>
         </form>
+
+        <div className="mt-5 flex items-center gap-3 text-xs uppercase tracking-wide text-neutral-500">
+          <span className="h-px flex-1 bg-white/10" />
+          {t("orDivider")}
+          <span className="h-px flex-1 bg-white/10" />
+        </div>
+
+        <button
+          type="button"
+          onClick={handleGoogleLogin}
+          disabled={isSubmitting}
+          className="mt-4 flex w-full items-center justify-center gap-3 rounded-full border border-white/10 bg-white/[0.05] px-5 py-3 text-sm font-medium text-white transition duration-300 hover:bg-white/[0.09] disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
+            <path
+              fill="#4285F4"
+              d="M23.49 12.27c0-.82-.07-1.61-.2-2.36H12v4.46h6.47c-.28 1.48-1.13 2.74-2.4 3.58v2.98h3.88c2.27-2.09 3.58-5.17 3.58-8.66z"
+            />
+            <path
+              fill="#34A853"
+              d="M12 24c3.24 0 5.96-1.07 7.95-2.91l-3.88-2.98c-1.08.72-2.45 1.15-4.07 1.15-3.13 0-5.78-2.11-6.73-4.95H1.26v3.09C3.24 21.3 7.31 24 12 24z"
+            />
+            <path
+              fill="#FBBC05"
+              d="M5.27 14.31c-.25-.72-.38-1.49-.38-2.31s.14-1.59.38-2.31V6.6H1.26A11.96 11.96 0 000 12c0 1.93.46 3.76 1.26 5.4l4.01-3.09z"
+            />
+            <path
+              fill="#EA4335"
+              d="M12 4.75c1.76 0 3.35.61 4.6 1.8l3.44-3.44C17.95 1.19 15.24 0 12 0 7.31 0 3.24 2.7 1.26 6.6l4.01 3.09c.95-2.84 3.6-4.94 6.73-4.94z"
+            />
+          </svg>
+          {t("googleButton")}
+        </button>
+
+        <p className="mt-3 text-center text-xs leading-5 text-neutral-500">
+          {t("googleHint")}
+        </p>
 
         <button
           type="button"

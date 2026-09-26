@@ -1,15 +1,15 @@
-// src/components/admin/AdminSessionGuard.tsx
+// src/components/account/AccountSessionGuard.tsx
 "use client";
 
 import { useCallback, useEffect, useRef } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import { supabase } from "@/lib/supabase/client";
 import { useInactivityLogout } from "@/hooks/useInactivityLogout";
 
 const TIMEOUT_MINUTES = 15;
-const LOGIN_PATH = "/admin/login";
+const LOGIN_PATH = "/connexion";
 
-export default function AdminSessionGuard() {
+export default function AccountSessionGuard() {
   const router = useRouter();
   const pathname = usePathname();
   const selfInitiatedSignOutRef = useRef(false);
@@ -20,8 +20,7 @@ export default function AdminSessionGuard() {
     selfInitiatedSignOutRef.current = true;
     await supabase.auth.signOut();
 
-    const nextPath = encodeURIComponent(pathname);
-    router.replace(`${LOGIN_PATH}?next=${nextPath}&reason=inactivity`);
+    router.replace(`${LOGIN_PATH}?reason=inactivity`);
   }, [pathname, router]);
 
   useInactivityLogout({
@@ -36,14 +35,10 @@ export default function AdminSessionGuard() {
       if (pathname === LOGIN_PATH) return;
 
       if (selfInitiatedSignOutRef.current) {
-        // This tab already redirected itself (with the inactivity reason)
-        // right after calling signOut() — don't overwrite that navigation.
         selfInitiatedSignOutRef.current = false;
         return;
       }
 
-      // signOut() happened in another tab (manual logout or its own
-      // inactivity timeout) — Supabase synced the session change here.
       router.replace(LOGIN_PATH);
     });
 

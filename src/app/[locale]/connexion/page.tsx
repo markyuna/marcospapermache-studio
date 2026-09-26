@@ -1,5 +1,6 @@
 // src/app/[locale]/connexion/page.tsx
 
+import { Suspense } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import CustomerLoginForm from "@/components/account/CustomerLoginForm";
@@ -38,7 +39,9 @@ export default async function ConnexionPage({ params }: Props) {
             </p>
           </div>
 
-          <CustomerLoginForm />
+          <Suspense fallback={null}>
+            <CustomerLoginForm />
+          </Suspense>
         </section>
       </div>
     </main>
