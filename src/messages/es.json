@@ -671,6 +671,19 @@
       "title": "Creación de tu imagen en curso",
       "description": "Esto puede tardar unos instantes. Espera hasta que la generación termine para evitar cualquier interrupción.",
       "notice": "No actualices ni cierres esta página"
+    },
+    "reference": {
+      "title": "Imagen de referencia (opcional)",
+      "hint": "JPG, PNG o WebP. Solo sirve para guiar la generación y no se guarda.",
+      "choose": "Elegir una imagen",
+      "remove": "Quitar la imagen",
+      "previewAlt": "Vista previa de la imagen de referencia",
+      "processing": "Preparando la imagen…",
+      "errors": {
+        "badType": "Formato no compatible. Usa una imagen JPG, PNG o WebP.",
+        "tooLarge": "La imagen es demasiado grande. Prueba con una más ligera.",
+        "unreadable": "No se pudo leer esta imagen. Prueba con otra."
+      }
     }
   },
   "ContactPage": {

@@ -671,6 +671,19 @@
       "title": "Création de votre image en cours",
       "description": "Cela peut prendre quelques instants. Merci de patienter jusqu’à la fin de la génération afin d’éviter toute interruption.",
       "notice": "N’actualisez pas et ne fermez pas cette page"
+    },
+    "reference": {
+      "title": "Image de référence (facultatif)",
+      "hint": "JPG, PNG ou WebP. Elle sert uniquement à guider la génération et n'est pas conservée.",
+      "choose": "Choisir une image",
+      "remove": "Retirer l'image",
+      "previewAlt": "Aperçu de l'image de référence",
+      "processing": "Préparation de l'image…",
+      "errors": {
+        "badType": "Format non pris en charge. Utilisez une image JPG, PNG ou WebP.",
+        "tooLarge": "L'image est trop volumineuse. Essayez avec une image plus légère.",
+        "unreadable": "Impossible de lire cette image. Essayez-en une autre."
+      }
     }
   },
   "ContactPage": {

@@ -671,6 +671,19 @@
       "title": "Creating your image",
       "description": "This may take a few moments. Please wait until the generation is complete to avoid any interruption.",
       "notice": "Do not refresh or close this page"
+    },
+    "reference": {
+      "title": "Reference image (optional)",
+      "hint": "JPG, PNG or WebP. It is only used to guide the generation and is not stored.",
+      "choose": "Choose an image",
+      "remove": "Remove image",
+      "previewAlt": "Reference image preview",
+      "processing": "Preparing image…",
+      "errors": {
+        "badType": "Unsupported format. Please use a JPG, PNG or WebP image.",
+        "tooLarge": "The image is too large. Please try a smaller one.",
+        "unreadable": "We couldn't read this image. Please try another one."
+      }
     }
   },
   "ContactPage": {
