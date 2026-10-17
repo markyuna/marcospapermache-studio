@@ -35,6 +35,7 @@ type GenerateImageResponse = {
   image?: string;
   imageId?: string;
   error?: string;
+  referenceError?: "too_large" | "bad_type" | "corrupt";
   requiresPayment?: boolean;
   requiresSignup?: boolean;
   paidCreditsRemaining?: number;
@@ -905,19 +906,43 @@ export default function AIExperienceSection() {
         scrollToResult(90);
       });
 
-      const response = await fetch("/api/generate-image", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          prompt: fullPrompt,
-          creationType,
-          withFrame: creationType === "wall" ? withFrame : false,
-        }),
-      });
+      const frameFlag = creationType === "wall" ? withFrame : false;
+      let requestInit: RequestInit;
+
+      if (referenceFile) {
+        // Multipart: the browser sets the Content-Type boundary itself.
+        const formData = new FormData();
+        formData.set("prompt", fullPrompt);
+        formData.set("creationType", creationType);
+        formData.set("withFrame", String(frameFlag));
+        formData.set("reference", referenceFile);
+        requestInit = { method: "POST", body: formData };
+      } else {
+        requestInit = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            prompt: fullPrompt,
+            creationType,
+            withFrame: frameFlag,
+          }),
+        };
+      }
+
+      const response = await fetch("/api/generate-image", requestInit);
 
       const data: GenerateImageResponse = await response.json();
+
+      if (data.referenceError) {
+        const referenceErrors = {
+          too_large: "tooLarge",
+          bad_type: "badType",
+          corrupt: "unreadable",
+        } as const;
+        throw new Error(t(`reference.errors.${referenceErrors[data.referenceError]}`));
+      }
 
       if (data.requiresSignup) {
         pendingAuthActionRef.current = runGeneration;

@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
+import { toFile } from "openai";
 import sharp from "sharp";
 
 import { getAuthenticatedUser, isAdminEmail } from "@/lib/admin-auth";
+import { openai } from "@/lib/openai";
 import { prisma } from "@/lib/prisma";
 import { uploadBase64ImageToStorage } from "@/lib/storage";
 import {
@@ -9,12 +11,39 @@ import {
   tryConsumeGeneration,
   type GenerationQuota,
 } from "@/lib/user-credits";
+import { validateAndNormalizeReference } from "@/lib/validate-image";
+
+// Image edits with a reference take noticeably longer than plain generations.
+export const maxDuration = 60;
 
 type RequestBody = {
   prompt?: string;
   creationType?: "wall" | "object" | "light";
   withFrame?: boolean;
 };
+
+// "high" copies the reference more faithfully but costs more input tokens; lower to "low" to save cost.
+const REFERENCE_INPUT_FIDELITY = "high" as const;
+
+const GENERATION_ERROR_MESSAGE = "Erreur serveur pendant la génération.";
+const MODERATION_ERROR_MESSAGE =
+  "Cette image ou cette description ne peut pas être utilisée. Essayez avec une autre image ou reformulez votre idée.";
+
+function isModerationRejection(error: unknown) {
+  const { status, code, message } = error as {
+    status?: unknown;
+    code?: unknown;
+    message?: unknown;
+  };
+
+  return (
+    status === 400 &&
+    /moderation|safety/i.test(`${String(code ?? "")} ${String(message ?? "")}`)
+  );
+}
+
+const REFERENCE_PROMPT_PREFIX =
+  "Use the provided image as a visual reference for the shape, composition, materials and mood of the sculpture. Do not copy it literally. ";
 
 export async function POST(request: Request) {
   // Set once a generation slot has been claimed, so any failure path — including
@@ -33,7 +62,38 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Non autorisé." }, { status: 403 });
     }
 
-    const body = (await request.json()) as RequestBody;
+    // JSON for plain generations, multipart when a reference image is attached.
+    const isMultipart = (request.headers.get("content-type") ?? "").includes(
+      "multipart/form-data",
+    );
+    let body: RequestBody;
+    let referenceFile: File | null = null;
+
+    if (isMultipart) {
+      const formData = await request.formData();
+      const rawWithFrame = formData.get("withFrame");
+      const rawCreationType = formData.get("creationType");
+      const rawReference = formData.get("reference");
+
+      body = {
+        prompt:
+          typeof formData.get("prompt") === "string"
+            ? (formData.get("prompt") as string)
+            : undefined,
+        creationType:
+          rawCreationType === "object" || rawCreationType === "light"
+            ? rawCreationType
+            : "wall",
+        withFrame: rawWithFrame === "true",
+      };
+      referenceFile =
+        rawReference instanceof File && rawReference.size > 0
+          ? rawReference
+          : null;
+    } else {
+      body = (await request.json()) as RequestBody;
+    }
+
     const prompt = body?.prompt?.trim();
     const creationType = body?.creationType ?? "wall";
     const withFrame = Boolean(body?.withFrame);
@@ -53,6 +113,23 @@ export async function POST(request: Request) {
         },
         { status: 401 },
       );
+    }
+
+    // Validate the reference before claiming a slot, so a bad file never costs
+    // the user a generation. The client maps `referenceError` to a translation.
+    let referenceBuffer: Buffer | null = null;
+
+    if (referenceFile) {
+      const reference = await validateAndNormalizeReference(referenceFile);
+
+      if (!reference.ok) {
+        return NextResponse.json(
+          { error: "Image de référence invalide.", referenceError: reference.code },
+          { status: 400 },
+        );
+      }
+
+      referenceBuffer = reference.buffer;
     }
 
     const isAdmin = isAdminEmail(user.email);
@@ -105,30 +182,70 @@ export async function POST(request: Request) {
       ? `${prompt}, zoomed out composition, the full outer frame must be completely visible with comfortable margin on every side, no cropped frame, no cut edges, no partial artwork, the artwork must fit naturally inside the image`
       : `${prompt}, centered composition, complete artwork fully visible, no cropped edges`;
 
-    const response = await fetch("https://api.openai.com/v1/images/generations", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: "gpt-image-1",
-        prompt: reinforcedPrompt,
-        size: imageSize,
-      }),
-    });
+    let imageBase64: string | undefined;
 
-    const data = await response.json();
+    if (referenceBuffer) {
+      try {
+        const edited = await openai.images.edit({
+          model: "gpt-image-1",
+          image: await toFile(referenceBuffer, "reference.png", {
+            type: "image/png",
+          }),
+          prompt: `${REFERENCE_PROMPT_PREFIX}${reinforcedPrompt}`,
+          size: imageSize,
+          input_fidelity: REFERENCE_INPUT_FIDELITY,
+        });
+        imageBase64 = edited.data?.[0]?.b64_json;
+      } catch (editError) {
+        await refundIfConsumed();
 
-    if (!response.ok) {
-      await refundIfConsumed();
-      return NextResponse.json(
-        { error: data?.error?.message || "Erreur OpenAI." },
-        { status: response.status },
+        if (isModerationRejection(editError)) {
+          return NextResponse.json(
+            { error: MODERATION_ERROR_MESSAGE },
+            { status: 400 },
+          );
+        }
+
+        // Keep OpenAI's internal message server-side only.
+        console.error("OpenAI image edit failed:", editError);
+        const status =
+          typeof (editError as { status?: unknown })?.status === "number"
+            ? (editError as { status: number }).status
+            : 500;
+        return NextResponse.json(
+          { error: GENERATION_ERROR_MESSAGE },
+          { status },
+        );
+      }
+    } else {
+      const response = await fetch(
+        "https://api.openai.com/v1/images/generations",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+          },
+          body: JSON.stringify({
+            model: "gpt-image-1",
+            prompt: reinforcedPrompt,
+            size: imageSize,
+          }),
+        },
       );
-    }
 
-    const imageBase64 = data?.data?.[0]?.b64_json;
+      const data = await response.json();
+
+      if (!response.ok) {
+        await refundIfConsumed();
+        return NextResponse.json(
+          { error: data?.error?.message || "Erreur OpenAI." },
+          { status: response.status },
+        );
+      }
+
+      imageBase64 = data?.data?.[0]?.b64_json;
+    }
 
     if (!imageBase64) {
       await refundIfConsumed();
