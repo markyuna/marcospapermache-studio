@@ -29,6 +29,7 @@ import { useRouter } from "@/i18n/navigation";
 import { supabase } from "@/lib/supabase/client";
 import { FREE_GENERATION_LIMIT } from "@/lib/generation-limits";
 import AuthModal from "@/components/auth/AuthModal";
+import ReferenceImageUpload from "./ReferenceImageUpload";
 
 type GenerateImageResponse = {
   image?: string;
@@ -495,6 +496,7 @@ export default function AIExperienceSection() {
   ] as const, [t]);
 
   const [prompt, setPrompt] = useState("");
+  const [referenceFile, setReferenceFile] = useState<File | null>(null);
   const [creationType, setCreationType] = useState<CreationType>("wall");
   const [selectedStyle, setSelectedStyle] = useState<StylePresetId | null>(null);
 
@@ -995,6 +997,7 @@ export default function AIExperienceSection() {
 
   function handleReset() {
     setPrompt("");
+    setReferenceFile(null);
     setCreationType("wall");
     setSelectedStyle(null);
     setSelectedWallSize("50x70");
@@ -1459,6 +1462,12 @@ export default function AIExperienceSection() {
                 className="mt-3 min-h-[110px] w-full resize-y rounded-[1.5rem] border border-white/10 bg-black/20 px-4 py-3 text-sm leading-7 text-white outline-none transition duration-300 placeholder:text-neutral-500 focus:border-[#caa27c] focus:bg-black/25 focus:ring-2 focus:ring-[#caa27c]/20 disabled:cursor-not-allowed disabled:opacity-70"
               />
             </div>
+
+            <ReferenceImageUpload
+              value={referenceFile}
+              onChange={setReferenceFile}
+              disabled={isLoading}
+            />
 
             {fullPrompt ? (
               <div className="mt-4 rounded-[1.25rem] border border-[#d9b08c]/18 bg-gradient-to-br from-[#d9b08c]/10 to-transparent p-3 md:p-4">
