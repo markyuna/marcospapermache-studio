@@ -5,8 +5,8 @@ import { useCallback, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { supabase } from "@/lib/supabase/client";
 import { useInactivityLogout } from "@/hooks/useInactivityLogout";
+import { SESSION_IDLE_TIMEOUT_MINUTES } from "@/lib/session-activity";
 
-const TIMEOUT_MINUTES = 15;
 const LOGIN_PATH = "/admin/login";
 
 export default function AdminSessionGuard() {
@@ -23,9 +23,20 @@ export default function AdminSessionGuard() {
     window.location.href = `${LOGIN_PATH}?next=${nextPath}&reason=inactivity`;
   }, [pathname]);
 
+  const handleKeepAlive = useCallback(async () => {
+    try {
+      const response = await fetch("/api/session/touch", { method: "POST" });
+      // Server says the session is idle (e.g. the machine slept past the timeout).
+      if (response.status === 401) await handleInactivityTimeout();
+    } catch {
+      // Offline — the next activity will retry.
+    }
+  }, [handleInactivityTimeout]);
+
   useInactivityLogout({
-    timeoutMinutes: TIMEOUT_MINUTES,
+    timeoutMinutes: SESSION_IDLE_TIMEOUT_MINUTES,
     onLogout: handleInactivityTimeout,
+    onKeepAlive: handleKeepAlive,
     storageKey: "mp-last-activity",
   });
 
