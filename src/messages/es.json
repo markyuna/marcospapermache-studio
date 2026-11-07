@@ -1096,6 +1096,62 @@
           "p6": "Escultura de papel maché de pliegues sencillos convertidos en volumen, aristas limpias, sensación de calma y precisión"
         }
       }
+    },
+    "save": {
+      "title": "Guárdalo y crea tu imagen",
+      "signedOutHint": "Con una cuenta gratuita puedes guardar este resultado y generar una imagen de inspiración de tu pieza.",
+      "createAccount": "Crear cuenta para guardar y generar",
+      "save": "Guardar en mi cuenta",
+      "saving": "Guardando…",
+      "saved": "Guardado en tu cuenta",
+      "viewAccount": "Ver mis resultados",
+      "generate": "Generar mi imagen",
+      "regenerate": "Regenerar",
+      "generating": "Creando tu imagen… suele tardar entre 10 y 20 segundos. No cierres esta página.",
+      "creditsLeft": "{count, plural, one {Te queda # generación} other {Te quedan # generaciones}}",
+      "creditsNone": "Ya no te quedan generaciones",
+      "creditsUnlimited": "Generaciones ilimitadas",
+      "confirmLast": "Vas a usar tu última generación.",
+      "confirmReplace": "La nueva imagen sustituirá a la anterior y gastará otra generación.",
+      "confirmQuestion": "¿Quieres continuar?",
+      "confirm": "Sí, continuar",
+      "cancel": "Cancelar",
+      "imageAlt": "Imagen de inspiración generada con IA para tu resultado",
+      "disclaimer": "Imagen de inspiración generada por IA: tu pieza se crea a mano y puede ser interpretada por el artista.",
+      "errors": {
+        "unauthenticated": "Tu sesión ha caducado. Inicia sesión de nuevo para continuar.",
+        "invalid_request": "No hemos podido procesar la petición. Inténtalo de nuevo.",
+        "invalid_code": "Este resultado no es válido. Repite el quiz para obtener uno nuevo.",
+        "invalid_locale": "No hemos podido procesar la petición. Inténtalo de nuevo.",
+        "limit_reached": "Has alcanzado el máximo de 20 resultados guardados. Elimina alguno desde tu cuenta para guardar más.",
+        "not_found": "No hemos encontrado este resultado.",
+        "replace_required": "Ya existe una imagen para este resultado. Confirma para sustituirla.",
+        "already_generating": "Ya estamos creando esta imagen. Espera unos segundos e inténtalo de nuevo.",
+        "quota_exhausted": "Ya no te quedan generaciones. Puedes conseguir más desde tu cuenta.",
+        "moderation": "No hemos podido usar esta descripción para generar una imagen. Prueba con otro resultado.",
+        "generation_failed": "No hemos podido crear la imagen. No se ha gastado ninguna generación: inténtalo de nuevo en un momento.",
+        "save_failed": "No hemos podido guardar el resultado. Inténtalo de nuevo.",
+        "delete_failed": "No hemos podido eliminar el resultado. Inténtalo de nuevo.",
+        "network": "Sin conexión con el servidor. Comprueba tu conexión e inténtalo de nuevo.",
+        "unknown": "Algo ha ido mal. Inténtalo de nuevo."
+      }
+    },
+    "account": {
+      "title": "Mis resultados del quiz",
+      "description": "Tus resultados guardados y sus imágenes de inspiración. Solo tú puedes verlos.",
+      "count": "{count} de {max} guardados",
+      "empty": "Aún no has guardado ningún resultado.",
+      "emptyCta": "Hacer el quiz",
+      "savedOn": "Guardado el {date}",
+      "noImage": "Sin imagen todavía",
+      "imageAlt": "Imagen de inspiración de tu resultado {profile}",
+      "view": "Ver resultado",
+      "openGenerator": "Abrir en el generador",
+      "delete": "Eliminar",
+      "deleting": "Eliminando…",
+      "deleteQuestion": "¿Eliminar este resultado y su imagen?",
+      "deleteConfirm": "Sí, eliminar",
+      "cancel": "Cancelar"
     }
   }
 }

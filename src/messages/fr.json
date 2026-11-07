@@ -1096,6 +1096,62 @@
           "p6": "Sculpture en papier mâché de plis simples devenus volume, arêtes nettes, sensation de calme et de précision"
         }
       }
+    },
+    "save": {
+      "title": "Garde-le et crée ton image",
+      "signedOutHint": "Avec un compte gratuit, tu peux garder ce résultat et générer une image d’inspiration de ta pièce.",
+      "createAccount": "Créer un compte pour garder et générer",
+      "save": "Enregistrer dans mon compte",
+      "saving": "Enregistrement…",
+      "saved": "Enregistré dans ton compte",
+      "viewAccount": "Voir mes résultats",
+      "generate": "Générer mon image",
+      "regenerate": "Régénérer",
+      "generating": "Création de ton image en cours… cela prend en général 10 à 20 secondes. Ne ferme pas cette page.",
+      "creditsLeft": "{count, plural, one {Il te reste # génération} other {Il te reste # générations}}",
+      "creditsNone": "Il ne te reste plus de génération",
+      "creditsUnlimited": "Générations illimitées",
+      "confirmLast": "Tu vas utiliser ta dernière génération.",
+      "confirmReplace": "La nouvelle image remplacera la précédente et utilisera une autre génération.",
+      "confirmQuestion": "Veux-tu continuer ?",
+      "confirm": "Oui, continuer",
+      "cancel": "Annuler",
+      "imageAlt": "Image d’inspiration générée par IA pour ton résultat",
+      "disclaimer": "Image d’inspiration générée par IA : ta pièce est créée à la main et peut être interprétée par l’artiste.",
+      "errors": {
+        "unauthenticated": "Ta session a expiré. Reconnecte-toi pour continuer.",
+        "invalid_request": "Nous n’avons pas pu traiter la demande. Réessaie.",
+        "invalid_code": "Ce résultat n’est pas valide. Refais le quiz pour en obtenir un nouveau.",
+        "invalid_locale": "Nous n’avons pas pu traiter la demande. Réessaie.",
+        "limit_reached": "Tu as atteint le maximum de 20 résultats enregistrés. Supprime-en un depuis ton compte pour en garder d’autres.",
+        "not_found": "Nous n’avons pas trouvé ce résultat.",
+        "replace_required": "Une image existe déjà pour ce résultat. Confirme pour la remplacer.",
+        "already_generating": "Nous créons déjà cette image. Patiente quelques secondes puis réessaie.",
+        "quota_exhausted": "Il ne te reste plus de génération. Tu peux en obtenir d’autres depuis ton compte.",
+        "moderation": "Nous n’avons pas pu utiliser cette description pour générer une image. Essaie avec un autre résultat.",
+        "generation_failed": "Nous n’avons pas pu créer l’image. Aucune génération n’a été utilisée : réessaie dans un instant.",
+        "save_failed": "Nous n’avons pas pu enregistrer le résultat. Réessaie.",
+        "delete_failed": "Nous n’avons pas pu supprimer le résultat. Réessaie.",
+        "network": "Pas de connexion avec le serveur. Vérifie ta connexion et réessaie.",
+        "unknown": "Quelque chose s’est mal passé. Réessaie."
+      }
+    },
+    "account": {
+      "title": "Mes résultats du quiz",
+      "description": "Tes résultats enregistrés et leurs images d’inspiration. Toi seul peux les voir.",
+      "count": "{count} sur {max} enregistrés",
+      "empty": "Tu n’as encore enregistré aucun résultat.",
+      "emptyCta": "Faire le quiz",
+      "savedOn": "Enregistré le {date}",
+      "noImage": "Pas encore d’image",
+      "imageAlt": "Image d’inspiration de ton résultat {profile}",
+      "view": "Voir le résultat",
+      "openGenerator": "Ouvrir dans le générateur",
+      "delete": "Supprimer",
+      "deleting": "Suppression…",
+      "deleteQuestion": "Supprimer ce résultat et son image ?",
+      "deleteConfirm": "Oui, supprimer",
+      "cancel": "Annuler"
     }
   }
 }

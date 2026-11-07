@@ -6,6 +6,7 @@ import AccountDashboard from "@/components/account/AccountDashboard";
 import { Container } from "@/components/layout/container";
 import { isAdminEmail } from "@/lib/admin-auth";
 import { prisma } from "@/lib/prisma";
+import { listQuizResults, toQuizResultDTOs } from "@/lib/quiz-results";
 import { supabaseAdmin } from "@/lib/supabase";
 import { requireUserPageAccess } from "@/lib/user-auth";
 import { getUserGenerationQuota } from "@/lib/user-credits";
@@ -20,6 +21,16 @@ type Props = {
   }>;
 };
 
+// A problem with the quiz tables must not take the whole account page down.
+async function loadQuizResults(userId: string) {
+  try {
+    return await toQuizResultDTOs(await listQuizResults(userId), userId);
+  } catch (error) {
+    console.error("Could not load quiz results:", error);
+    return [];
+  }
+}
+
 export default async function MonComptePage({ params }: Props) {
   const { locale } = await params;
 
@@ -27,12 +38,13 @@ export default async function MonComptePage({ params }: Props) {
 
   const user = await requireUserPageAccess(locale);
 
-  const [quota, generatedImages, commandesResult, profile] = await Promise.all([
+  const [quota, generatedImages, quizResults, commandesResult, profile] = await Promise.all([
     getUserGenerationQuota(user.id),
     prisma.generatedImage.findMany({
       where: { supabaseUserId: user.id },
       orderBy: { createdAt: "desc" },
     }),
+    loadQuizResults(user.id),
     supabaseAdmin
       .from("commandes")
       .select("*")
@@ -53,6 +65,7 @@ export default async function MonComptePage({ params }: Props) {
           freeRemaining={quota.freeRemaining}
           imagesGenerated={quota.imagesGenerated}
           generatedImages={generatedImages}
+          quizResults={quizResults}
           commandes={commandes}
           profile={profile}
           isAdmin={isAdmin}

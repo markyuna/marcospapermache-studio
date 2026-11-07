@@ -1096,6 +1096,62 @@
           "p6": "Paper mâché sculpture of simple folds turned into volume, clean edges, a feeling of calm and precision"
         }
       }
+    },
+    "save": {
+      "title": "Save it and create your image",
+      "signedOutHint": "With a free account you can save this result and generate an inspiration image of your piece.",
+      "createAccount": "Create an account to save and generate",
+      "save": "Save to my account",
+      "saving": "Saving…",
+      "saved": "Saved to your account",
+      "viewAccount": "View my results",
+      "generate": "Generate my image",
+      "regenerate": "Regenerate",
+      "generating": "Creating your image… this usually takes 10 to 20 seconds. Please keep this page open.",
+      "creditsLeft": "{count, plural, one {You have # generation left} other {You have # generations left}}",
+      "creditsNone": "You have no generations left",
+      "creditsUnlimited": "Unlimited generations",
+      "confirmLast": "You are about to use your last generation.",
+      "confirmReplace": "The new image will replace the previous one and use another generation.",
+      "confirmQuestion": "Do you want to continue?",
+      "confirm": "Yes, continue",
+      "cancel": "Cancel",
+      "imageAlt": "AI-generated inspiration image for your result",
+      "disclaimer": "AI-generated inspiration image: your piece is made by hand and may be interpreted by the artist.",
+      "errors": {
+        "unauthenticated": "Your session has expired. Sign in again to continue.",
+        "invalid_request": "We couldn’t process the request. Please try again.",
+        "invalid_code": "This result isn’t valid. Retake the quiz to get a new one.",
+        "invalid_locale": "We couldn’t process the request. Please try again.",
+        "limit_reached": "You’ve reached the maximum of 20 saved results. Delete one from your account to save more.",
+        "not_found": "We couldn’t find this result.",
+        "replace_required": "An image already exists for this result. Confirm to replace it.",
+        "already_generating": "We’re already creating this image. Wait a few seconds and try again.",
+        "quota_exhausted": "You have no generations left. You can get more from your account.",
+        "moderation": "We couldn’t use this description to generate an image. Try another result.",
+        "generation_failed": "We couldn’t create the image. No generation was used: please try again in a moment.",
+        "save_failed": "We couldn’t save the result. Please try again.",
+        "delete_failed": "We couldn’t delete the result. Please try again.",
+        "network": "Can’t reach the server. Check your connection and try again.",
+        "unknown": "Something went wrong. Please try again."
+      }
+    },
+    "account": {
+      "title": "My quiz results",
+      "description": "Your saved results and their inspiration images. Only you can see them.",
+      "count": "{count} of {max} saved",
+      "empty": "You haven’t saved any results yet.",
+      "emptyCta": "Take the quiz",
+      "savedOn": "Saved on {date}",
+      "noImage": "No image yet",
+      "imageAlt": "Inspiration image for your {profile} result",
+      "view": "View result",
+      "openGenerator": "Open in the generator",
+      "delete": "Delete",
+      "deleting": "Deleting…",
+      "deleteQuestion": "Delete this result and its image?",
+      "deleteConfirm": "Yes, delete",
+      "cancel": "Cancel"
     }
   }
 }

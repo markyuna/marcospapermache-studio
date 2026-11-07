@@ -7,6 +7,8 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Check, Copy, RotateCcw, Share2, Sparkles } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
+import QuizSavePanel from "@/components/quiz/QuizSavePanel";
+import { PROFILE_GRADIENTS } from "@/components/quiz/profile-gradients";
 import { GradientTitle } from "@/components/ui/GradientTitle";
 import type { GeneratorConfig } from "@/data/quiz/generator";
 import {
@@ -37,15 +39,6 @@ type QuizResultProps = {
   code: string | null;
   artworks: QuizArtwork[];
   onRetake: () => void;
-};
-
-// TODO: replace these gradients with a real illustration/photo per profile.
-const PROFILE_GRADIENTS: Record<ProfileId, string> = {
-  contemplativo: "from-[#d8c3a5] via-[#b9c4a8] to-[#8fa58a]",
-  onirico: "from-[#1d2a4d] via-[#34508a] to-[#d4a85a]",
-  animal: "from-[#e3a572] via-[#d9825b] to-[#f0d9b8]",
-  vibrante: "from-[#ff8a2a] via-[#e8317a] to-[#1fb5c4]",
-  minimalista: "from-[#f2efe9] via-[#d9d5cd] to-[#8c8a85]",
 };
 
 const COPIED_RESET_MS = 2000;
@@ -306,6 +299,9 @@ export default function QuizResult({
           </ul>
         </section>
       )}
+
+      {/* Save to the account / generate the image (needs the answers code) */}
+      {config && code && <QuizSavePanel code={code} hasSession={hasSession} />}
 
       {/* Prompts */}
       <section>
