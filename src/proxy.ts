@@ -2,6 +2,7 @@
 import createMiddleware from "next-intl/middleware";
 import { NextResponse, type NextRequest } from "next/server";
 import { routing } from "@/i18n/routing";
+import { isOAuthCode, isPkceVerifierCookie } from "@/lib/auth-redirect";
 import {
   ACTIVITY_COOKIE_NAME,
   ACTIVITY_COOKIE_REFRESH_MS,
@@ -64,7 +65,36 @@ function applySessionActivity(request: NextRequest, response: NextResponse) {
   return response;
 }
 
+// Safety net for an OAuth/email-confirmation code that lands on the wrong page
+// (Supabase falls back to its Site URL when the redirect URL is not allowed).
+// Only while this browser holds the PKCE verifier, i.e. a flow it started, and
+// never for the callback itself or the API, so it cannot loop: the callback's
+// destination is stripped of `code`, and the verifier is gone after the exchange.
+function redirectStrayAuthCode(request: NextRequest) {
+  const { pathname, searchParams } = request.nextUrl;
+
+  if (request.method !== "GET") return null;
+  if (pathname === "/auth/callback" || /^\/api(\/|$)/.test(pathname)) return null;
+
+  const code = searchParams.get("code");
+  if (!isOAuthCode(code)) return null;
+
+  const hasVerifier = request.cookies
+    .getAll()
+    .some(({ name }) => isPkceVerifierCookie(name));
+  if (!hasVerifier) return null;
+
+  const target = request.nextUrl.clone();
+  target.pathname = "/auth/callback";
+  target.search = `?code=${encodeURIComponent(code)}`;
+
+  return NextResponse.redirect(target);
+}
+
 export default function proxy(request: NextRequest) {
+  const stray = redirectStrayAuthCode(request);
+  if (stray) return stray;
+
   const response = isLocalized(request.nextUrl.pathname)
     ? handleI18nRouting(request)
     : NextResponse.next();

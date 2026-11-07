@@ -5,22 +5,10 @@ import { createPortal } from "react-dom";
 import { useTranslations } from "next-intl";
 import { Loader2, X } from "lucide-react";
 
-import { sanitizeReturnTo } from "@/lib/return-to";
+import { getAuthCallbackUrl, saveReturnTo } from "@/lib/auth-redirect";
 import { supabase } from "@/lib/supabase/client";
 
 type Mode = "signup" | "login";
-
-// Where the callback sends the user after Google sign-in or email confirmation:
-// the page they are on, with its query (?prompt=, ?type=, …), so a preselected
-// generator survives the round trip. The callback validates it again.
-function getAuthCallbackUrl() {
-  const returnTo = sanitizeReturnTo(
-    `${window.location.pathname}${window.location.search}`,
-    window.location.pathname
-  );
-
-  return `${window.location.origin}/auth/callback?next=${encodeURIComponent(returnTo)}`;
-}
 
 type AuthModalProps = {
   isOpen: boolean;
@@ -65,11 +53,14 @@ export default function AuthModal({
     setError("");
     setInfo("");
 
+    // If the project requires email confirmation, the link in the email must
+    // bring the user back to this exact page, query string included. The path
+    // travels in a cookie so the redirect URL itself stays plain.
+    saveReturnTo();
+
     const { data, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
-      // If the project requires email confirmation, the link in the email must
-      // bring the user back to this exact page, query string included.
       options: { emailRedirectTo: getAuthCallbackUrl() },
     });
 
@@ -123,6 +114,9 @@ export default function AuthModal({
   async function handleGoogleLogin() {
     setIsSubmitting(true);
     setError("");
+
+    // Leaving for Google: remember this page (with its query) for the callback.
+    saveReturnTo();
 
     const { error: oauthError } = await supabase.auth.signInWithOAuth({
       provider: "google",
