@@ -37,6 +37,21 @@ import {
   type GeneratorPrefill,
 } from "@/data/quiz/generator-params";
 import { useRouter } from "@/i18n/navigation";
+import {
+  buildGenerationPrompt,
+  type ColorId as ColorOption,
+  type CreationType,
+  type FrameColorId as FrameColor,
+  type FrameMaterialId as FrameMaterial,
+  type LightIntensityId as LightingIntensity,
+  type LightTemperatureId as LightingTemperature,
+  type LightTypeId as LightType,
+  type ObjectFinishId as ObjectFinish,
+  type ObjectSizeId,
+  type ObjectUsageId as ObjectUsage,
+  type StyleId as StylePresetId,
+  type WallSizeId,
+} from "@/lib/generator-prompt";
 import { supabase } from "@/lib/supabase/client";
 import { FREE_GENERATION_LIMIT } from "@/lib/generation-limits";
 import AuthModal from "@/components/auth/AuthModal";
@@ -69,72 +84,24 @@ type UserCreditsResponse = {
   unlimited?: boolean;
 };
 
-type CreationType = "wall" | "object" | "light";
-
 type WallSizeOption = {
-  id: "30x40" | "50x70" | "70x100";
+  id: WallSizeId;
   label: string;
-  prompt: string;
 };
 
 type ObjectSizeOption = {
-  id: "small" | "medium" | "large";
+  id: ObjectSizeId;
   label: string;
-  prompt: string;
 };
-
-type LightingIntensity = "subtle" | "medium" | "strong";
-type LightingTemperature = "warm" | "neutral" | "cool";
-
-type FrameColor = "black" | "white" | "gold";
-type FrameMaterial = "metal" | "wood";
-
-type ObjectUsage = "table" | "shelf" | "floor";
-type ObjectFinish = "matte" | "glossy" | "metallic";
-
-type LightType = "tableLamp" | "wallLight" | "ceilingLight" | "lightSculpture";
-
-type ColorOption =
-  | "black"
-  | "white"
-  | "beige"
-  | "gold"
-  | "blue"
-  | "green"
-  | "yellow"
-  | "red"
-  | "orange"
-  | "brown"
-  | "gray"
-  | "turquoise"
-  | "pink"
-  | "multicolor"
-  | "gradient";
-
-type StylePresetId =
-  | "organic"
-  | "minimal"
-  | "oceanic"
-  | "luminous"
-  | "origami"
-  | "abstract"
-  | "geometric"
-  | "botanical"
-  | "figurative";
 
 type StylePreset = {
   id: StylePresetId;
   label: string;
-  prompt: string;
-  framedPrompt?: string;
-  objectPrompt?: string;
-  lightPrompt?: string;
 };
 
 type SelectOption<T extends string> = {
   id: T;
   label: string;
-  prompt: string;
 };
 
 const COLOR_SWATCH_BACKGROUNDS: Record<ColorOption, string> = {
@@ -174,337 +141,87 @@ export default function AIExperienceSection() {
   const router = useRouter();
 
   const stylePresets: readonly StylePreset[] = useMemo(() => [
-    {
-      id: "organic",
-      label: t("styles.organic.label"),
-      prompt: t("styles.organic.prompt"),
-      framedPrompt:
-        "organic sculptural composition adapted to framed wall art, balanced relief structure, elegant flowing forms, controlled expansion, composition designed to preserve the full frame visibility",
-      objectPrompt:
-        "organic sculptural object with flowing handmade forms, soft volume transitions, elegant three-dimensional presence, refined artisan finish",
-      lightPrompt:
-        "organic luminous sculpture with fluid sculptural lines, warm atmospheric presence, refined handcrafted structure designed to interact beautifully with light",
-    },
-    {
-      id: "minimal",
-      label: t("styles.minimal.label"),
-      prompt: t("styles.minimal.prompt"),
-      framedPrompt:
-        "minimal sculptural composition adapted to framed wall art, restrained relief, refined clean volumes, disciplined composition that fully respects the frame and preserves the frame as a visible design element",
-      objectPrompt:
-        "minimal sculptural object with clean lines, restrained geometry, elegant contemporary presence, refined and balanced proportions",
-      lightPrompt:
-        "minimal luminous sculpture with clean geometry, elegant light diffusion, refined contemporary silhouette, sophisticated restraint",
-    },
-    {
-      id: "oceanic",
-      label: t("styles.oceanic.label"),
-      prompt: t("styles.oceanic.prompt"),
-      framedPrompt:
-        "ocean-inspired sculptural composition adapted to framed wall art, fluid layered relief, elegant wave-like movement with controlled depth, composition arranged to keep the frame fully visible",
-      objectPrompt:
-        "ocean-inspired sculptural object with fluid layered forms, wave-like movement, soft organic rhythm, elegant handcrafted texture",
-      lightPrompt:
-        "ocean-inspired luminous sculpture with flowing shapes, soft ambient glow, fluid movement, poetic light diffusion",
-    },
-    {
-      id: "luminous",
-      label: t("styles.luminous.label"),
-      prompt: t("styles.luminous.prompt"),
-      framedPrompt:
-        "luminous sculptural composition adapted to framed wall art, refined light-inspired relief, subtle radiant accents, composition built to preserve full frame visibility on all sides",
-      objectPrompt:
-        "luminous-inspired sculptural object with radiant accents, elegant handcrafted texture, artistic presence, sophisticated contemporary feel",
-      lightPrompt:
-        "luminous sculptural light piece with visible glow, elegant ambient illumination, refined handcrafted paper texture, atmospheric presence",
-    },
-    {
-      id: "origami",
-      label: t("styles.origami.label"),
-      prompt: t("styles.origami.prompt"),
-      framedPrompt:
-        "origami-inspired sculptural composition adapted to framed wall art, folded geometric planes, crisp faceted relief, elegant angular paper-like construction, structured composition designed to remain centered and fully contained inside a clearly visible open frame",
-      objectPrompt:
-        "origami-inspired sculptural object with folded geometric planes, crisp edges, elegant angular volumes, handcrafted paper-based construction",
-      lightPrompt:
-        "origami-inspired luminous sculpture with faceted folded surfaces, geometric light play, elegant angular construction, refined artistic glow",
-    },
-    {
-      id: "abstract",
-      label: t("styles.abstract.label"),
-      prompt: t("styles.abstract.prompt"),
-      framedPrompt:
-        "abstract sculptural composition adapted to framed wall art, non-figurative relief, expressive balanced forms, bold artistic gesture, composition designed to preserve the full frame visibility",
-      objectPrompt:
-        "abstract sculptural object with expressive non-figurative forms, bold artistic volumes, elegant handcrafted texture, contemporary gallery presence",
-      lightPrompt:
-        "abstract luminous sculpture with expressive non-figurative forms, bold artistic silhouette, refined handcrafted texture, atmospheric glow",
-    },
-    {
-      id: "geometric",
-      label: t("styles.geometric.label"),
-      prompt: t("styles.geometric.prompt"),
-      framedPrompt:
-        "geometric sculptural composition adapted to framed wall art, precise angular relief, structured repeating volumes, disciplined graphic composition designed to preserve the full frame visibility",
-      objectPrompt:
-        "geometric sculptural object with precise angular volumes, structured repeating forms, elegant handcrafted texture, refined contemporary presence",
-      lightPrompt:
-        "geometric luminous sculpture with precise angular facets, structured light play, elegant handcrafted texture, refined contemporary glow",
-    },
-    {
-      id: "botanical",
-      label: t("styles.botanical.label"),
-      prompt: t("styles.botanical.prompt"),
-      framedPrompt:
-        "botanical sculptural composition adapted to framed wall art, leaf and branch inspired relief, delicate organic rhythm, composition designed to preserve the full frame visibility",
-      objectPrompt:
-        "botanical sculptural object with leaf and branch inspired forms, delicate organic texture, elegant handcrafted presence, refined artisan finish",
-      lightPrompt:
-        "botanical luminous sculpture with leaf and branch inspired silhouette, delicate organic texture, soft atmospheric glow, refined handcrafted presence",
-    },
-    {
-      id: "figurative",
-      label: t("styles.figurative.label"),
-      prompt: t("styles.figurative.prompt"),
-      framedPrompt:
-        "figurative sculptural composition adapted to framed wall art, stylized human or animal silhouette, refined relief, composition designed to preserve the full frame visibility",
-      objectPrompt:
-        "figurative sculptural object with stylized human or animal form, refined handcrafted texture, elegant artistic presence, sophisticated silhouette",
-      lightPrompt:
-        "figurative luminous sculpture with stylized human or animal silhouette, soft ambient glow, refined handcrafted texture, atmospheric presence",
-    },
+    { id: "organic", label: t("styles.organic.label") },
+    { id: "minimal", label: t("styles.minimal.label") },
+    { id: "oceanic", label: t("styles.oceanic.label") },
+    { id: "luminous", label: t("styles.luminous.label") },
+    { id: "origami", label: t("styles.origami.label") },
+    { id: "abstract", label: t("styles.abstract.label") },
+    { id: "geometric", label: t("styles.geometric.label") },
+    { id: "botanical", label: t("styles.botanical.label") },
+    { id: "figurative", label: t("styles.figurative.label") },
   ] as const, [t]);
 
   const wallSizeOptions: readonly WallSizeOption[] = useMemo(() => [
-    {
-      id: "30x40",
-      label: t("sizes.wall.small"),
-      prompt:
-        "vertical format artwork, portrait orientation, aspect ratio 3:4, proportions of a 30 x 40 cm wall piece, realistic scale as a small wall artwork",
-    },
-    {
-      id: "50x70",
-      label: t("sizes.wall.medium"),
-      prompt:
-        "vertical format artwork, portrait orientation, aspect ratio 5:7, proportions of a 50 x 70 cm wall piece, realistic scale as a medium-sized wall artwork",
-    },
-    {
-      id: "70x100",
-      label: t("sizes.wall.large"),
-      prompt:
-        "vertical format artwork, portrait orientation, aspect ratio 7:10, proportions of a 70 x 100 cm wall piece, realistic scale as a large wall artwork",
-    },
+    { id: "30x40", label: t("sizes.wall.small") },
+    { id: "50x70", label: t("sizes.wall.medium") },
+    { id: "70x100", label: t("sizes.wall.large") },
   ] as const, [t]);
 
   const objectSizeOptions: readonly SelectOption<ObjectSizeOption["id"]>[] = useMemo(() => [
-    {
-      id: "small",
-      label: t("sizes.object.small"),
-      prompt:
-        "small decorative sculpture, approximately 20 to 30 cm, compact format, elegant tabletop scale",
-    },
-    {
-      id: "medium",
-      label: t("sizes.object.medium"),
-      prompt:
-        "medium decorative sculpture, approximately 40 to 60 cm, balanced sculptural presence, suitable for a console or side table",
-    },
-    {
-      id: "large",
-      label: t("sizes.object.large"),
-      prompt:
-        "large decorative sculpture, approximately 70 cm or more, strong sculptural presence, gallery-style object scale",
-    },
+    { id: "small", label: t("sizes.object.small") },
+    { id: "medium", label: t("sizes.object.medium") },
+    { id: "large", label: t("sizes.object.large") },
   ] as const, [t]);
 
   const frameColors: readonly SelectOption<FrameColor>[] = useMemo(() => [
-    { id: "black", label: t("frameColors.black"), prompt: "black" },
-    { id: "white", label: t("frameColors.white"), prompt: "white" },
-    { id: "gold", label: t("frameColors.gold"), prompt: "gold" },
+    { id: "black", label: t("frameColors.black") },
+    { id: "white", label: t("frameColors.white") },
+    { id: "gold", label: t("frameColors.gold") },
   ] as const, [t]);
 
   const frameMaterials: readonly SelectOption<FrameMaterial>[] = useMemo(() => [
-    { id: "metal", label: t("frameMaterials.metal"), prompt: "metal" },
-    { id: "wood", label: t("frameMaterials.wood"), prompt: "wood" },
+    { id: "metal", label: t("frameMaterials.metal") },
+    { id: "wood", label: t("frameMaterials.wood") },
   ] as const, [t]);
 
   const objectUsages: readonly SelectOption<ObjectUsage>[] = useMemo(() => [
-    {
-      id: "table",
-      label: t("objectUsage.table"),
-      prompt:
-        "designed for a table or console display, front-facing studio object presentation",
-    },
-    {
-      id: "shelf",
-      label: t("objectUsage.shelf"),
-      prompt:
-        "designed for a shelf display, compact elegant composition, decorative interior object",
-    },
-    {
-      id: "floor",
-      label: t("objectUsage.floor"),
-      prompt:
-        "designed as a floor-standing sculptural object, strong vertical presence, gallery-inspired display",
-    },
+    { id: "table", label: t("objectUsage.table") },
+    { id: "shelf", label: t("objectUsage.shelf") },
+    { id: "floor", label: t("objectUsage.floor") },
   ] as const, [t]);
 
   const objectFinishes: readonly SelectOption<ObjectFinish>[] = useMemo(() => [
-    {
-      id: "matte",
-      label: t("objectFinish.matte"),
-      prompt: "matte finish, soft artisanal surface, refined understated texture",
-    },
-    {
-      id: "glossy",
-      label: t("objectFinish.glossy"),
-      prompt:
-        "slightly glossy finish, subtle reflective accents, elegant polished handmade surface",
-    },
-    {
-      id: "metallic",
-      label: t("objectFinish.metallic"),
-      prompt:
-        "metallic finish accents, refined industrial sheen, sophisticated contemporary character",
-    },
+    { id: "matte", label: t("objectFinish.matte") },
+    { id: "glossy", label: t("objectFinish.glossy") },
+    { id: "metallic", label: t("objectFinish.metallic") },
   ] as const, [t]);
 
   const lightTypes: readonly SelectOption<LightType>[] = useMemo(() => [
-    {
-      id: "tableLamp",
-      label: t("lightTypes.tableLamp"),
-      prompt:
-        "papier-mâché sculptural table lamp, decorative lighting object, designed for a table or console",
-    },
-    {
-      id: "wallLight",
-      label: t("lightTypes.wallLight"),
-      prompt:
-        "papier-mâché sculptural wall light, artistic applique murale, elegant wall-mounted lighting piece",
-    },
-    {
-      id: "ceilingLight",
-      label: t("lightTypes.ceilingLight"),
-      prompt:
-        "papier-mâché sculptural ceiling light, artistic suspension or plafonnier, elegant overhead lighting object",
-    },
-    {
-      id: "lightSculpture",
-      label: t("lightTypes.lightSculpture"),
-      prompt:
-        "papier-mâché luminous sculpture, artistic object combining sculptural form and integrated light",
-    },
+    { id: "tableLamp", label: t("lightTypes.tableLamp") },
+    { id: "wallLight", label: t("lightTypes.wallLight") },
+    { id: "ceilingLight", label: t("lightTypes.ceilingLight") },
+    { id: "lightSculpture", label: t("lightTypes.lightSculpture") },
   ] as const, [t]);
 
   const lightTemperatures: readonly SelectOption<LightingTemperature>[] = useMemo(() => [
-    {
-      id: "warm",
-      label: t("lightTemperature.warm"),
-      prompt: "warm light, cozy ambient glow, golden illumination",
-    },
-    {
-      id: "neutral",
-      label: t("lightTemperature.neutral"),
-      prompt:
-        "neutral light, balanced illumination, elegant and natural atmosphere",
-    },
-    {
-      id: "cool",
-      label: t("lightTemperature.cool"),
-      prompt: "cool light, contemporary crisp illumination, modern atmosphere",
-    },
+    { id: "warm", label: t("lightTemperature.warm") },
+    { id: "neutral", label: t("lightTemperature.neutral") },
+    { id: "cool", label: t("lightTemperature.cool") },
   ] as const, [t]);
 
   const lightIntensities: readonly SelectOption<LightingIntensity>[] = useMemo(() => [
-    {
-      id: "subtle",
-      label: t("lightIntensity.subtle"),
-      prompt:
-        "subtle light intensity, soft atmospheric glow, discreet illumination",
-    },
-    {
-      id: "medium",
-      label: t("lightIntensity.medium"),
-      prompt:
-        "medium light intensity, balanced luminous presence, refined decorative illumination",
-    },
-    {
-      id: "strong",
-      label: t("lightIntensity.strong"),
-      prompt:
-        "strong light intensity, pronounced luminous presence, bold artistic lighting effect",
-    },
+    { id: "subtle", label: t("lightIntensity.subtle") },
+    { id: "medium", label: t("lightIntensity.medium") },
+    { id: "strong", label: t("lightIntensity.strong") },
   ] as const, [t]);
 
   const colorOptions: readonly SelectOption<ColorOption>[] = useMemo(() => [
-    { id: "black", label: t("colors.black"), prompt: "black color accents" },
-    { id: "white", label: t("colors.white"), prompt: "white tones" },
-    {
-      id: "beige",
-      label: t("colors.beige"),
-      prompt: "beige tones, soft neutral warmth",
-    },
-    {
-      id: "gold",
-      label: t("colors.gold"),
-      prompt: "gold accents, refined metallic highlights",
-    },
-    {
-      id: "blue",
-      label: t("colors.blue"),
-      prompt: "blue tones, deep or soft variations",
-    },
-    {
-      id: "green",
-      label: t("colors.green"),
-      prompt: "green tones, natural organic feel",
-    },
-    {
-      id: "yellow",
-      label: t("colors.yellow"),
-      prompt: "yellow accents, warm luminous tones",
-    },
-    {
-      id: "red",
-      label: t("colors.red"),
-      prompt: "red accents, expressive artistic tone",
-    },
-    {
-      id: "orange",
-      label: t("colors.orange"),
-      prompt: "orange tones, warm vibrant energy",
-    },
-    {
-      id: "brown",
-      label: t("colors.brown"),
-      prompt: "brown tones, earthy material feel",
-    },
-    {
-      id: "gray",
-      label: t("colors.gray"),
-      prompt: "gray tones, refined neutral finish",
-    },
-    {
-      id: "turquoise",
-      label: t("colors.turquoise"),
-      prompt: "turquoise tones, vivid refreshing accent",
-    },
-    {
-      id: "pink",
-      label: t("colors.pink"),
-      prompt: "soft pink tones, delicate refined accent",
-    },
-    {
-      id: "multicolor",
-      label: t("colors.multicolor"),
-      prompt: "rich multicolor composition, expressive handcrafted palette",
-    },
-    {
-      id: "gradient",
-      label: t("colors.gradient"),
-      prompt:
-        "smooth gradient transitions between the selected colors, elegant blended tones across the sculpture",
-    },
+    { id: "black", label: t("colors.black") },
+    { id: "white", label: t("colors.white") },
+    { id: "beige", label: t("colors.beige") },
+    { id: "gold", label: t("colors.gold") },
+    { id: "blue", label: t("colors.blue") },
+    { id: "green", label: t("colors.green") },
+    { id: "yellow", label: t("colors.yellow") },
+    { id: "red", label: t("colors.red") },
+    { id: "orange", label: t("colors.orange") },
+    { id: "brown", label: t("colors.brown") },
+    { id: "gray", label: t("colors.gray") },
+    { id: "turquoise", label: t("colors.turquoise") },
+    { id: "pink", label: t("colors.pink") },
+    { id: "multicolor", label: t("colors.multicolor") },
+    { id: "gradient", label: t("colors.gradient") },
   ] as const, [t]);
 
   const [prompt, setPrompt] = useState("");
@@ -718,178 +435,48 @@ export default function AIExperienceSection() {
       .map((color) => color.label);
   }, [colorOptions, selectedColors]);
 
-  const fullPrompt = useMemo(() => {
-    const preset = stylePresets.find((item) => item.id === selectedStyle);
-    const colors = colorOptions.filter((item) => selectedColors.includes(item.id));
-    const hasGradient = selectedColors.includes("gradient");
-    const baseSelectedColors = colors.filter((color) => color.id !== "gradient");
-
-    let basePrompt = "";
-
-    if (!prompt.trim() && preset) {
-      basePrompt = preset.prompt;
-    } else if (prompt.trim() && preset) {
-      basePrompt = `${prompt.trim()}. ${t("promptEnrichedSuffix")} ${preset.prompt}`;
-    } else {
-      basePrompt = prompt.trim();
-    }
-
-    if (!basePrompt) return "";
-
-    if (baseSelectedColors.length > 0) {
-      const colorPrompts = baseSelectedColors.map((color) => color.prompt).join(", ");
-      basePrompt += `, ${colorPrompts}`;
-
-      if (baseSelectedColors.length > 1) {
-        basePrompt +=
-          ", harmonious combination of the selected colors, balanced artistic composition";
-      }
-    }
-
-    if (hasGradient && baseSelectedColors.length >= 2) {
-      const gradientOption = colorOptions.find((item) => item.id === "gradient");
-
-      if (gradientOption) {
-        basePrompt += `, ${gradientOption.prompt}`;
-      }
-    }
-
-    if (creationType === "wall") {
-      const sizePreset = wallSizeOptions.find(
-        (item) => item.id === selectedWallSize,
-      );
-
-      basePrompt +=
-        ", contemporary papier-mâché wall sculpture, artistic bas-relief, elegant handcrafted wall composition";
-
-      if (sizePreset) {
-        basePrompt += `, ${sizePreset.prompt}`;
-      }
-
-      if (withFrame) {
-        const colorPreset = frameColors.find((item) => item.id === frameColor);
-        const materialPreset = frameMaterials.find(
-          (item) => item.id === frameMaterial,
-        );
-
-        const frameDescription = `clearly visible thin flat open ${colorPreset?.prompt ?? "black"} ${materialPreset?.prompt ?? "metal"} frame`;
-
-        basePrompt +=
-          `, designed as framed wall art, ${frameDescription}, ` +
-          "front-facing centered composition, " +
-          "the entire outer frame must be fully visible on all four sides, " +
-          "comfortable and even margin around the full frame, " +
-          "no cropped frame, no cut frame, no partial frame, no cut-off corners, " +
-          "the frame is an essential and visible part of the artwork, " +
-          "the sculpture is physically attached to and integrated into the frame, " +
-          "the sculpture may interact with the inner edges of the frame, " +
-          "but the outer perimeter of the frame must remain entirely visible and readable, " +
-          "zoomed out slightly so the whole frame fits naturally inside the image, " +
-          "neutral studio-style presentation, no room staging, no furniture, no large decorative background, " +
-          "premium contemporary art photography, realistic handmade texture, subtle natural shadows, open frame only, flat frame only, visible frame structure, no invisible frame, no box frame, no shadow box, no display case, no glass enclosure";
-
-        if (preset?.framedPrompt) {
-          basePrompt += `, ${preset.framedPrompt}`;
-        }
-      } else {
-        basePrompt +=
-          ", presented as a standalone wall sculpture without frame, no frame, no border, no encadrement, neutral studio presentation, premium contemporary art photography, realistic handmade texture";
-      }
-    }
-
-    if (creationType === "object") {
-      const objectSize = objectSizeOptions.find(
-        (item) => item.id === selectedObjectSize,
-      );
-      const usage = objectUsages.find((item) => item.id === selectedObjectUsage);
-      const finish = objectFinishes.find(
-        (item) => item.id === selectedObjectFinish,
-      );
-
-      basePrompt +=
-        ", contemporary papier-mâché sculptural object, fully three-dimensional decorative sculpture, not wall-mounted, not framed, freestanding object";
-
-      if (objectSize) {
-        basePrompt += `, ${objectSize.prompt}`;
-      }
-
-      if (usage) {
-        basePrompt += `, ${usage.prompt}`;
-      }
-
-      if (finish) {
-        basePrompt += `, ${finish.prompt}`;
-      }
-
-      basePrompt +=
-        ", studio product photography, isolated elegant presentation, refined handmade texture, subtle natural shadow, premium decorative object";
-
-      if (preset?.objectPrompt) {
-        basePrompt += `, ${preset.objectPrompt}`;
-      }
-    }
-
-    if (creationType === "light") {
-      const lightType = lightTypes.find((item) => item.id === selectedLightType);
-      const lightTemp = lightTemperatures.find(
-        (item) => item.id === selectedLightTemperature,
-      );
-      const intensity = lightIntensities.find(
-        (item) => item.id === selectedLightIntensity,
-      );
-
-      basePrompt +=
-        ", contemporary papier-mâché luminous sculpture, integrated lighting design, handcrafted artistic light object";
-
-      if (lightType) {
-        basePrompt += `, ${lightType.prompt}`;
-      }
-
-      if (lightTemp) {
-        basePrompt += `, ${lightTemp.prompt}`;
-      }
-
-      if (intensity) {
-        basePrompt += `, ${intensity.prompt}`;
-      }
-
-      basePrompt +=
-        ", visible light emission, elegant glow, premium decorative lighting photography, dark refined background, atmospheric but clean presentation";
-
-      if (preset?.lightPrompt) {
-        basePrompt += `, ${preset.lightPrompt}`;
-      }
-    }
-
-    return basePrompt;
-  }, [
-    colorOptions,
-    creationType,
-    frameColor,
-    frameMaterial,
-    objectFinishes,
-    objectSizeOptions,
-    objectUsages,
-    prompt,
-    selectedColors,
-    selectedLightIntensity,
-    selectedLightTemperature,
-    selectedLightType,
-    selectedObjectFinish,
-    selectedObjectSize,
-    selectedObjectUsage,
-    selectedStyle,
-    selectedWallSize,
-    stylePresets,
-    t,
-    wallSizeOptions,
-    withFrame,
-    lightIntensities,
-    lightTemperatures,
-    lightTypes,
-    frameColors,
-    frameMaterials,
-  ]);
+  const fullPrompt = useMemo(
+    () =>
+      buildGenerationPrompt(
+        {
+          prompt,
+          styleId: selectedStyle,
+          colors: selectedColors,
+          creationType,
+          wallSize: selectedWallSize,
+          withFrame,
+          frameColor,
+          frameMaterial,
+          objectSize: selectedObjectSize,
+          objectUsage: selectedObjectUsage,
+          objectFinish: selectedObjectFinish,
+          lightType: selectedLightType,
+          lightTemperature: selectedLightTemperature,
+          lightIntensity: selectedLightIntensity,
+        },
+        {
+          enrichedSuffix: t("promptEnrichedSuffix"),
+          stylePrompt: (styleId) => t(`styles.${styleId}.prompt`),
+        },
+      ),
+    [
+      creationType,
+      frameColor,
+      frameMaterial,
+      prompt,
+      selectedColors,
+      selectedLightIntensity,
+      selectedLightTemperature,
+      selectedLightType,
+      selectedObjectFinish,
+      selectedObjectSize,
+      selectedObjectUsage,
+      selectedStyle,
+      selectedWallSize,
+      t,
+      withFrame,
+    ],
+  );
 
   function toggleColor(colorId: ColorOption) {
     setSelectedColors((current) => {

@@ -10,36 +10,16 @@ import { useTranslations } from "next-intl";
 import QuestionCard from "@/components/quiz/QuestionCard";
 import QuizResult, { type QuizArtwork } from "@/components/quiz/QuizResult";
 import { GradientTitle } from "@/components/ui/GradientTitle";
-import type { GeneratorConfig } from "@/data/quiz/generator";
-import { isProfileId, type ProfileId } from "@/data/quiz/profiles";
-import { decodeAnswers, encodeAnswers } from "@/data/quiz/share";
 import {
-  computeGeneratorConfig,
-  computeProfile,
-  getVisibleQuestions,
-  pruneAnswers,
-  type Answers,
-} from "@/data/quiz/scoring";
+  outcomeFromAnswers,
+  resolveQuizOutcome,
+  type QuizOutcome,
+} from "@/data/quiz/outcome";
+import { isProfileId } from "@/data/quiz/profiles";
+import { getVisibleQuestions, pruneAnswers, type Answers } from "@/data/quiz/scoring";
 import { useRouter } from "@/i18n/navigation";
 
 const AUTO_ADVANCE_MS = 250;
-
-type QuizOutcome = {
-  profileId: ProfileId;
-  // null for legacy ?p= links: only the profile is known.
-  config: GeneratorConfig | null;
-  // Canonical answers code; also the seed for the stable prompt pick.
-  // null for legacy ?p= links (seed 0, shared back as ?p=).
-  code: string | null;
-};
-
-function outcomeFromAnswers(answers: Answers): QuizOutcome {
-  return {
-    profileId: computeProfile(answers),
-    config: computeGeneratorConfig(answers),
-    code: encodeAnswers(answers),
-  };
-}
 
 // Shared links: ?r=<answers code> carries everything; a bare ?p=<profile> from
 // the first version of the quiz still opens that profile. Anything that does
@@ -47,17 +27,8 @@ function outcomeFromAnswers(answers: Answers): QuizOutcome {
 function outcomeFromParams(params: {
   get(name: string): string | null;
 }): QuizOutcome | null {
-  const decoded = decodeAnswers(params.get("r"));
-
-  if (decoded) {
-    const complete = getVisibleQuestions(decoded).every(
-      (question) => decoded[question.id] !== undefined
-    );
-    const answers = pruneAnswers(decoded);
-
-    // Re-encoding gives the canonical code, so a hand-edited one cannot alias.
-    if (complete) return outcomeFromAnswers(answers);
-  }
+  const fromCode = resolveQuizOutcome(params.get("r"));
+  if (fromCode) return fromCode;
 
   const legacy = params.get("p");
   if (isProfileId(legacy)) {
