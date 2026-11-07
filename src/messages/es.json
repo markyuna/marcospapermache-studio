@@ -5,6 +5,7 @@
     "sculptures": "Esculturas",
     "custom": "A medida",
     "ai": "Experiencia IA",
+    "quiz": "Quiz",
     "contact": "Contacto",
     "order": "Encargar",
     "openMenu": "Abrir menú",
@@ -169,6 +170,7 @@
       "sculptures": "Esculturas",
       "custom": "Creaciones a medida",
       "ai": "Experiencia IA",
+      "quiz": "Quiz",
       "contact": "Contacto",
       "about": "Sobre mí",
       "exhibitions": "Exposiciones"
@@ -655,7 +657,8 @@
       "loginError": "Email o contraseña incorrectos.",
       "gateTitle": "Crea una cuenta para empezar",
       "gateDescription": "Crear tu escultura empieza con una cuenta gratuita — así conservas tus generaciones, pedidos y créditos.",
-      "gateButton": "Crear mi cuenta"
+      "gateButton": "Crear mi cuenta",
+      "confirmEmail": "Te hemos enviado un email de confirmación. Ábrelo para activar tu cuenta y volverás a esta página con tu selección."
     },
     "errors": {
       "emptyPrompt": "Describe primero tu idea para generar una imagen.",
@@ -779,8 +782,7 @@
       "universeLabel": "Universo",
       "universeValue": "Papel maché · textura · presencia"
     }
-  }
-,
+  },
   "Legal": {
     "footerLinks": {
       "mentionsLegales": "Aviso legal",
@@ -935,6 +937,218 @@
     },
     "carousel": {
       "goToImage": "Ir a la imagen {index}"
+    }
+  },
+  "quiz": {
+    "title": "Descubre tu escultura",
+    "subtitle": "Unas preguntas, 2 minutos. Encuentra la pieza que va con lo que sientes y te la dejamos lista para crear.",
+    "start": "Empezar",
+    "next": "Siguiente",
+    "back": "Atrás",
+    "progress": "Pregunta {current} de {total}",
+    "teaser": {
+      "title": "¿Qué escultura va contigo?",
+      "text": "Responde unas pocas preguntas y descubre la pieza que encaja con lo que sientes.",
+      "cta": "Hacer el quiz"
+    },
+    "result": {
+      "yourProfile": "Tu perfil escultórico",
+      "recommended": "Esculturas para ti",
+      "promptsTitle": "Crea la tuya con IA",
+      "promptsHint": "Copia un prompt y pruébalo en nuestro generador.",
+      "copy": "Copiar",
+      "copied": "¡Copiado!",
+      "tryNow": "Probar ahora",
+      "share": "Compartir mi resultado",
+      "retake": "Repetir el quiz",
+      "custom": "Encargar una pieza a medida",
+      "configTitle": "Tu pieza ideal, lista para crear",
+      "configHint": "Hemos preseleccionado estas opciones en el generador. Puedes cambiarlas cuando quieras.",
+      "signupNotice": "Crea una cuenta gratuita para generar tu imagen",
+      "tryNowSignup": "Crear cuenta para generar"
+    },
+    "questions": {
+      "ambiente": {
+        "title": "¿Qué ambiente te relaja más?",
+        "options": {
+          "bosque": "Un bosque en silencio",
+          "oceano": "El océano al amanecer",
+          "ciudad": "Una ciudad de noche",
+          "desierto": "Un desierto infinito"
+        }
+      },
+      "emocion": {
+        "title": "¿Qué quieres sentir al ver la pieza cada día?",
+        "options": {
+          "calma": "Calma",
+          "misterio": "Misterio y asombro",
+          "energia": "Energía",
+          "ternura": "Ternura"
+        }
+      },
+      "forma": {
+        "title": "¿Cómo imaginas tu pieza?",
+        "options": {
+          "mural": "Colgada en la pared",
+          "objeto": "Sobre un mueble o una estantería",
+          "luminosa": "Como una luz que da ambiente"
+        }
+      },
+      "estilo": {
+        "title": "¿Qué estilo te atrae más?",
+        "options": {
+          "organico": "Formas orgánicas, casi vivas",
+          "geometrico": "Líneas y geometría precisa",
+          "minimal": "Pocas formas, mucho silencio",
+          "surrealista": "Surrealista, como un sueño",
+          "figurativo": "Animales y figuras reconocibles",
+          "origami": "Pliegues y papel doblado"
+        }
+      },
+      "paleta": {
+        "title": "¿Qué paleta prefieres?",
+        "options": {
+          "tierra": "Tonos tierra y naturales",
+          "vivos": "Colores vivos e intensos",
+          "monocromo": "Blanco, negro y grises",
+          "nocturna": "Azules profundos y dorados",
+          "pasteles": "Pasteles suaves",
+          "mar": "Turquesas y azules del mar"
+        }
+      },
+      "espacio": {
+        "title": "¿Qué tamaño imaginas?",
+        "options": {
+          "rincon": "Pequeña, para un rincón",
+          "medio": "Mediana",
+          "grande": "Grande, que protagonice el espacio"
+        }
+      },
+      "marco": {
+        "title": "¿Cómo quieres presentarla?",
+        "options": {
+          "abierto": "Con un marco artístico abierto",
+          "sin": "Sin marco"
+        }
+      }
+    },
+    "profiles": {
+      "contemplativo": {
+        "name": "El Contemplativo",
+        "tagline": "Buscas piezas que respiran: formas suaves, materia cálida y una presencia serena.",
+        "prompts": {
+          "p1": "Escultura de papel maché de una figura orgánica y serena, curvas suaves que recuerdan a piedras de río, texturas rugosas hechas a mano, estilo artesanal, fondo neutro, luz natural suave",
+          "p2": "Escultura de papel maché inspirada en una ola congelada en calma, superficie texturizada, acabado mate artesanal, fotografía de estudio con luz difusa",
+          "p3": "Escultura de papel maché de un bosque de bambú estilizado, tallos que se inclinan como si los moviera una brisa, capas de papel visibles, ambiente de silencio, acabado artesanal",
+          "p4": "Escultura de papel maché de una montaña envuelta en niebla, capas superpuestas que dan sensación de profundidad, textura suave y matizada, atmósfera de paz, estilo artesanal",
+          "p5": "Escultura de papel maché de dos manos que sostienen una pequeña semilla, formas redondeadas y cálidas, fibras de papel visibles, sensación de cuidado y quietud",
+          "p6": "Escultura de papel maché de un jardín zen: círculos concéntricos sobre arena y tres piedras suaves, relieve delicado, composición equilibrada, acabado mate artesanal"
+        }
+      },
+      "onirico": {
+        "name": "El Onírico",
+        "tagline": "Te atrae lo que parece salido de un sueño: lo imposible, lo nocturno, lo misterioso.",
+        "prompts": {
+          "p1": "Escultura de papel maché surrealista de un pez flotando sobre una ciudad nocturna, texturas rugosas, estilo artesanal, fondo neutro, iluminación de estudio",
+          "p2": "Escultura de papel maché surrealista de un árbol cuyas raíces son relojes derretidos, pintura a mano, acabado artesanal, luz dramática",
+          "p3": "Escultura de papel maché de una luna con rostro dormido que sostiene una pequeña ciudad en equilibrio, relieve detallado, atmósfera de cuento, estilo artesanal",
+          "p4": "Escultura de papel maché de una escalera que sube hacia las nubes y termina en una puerta abierta, perspectiva imposible, texturas de papel superpuestas, aire de sueño",
+          "p5": "Escultura de papel maché de una ballena que nada por el cielo entre estrellas y edificios, escala fantástica, detalles pintados a mano, estilo artesanal",
+          "p6": "Escultura de papel maché de un faro cuya luz se convierte en una bandada de aves, surrealista y poético, textura rugosa, acabado artesanal"
+        }
+      },
+      "animal": {
+        "name": "El Protector de Animales",
+        "tagline": "Te conecta la ternura y el carácter: piezas con alma animal que alegran cualquier rincón.",
+        "prompts": {
+          "p1": "Escultura de papel maché de un zorro sentado con expresión amable y curiosa, pelaje con textura de capas de papel, pintado a mano, estilo artesanal, fondo neutro",
+          "p2": "Escultura de papel maché de un búho pequeño con grandes ojos tiernos, plumas texturizadas, pintado a mano, fotografía de estudio cálida",
+          "p3": "Escultura de papel maché de un gato acurrucado con los ojos entrecerrados, pelaje hecho con tiras de papel superpuestas, expresión de calma y confianza, estilo artesanal",
+          "p4": "Escultura de papel maché de un elefante pequeño con la trompa levantada, arrugas modeladas con mucho detalle, mirada dulce, textura de papel visible",
+          "p5": "Escultura de papel maché de una liebre atenta con orejas largas y elegantes, siluetas suaves, pelaje con relieve, carácter tierno y alerta",
+          "p6": "Escultura de papel maché de una familia de pájaros posados juntos en una rama, cada uno con su propia personalidad, plumas de papel, composición cálida y juguetona"
+        }
+      },
+      "vibrante": {
+        "name": "El Vibrante",
+        "tagline": "Quieres una pieza con energía, color y personalidad, de las que inician conversaciones.",
+        "prompts": {
+          "p1": "Escultura de papel maché de un pájaro tropical exuberante, formas exageradas y juguetonas, pintada a mano, estilo artesanal, fondo limpio",
+          "p2": "Escultura de papel maché abstracta y dinámica con formas entrelazadas, sensación de movimiento, acabado brillante artesanal, iluminación de estudio",
+          "p3": "Escultura de papel maché de un pulpo festivo con tentáculos en espiral que parecen bailar, ritmo y energía, detalles pintados a mano, estilo artesanal",
+          "p4": "Escultura de papel maché de una ciudad en plena fiesta: edificios inclinados y balcones llenos de vida, formas alegres y desordenadas, relieve marcado",
+          "p5": "Escultura de papel maché de una flor gigante con pétalos que se despliegan como fuegos artificiales, volumen exagerado, acabado brillante artesanal",
+          "p6": "Escultura de papel maché de un caracol de carnaval con la concha convertida en un remolino de formas y patrones, humor y energía, textura de papel visible"
+        }
+      },
+      "minimalista": {
+        "name": "El Minimalista",
+        "tagline": "Valoras la pureza de la forma: líneas limpias, pocos colores y presencia silenciosa.",
+        "prompts": {
+          "p1": "Escultura de papel maché abstracta minimalista, forma geométrica suave y asimétrica, acabado mate con textura sutil de papel, sombras suaves, estilo escandinavo artesanal, fondo claro",
+          "p2": "Escultura de papel maché de una esfera partida con superficie lisa y borde interior en contraste, diseño minimalista, acabado artesanal, iluminación de estudio contrastada",
+          "p3": "Escultura de papel maché de un único arco continuo que se curva sobre sí mismo, líneas limpias, superficie lisa con grano de papel apenas visible, mucho espacio vacío",
+          "p4": "Escultura de papel maché de tres formas ovaladas de distinto tamaño en equilibrio, bordes suaves, superficie mate, composición silenciosa",
+          "p5": "Escultura de papel maché de una sola línea ondulada en relieve sobre una superficie plana, ritmo sereno, sombras largas y suaves",
+          "p6": "Escultura de papel maché de pliegues sencillos convertidos en volumen, aristas limpias, sensación de calma y precisión"
+        }
+      }
+    },
+    "save": {
+      "title": "Guárdalo y crea tu imagen",
+      "signedOutHint": "Con una cuenta gratuita puedes guardar este resultado y generar una imagen de inspiración de tu pieza.",
+      "createAccount": "Crear cuenta para guardar y generar",
+      "save": "Guardar en mi cuenta",
+      "saving": "Guardando…",
+      "saved": "Guardado en tu cuenta",
+      "viewAccount": "Ver mis resultados",
+      "generate": "Generar mi imagen",
+      "regenerate": "Regenerar",
+      "generating": "Creando tu imagen… suele tardar entre 10 y 20 segundos. No cierres esta página.",
+      "creditsLeft": "{count, plural, one {Te queda # generación} other {Te quedan # generaciones}}",
+      "creditsNone": "Ya no te quedan generaciones",
+      "creditsUnlimited": "Generaciones ilimitadas",
+      "confirmLast": "Vas a usar tu última generación.",
+      "confirmReplace": "La nueva imagen sustituirá a la anterior y gastará otra generación.",
+      "confirmQuestion": "¿Quieres continuar?",
+      "confirm": "Sí, continuar",
+      "cancel": "Cancelar",
+      "imageAlt": "Imagen de inspiración generada con IA para tu resultado",
+      "disclaimer": "Imagen de inspiración generada por IA: tu pieza se crea a mano y puede ser interpretada por el artista.",
+      "errors": {
+        "unauthenticated": "Tu sesión ha caducado. Inicia sesión de nuevo para continuar.",
+        "invalid_request": "No hemos podido procesar la petición. Inténtalo de nuevo.",
+        "invalid_code": "Este resultado no es válido. Repite el quiz para obtener uno nuevo.",
+        "invalid_locale": "No hemos podido procesar la petición. Inténtalo de nuevo.",
+        "limit_reached": "Has alcanzado el máximo de 20 resultados guardados. Elimina alguno desde tu cuenta para guardar más.",
+        "not_found": "No hemos encontrado este resultado.",
+        "replace_required": "Ya existe una imagen para este resultado. Confirma para sustituirla.",
+        "already_generating": "Ya estamos creando esta imagen. Espera unos segundos e inténtalo de nuevo.",
+        "quota_exhausted": "Ya no te quedan generaciones. Puedes conseguir más desde tu cuenta.",
+        "moderation": "No hemos podido usar esta descripción para generar una imagen. Prueba con otro resultado.",
+        "generation_failed": "No hemos podido crear la imagen. No se ha gastado ninguna generación: inténtalo de nuevo en un momento.",
+        "save_failed": "No hemos podido guardar el resultado. Inténtalo de nuevo.",
+        "delete_failed": "No hemos podido eliminar el resultado. Inténtalo de nuevo.",
+        "network": "Sin conexión con el servidor. Comprueba tu conexión e inténtalo de nuevo.",
+        "unknown": "Algo ha ido mal. Inténtalo de nuevo."
+      }
+    },
+    "account": {
+      "title": "Mis resultados del quiz",
+      "description": "Tus resultados guardados y sus imágenes de inspiración. Solo tú puedes verlos.",
+      "count": "{count} de {max} guardados",
+      "empty": "Aún no has guardado ningún resultado.",
+      "emptyCta": "Hacer el quiz",
+      "savedOn": "Guardado el {date}",
+      "noImage": "Sin imagen todavía",
+      "imageAlt": "Imagen de inspiración de tu resultado {profile}",
+      "view": "Ver resultado",
+      "openGenerator": "Abrir en el generador",
+      "delete": "Eliminar",
+      "deleting": "Eliminando…",
+      "deleteQuestion": "¿Eliminar este resultado y su imagen?",
+      "deleteConfirm": "Sí, eliminar",
+      "cancel": "Cancelar"
     }
   }
 }

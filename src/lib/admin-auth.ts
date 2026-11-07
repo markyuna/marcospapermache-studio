@@ -1,7 +1,9 @@
 // src/lib/admin-auth.ts
 import "server-only";
 import { cache } from "react";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { ACTIVITY_COOKIE_NAME, isSessionIdle } from "@/lib/session-activity";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 function getAllowedAdminEmails() {
@@ -20,6 +22,13 @@ export function isAdminEmail(email: string | null | undefined) {
 
 // Deduplicates auth.getUser() within a single request render pass
 export const getAuthenticatedUser = cache(async () => {
+  // The proxy stamps this cookie on every request; an old stamp means the
+  // session sat idle past the timeout, even if the Supabase token is valid.
+  const cookieStore = await cookies();
+  if (isSessionIdle(cookieStore.get(ACTIVITY_COOKIE_NAME)?.value)) {
+    return null;
+  }
+
   const supabase = await createSupabaseServerClient();
 
   const {

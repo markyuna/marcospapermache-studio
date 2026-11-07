@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 
 import { useRouter } from "@/i18n/navigation";
+import { getAuthCallbackUrl, saveReturnTo } from "@/lib/auth-redirect";
 import { supabase } from "@/lib/supabase/client";
 
 export default function CustomerLoginForm() {
@@ -46,11 +47,11 @@ export default function CustomerLoginForm() {
     setLoading(true);
     setError(null);
 
+    saveReturnTo(`/${locale}/mon-compte`);
+
     const { error: oauthError } = await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: {
-        redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback?next=/${locale}/mon-compte`,
-      },
+      options: { redirectTo: getAuthCallbackUrl() },
     });
 
     if (oauthError) {

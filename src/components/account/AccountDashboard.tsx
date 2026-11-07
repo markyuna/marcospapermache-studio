@@ -12,6 +12,8 @@ import BuyCreditsButton from "@/components/account/BuyCreditsButton";
 import GeneratedImagesGallery from "@/components/account/GeneratedImagesGallery";
 import LogoutButton from "@/components/account/LogoutButton";
 import ProfileForm from "@/components/account/ProfileForm";
+import QuizResultsSection from "@/components/account/QuizResultsSection";
+import type { QuizResultDTO } from "@/lib/quiz-api";
 import PasswordChangeForm from "@/components/account/PasswordChangeForm";
 
 type Props = {
@@ -20,6 +22,7 @@ type Props = {
   freeRemaining: number;
   imagesGenerated: number;
   generatedImages: GeneratedImage[];
+  quizResults: QuizResultDTO[];
   commandes: Commande[];
   profile: UserProfile | null;
   isAdmin: boolean;
@@ -46,6 +49,7 @@ export default async function AccountDashboard({
   freeRemaining,
   imagesGenerated,
   generatedImages,
+  quizResults,
   commandes,
   profile,
   isAdmin,
@@ -136,6 +140,9 @@ export default async function AccountDashboard({
           <GeneratedImagesGallery images={generatedImages} />
         )}
       </section>
+
+      {/* Saved quiz results */}
+      <QuizResultsSection results={quizResults} />
 
       {/* Orders section */}
       <section className={cardClassName}>

@@ -97,3 +97,26 @@ model ProcessedStripeEvent {
 
   @@map("processed_stripe_events")
 }
+
+// Saved quiz outcome (and its private generated image). The table, its limit
+// trigger, RLS and the private quiz-images bucket are created by supabase/quiz_results.sql,
+// not by prisma migrate. Writes are server-side only: profile, config and
+// image_path are always computed by the server, never taken from the client.
+model QuizResult {
+  id               String    @id @default(uuid()) @db.Uuid
+  userId           String    @map("user_id") @db.Uuid
+  code             String
+  profile          String
+  config           Json
+  locale           String    @default("fr")
+  promptKey        String?   @map("prompt_key")
+  imagePath        String?   @map("image_path")
+  imageGeneratedAt DateTime? @map("image_generated_at") @db.Timestamptz(6)
+  generatingSince  DateTime? @map("generating_since") @db.Timestamptz(6)
+  createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@unique([userId, code])
+  @@index([userId, createdAt(sort: Desc)])
+  @@map("quiz_results")
+}
