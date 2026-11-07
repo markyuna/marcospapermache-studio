@@ -5,9 +5,22 @@ import { createPortal } from "react-dom";
 import { useTranslations } from "next-intl";
 import { Loader2, X } from "lucide-react";
 
+import { sanitizeReturnTo } from "@/lib/return-to";
 import { supabase } from "@/lib/supabase/client";
 
 type Mode = "signup" | "login";
+
+// Where the callback sends the user after Google sign-in or email confirmation:
+// the page they are on, with its query (?prompt=, ?type=, …), so a preselected
+// generator survives the round trip. The callback validates it again.
+function getAuthCallbackUrl() {
+  const returnTo = sanitizeReturnTo(
+    `${window.location.pathname}${window.location.search}`,
+    window.location.pathname
+  );
+
+  return `${window.location.origin}/auth/callback?next=${encodeURIComponent(returnTo)}`;
+}
 
 type AuthModalProps = {
   isOpen: boolean;
@@ -29,6 +42,7 @@ export default function AuthModal({
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [info, setInfo] = useState("");
   const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
 
   if (isOpen !== prevIsOpen) {
@@ -39,6 +53,7 @@ export default function AuthModal({
       setEmail("");
       setPassword("");
       setError("");
+      setInfo("");
     }
   }
 
@@ -48,10 +63,14 @@ export default function AuthModal({
     e.preventDefault();
     setIsSubmitting(true);
     setError("");
+    setInfo("");
 
-    const { error: signUpError } = await supabase.auth.signUp({
+    const { data, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
+      // If the project requires email confirmation, the link in the email must
+      // bring the user back to this exact page, query string included.
+      options: { emailRedirectTo: getAuthCallbackUrl() },
     });
 
     if (signUpError) {
@@ -68,6 +87,14 @@ export default function AuthModal({
     }
 
     setIsSubmitting(false);
+
+    // Email confirmation enabled: the account exists but there is no session
+    // until the link is clicked, so there is nothing to resume yet.
+    if (!data.session) {
+      setInfo(t("confirmEmail"));
+      return;
+    }
+
     onClose();
     await onAuthSuccess();
   }
@@ -100,7 +127,7 @@ export default function AuthModal({
     const { error: oauthError } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/auth/callback?next=${window.location.pathname}`,
+        redirectTo: getAuthCallbackUrl(),
       },
     });
 
@@ -174,6 +201,15 @@ export default function AuthModal({
             </p>
           ) : null}
 
+          {info ? (
+            <p
+              role="status"
+              className="rounded-[1rem] border border-[#caa27c]/30 bg-[#caa27c]/10 px-4 py-3 text-sm text-[#f1dcc4]"
+            >
+              {info}
+            </p>
+          ) : null}
+
           <button
             type="submit"
             disabled={isSubmitting}
@@ -231,6 +267,7 @@ export default function AuthModal({
           onClick={() => {
             setMode(mode === "signup" ? "login" : "signup");
             setError("");
+            setInfo("");
           }}
           className="mt-4 text-sm text-neutral-400 underline-offset-4 hover:text-white hover:underline"
         >

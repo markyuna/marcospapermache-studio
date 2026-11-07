@@ -2,11 +2,17 @@
 import { NextResponse } from "next/server";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { routing } from "@/i18n/routing";
+import { sanitizeReturnTo } from "@/lib/return-to";
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
-  const next = searchParams.get("next") ?? `/${routing.defaultLocale}/mon-compte`;
+  // `next` comes from the URL: only same-site paths are followed, otherwise
+  // `${origin}${next}` could be turned into a redirect to another host.
+  const next = sanitizeReturnTo(
+    searchParams.get("next"),
+    `/${routing.defaultLocale}/mon-compte`
+  );
 
   if (code) {
     const supabase = await createSupabaseServerClient();
