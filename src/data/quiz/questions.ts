@@ -37,7 +37,7 @@ export const QUESTIONS: QuizQuestion[] = [
     id: "forma",
     options: [
       { id: "mural", scores: { onirico: 1, minimalista: 1 }, generator: { type: "mural" } },
-      { id: "objeto", scores: { animal: 1, vibrante: 1 }, generator: { type: "objeto" } },
+      { id: "objeto", scores: { animal: 1, minimalista: 1 }, generator: { type: "objeto" } },
       { id: "luminosa", scores: { onirico: 1, vibrante: 1 }, generator: { type: "luminosa" } },
     ],
   },
@@ -55,16 +55,18 @@ export const QUESTIONS: QuizQuestion[] = [
   {
     id: "paleta",
     options: [
-      { id: "tierra", scores: { contemplativo: 1, animal: 2 }, generator: { colors: ["beige", "brun", "vert"] } },
+      { id: "tierra", scores: { contemplativo: 1, animal: 2 }, generator: { colors: ["beige", "brun", "vert"], direction: { botanique: 1 } } },
       { id: "vivos", scores: { vibrante: 2 }, generator: { colors: ["rouge", "orange", "jaune", "degrade"] } },
       { id: "monocromo", scores: { minimalista: 2, onirico: 1 }, generator: { colors: ["noir", "blanc", "gris"] } },
-      { id: "nocturna", scores: { onirico: 2, contemplativo: 1 }, generator: { colors: ["bleu", "dore"] } },
+      { id: "nocturna", scores: { onirico: 2, contemplativo: 1 }, generator: { colors: ["bleu", "dore"], direction: { lumineux: 1 } } },
       { id: "pasteles", scores: { animal: 1, vibrante: 1 }, generator: { colors: ["rose", "beige", "blanc"] } },
-      { id: "mar", scores: { contemplativo: 2, onirico: 1 }, generator: { colors: ["turquoise", "bleu", "degrade"] } },
+      { id: "mar", scores: { contemplativo: 2, onirico: 1 }, generator: { colors: ["turquoise", "bleu", "degrade"], direction: { oceanique: 1 } } },
     ],
   },
   {
     id: "espacio",
+    // Light sculptures have no size in the generator panel, so asking is moot.
+    visibleIf: (answers) => answers.forma !== "luminosa",
     options: [
       { id: "rincon", scores: {}, generator: { size: "30x40" } },
       { id: "medio", scores: {}, generator: { size: "50x70" } },

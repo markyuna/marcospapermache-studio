@@ -1022,9 +1022,9 @@
       "espacio": {
         "title": "What size do you imagine?",
         "options": {
-          "rincon": "Small",
+          "rincon": "Small, for a corner",
           "medio": "Medium",
-          "grande": "Large"
+          "grande": "Large, to be the centrepiece"
         }
       },
       "marco": {

@@ -1022,9 +1022,9 @@
       "espacio": {
         "title": "¿Qué tamaño imaginas?",
         "options": {
-          "rincon": "Pequeña",
+          "rincon": "Pequeña, para un rincón",
           "medio": "Mediana",
-          "grande": "Grande"
+          "grande": "Grande, que protagonice el espacio"
         }
       },
       "marco": {
