@@ -17,14 +17,11 @@
     "dashboard": "Mi panel"
   },
   "Hero": {
-    "badge": "Marcos Papermache · Arte contemporáneo",
-    "title": {
-      "line1": "La materia se convierte en forma,",
-      "line2": "la idea se convierte en escultura."
-    },
+    "badge": "ARTE CONTEMPORÁNEO · PIEZAS ÚNICAS",
+    "title": "Tu idea se convierte en una <accent>escultura única</accent>, modelada a mano en papel maché.",
     "description": "Un universo donde la artesanía, la presencia escultórica y la creación asistida por IA se unen para dar vida a obras sensibles y contemporáneas concebidas a medida.",
     "ctaPrimary": "Crea tu escultura con IA",
-    "compareDescription": "Descubre cómo la IA genera conceptos y cómo nuestros artesanos los transforman en esculturas únicas de papel maché.",
+    "compareDescription": "Imaginas una idea, la IA la esboza como concepto y yo la esculpo personalmente en París: una pieza ligera, resistente y 100 % única.",
     "ctaExplore": "Explorar las esculturas",
     "compareHintDesktop": "← Desliza para comparar →",
     "compareHintMobile": "Desliza para comparar",
