@@ -13,6 +13,10 @@ import {
   type PanelColor,
   type PanelSize,
 } from "./generator";
+import {
+  DEFAULT_GENERATION_SELECTION,
+  type GenerationSelection,
+} from "../../lib/generator-prompt";
 
 // Quiz ids (French, as used in the URL) → the generator panel's own state ids
 // in AIExperienceSection. Keep them in sync with that component.
@@ -159,4 +163,70 @@ export function parseGeneratorParams(params: {
   if (frameMaterial) prefill.frameMaterial = frameMaterial;
 
   return prefill;
+}
+
+// The generator-panel selection a quiz result stands for: the same mapping the
+// panel applies when it opens with the quiz parameters (see handlePrefill in
+// AIExperienceSection). Anything the quiz does not ask for keeps the panel's
+// defaults. The prompt argument is the visitor-facing text the enriched prompt
+// starts from.
+export function quizConfigToSelection(
+  config: GeneratorConfig,
+  prompt: string
+): GenerationSelection {
+  const isWall = config.type === "mural";
+  const colors = config.colors.map((color) => PANEL_COLOR[color]);
+  const baseCount = colors.filter((color) => color !== "gradient").length;
+
+  return {
+    ...DEFAULT_GENERATION_SELECTION,
+    prompt,
+    styleId: PANEL_DIRECTION[config.direction],
+    // Same rule as the panel: a gradient needs at least two other colours.
+    colors: baseCount >= 2 ? colors : colors.filter((color) => color !== "gradient"),
+    creationType: PANEL_TYPE[config.type],
+    wallSize: config.size,
+    objectSize: PANEL_OBJECT_SIZE[config.size],
+    // The frame only exists for wall pieces.
+    withFrame: isWall && config.frame,
+    ...(isWall && config.frame && config.frameColor
+      ? { frameColor: PANEL_FRAME_COLOR[config.frameColor] }
+      : {}),
+    ...(isWall && config.frame && config.frameMaterial
+      ? { frameMaterial: PANEL_FRAME_MATERIAL[config.frameMaterial] }
+      : {}),
+  };
+}
+
+// A configuration read back from the database (jsonb) is data, not a type:
+// check it before using it to build links or prompts.
+export function parseGeneratorConfig(value: unknown): GeneratorConfig | null {
+  if (typeof value !== "object" || value === null) return null;
+  const v = value as Record<string, unknown>;
+
+  const type = pick(String(v.type), CREATION_TYPES);
+  const direction = pick(String(v.direction), DIRECTIONS);
+  const size = pick(String(v.size), PANEL_SIZES);
+  if (!type || !direction || !size || typeof v.frame !== "boolean") return null;
+  if (!Array.isArray(v.colors) || v.colors.length > MAX_PREFILL_COLORS) return null;
+
+  const colors: PanelColor[] = [];
+  for (const raw of v.colors) {
+    const color = pick(String(raw), PANEL_COLORS);
+    if (!color) return null;
+    colors.push(color);
+  }
+
+  const frameColor = pick(String(v.frameColor), FRAME_COLORS);
+  const frameMaterial = pick(String(v.frameMaterial), FRAME_MATERIALS);
+
+  return {
+    type,
+    direction,
+    colors,
+    size,
+    frame: v.frame,
+    ...(frameColor ? { frameColor } : {}),
+    ...(frameMaterial ? { frameMaterial } : {}),
+  };
 }
