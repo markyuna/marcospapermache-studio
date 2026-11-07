@@ -15,7 +15,6 @@ import { ArrowRight, MoveHorizontal } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { Container } from "@/components/layout/container";
-import { GradientTitle } from "@/components/ui/GradientTitle";
 import { Link } from "@/i18n/navigation";
 
 // Left side of the reveal = AI concept, right side = the real sculpture.
@@ -92,16 +91,17 @@ export function HeroSection() {
             className="flex flex-col justify-center max-w-2xl h-full"
           >
             <div className="inline-flex items-center rounded-full border border-[#e7dac9] bg-white/60 px-4 py-2 backdrop-blur-sm">
-              <span className="text-[10px] uppercase tracking-[0.34em] text-[#9d7b5e] md:text-[11px]">
+              <span className="text-[10px] uppercase tracking-[0.18em] text-[#9d7b5e] sm:tracking-[0.34em] md:text-[11px]">
                 {t("badge")}
               </span>
             </div>
 
             <h1 className="mt-7 text-[2.4rem] font-semibold leading-[1.05] tracking-[-0.06em] text-[#1c1c1a] sm:text-5xl lg:text-[52px]">
-              <span className="block">{t("title.line1")}</span>
-              <span className="block">
-                <GradientTitle text={t("title.line2")} />
-              </span>
+              {t.rich("title", {
+                accent: (chunks) => (
+                  <span className="heading-gradient">{chunks}</span>
+                ),
+              })}
             </h1>
 
             <p className="mt-6 max-w-xl text-[15px] leading-7 text-[#5f5348]">

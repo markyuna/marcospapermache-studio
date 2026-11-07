@@ -16,14 +16,11 @@
     "dashboard": "My dashboard"
   },
   "Hero": {
-    "badge": "Marcos Papermache · Contemporary art",
-    "title": {
-      "line1": "Matter becomes form,",
-      "line2": "the idea becomes sculpture."
-    },
+    "badge": "CONTEMPORARY ART · UNIQUE PIECES",
+    "title": "Your idea becomes a <accent>unique sculpture</accent>, hand-modeled in papier-mâché.",
     "description": "A universe where craftsmanship, sculptural presence and AI-assisted creation come together to bring sensitive, contemporary made-to-measure works to life.",
     "ctaPrimary": "Create your sculpture with AI",
-    "compareDescription": "Discover how AI generates concepts and how our artisans transform them into unique papier-mâché sculptures.",
+    "compareDescription": "You imagine an idea, AI sketches it as a concept, and I sculpt it myself in Paris: a light, sturdy, 100% unique piece.",
     "ctaExplore": "Explore the sculptures",
     "compareHintDesktop": "← Drag to compare →",
     "compareHintMobile": "Drag to compare",
@@ -782,7 +779,8 @@
       "universeLabel": "Universe",
       "universeValue": "Papier-mâché · texture · presence"
     }
-  },
+  }
+,
   "Legal": {
     "footerLinks": {
       "mentionsLegales": "Legal notice",

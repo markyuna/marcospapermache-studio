@@ -16,14 +16,11 @@
     "dashboard": "Mon tableau de bord"
   },
   "Hero": {
-    "badge": "Marcos Papermache · Art contemporain",
-    "title": {
-      "line1": "La matière devient forme,",
-      "line2": "l’idée devient sculpture."
-    },
+    "badge": "ART CONTEMPORAIN · PIÈCES UNIQUES",
+    "title": "Votre idée devient une <accent>sculpture unique</accent>, modelée à la main en papier mâché.",
     "description": "Un univers où l’artisanat, la présence sculpturale et la création assistée par l’IA se rencontrent pour donner vie à des œuvres sensibles et contemporaines pensées sur mesure.",
     "ctaPrimary": "Créer votre sculpture avec l’IA",
-    "compareDescription": "Découvrez comment l’IA génère des concepts et comment nos artisans les transforment en sculptures uniques de papier mâché.",
+    "compareDescription": "Vous imaginez une idée, l’IA l’esquisse en concept, et je la sculpte moi-même à Paris\u00A0: une pièce légère, solide et 100\u00A0% unique.",
     "ctaExplore": "Explorer les sculptures",
     "compareHintDesktop": "← Glisser pour comparer →",
     "compareHintMobile": "Glisser pour comparer",
@@ -782,7 +779,8 @@
       "universeLabel": "Univers",
       "universeValue": "Papier mâché · texture · présence"
     }
-  },
+  }
+,
   "Legal": {
     "footerLinks": {
       "mentionsLegales": "Mentions légales",
