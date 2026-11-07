@@ -3,7 +3,7 @@ import { toFile } from "openai";
 import sharp from "sharp";
 
 import { getAuthenticatedUser, isAdminEmail } from "@/lib/admin-auth";
-import { openai } from "@/lib/openai";
+import { IMAGE_MODEL, openai } from "@/lib/openai";
 import { prisma } from "@/lib/prisma";
 import { uploadBase64ImageToStorage } from "@/lib/storage";
 import {
@@ -21,9 +21,6 @@ type RequestBody = {
   creationType?: "wall" | "object" | "light";
   withFrame?: boolean;
 };
-
-// "high" copies the reference more faithfully but costs more input tokens; lower to "low" to save cost.
-const REFERENCE_INPUT_FIDELITY = "high" as const;
 
 const GENERATION_ERROR_MESSAGE = "Erreur serveur pendant la génération.";
 const MODERATION_ERROR_MESSAGE =
@@ -187,13 +184,12 @@ export async function POST(request: Request) {
     if (referenceBuffer) {
       try {
         const edited = await openai.images.edit({
-          model: "gpt-image-1",
+          model: IMAGE_MODEL,
           image: await toFile(referenceBuffer, "reference.png", {
             type: "image/png",
           }),
           prompt: `${REFERENCE_PROMPT_PREFIX}${reinforcedPrompt}`,
           size: imageSize,
-          input_fidelity: REFERENCE_INPUT_FIDELITY,
         });
         imageBase64 = edited.data?.[0]?.b64_json;
       } catch (editError) {
@@ -227,7 +223,7 @@ export async function POST(request: Request) {
             Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
           },
           body: JSON.stringify({
-            model: "gpt-image-1",
+            model: IMAGE_MODEL,
             prompt: reinforcedPrompt,
             size: imageSize,
           }),
@@ -238,8 +234,25 @@ export async function POST(request: Request) {
 
       if (!response.ok) {
         await refundIfConsumed();
+
+        if (
+          isModerationRejection({
+            status: response.status,
+            code: data?.error?.code,
+            message: data?.error?.message,
+          })
+        ) {
+          return NextResponse.json(
+            { error: MODERATION_ERROR_MESSAGE },
+            { status: 400 },
+          );
+        }
+
+        // Keep OpenAI's internal message server-side only. No `error` text is
+        // sent: the client falls back to its translated errors.generationFailed.
+        console.error("OpenAI image generation failed:", response.status, data);
         return NextResponse.json(
-          { error: data?.error?.message || "Erreur OpenAI." },
+          { errorCode: "generation_failed" },
           { status: response.status },
         );
       }
