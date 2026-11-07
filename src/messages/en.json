@@ -5,6 +5,7 @@
     "sculptures": "Sculptures",
     "custom": "Custom",
     "ai": "AI Experience",
+    "quiz": "Quiz",
     "contact": "Contact",
     "order": "Order",
     "openMenu": "Open menu",
@@ -172,6 +173,7 @@
       "sculptures": "Sculptures",
       "custom": "Custom creations",
       "ai": "AI Experience",
+      "quiz": "Quiz",
       "contact": "Contact",
       "about": "About",
       "exhibitions": "Exhibitions"
@@ -658,7 +660,8 @@
       "loginError": "Incorrect email or password.",
       "gateTitle": "Create an account to get started",
       "gateDescription": "Designing your sculpture starts with a free account — you'll keep your generations, orders and credits.",
-      "gateButton": "Create my account"
+      "gateButton": "Create my account",
+      "confirmEmail": "We’ve sent you a confirmation email. Open it to activate your account and you’ll come back to this page with your selection."
     },
     "errors": {
       "emptyPrompt": "First describe your idea to generate an image.",
@@ -782,7 +785,7 @@
       "universeLabel": "Universe",
       "universeValue": "Papier-mâché · texture · presence"
     }
-  },
+  },
   "Legal": {
     "footerLinks": {
       "mentionsLegales": "Legal notice",
@@ -937,6 +940,162 @@
     },
     "carousel": {
       "goToImage": "Go to image {index}"
+    }
+  },
+  "quiz": {
+    "title": "Discover your sculpture",
+    "subtitle": "A few questions, 2 minutes. Find the piece that fits how you feel, and we’ll leave it ready to create.",
+    "start": "Start",
+    "next": "Next",
+    "back": "Back",
+    "progress": "Question {current} of {total}",
+    "teaser": {
+      "title": "Which sculpture is yours?",
+      "text": "Answer a few questions and discover the piece that matches what you feel.",
+      "cta": "Take the quiz"
+    },
+    "result": {
+      "yourProfile": "Your sculptural profile",
+      "recommended": "Sculptures for you",
+      "promptsTitle": "Create your own with AI",
+      "promptsHint": "Copy a prompt and try it in our generator.",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "tryNow": "Try it now",
+      "share": "Share my result",
+      "retake": "Retake the quiz",
+      "custom": "Commission a custom piece",
+      "configTitle": "Your ideal piece, ready to create",
+      "configHint": "We’ve preselected these options in the generator. You can change them whenever you like.",
+      "signupNotice": "Create a free account to generate your image",
+      "tryNowSignup": "Create account to generate"
+    },
+    "questions": {
+      "ambiente": {
+        "title": "Which setting relaxes you most?",
+        "options": {
+          "bosque": "A silent forest",
+          "oceano": "The ocean at dawn",
+          "ciudad": "A city at night",
+          "desierto": "An endless desert"
+        }
+      },
+      "emocion": {
+        "title": "What do you want to feel when you see the piece every day?",
+        "options": {
+          "calma": "Calm",
+          "misterio": "Mystery and wonder",
+          "energia": "Energy",
+          "ternura": "Tenderness"
+        }
+      },
+      "forma": {
+        "title": "How do you picture your piece?",
+        "options": {
+          "mural": "Hanging on the wall",
+          "objeto": "On a piece of furniture or a shelf",
+          "luminosa": "As a light that sets the mood"
+        }
+      },
+      "estilo": {
+        "title": "Which style appeals to you most?",
+        "options": {
+          "organico": "Organic, almost living forms",
+          "geometrico": "Precise lines and geometry",
+          "minimal": "Few shapes, a lot of silence",
+          "surrealista": "Surreal, like a dream",
+          "figurativo": "Animals and recognizable figures",
+          "origami": "Folds and folded paper"
+        }
+      },
+      "paleta": {
+        "title": "Which palette do you prefer?",
+        "options": {
+          "tierra": "Earthy, natural tones",
+          "vivos": "Bright, intense colors",
+          "monocromo": "White, black and greys",
+          "nocturna": "Deep blues and golds",
+          "pasteles": "Soft pastels",
+          "mar": "Sea turquoises and blues"
+        }
+      },
+      "espacio": {
+        "title": "What size do you imagine?",
+        "options": {
+          "rincon": "Small",
+          "medio": "Medium",
+          "grande": "Large"
+        }
+      },
+      "marco": {
+        "title": "How would you like it presented?",
+        "options": {
+          "abierto": "With an open artistic frame",
+          "sin": "Without a frame"
+        }
+      }
+    },
+    "profiles": {
+      "contemplativo": {
+        "name": "The Contemplative",
+        "tagline": "You look for pieces that breathe: soft forms, warm material and a serene presence.",
+        "prompts": {
+          "p1": "Paper mâché sculpture of a serene organic figure, soft curves reminiscent of river stones, rough handmade textures, handcrafted style, neutral background, soft natural light",
+          "p2": "Paper mâché sculpture inspired by a wave frozen in calm, textured surface, matte handcrafted finish, studio photography with diffused light",
+          "p3": "Paper mâché sculpture of a stylized bamboo forest, stalks leaning as if moved by a breeze, visible layers of paper, atmosphere of silence, handcrafted finish",
+          "p4": "Paper mâché sculpture of a mountain wrapped in mist, overlapping layers that create a sense of depth, soft nuanced texture, peaceful atmosphere, handcrafted style",
+          "p5": "Paper mâché sculpture of two hands holding a tiny seed, rounded warm forms, visible paper fibers, a feeling of care and stillness",
+          "p6": "Paper mâché sculpture of a zen garden: concentric circles in sand and three smooth stones, delicate relief, balanced composition, matte handcrafted finish"
+        }
+      },
+      "onirico": {
+        "name": "The Dreamer",
+        "tagline": "You are drawn to what seems to come from a dream: the impossible, the nocturnal, the mysterious.",
+        "prompts": {
+          "p1": "Surreal paper mâché sculpture of a fish floating above a city at night, rough textures, handcrafted style, neutral background, studio lighting",
+          "p2": "Surreal paper mâché sculpture of a tree whose roots are melting clocks, hand-painted, handcrafted finish, dramatic light",
+          "p3": "Paper mâché sculpture of a sleeping moon face balancing a tiny city, detailed relief, fairy-tale atmosphere, handcrafted style",
+          "p4": "Paper mâché sculpture of a staircase climbing into the clouds and ending at an open door, impossible perspective, layered paper textures, dreamlike air",
+          "p5": "Paper mâché sculpture of a whale swimming through the sky among stars and buildings, fantastical scale, hand-painted details, handcrafted style",
+          "p6": "Paper mâché sculpture of a lighthouse whose light turns into a flock of birds, surreal and poetic, rough texture, handcrafted finish"
+        }
+      },
+      "animal": {
+        "name": "The Animal Guardian",
+        "tagline": "Tenderness and character speak to you: pieces with an animal soul that brighten any corner.",
+        "prompts": {
+          "p1": "Paper mâché sculpture of a seated fox with a kind, curious expression, fur textured with layers of paper, hand-painted, handcrafted style, neutral background",
+          "p2": "Paper mâché sculpture of a small owl with big tender eyes, textured feathers, hand-painted, warm studio photography",
+          "p3": "Paper mâché sculpture of a curled-up cat with half-closed eyes, fur made of overlapping paper strips, expression of calm and trust, handcrafted style",
+          "p4": "Paper mâché sculpture of a small elephant with its trunk raised, wrinkles modeled in fine detail, gentle gaze, visible paper texture",
+          "p5": "Paper mâché sculpture of an alert hare with long elegant ears, soft silhouettes, fur in relief, tender and watchful character",
+          "p6": "Paper mâché sculpture of a family of birds perched together on a branch, each with its own personality, paper feathers, warm and playful composition"
+        }
+      },
+      "vibrante": {
+        "name": "The Vibrant",
+        "tagline": "You want a piece full of energy, color and personality, the kind that starts conversations.",
+        "prompts": {
+          "p1": "Paper mâché sculpture of a lush tropical bird, exaggerated playful forms, hand-painted, handcrafted style, clean background",
+          "p2": "Abstract, dynamic paper mâché sculpture with interwoven shapes, sense of movement, glossy handcrafted finish, studio lighting",
+          "p3": "Paper mâché sculpture of a festive octopus with spiraling tentacles that seem to dance, rhythm and energy, hand-painted details, handcrafted style",
+          "p4": "Paper mâché sculpture of a city in full celebration: tilted buildings and balconies full of life, joyful messy forms, strong relief",
+          "p5": "Paper mâché sculpture of a giant flower whose petals burst open like fireworks, exaggerated volume, glossy handcrafted finish",
+          "p6": "Paper mâché sculpture of a carnival snail whose shell is a swirl of shapes and patterns, humor and energy, visible paper texture"
+        }
+      },
+      "minimalista": {
+        "name": "The Minimalist",
+        "tagline": "You value the purity of form: clean lines, few colors and a quiet presence.",
+        "prompts": {
+          "p1": "Minimalist abstract paper mâché sculpture, soft asymmetrical geometric form, matte finish with subtle paper texture, soft shadows, handcrafted Scandinavian style, light background",
+          "p2": "Paper mâché sculpture of a split sphere with a smooth surface and a contrasting inner edge, minimalist design, handcrafted finish, high-contrast studio lighting",
+          "p3": "Paper mâché sculpture of a single continuous arch curving back on itself, clean lines, smooth surface with barely visible paper grain, plenty of empty space",
+          "p4": "Paper mâché sculpture of three oval forms of different sizes in balance, soft edges, matte surface, quiet composition",
+          "p5": "Paper mâché sculpture of a single wavy line in relief on a flat surface, serene rhythm, long soft shadows",
+          "p6": "Paper mâché sculpture of simple folds turned into volume, clean edges, a feeling of calm and precision"
+        }
+      }
     }
   }
 }

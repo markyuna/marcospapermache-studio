@@ -32,6 +32,7 @@ const navLinks = [
   { href: "/sculptures", key: "sculptures" },
   { href: "/creations-sur-mesure", key: "custom" },
   { href: "/create", key: "ai" },
+  { href: "/quiz", key: "quiz" },
 ] as const;
 
 // Every locale's label for each nav link, stacked (not just the active one)

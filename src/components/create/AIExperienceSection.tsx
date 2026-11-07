@@ -7,6 +7,7 @@ import {
   useMemo,
   useRef,
   useState,
+  Suspense,
   type ReactNode,
 } from "react";
 import type { User } from "@supabase/supabase-js";
@@ -25,6 +26,16 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+import PromptPrefill from "@/components/create/PromptPrefill";
+import {
+  PANEL_COLOR,
+  PANEL_DIRECTION,
+  PANEL_FRAME_COLOR,
+  PANEL_FRAME_MATERIAL,
+  PANEL_OBJECT_SIZE,
+  PANEL_TYPE,
+  type GeneratorPrefill,
+} from "@/data/quiz/generator-params";
 import { useRouter } from "@/i18n/navigation";
 import { supabase } from "@/lib/supabase/client";
 import { FREE_GENERATION_LIMIT } from "@/lib/generation-limits";
@@ -539,6 +550,46 @@ export default function AIExperienceSection() {
   const [paymentSuccessMessage, setPaymentSuccessMessage] = useState("");
 
   const resultRef = useRef<HTMLDivElement | null>(null);
+  const sectionRef = useRef<HTMLElement | null>(null);
+
+  // Prompt coming from a link (?prompt=, e.g. the quiz): fill the field and
+  // bring the generator into view, without generating anything.
+  const handlePrefill = useCallback((prefill: GeneratorPrefill) => {
+    if (prefill.prompt) setPrompt(prefill.prompt);
+    if (prefill.type) setCreationType(PANEL_TYPE[prefill.type]);
+    if (prefill.direction) {
+      setSelectedStyle(PANEL_DIRECTION[prefill.direction]);
+    }
+
+    if (prefill.colors) {
+      const colors = prefill.colors.map((color) => PANEL_COLOR[color]);
+      const baseCount = colors.filter((color) => color !== "gradient").length;
+      // Same rule as toggleColor: gradient needs at least two other colors.
+      setSelectedColors(
+        baseCount >= 2 ? colors : colors.filter((color) => color !== "gradient"),
+      );
+    }
+
+    // Wall pieces use the 30x40… formats; objects have three generic ones and
+    // light sculptures have no size, so those are simply never read for them.
+    if (prefill.size) {
+      setSelectedWallSize(prefill.size);
+      setSelectedObjectSize(PANEL_OBJECT_SIZE[prefill.size]);
+    }
+
+    // The frame only exists for wall pieces.
+    if (prefill.frame !== undefined && (!prefill.type || prefill.type === "mural")) {
+      setWithFrame(prefill.frame);
+      if (prefill.frame && prefill.frameColor) {
+        setFrameColor(PANEL_FRAME_COLOR[prefill.frameColor]);
+      }
+      if (prefill.frame && prefill.frameMaterial) {
+        setFrameMaterial(PANEL_FRAME_MATERIAL[prefill.frameMaterial]);
+      }
+    }
+
+    sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
   const pendingAuthActionRef = useRef<(() => void) | null>(null);
 
   const refreshAuthState = useCallback(async () => {
@@ -1131,7 +1182,13 @@ export default function AIExperienceSection() {
   }
 
   return (
-    <section className="relative rounded-[2.5rem] border border-white/10 bg-[#0b0b0d] p-5 text-white shadow-[0_30px_120px_rgba(0,0,0,0.38)] md:p-8">
+    <section
+      ref={sectionRef}
+      className="relative scroll-mt-24 rounded-[2.5rem] border border-white/10 bg-[#0b0b0d] p-5 text-white shadow-[0_30px_120px_rgba(0,0,0,0.38)] md:p-8"
+    >
+      <Suspense fallback={null}>
+        <PromptPrefill onPrefill={handlePrefill} />
+      </Suspense>
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(205,164,124,0.18),transparent_24%),radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.04),transparent_24%)]" />
 
       <div className="relative grid gap-6 lg:grid-cols-[1fr_1fr] lg:gap-8">

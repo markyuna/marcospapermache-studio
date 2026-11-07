@@ -6,6 +6,7 @@ import { setRequestLocale } from "next-intl/server";
 import { CtaSection } from "@/components/home/cta-section";
 import { FeaturedSection } from "@/components/home/featured-section";
 import { HeroSection } from "@/components/home/hero-section";
+import { QuizTeaser } from "@/components/home/QuizTeaser";
 import { ProcessSection } from "@/components/home/process-section";
 import ReviewsSection from "@/components/home/ReviewsSection";
 import { createMetadata } from "@/lib/seo";
@@ -60,6 +61,7 @@ export default async function HomePage({ params }: Props) {
 
       <div className="relative z-10">
         <FeaturedSection />
+        <QuizTeaser />
         <ProcessSection />
         <ReviewsSection />
         <CtaSection />
