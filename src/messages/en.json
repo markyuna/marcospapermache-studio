@@ -515,6 +515,7 @@
     },
     "lightTypes": {
       "tableLamp": "Table lamp",
+      "floorLamp": "Floor lamp",
       "wallLight": "Wall light",
       "ceilingLight": "Pendant / ceiling light",
       "lightSculpture": "Luminous sculpture"
@@ -528,6 +529,16 @@
       "subtle": "Subtle",
       "medium": "Medium",
       "strong": "Strong"
+    },
+    "lightDiffusion": {
+      "inner": "Diffused, from within",
+      "indirect": "Indirect, onto wall or floor",
+      "cutouts": "Through cut-outs"
+    },
+    "texture": {
+      "stone": "Matte, stone-like",
+      "smooth": "Smooth",
+      "relief": "Relief, folds and layers"
     },
     "colors": {
       "black": "Black",
@@ -566,7 +577,9 @@
       "objectFinishLabel": "Finish",
       "lightTypeLabel": "Light type",
       "lightTemperatureLabel": "Light temperature",
-      "lightIntensityLabel": "Light intensity"
+      "lightIntensityLabel": "Light intensity",
+      "lightDiffusionLabel": "Light diffusion (optional)",
+      "textureLabel": "Texture (optional)"
     },
     "styles": {
       "organic": {
@@ -994,6 +1007,23 @@
           "luminosa": "As a light that sets the mood"
         }
       },
+      "ubicacion_luz": {
+        "title": "Where will your light go?",
+        "options": {
+          "pie": "On the floor, as a standing piece",
+          "mesa": "On a table or a piece of furniture",
+          "techo": "Hanging from the ceiling",
+          "pared": "On the wall"
+        }
+      },
+      "difusion_luz": {
+        "title": "How should the light come out?",
+        "options": {
+          "interior": "Soft and diffused, from inside the form",
+          "indirecta": "Indirect, bouncing off the wall or floor",
+          "recortes": "Through openings that draw shadows"
+        }
+      },
       "estilo": {
         "title": "Which style appeals to you most?",
         "options": {
@@ -1013,7 +1043,16 @@
           "monocromo": "White, black and greys",
           "nocturna": "Deep blues and golds",
           "pasteles": "Soft pastels",
-          "mar": "Sea turquoises and blues"
+          "mar": "Sea turquoises and blues",
+          "crema": "Whites and creams"
+        }
+      },
+      "textura": {
+        "title": "Which texture appeals to you most?",
+        "options": {
+          "piedra": "Matte and grainy, like stone or sand",
+          "lisa": "Smooth and soft",
+          "relieve": "With relief, folds or visible layers"
         }
       },
       "espacio": {

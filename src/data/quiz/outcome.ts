@@ -7,7 +7,7 @@ import {
   pruneAnswers,
   type Answers,
 } from "./scoring";
-import { decodeAnswers, encodeAnswers } from "./share";
+import { codeQuestionIds, decodeAnswers, encodeAnswers } from "./share";
 
 export type QuizOutcome = {
   profileId: ProfileId;
@@ -47,8 +47,10 @@ export function resolveQuizOutcome(
   const decoded = decodeAnswers(code ?? null);
   if (!decoded) return null;
 
+  // A code only answers the questions that existed when it was made.
+  const covered = new Set(codeQuestionIds(code ?? ""));
   const complete = getVisibleQuestions(decoded).every(
-    (question) => decoded[question.id] !== undefined
+    (question) => !covered.has(question.id) || decoded[question.id] !== undefined
   );
   if (!complete) return null;
 

@@ -515,6 +515,7 @@
     },
     "lightTypes": {
       "tableLamp": "Lámpara de mesa",
+      "floorLamp": "Lámpara de pie",
       "wallLight": "Aplique de pared",
       "ceilingLight": "Suspensión / plafón",
       "lightSculpture": "Escultura luminosa"
@@ -528,6 +529,16 @@
       "subtle": "Sutil",
       "medium": "Media",
       "strong": "Fuerte"
+    },
+    "lightDiffusion": {
+      "inner": "Difusa, desde dentro",
+      "indirect": "Indirecta, hacia pared o suelo",
+      "cutouts": "A través de calados"
+    },
+    "texture": {
+      "stone": "Mate, como la piedra",
+      "smooth": "Lisa",
+      "relief": "Con relieve, pliegues y capas"
     },
     "colors": {
       "black": "Negro",
@@ -566,7 +577,9 @@
       "objectFinishLabel": "Acabado",
       "lightTypeLabel": "Tipo de luminaria",
       "lightTemperatureLabel": "Temperatura de luz",
-      "lightIntensityLabel": "Intensidad luminosa"
+      "lightIntensityLabel": "Intensidad luminosa",
+      "lightDiffusionLabel": "Cómo sale la luz (opcional)",
+      "textureLabel": "Textura (opcional)"
     },
     "styles": {
       "organic": {
@@ -994,6 +1007,23 @@
           "luminosa": "Como una luz que da ambiente"
         }
       },
+      "ubicacion_luz": {
+        "title": "¿Dónde irá tu luz?",
+        "options": {
+          "pie": "Sobre el suelo, como una pieza de pie",
+          "mesa": "Sobre una mesa o un mueble",
+          "techo": "Colgada del techo",
+          "pared": "En la pared"
+        }
+      },
+      "difusion_luz": {
+        "title": "¿Cómo quieres que salga la luz?",
+        "options": {
+          "interior": "Suave y difusa, desde dentro de la forma",
+          "indirecta": "Indirecta, rebotando en la pared o el suelo",
+          "recortes": "A través de huecos que dibujan sombras"
+        }
+      },
       "estilo": {
         "title": "¿Qué estilo te atrae más?",
         "options": {
@@ -1013,7 +1043,16 @@
           "monocromo": "Blanco, negro y grises",
           "nocturna": "Azules profundos y dorados",
           "pasteles": "Pasteles suaves",
-          "mar": "Turquesas y azules del mar"
+          "mar": "Turquesas y azules del mar",
+          "crema": "Blancos y cremas"
+        }
+      },
+      "textura": {
+        "title": "¿Qué textura te gusta más?",
+        "options": {
+          "piedra": "Mate y granulada, como piedra o arena",
+          "lisa": "Lisa y suave",
+          "relieve": "Con relieve, pliegues o capas visibles"
         }
       },
       "espacio": {

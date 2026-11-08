@@ -42,6 +42,25 @@ export const QUESTIONS: QuizQuestion[] = [
     ],
   },
   {
+    id: "ubicacion_luz",
+    visibleIf: (answers) => answers.forma === "luminosa",
+    options: [
+      { id: "pie", scores: {}, generator: { lightType: "pied" } },
+      { id: "mesa", scores: {}, generator: { lightType: "table" } },
+      { id: "techo", scores: {}, generator: { lightType: "suspension" } },
+      { id: "pared", scores: {}, generator: { lightType: "applique" } },
+    ],
+  },
+  {
+    id: "difusion_luz",
+    visibleIf: (answers) => answers.forma === "luminosa",
+    options: [
+      { id: "interior", scores: {}, generator: { lightDiffusion: "interieure" } },
+      { id: "indirecta", scores: {}, generator: { lightDiffusion: "indirecte" } },
+      { id: "recortes", scores: {}, generator: { lightDiffusion: "ajouree" } },
+    ],
+  },
+  {
     id: "estilo",
     options: [
       { id: "organico", scores: { contemplativo: 1, animal: 1 }, generator: { direction: { organique: 2 } } },
@@ -61,6 +80,16 @@ export const QUESTIONS: QuizQuestion[] = [
       { id: "nocturna", scores: { onirico: 2, contemplativo: 1 }, generator: { colors: ["bleu", "dore"], direction: { lumineux: 1 } } },
       { id: "pasteles", scores: { animal: 1, vibrante: 1 }, generator: { colors: ["rose", "beige", "blanc"] } },
       { id: "mar", scores: { contemplativo: 2, onirico: 1 }, generator: { colors: ["turquoise", "bleu", "degrade"], direction: { oceanique: 1 } } },
+      // Last on purpose: share codes store the option's index.
+      { id: "crema", scores: { minimalista: 2, contemplativo: 1 }, generator: { colors: ["blanc", "beige"] } },
+    ],
+  },
+  {
+    id: "textura",
+    options: [
+      { id: "piedra", scores: {}, generator: { texture: "pierre" } },
+      { id: "lisa", scores: {}, generator: { texture: "lisse" } },
+      { id: "relieve", scores: {}, generator: { texture: "relief" } },
     ],
   },
   {

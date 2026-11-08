@@ -515,6 +515,7 @@
     },
     "lightTypes": {
       "tableLamp": "Lampe de table",
+      "floorLamp": "Lampadaire",
       "wallLight": "Applique murale",
       "ceilingLight": "Suspension / plafonnier",
       "lightSculpture": "Sculpture lumineuse"
@@ -528,6 +529,16 @@
       "subtle": "Subtile",
       "medium": "Moyenne",
       "strong": "Forte"
+    },
+    "lightDiffusion": {
+      "inner": "Diffuse, depuis l’intérieur",
+      "indirect": "Indirecte, sur le mur ou le sol",
+      "cutouts": "À travers des ajours"
+    },
+    "texture": {
+      "stone": "Mate, comme la pierre",
+      "smooth": "Lisse",
+      "relief": "En relief, plis et couches"
     },
     "colors": {
       "black": "Noir",
@@ -566,7 +577,9 @@
       "objectFinishLabel": "Finition",
       "lightTypeLabel": "Type de luminaire",
       "lightTemperatureLabel": "Température de lumière",
-      "lightIntensityLabel": "Intensité lumineuse"
+      "lightIntensityLabel": "Intensité lumineuse",
+      "lightDiffusionLabel": "Diffusion de la lumière (facultatif)",
+      "textureLabel": "Texture (facultatif)"
     },
     "styles": {
       "organic": {
@@ -994,6 +1007,23 @@
           "luminosa": "Comme une lumière qui crée l’ambiance"
         }
       },
+      "ubicacion_luz": {
+        "title": "Où imagines-tu ta lumière\u00A0?",
+        "options": {
+          "pie": "Posée au sol, comme une pièce sur pied",
+          "mesa": "Sur une table ou un meuble",
+          "techo": "Suspendue au plafond",
+          "pared": "Fixée au mur"
+        }
+      },
+      "difusion_luz": {
+        "title": "Comment veux-tu que la lumière se diffuse\u00A0?",
+        "options": {
+          "interior": "Douce et diffuse, depuis l’intérieur de la forme",
+          "indirecta": "Indirecte, en rebondissant sur le mur ou le sol",
+          "recortes": "À travers des ajours qui dessinent des ombres"
+        }
+      },
       "estilo": {
         "title": "Quel style t’attire le plus ?",
         "options": {
@@ -1013,7 +1043,16 @@
           "monocromo": "Blanc, noir et gris",
           "nocturna": "Bleus profonds et dorés",
           "pasteles": "Pastels doux",
-          "mar": "Turquoises et bleus de la mer"
+          "mar": "Turquoises et bleus de la mer",
+          "crema": "Blancs et crèmes"
+        }
+      },
+      "textura": {
+        "title": "Quelle texture t’attire le plus\u00A0?",
+        "options": {
+          "piedra": "Mate et granuleuse, comme la pierre ou le sable",
+          "lisa": "Lisse et douce",
+          "relieve": "Avec du relief, des plis ou des couches visibles"
         }
       },
       "espacio": {

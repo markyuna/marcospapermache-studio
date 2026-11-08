@@ -32,7 +32,10 @@ import {
   PANEL_DIRECTION,
   PANEL_FRAME_COLOR,
   PANEL_FRAME_MATERIAL,
+  PANEL_LIGHT_DIFFUSION,
+  PANEL_LIGHT_TYPE,
   PANEL_OBJECT_SIZE,
+  PANEL_TEXTURE,
   PANEL_TYPE,
   type GeneratorPrefill,
 } from "@/data/quiz/generator-params";
@@ -43,6 +46,7 @@ import {
   type CreationType,
   type FrameColorId as FrameColor,
   type FrameMaterialId as FrameMaterial,
+  type LightDiffusionId as LightDiffusion,
   type LightIntensityId as LightingIntensity,
   type LightTemperatureId as LightingTemperature,
   type LightTypeId as LightType,
@@ -50,6 +54,7 @@ import {
   type ObjectSizeId,
   type ObjectUsageId as ObjectUsage,
   type StyleId as StylePresetId,
+  type TextureId as Texture,
   type WallSizeId,
 } from "@/lib/generator-prompt";
 import { supabase } from "@/lib/supabase/client";
@@ -189,6 +194,7 @@ export default function AIExperienceSection() {
 
   const lightTypes: readonly SelectOption<LightType>[] = useMemo(() => [
     { id: "tableLamp", label: t("lightTypes.tableLamp") },
+    { id: "floorLamp", label: t("lightTypes.floorLamp") },
     { id: "wallLight", label: t("lightTypes.wallLight") },
     { id: "ceilingLight", label: t("lightTypes.ceilingLight") },
     { id: "lightSculpture", label: t("lightTypes.lightSculpture") },
@@ -204,6 +210,18 @@ export default function AIExperienceSection() {
     { id: "subtle", label: t("lightIntensity.subtle") },
     { id: "medium", label: t("lightIntensity.medium") },
     { id: "strong", label: t("lightIntensity.strong") },
+  ] as const, [t]);
+
+  const lightDiffusions: readonly SelectOption<LightDiffusion>[] = useMemo(() => [
+    { id: "inner", label: t("lightDiffusion.inner") },
+    { id: "indirect", label: t("lightDiffusion.indirect") },
+    { id: "cutouts", label: t("lightDiffusion.cutouts") },
+  ] as const, [t]);
+
+  const textures: readonly SelectOption<Texture>[] = useMemo(() => [
+    { id: "stone", label: t("texture.stone") },
+    { id: "smooth", label: t("texture.smooth") },
+    { id: "relief", label: t("texture.relief") },
   ] as const, [t]);
 
   const colorOptions: readonly SelectOption<ColorOption>[] = useMemo(() => [
@@ -249,6 +267,10 @@ export default function AIExperienceSection() {
     useState<LightingTemperature>("warm");
   const [selectedLightIntensity, setSelectedLightIntensity] =
     useState<LightingIntensity>("medium");
+  // Optional: null (nothing selected) adds nothing to the prompt.
+  const [selectedLightDiffusion, setSelectedLightDiffusion] =
+    useState<LightDiffusion | null>(null);
+  const [selectedTexture, setSelectedTexture] = useState<Texture | null>(null);
 
   const [selectedColors, setSelectedColors] = useState<ColorOption[]>([]);
 
@@ -304,6 +326,18 @@ export default function AIExperienceSection() {
         setFrameMaterial(PANEL_FRAME_MATERIAL[prefill.frameMaterial]);
       }
     }
+
+    // Light placement and diffusion only exist for light sculptures.
+    if (!prefill.type || prefill.type === "luminosa") {
+      if (prefill.lightType) {
+        setSelectedLightType(PANEL_LIGHT_TYPE[prefill.lightType]);
+      }
+      if (prefill.lightDiffusion) {
+        setSelectedLightDiffusion(PANEL_LIGHT_DIFFUSION[prefill.lightDiffusion]);
+      }
+    }
+
+    if (prefill.texture) setSelectedTexture(PANEL_TEXTURE[prefill.texture]);
 
     sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
@@ -453,6 +487,8 @@ export default function AIExperienceSection() {
           lightType: selectedLightType,
           lightTemperature: selectedLightTemperature,
           lightIntensity: selectedLightIntensity,
+          lightDiffusion: selectedLightDiffusion,
+          texture: selectedTexture,
         },
         {
           enrichedSuffix: t("promptEnrichedSuffix"),
@@ -465,6 +501,7 @@ export default function AIExperienceSection() {
       frameMaterial,
       prompt,
       selectedColors,
+      selectedLightDiffusion,
       selectedLightIntensity,
       selectedLightTemperature,
       selectedLightType,
@@ -472,6 +509,7 @@ export default function AIExperienceSection() {
       selectedObjectSize,
       selectedObjectUsage,
       selectedStyle,
+      selectedTexture,
       selectedWallSize,
       t,
       withFrame,
@@ -673,6 +711,8 @@ export default function AIExperienceSection() {
     setSelectedLightType("tableLamp");
     setSelectedLightTemperature("warm");
     setSelectedLightIntensity("medium");
+    setSelectedLightDiffusion(null);
+    setSelectedTexture(null);
     setSelectedColors([]);
     setGeneratedImage(null);
     setGeneratedImageId(null);
@@ -1111,8 +1151,54 @@ export default function AIExperienceSection() {
                     ))}
                   </div>
                 </div>
+
+                <div className="mt-5">
+                  <p className="text-sm font-medium text-neutral-200">
+                    {t("form.lightDiffusionLabel")}
+                  </p>
+
+                  <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                    {lightDiffusions.map((diffusion) => (
+                      <div key={diffusion.id}>
+                        {renderCardButton(
+                          diffusion.label,
+                          selectedLightDiffusion === diffusion.id,
+                          // Optional: clicking the selected card clears it.
+                          () =>
+                            setSelectedLightDiffusion((current) =>
+                              current === diffusion.id ? null : diffusion.id,
+                            ),
+                          isLoading,
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </>
             ) : null}
+
+            <div className="mt-5">
+              <p className="text-sm font-medium text-neutral-200">
+                {t("form.textureLabel")}
+              </p>
+
+              <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                {textures.map((texture) => (
+                  <div key={texture.id}>
+                    {renderCardButton(
+                      texture.label,
+                      selectedTexture === texture.id,
+                      // Optional: clicking the selected card clears it.
+                      () =>
+                        setSelectedTexture((current) =>
+                          current === texture.id ? null : texture.id,
+                        ),
+                      isLoading,
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
 
             <div className="mt-5">
               <label
