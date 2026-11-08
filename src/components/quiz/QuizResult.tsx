@@ -17,7 +17,10 @@ import {
   PANEL_DIRECTION,
   PANEL_FRAME_COLOR,
   PANEL_FRAME_MATERIAL,
+  PANEL_LIGHT_DIFFUSION,
+  PANEL_LIGHT_TYPE,
   PANEL_OBJECT_SIZE,
+  PANEL_TEXTURE,
   PANEL_TYPE,
 } from "@/data/quiz/generator-params";
 import { PROFILES, type ProfileId } from "@/data/quiz/profiles";
@@ -141,6 +144,17 @@ export default function QuizResult({
       configChips.push(
         `${tPanel("form.withFrame")} · ${tPanel(`frameColors.${PANEL_FRAME_COLOR[config.frameColor]}`)} · ${tPanel(`frameMaterials.${PANEL_FRAME_MATERIAL[config.frameMaterial]}`)}`
       );
+    }
+    if (config.lightType) {
+      configChips.push(tPanel(`lightTypes.${PANEL_LIGHT_TYPE[config.lightType]}`));
+    }
+    if (config.lightDiffusion) {
+      configChips.push(
+        tPanel(`lightDiffusion.${PANEL_LIGHT_DIFFUSION[config.lightDiffusion]}`)
+      );
+    }
+    if (config.texture) {
+      configChips.push(tPanel(`texture.${PANEL_TEXTURE[config.texture]}`));
     }
   }
 

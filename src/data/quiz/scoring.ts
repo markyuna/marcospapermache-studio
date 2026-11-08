@@ -4,8 +4,11 @@ import type {
   FrameColor,
   FrameMaterial,
   GeneratorConfig,
+  LightDiffusion,
+  LightType,
   PanelColor,
   PanelSize,
+  Texture,
 } from "./generator";
 import { PROFILES, type ProfileId } from "./profiles";
 import { QUESTIONS, type QuizOption, type QuizQuestion } from "./questions";
@@ -63,6 +66,9 @@ export function computeGeneratorConfig(answers: Answers): GeneratorConfig {
   let type: CreationType = "mural";
   let size: PanelSize = "50x70";
   let frame = false;
+  let lightType: LightType | undefined;
+  let lightDiffusion: LightDiffusion | undefined;
+  let texture: Texture | undefined;
 
   for (const option of selectedOptions(answers)) {
     const g = option.generator;
@@ -70,6 +76,9 @@ export function computeGeneratorConfig(answers: Answers): GeneratorConfig {
     if (g.type) type = g.type;
     if (g.size) size = g.size;
     if (g.frame !== undefined) frame = g.frame;
+    if (g.lightType) lightType = g.lightType;
+    if (g.lightDiffusion) lightDiffusion = g.lightDiffusion;
+    if (g.texture) texture = g.texture;
     for (const c of g.colors ?? []) {
       if (!colors.includes(c)) colors.push(c);
     }
@@ -113,5 +122,9 @@ export function computeGeneratorConfig(answers: Answers): GeneratorConfig {
     size,
     frame: hasMarco,
     ...(hasMarco ? { frameColor, frameMaterial } : {}),
+    // The light questions only exist for light sculptures.
+    ...(type === "luminosa" && lightType ? { lightType } : {}),
+    ...(type === "luminosa" && lightDiffusion ? { lightDiffusion } : {}),
+    ...(texture ? { texture } : {}),
   };
 }

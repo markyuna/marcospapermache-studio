@@ -41,11 +41,14 @@ export type ObjectUsageId = "table" | "shelf" | "floor";
 export type ObjectFinishId = "matte" | "glossy" | "metallic";
 export type LightTypeId =
   | "tableLamp"
+  | "floorLamp"
   | "wallLight"
   | "ceilingLight"
   | "lightSculpture";
 export type LightTemperatureId = "warm" | "neutral" | "cool";
 export type LightIntensityId = "subtle" | "medium" | "strong";
+export type LightDiffusionId = "inner" | "indirect" | "cutouts";
+export type TextureId = "stone" | "smooth" | "relief";
 
 // Display order of the palette. The prompt lists colours in THIS order, not in
 // the order the visitor picked them.
@@ -224,6 +227,8 @@ const OBJECT_FINISH_PROMPTS: Record<ObjectFinishId, string> = {
 const LIGHT_TYPE_PROMPTS: Record<LightTypeId, string> = {
   tableLamp:
     "papier-mâché sculptural table lamp, decorative lighting object, designed for a table or console",
+  floorLamp:
+    "papier-mâché sculptural floor lamp, tall freestanding lighting sculpture standing directly on the floor, strong vertical presence",
   wallLight:
     "papier-mâché sculptural wall light, artistic applique murale, elegant wall-mounted lighting piece",
   ceilingLight:
@@ -247,6 +252,24 @@ const LIGHT_INTENSITY_PROMPTS: Record<LightIntensityId, string> = {
     "strong light intensity, pronounced luminous presence, bold artistic lighting effect",
 };
 
+const LIGHT_DIFFUSION_PROMPTS: Record<LightDiffusionId, string> = {
+  inner:
+    "soft diffused light glowing from within the sculpture, light emanating from inside the hollow form, warm translucent inner glow",
+  indirect:
+    "indirect lighting, hidden light source, light bouncing off the wall and floor, soft halo around the sculpture",
+  cutouts:
+    "light passing through openings and cut-outs in the sculpture, projected patterns of light and shadow on the surrounding surfaces",
+};
+
+const TEXTURE_PROMPTS: Record<TextureId, string> = {
+  stone:
+    "matte mineral texture like stone or sand, fine granular handmade surface, tactile natural finish",
+  smooth:
+    "smooth refined surface, soft seamless finish, delicately sanded papier-mâché",
+  relief:
+    "pronounced surface relief, visible folds, layers and handmade marks, rich tactile texture",
+};
+
 export type GenerationSelection = {
   // Free text typed by the visitor (or a ready-made quiz prompt).
   prompt: string;
@@ -263,6 +286,9 @@ export type GenerationSelection = {
   lightType: LightTypeId;
   lightTemperature: LightTemperatureId;
   lightIntensity: LightIntensityId;
+  // Optional: null adds nothing to the prompt.
+  lightDiffusion: LightDiffusionId | null;
+  texture: TextureId | null;
 };
 
 // The translated pieces. They depend on the locale, so the caller supplies them
@@ -288,6 +314,8 @@ export const DEFAULT_GENERATION_SELECTION: Omit<GenerationSelection, "prompt"> =
   lightType: "tableLamp",
   lightTemperature: "warm",
   lightIntensity: "medium",
+  lightDiffusion: null,
+  texture: null,
 };
 
 export function buildGenerationPrompt(
@@ -328,6 +356,10 @@ export function buildGenerationPrompt(
 
   if (hasGradient && baseColors.length >= 2) {
     basePrompt += `, ${COLOR_PROMPTS.gradient}`;
+  }
+
+  if (selection.texture) {
+    basePrompt += `, ${TEXTURE_PROMPTS[selection.texture]}`;
   }
 
   if (creationType === "wall") {
@@ -415,6 +447,10 @@ export function buildGenerationPrompt(
 
     if (intensityPrompt) {
       basePrompt += `, ${intensityPrompt}`;
+    }
+
+    if (selection.lightDiffusion) {
+      basePrompt += `, ${LIGHT_DIFFUSION_PROMPTS[selection.lightDiffusion]}`;
     }
 
     basePrompt +=

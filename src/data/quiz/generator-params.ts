@@ -3,15 +3,21 @@ import {
   DIRECTIONS,
   FRAME_COLORS,
   FRAME_MATERIALS,
+  LIGHT_DIFFUSIONS,
+  LIGHT_TYPES,
   PANEL_COLORS,
   PANEL_SIZES,
+  TEXTURES,
   type CreationType,
   type Direction,
   type FrameColor,
   type FrameMaterial,
   type GeneratorConfig,
+  type LightDiffusion,
+  type LightType,
   type PanelColor,
   type PanelSize,
+  type Texture,
 } from "./generator";
 import {
   DEFAULT_GENERATION_SELECTION,
@@ -74,6 +80,25 @@ export const PANEL_OBJECT_SIZE = {
   "70x100": "large",
 } as const satisfies Record<PanelSize, string>;
 
+export const PANEL_LIGHT_TYPE = {
+  pied: "floorLamp",
+  table: "tableLamp",
+  suspension: "ceilingLight",
+  applique: "wallLight",
+} as const satisfies Record<LightType, string>;
+
+export const PANEL_LIGHT_DIFFUSION = {
+  interieure: "inner",
+  indirecte: "indirect",
+  ajouree: "cutouts",
+} as const satisfies Record<LightDiffusion, string>;
+
+export const PANEL_TEXTURE = {
+  pierre: "stone",
+  lisse: "smooth",
+  relief: "relief",
+} as const satisfies Record<Texture, string>;
+
 export const MAX_PREFILL_PROMPT_LENGTH = 500;
 export const MAX_PREFILL_COLORS = 4;
 
@@ -86,6 +111,9 @@ export interface GeneratorPrefill {
   frame?: boolean;
   frameColor?: FrameColor;
   frameMaterial?: FrameMaterial;
+  lightType?: LightType;
+  lightDiffusion?: LightDiffusion;
+  texture?: Texture;
 }
 
 export function buildGeneratorQuery(
@@ -109,6 +137,13 @@ export function buildGeneratorQuery(
         params.set("frameMaterial", config.frameMaterial);
       }
     }
+    if (config.type === "luminosa") {
+      if (config.lightType) params.set("lightType", config.lightType);
+      if (config.lightDiffusion) {
+        params.set("lightDiffusion", config.lightDiffusion);
+      }
+    }
+    if (config.texture) params.set("texture", config.texture);
   }
 
   return params.toString();
@@ -162,6 +197,15 @@ export function parseGeneratorParams(params: {
   const frameMaterial = pick(params.get("frameMaterial"), FRAME_MATERIALS);
   if (frameMaterial) prefill.frameMaterial = frameMaterial;
 
+  const lightType = pick(params.get("lightType"), LIGHT_TYPES);
+  if (lightType) prefill.lightType = lightType;
+
+  const lightDiffusion = pick(params.get("lightDiffusion"), LIGHT_DIFFUSIONS);
+  if (lightDiffusion) prefill.lightDiffusion = lightDiffusion;
+
+  const texture = pick(params.get("texture"), TEXTURES);
+  if (texture) prefill.texture = texture;
+
   return prefill;
 }
 
@@ -175,6 +219,7 @@ export function quizConfigToSelection(
   prompt: string
 ): GenerationSelection {
   const isWall = config.type === "mural";
+  const isLight = config.type === "luminosa";
   const colors = config.colors.map((color) => PANEL_COLOR[color]);
   const baseCount = colors.filter((color) => color !== "gradient").length;
 
@@ -195,6 +240,14 @@ export function quizConfigToSelection(
     ...(isWall && config.frame && config.frameMaterial
       ? { frameMaterial: PANEL_FRAME_MATERIAL[config.frameMaterial] }
       : {}),
+    // Light placement and diffusion only exist for light sculptures.
+    ...(isLight && config.lightType
+      ? { lightType: PANEL_LIGHT_TYPE[config.lightType] }
+      : {}),
+    ...(isLight && config.lightDiffusion
+      ? { lightDiffusion: PANEL_LIGHT_DIFFUSION[config.lightDiffusion] }
+      : {}),
+    ...(config.texture ? { texture: PANEL_TEXTURE[config.texture] } : {}),
   };
 }
 
@@ -219,6 +272,10 @@ export function parseGeneratorConfig(value: unknown): GeneratorConfig | null {
 
   const frameColor = pick(String(v.frameColor), FRAME_COLORS);
   const frameMaterial = pick(String(v.frameMaterial), FRAME_MATERIALS);
+  // Optional: results saved before these questions existed have none.
+  const lightType = pick(String(v.lightType), LIGHT_TYPES);
+  const lightDiffusion = pick(String(v.lightDiffusion), LIGHT_DIFFUSIONS);
+  const texture = pick(String(v.texture), TEXTURES);
 
   return {
     type,
@@ -228,5 +285,8 @@ export function parseGeneratorConfig(value: unknown): GeneratorConfig | null {
     frame: v.frame,
     ...(frameColor ? { frameColor } : {}),
     ...(frameMaterial ? { frameMaterial } : {}),
+    ...(lightType ? { lightType } : {}),
+    ...(lightDiffusion ? { lightDiffusion } : {}),
+    ...(texture ? { texture } : {}),
   };
 }

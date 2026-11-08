@@ -1,25 +1,71 @@
-import { QUESTIONS } from "./questions";
+import { QUESTIONS, type QuizQuestion } from "./questions";
 import type { Answers } from "./scoring";
 
-// Una posición por pregunta (orden de QUESTIONS): índice de la opción o "-"
+// Posición de cada pregunta en el código. Va aparte del orden en que se muestran
+// (QUESTIONS) porque los códigos se guardan y se comparten: una pregunta nueva
+// siempre se añade al FINAL. Las LEGACY_CODE_LENGTH primeras posiciones son el
+// quiz anterior a las preguntas de luz y textura.
+const CODE_ORDER = [
+  "ambiente",
+  "emocion",
+  "forma",
+  "estilo",
+  "paleta",
+  "espacio",
+  "marco",
+  "ubicacion_luz",
+  "difusion_luz",
+  "textura",
+];
+export const LEGACY_CODE_LENGTH = 7;
+
+const CODE_QUESTIONS: QuizQuestion[] = CODE_ORDER.map((id) => {
+  const question = QUESTIONS.find((q) => q.id === id);
+  if (!question) throw new Error(`Quiz code order: unknown question "${id}"`);
+  return question;
+});
+if (CODE_QUESTIONS.length !== QUESTIONS.length) {
+  throw new Error("Quiz code order must list every question exactly once");
+}
+
+// Una posición por pregunta (orden de CODE_ORDER): índice de la opción o "-".
+// Las posiciones vacías del final (más allá del quiz antiguo) se quitan, así un
+// conjunto de respuestas sin las preguntas nuevas conserva su código de antes
+// (y con él el desempate de perfil y los prompts).
 export function encodeAnswers(answers: Answers): string {
-  return QUESTIONS.map((q) => {
+  const chars = CODE_QUESTIONS.map((q) => {
     const idx = q.options.findIndex((o) => o.id === answers[q.id]);
     return idx >= 0 ? String(idx) : "-";
-  }).join("");
+  });
+  while (chars.length > LEGACY_CODE_LENGTH && chars[chars.length - 1] === "-") {
+    chars.pop();
+  }
+  return chars.join("");
 }
 
 export function decodeAnswers(code: string | null): Answers | null {
-  if (!code || code.length !== QUESTIONS.length) return null;
+  if (
+    !code ||
+    code.length < LEGACY_CODE_LENGTH ||
+    code.length > CODE_QUESTIONS.length
+  ) {
+    return null;
+  }
   const answers: Answers = {};
-  for (let i = 0; i < QUESTIONS.length; i++) {
+  for (let i = 0; i < code.length; i++) {
     const ch = code[i];
     if (ch === "-") continue;
-    const option = QUESTIONS[i].options[Number(ch)];
+    const option = CODE_QUESTIONS[i].options[Number(ch)];
     if (!/^\d$/.test(ch) || !option) return null;
-    answers[QUESTIONS[i].id] = option.id;
+    answers[CODE_QUESTIONS[i].id] = option.id;
   }
   return answers;
+}
+
+// Las preguntas que un código cubre: uno de antes de las preguntas nuevas está
+// completo sin ellas.
+export function codeQuestionIds(code: string): string[] {
+  return CODE_ORDER.slice(0, code.length);
 }
 
 // Finalizador de murmur3: reparte bien los bits. Sin él, `hash % n` solo
