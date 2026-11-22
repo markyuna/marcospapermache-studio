@@ -447,7 +447,14 @@
       "requestSimilar": "Request a similar piece",
       "requestThis": "Request this piece"
     },
-    "year": "Year"
+    "year": "Year",
+    "atelier": {
+      "carouselLabel": "Workshop photos",
+      "openImage": "Enlarge image {index} of {total}",
+      "imageAlt": "Workshop – step {index}",
+      "pause": "Pause scrolling",
+      "play": "Resume scrolling"
+    }
   },
   "SculptureCard": {
     "status": {

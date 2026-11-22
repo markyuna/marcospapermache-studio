@@ -447,7 +447,14 @@
       "requestSimilar": "Demander une pièce similaire",
       "requestThis": "Demander cette pièce"
     },
-    "year": "Année"
+    "year": "Année",
+    "atelier": {
+      "carouselLabel": "Photos de l’atelier",
+      "openImage": "Agrandir l’image {index} sur {total}",
+      "imageAlt": "Atelier – étape {index}",
+      "pause": "Mettre le défilement en pause",
+      "play": "Reprendre le défilement"
+    }
   },
   "SculptureCard": {
     "status": {
