@@ -27,6 +27,7 @@ Prisma client is auto-generated on `postinstall`. Regenerate manually with `npx 
 - **Forms:** React Hook Form + Zod 4
 - **i18n:** next-intl — 3 locales: `fr` (default), `en`, `es`
 - **AI:** OpenAI (DALL-E 3 image generation)
+- **Analytics:** first-party, cookieless (see Analytics below) + Vercel Analytics / Speed Insights
 - **Email:** Resend with React Email templates
 - **File uploads:** Supabase Storage (images uploaded server-side)
 
@@ -43,12 +44,15 @@ Public:
 - `POST /api/commandes` — submit a custom order (sends email via Resend)
 - `POST /api/generate-image` — OpenAI image generation (DALL-E 3)
 - `GET /api/health` — health check
+- `POST /api/analytics/collect` — first-party analytics beacon (page views, engagement, events)
 
 Admin (all require `requireAdmin()` from `src/lib/admin-auth.ts`):
 - `/api/admin/artworks` — artwork CRUD
 - `/api/admin/artworks/[id]/images` — image upload/delete per artwork
 - `/api/admin/commandes/[id]` — order detail & status updates
-- `/api/admin/clarity` — Microsoft Clarity analytics proxy
+- `/api/admin/analytics/realtime` — live visitors + latest visits (polled by the dashboard)
+- `/api/admin/analytics/sessions/[id]` — page-by-page journey of one visit
+- `/api/admin/analytics/export` — CSV export of visits for the current period/filters
 
 ### Auth Flow
 
@@ -61,6 +65,17 @@ Admin (all require `requireAdmin()` from `src/lib/admin-auth.ts`):
 - `Artwork` — gallery items (slug, title, description, imageUrl, category, tags, featured)
 - `AIImage` — DALL-E generated images
 - `Order` — customer commandes (name, email, description, optional imageUrl/budget/dimensions, status)
+- `AnalyticsSession` / `AnalyticsEvent` — first-party analytics (tables created by `supabase/analytics.sql`)
+
+### Analytics
+
+Cookieless, first-party audience measurement (replaced Microsoft Clarity):
+
+- `src/components/analytics/AnalyticsTracker.tsx` (mounted in the locale layout) sends page views, engaged time, scroll depth and automatic clicks (outbound, mailto, tel, downloads, `data-analytics="label"` → `cta_click`).
+- Custom events: `track("event_name", props)` from `src/lib/analytics/track.ts`; known names and labels live in `EVENT_CATALOG` (`src/lib/analytics/shared.ts`).
+- Ingestion: `src/lib/analytics/collect.ts` — daily-rotating visitor hash (no IP/UA stored), 30-min sessions, bots dropped. Recording is off in dev and on Vercel previews unless `ANALYTICS_ENABLED=1`.
+- Dashboard queries: `src/lib/analytics/dashboard.ts`; UI in `src/components/admin/analytics/`. Period/filters are URL search params on `/admin/analytics`.
+- Admin browsers are excluded via the `mp_analytics_ignore` localStorage flag (set automatically on admin pages, toggle on the Analytics page).
 
 ### i18n
 
@@ -77,4 +92,5 @@ Locale routing is handled by next-intl middleware. Translation files: `src/messa
 | `DATABASE_URL` | PostgreSQL pooler connection string |
 | `RESEND_API_KEY` / `RESEND_FROM_EMAIL` / `RESEND_TO_EMAIL` | Transactional email |
 | `ADMIN_EMAILS` | Comma-separated list of allowed admin emails |
-| `NEXT_PUBLIC_CLARITY_PROJECT_ID` / `CLARITY_API_TOKEN` | Microsoft Clarity analytics |
+| `ANALYTICS_SALT` | Secret for the daily visitor hash (falls back to `SUPABASE_SERVICE_ROLE_KEY`) |
+| `ANALYTICS_ENABLED` | `1` forces analytics recording (e.g. in dev), `0` disables it |

@@ -18,6 +18,7 @@ import {
 import { isProfileId } from "@/data/quiz/profiles";
 import { getVisibleQuestions, pruneAnswers, type Answers } from "@/data/quiz/scoring";
 import { useRouter } from "@/i18n/navigation";
+import { track } from "@/lib/analytics/track";
 
 const AUTO_ADVANCE_MS = 250;
 
@@ -82,6 +83,7 @@ export default function QuizFlow({ artworks }: QuizFlowProps) {
       const result = outcomeFromAnswers(pruned);
 
       setOutcome(result);
+      track("quiz_completed", { profile: result.profileId });
       router.replace(`/quiz?r=${result.code}`, { scroll: false });
     },
     [router]
@@ -168,7 +170,10 @@ export default function QuizFlow({ artworks }: QuizFlowProps) {
 
         <button
           type="button"
-          onClick={() => setStarted(true)}
+          onClick={() => {
+            setStarted(true);
+            track("quiz_started");
+          }}
           className="btn-gold-shimmer mt-10 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold transition duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c65400]/50 focus-visible:ring-offset-2"
         >
           {t("start")}

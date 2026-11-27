@@ -61,6 +61,7 @@ import { supabase } from "@/lib/supabase/client";
 import { FREE_GENERATION_LIMIT } from "@/lib/generation-limits";
 import AuthModal from "@/components/auth/AuthModal";
 import ReferenceImageUpload from "./ReferenceImageUpload";
+import { track } from "@/lib/analytics/track";
 
 type GenerateImageResponse = {
   image?: string;
@@ -621,12 +622,14 @@ export default function AIExperienceSection() {
       }
 
       if (data.requiresSignup) {
+        track("generation_blocked", { reason: "signup" });
         pendingAuthActionRef.current = runGeneration;
         setShowAuthModal(true);
         throw new Error(data.error || t("errors.generationFailed"));
       }
 
       if (data.requiresPayment) {
+        track("generation_blocked", { reason: "payment" });
         // Server-side quota is the source of truth — sync so the payment
         // panel replaces the generate button.
         setFreeRemaining(0);
@@ -644,6 +647,7 @@ export default function AIExperienceSection() {
 
       setGeneratedImage(data.image);
       setGeneratedImageId(data.imageId ?? null);
+      track("image_generated", { type: String(creationType) });
       setLastPrompt(fullPrompt);
 
       if (data.unlimited) {
@@ -688,6 +692,7 @@ export default function AIExperienceSection() {
         throw new Error(data.error || t("errors.checkoutFailed"));
       }
 
+      track("checkout_started", { source: "create" });
       window.location.href = data.url;
     } catch (err) {
       const message = err instanceof Error ? err.message : t("errors.unknown");

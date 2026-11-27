@@ -14,6 +14,7 @@ import type {
   QuizQuotaPayload,
   QuizResultDTO,
 } from "@/lib/quiz-api";
+import { track } from "@/lib/analytics/track";
 
 type QuizSavePanelProps = {
   // The answers code (?r=). It is the only thing sent to the server besides the
@@ -180,8 +181,10 @@ export default function QuizSavePanel({ code, hasSession }: QuizSavePanelProps) 
 
     setBusy("idle");
 
-    if (outcome.ok) setSaved(outcome.data.result);
-    else fail(outcome);
+    if (outcome.ok) {
+      setSaved(outcome.data.result);
+      track("quiz_saved");
+    } else fail(outcome);
   }
 
   async function runGenerate(confirmReplace: boolean) {
@@ -196,6 +199,7 @@ export default function QuizSavePanel({ code, hasSession }: QuizSavePanelProps) 
     });
 
     if (outcome.ok) {
+      track("quiz_image_generated");
       setCredits(creditsFromQuota(outcome.data.quota));
       // The server saved the result too: take its version as the truth.
       setSaved(await fetchSaved(code));

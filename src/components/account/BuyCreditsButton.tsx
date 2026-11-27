@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { CreditCard, Loader2 } from "lucide-react";
+import { track } from "@/lib/analytics/track";
 
 type CheckoutSessionResponse = {
   url?: string;
@@ -32,6 +33,7 @@ export default function BuyCreditsButton() {
         throw new Error(data.error || t("buyError"));
       }
 
+      track("checkout_started", { source: "account" });
       window.location.href = data.url;
     } catch (err) {
       setError(err instanceof Error ? err.message : t("buyError"));

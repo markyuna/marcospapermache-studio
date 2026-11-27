@@ -11,6 +11,7 @@ import {
   Trash2,
   AlertCircle,
 } from "lucide-react";
+import { track } from "@/lib/analytics/track";
 
 type CommandeFormProps = {
   defaultPrompt?: string;
@@ -210,6 +211,11 @@ export default function CommandeForm({
       if (!response.ok) {
         throw new Error(result.error || t("errors.generic"));
       }
+
+      track("commande_submitted", {
+        with_image: Boolean(imagePreview),
+        with_ai_image: Boolean(generatedImage),
+      });
 
       form.reset();
 
