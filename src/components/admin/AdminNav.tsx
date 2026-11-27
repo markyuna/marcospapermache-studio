@@ -24,18 +24,22 @@ export default function AdminNav() {
 
   return (
     <div className="sticky top-0 z-40 border-b border-neutral-200 bg-paper-base/95 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-8">
+      {/* Phones: brand + logout on the first row, links on a full-width second row. */}
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-3 md:px-8">
 
         {/* Brand */}
         <Link
           href="/admin/artworks"
-          className="text-sm font-semibold text-neutral-900 transition hover:text-neutral-600"
+          className="shrink-0 text-sm font-semibold text-neutral-900 transition hover:text-neutral-600"
         >
           Marcos Papermache
         </Link>
 
         {/* Nav links */}
-        <nav aria-label="Navigation administration" className="flex items-center gap-1">
+        <nav
+          aria-label="Navigation administration"
+          className="order-last flex w-full items-center gap-1 sm:order-none sm:w-auto"
+        >
           {links.map((link) => {
             const isActive =
               pathname === link.href || pathname.startsWith(`${link.href}/`);
@@ -47,7 +51,7 @@ export default function AdminNav() {
                 prefetch
                 aria-current={isActive ? "page" : undefined}
                 className={clsx(
-                  "inline-flex items-center rounded-lg px-3 py-1.5 text-sm font-medium transition",
+                  "inline-flex flex-1 items-center justify-center rounded-lg px-3 py-1.5 text-sm font-medium transition sm:flex-none",
                   isActive
                     ? "bg-neutral-200 text-neutral-900"
                     : "text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900"
