@@ -6,7 +6,7 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import AccountSessionGuard from "@/components/account/AccountSessionGuard";
-import ClarityInit from "@/components/analytics/ClarityInit";
+import AnalyticsTracker from "@/components/analytics/AnalyticsTracker";
 import Footer from "@/components/layout/Footer";
 import HtmlLangSync from "@/components/layout/HtmlLangSync";
 import Navbar from "@/components/layout/Navbar";
@@ -147,7 +147,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <HtmlLangSync locale={locale} />
-      <ClarityInit />
+      <AnalyticsTracker />
       <AccountSessionGuard />
 
       <JsonLd data={websiteJsonLd} />

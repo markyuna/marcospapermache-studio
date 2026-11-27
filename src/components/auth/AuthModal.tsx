@@ -7,6 +7,7 @@ import { Loader2, X } from "lucide-react";
 
 import { getAuthCallbackUrl, saveReturnTo } from "@/lib/auth-redirect";
 import { supabase } from "@/lib/supabase/client";
+import { track } from "@/lib/analytics/track";
 
 type Mode = "signup" | "login";
 
@@ -78,6 +79,7 @@ export default function AuthModal({
     }
 
     setIsSubmitting(false);
+    track("signup", { method: "email" });
 
     // Email confirmation enabled: the account exists but there is no session
     // until the link is clicked, so there is nothing to resume yet.
@@ -106,6 +108,7 @@ export default function AuthModal({
       return;
     }
 
+    track("login", { method: "email" });
     setIsSubmitting(false);
     onClose();
     await onAuthSuccess();

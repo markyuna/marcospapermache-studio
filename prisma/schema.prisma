@@ -120,3 +120,63 @@ model QuizResult {
   @@index([userId, createdAt(sort: Desc)])
   @@map("quiz_results")
 }
+
+// First-party, cookieless audience measurement. Tables, indexes (including the
+// partial unique index on pageview_id), RLS and the 13-month purge function are
+// created by supabase/analytics.sql, not by prisma migrate. Writes come only
+// from /api/analytics/collect (src/lib/analytics/collect.ts).
+model AnalyticsSession {
+  id           String   @id @default(uuid()) @db.Uuid
+  visitorId    String   @map("visitor_id")
+  startedAt    DateTime @default(now()) @map("started_at") @db.Timestamptz(6)
+  lastSeenAt   DateTime @default(now()) @map("last_seen_at") @db.Timestamptz(6)
+  entryPath    String   @map("entry_path")
+  exitPath     String   @map("exit_path")
+  pageviews    Int      @default(0)
+  events       Int      @default(0)
+  durationMs   Int      @default(0) @map("duration_ms")
+  channel      String   @default("direct")
+  referrer     String?
+  referrerHost String?  @map("referrer_host")
+  utmSource    String?  @map("utm_source")
+  utmMedium    String?  @map("utm_medium")
+  utmCampaign  String?  @map("utm_campaign")
+  utmTerm      String?  @map("utm_term")
+  utmContent   String?  @map("utm_content")
+  country      String?
+  region       String?
+  city         String?
+  device       String   @default("desktop")
+  browser      String?
+  os           String?
+  screenWidth  Int?     @map("screen_width")
+  locale       String?
+  language     String?
+
+  analyticsEvents AnalyticsEvent[]
+
+  @@index([startedAt(sort: Desc)])
+  @@index([visitorId, lastSeenAt(sort: Desc)])
+  @@index([lastSeenAt(sort: Desc)])
+  @@map("analytics_sessions")
+}
+
+model AnalyticsEvent {
+  id          BigInt   @id @default(autoincrement())
+  sessionId   String   @map("session_id") @db.Uuid
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  type        String
+  name        String
+  path        String
+  pageviewId  String?  @map("pageview_id") @db.Uuid
+  durationMs  Int?     @map("duration_ms")
+  scrollDepth Int?     @map("scroll_depth") @db.SmallInt
+  props       Json?
+
+  session AnalyticsSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt(sort: Desc)])
+  @@index([sessionId, createdAt])
+  @@index([type, name, createdAt(sort: Desc)])
+  @@map("analytics_events")
+}

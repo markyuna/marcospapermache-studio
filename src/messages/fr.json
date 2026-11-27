@@ -921,7 +921,7 @@
       },
       "cookies": {
         "heading": "Cookies",
-        "text": "Nous utilisons des cookies nécessaires au fonctionnement du site et, sous réserve de votre consentement, des cookies de mesure d’audience. Vous pouvez gérer vos préférences via le bandeau de cookies ou les paramètres de votre navigateur."
+        "text": "Nous utilisons uniquement les cookies nécessaires au fonctionnement du site (connexion à votre compte, sécurité). La mesure d’audience est réalisée par un outil interne, sans cookie ni traceur publicitaire : votre adresse IP n’est pas conservée, les statistiques sont anonymes et agrégées, et les données sont supprimées au bout de 13 mois. Vous pouvez gérer les cookies via les paramètres de votre navigateur."
       },
       "mineurs": {
         "heading": "Mineurs",
