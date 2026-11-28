@@ -220,7 +220,7 @@ function VisitRow({ session, now }: { session: RecentSession; now: number }) {
                     </>
                   ) : (
                     <>
-                      <MousePointerClick className="mr-1 inline h-3 w-3 text-neutral-500" aria-hidden />
+                      <MousePointerClick className="mr-1 inline! h-3 w-3 text-neutral-500" aria-hidden />
                       <span className="font-medium text-neutral-800">{eventLabel(event.name)}</span>
                       {event.props && typeof event.props === "object" && (
                         <span className="ml-2 text-neutral-500">

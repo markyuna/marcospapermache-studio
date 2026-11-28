@@ -2,11 +2,12 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, Lock, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+import AuthModal from "@/components/auth/AuthModal";
 import QuestionCard from "@/components/quiz/QuestionCard";
 import QuizResult, { type QuizArtwork } from "@/components/quiz/QuizResult";
 import { GradientTitle } from "@/components/ui/GradientTitle";
@@ -19,8 +20,13 @@ import { isProfileId } from "@/data/quiz/profiles";
 import { getVisibleQuestions, pruneAnswers, type Answers } from "@/data/quiz/scoring";
 import { useRouter } from "@/i18n/navigation";
 import { track } from "@/lib/analytics/track";
+import { supabase } from "@/lib/supabase/client";
 
 const AUTO_ADVANCE_MS = 250;
+
+// Added to the return URL of Google / the email-confirmation link so the quiz
+// starts by itself once the visitor is back and signed in.
+const START_PARAM = "start";
 
 // Shared links: ?r=<answers code> carries everything; a bare ?p=<profile> from
 // the first version of the quiz still opens that profile. Anything that does
@@ -57,6 +63,11 @@ export default function QuizFlow({ artworks }: QuizFlowProps) {
   const [started, setStarted] = useState(false);
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<Answers>({});
+  // Taking the quiz requires an account. null = session not checked yet.
+  const [hasSession, setHasSession] = useState<boolean | null>(null);
+  const [showAuth, setShowAuth] = useState(false);
+  const pathname = usePathname();
+  const autoStartRef = useRef(searchParams.get(START_PARAM) === "1");
 
   const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -68,6 +79,54 @@ export default function QuizFlow({ artworks }: QuizFlowProps) {
   }, []);
 
   useEffect(() => clearAdvanceTimer, [clearAdvanceTimer]);
+
+  const beginQuiz = useCallback(() => {
+    setStarted(true);
+    track("quiz_started");
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+
+    supabase.auth.getSession().then(({ data }) => {
+      if (!active) return;
+      const signedIn = Boolean(data.session);
+      setHasSession(signedIn);
+
+      // Back from Google / the confirmation email: start right away.
+      if (autoStartRef.current) {
+        autoStartRef.current = false;
+        router.replace("/quiz", { scroll: false });
+        if (signedIn) beginQuiz();
+      }
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setHasSession(Boolean(session));
+    });
+
+    return () => {
+      active = false;
+      subscription.unsubscribe();
+    };
+  }, [beginQuiz, router]);
+
+  async function handleStart() {
+    // Ask Supabase rather than trusting the cached flag: the session may have
+    // expired since the page loaded.
+    const { data } = await supabase.auth.getSession();
+
+    if (data.session) {
+      beginQuiz();
+      return;
+    }
+
+    setHasSession(false);
+    setShowAuth(true);
+    track("quiz_auth_prompt");
+  }
 
   // "marco" only exists for mural pieces, so the total can change after the
   // "forma" answer; clamp in case the user went back and shrank the list.
@@ -170,15 +229,34 @@ export default function QuizFlow({ artworks }: QuizFlowProps) {
 
         <button
           type="button"
-          onClick={() => {
-            setStarted(true);
-            track("quiz_started");
-          }}
+          onClick={handleStart}
           className="btn-gold-shimmer mt-10 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold transition duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c65400]/50 focus-visible:ring-offset-2"
         >
           {t("start")}
           <ArrowRight className="h-4 w-4" />
         </button>
+
+        {hasSession === false && (
+          <p className="mx-auto mt-5 max-w-md text-center text-sm leading-6 text-[#8a7766]">
+            <Lock className="mr-1.5 inline-block! h-3.5 w-3.5 align-[-2px]" aria-hidden />
+            {t("loginRequired")}
+          </p>
+        )}
+
+        <AuthModal
+          isOpen={showAuth}
+          onClose={() => setShowAuth(false)}
+          onAuthSuccess={beginQuiz}
+          initialMode="signup"
+          returnTo={`${pathname}?${START_PARAM}=1`}
+          copy={{
+            signupTitle: t("auth.signupTitle"),
+            signupDescription: t("auth.signupDescription"),
+            loginTitle: t("auth.loginTitle"),
+            loginDescription: t("auth.loginDescription"),
+            googleHint: t("auth.googleHint"),
+          }}
+        />
       </motion.div>
     );
   }

@@ -38,7 +38,7 @@ export default function EventsCard({ events, props, sessions, query }: Props) {
     <section className="min-w-0 rounded-2xl border border-black/5 bg-paper-surface p-4 shadow-sm md:p-5">
       <h2 className="text-base font-semibold text-neutral-900">Événements & conversions</h2>
       <p className="mb-3 text-xs text-neutral-500">
-        Actions réalisées sur le site. <Target className="inline-block h-3 w-3 align-[-1px]" aria-hidden /> = objectif de conversion.
+        Actions réalisées sur le site. <Target className="inline-block! h-3 w-3 align-[-1px]" aria-hidden /> = objectif de conversion.
       </p>
 
       {events.length === 0 ? (

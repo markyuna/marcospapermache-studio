@@ -966,6 +966,14 @@
     "next": "Next",
     "back": "Back",
     "progress": "Question {current} of {total}",
+    "loginRequired": "A free account is needed to take the quiz: it lets you save your result and create your sculpture.",
+    "auth": {
+      "signupTitle": "Create your account to take the quiz",
+      "signupDescription": "It’s free: you’ll be able to save your result in your account and generate the image of your sculpture.",
+      "loginTitle": "Log in to take the quiz",
+      "loginDescription": "Log in to your account to start the quiz and find your results.",
+      "googleHint": "You’ll come back to the quiz after connecting, and it will start automatically."
+    },
     "teaser": {
       "title": "Which sculpture is yours?",
       "text": "Answer a few questions and discover the piece that matches what you feel.",

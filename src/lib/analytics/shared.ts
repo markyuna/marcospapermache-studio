@@ -24,6 +24,7 @@ export const EVENT_CATALOG = {
   image_generated: { label: "Image IA générée", conversion: true },
   generation_blocked: { label: "Génération bloquée (compte / crédits)", conversion: false },
   checkout_started: { label: "Paiement Stripe lancé", conversion: true },
+  quiz_auth_prompt: { label: "Quiz : connexion demandée", conversion: false },
   quiz_started: { label: "Quiz commencé", conversion: false },
   quiz_completed: { label: "Quiz terminé", conversion: false },
   quiz_saved: { label: "Résultat du quiz enregistré", conversion: false },
