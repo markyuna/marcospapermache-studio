@@ -966,6 +966,14 @@
     "next": "Siguiente",
     "back": "Atrás",
     "progress": "Pregunta {current} de {total}",
+    "loginRequired": "Necesitas una cuenta gratuita para hacer el quiz: te permite guardar tu resultado y crear tu escultura.",
+    "auth": {
+      "signupTitle": "Crea tu cuenta para hacer el quiz",
+      "signupDescription": "Es gratis: podrás guardar tu resultado en tu cuenta y generar la imagen de tu escultura.",
+      "loginTitle": "Inicia sesión para hacer el quiz",
+      "loginDescription": "Inicia sesión en tu cuenta para empezar el quiz y encontrar tus resultados.",
+      "googleHint": "Volverás al quiz después de conectarte y empezará automáticamente."
+    },
     "teaser": {
       "title": "¿Qué escultura va contigo?",
       "text": "Responde unas pocas preguntas y descubre la pieza que encaja con lo que sientes.",

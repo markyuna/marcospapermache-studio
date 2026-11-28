@@ -11,11 +11,19 @@ import { track } from "@/lib/analytics/track";
 
 type Mode = "signup" | "login";
 
+export type AuthModalCopy = Partial<
+  Record<"signupTitle" | "signupDescription" | "loginTitle" | "loginDescription" | "googleHint", string>
+>;
+
 type AuthModalProps = {
   isOpen: boolean;
   onClose: () => void;
   onAuthSuccess: () => void | Promise<void>;
   initialMode?: Mode;
+  /** Where Google / the email-confirmation link brings the user back (default: this page). */
+  returnTo?: string;
+  /** Context-specific wording; anything omitted keeps the generator's default text. */
+  copy?: AuthModalCopy;
 };
 
 export default function AuthModal({
@@ -23,6 +31,8 @@ export default function AuthModal({
   onClose,
   onAuthSuccess,
   initialMode = "signup",
+  returnTo,
+  copy,
 }: AuthModalProps) {
   const t = useTranslations("AIExperience.auth");
 
@@ -57,7 +67,7 @@ export default function AuthModal({
     // If the project requires email confirmation, the link in the email must
     // bring the user back to this exact page, query string included. The path
     // travels in a cookie so the redirect URL itself stays plain.
-    saveReturnTo();
+    saveReturnTo(returnTo);
 
     const { data, error: signUpError } = await supabase.auth.signUp({
       email,
@@ -119,7 +129,7 @@ export default function AuthModal({
     setError("");
 
     // Leaving for Google: remember this page (with its query) for the callback.
-    saveReturnTo();
+    saveReturnTo(returnTo);
 
     const { error: oauthError } = await supabase.auth.signInWithOAuth({
       provider: "google",
@@ -155,10 +165,12 @@ export default function AuthModal({
         </button>
 
         <h2 className="text-xl font-semibold text-white">
-          {mode === "signup" ? t("signupTitle") : t("loginTitle")}
+          {mode === "signup" ? (copy?.signupTitle ?? t("signupTitle")) : (copy?.loginTitle ?? t("loginTitle"))}
         </h2>
         <p className="mt-2 text-sm leading-6 text-neutral-400">
-          {mode === "signup" ? t("signupDescription") : t("loginDescription")}
+          {mode === "signup"
+            ? (copy?.signupDescription ?? t("signupDescription"))
+            : (copy?.loginDescription ?? t("loginDescription"))}
         </p>
 
         <form
@@ -256,7 +268,7 @@ export default function AuthModal({
         </button>
 
         <p className="mt-3 text-center text-xs leading-5 text-neutral-500">
-          {t("googleHint")}
+          {copy?.googleHint ?? t("googleHint")}
         </p>
 
         <button

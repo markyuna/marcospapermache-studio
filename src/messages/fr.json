@@ -966,6 +966,14 @@
     "next": "Suivant",
     "back": "Retour",
     "progress": "Question {current} sur {total}",
+    "loginRequired": "Un compte gratuit est nécessaire pour faire le quiz : il te permet d’enregistrer ton résultat et de créer ta sculpture.",
+    "auth": {
+      "signupTitle": "Créez votre compte pour faire le quiz",
+      "signupDescription": "C’est gratuit : vous pourrez enregistrer votre résultat dans votre espace et générer l’image de votre sculpture.",
+      "loginTitle": "Connectez-vous pour faire le quiz",
+      "loginDescription": "Connectez-vous à votre compte pour commencer le quiz et retrouver vos résultats.",
+      "googleHint": "Vous reviendrez sur le quiz après la connexion, et il démarrera automatiquement."
+    },
     "teaser": {
       "title": "Quelle sculpture te correspond ?",
       "text": "Réponds à quelques questions et découvre la pièce qui épouse ce que tu ressens.",
